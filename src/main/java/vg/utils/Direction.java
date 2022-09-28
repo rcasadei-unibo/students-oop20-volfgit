@@ -1,4 +1,4 @@
-package vg.utils
+package vg.utils;
 
 public enum Direction {
     UP,
