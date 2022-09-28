@@ -5,13 +5,21 @@ package vg.core;
 
 import com.sun.marlin.DRenderer;
 
+enum GameState{
+    PLAYING, //playing game
+    PAUSED, //playing level but paused
+    STOPPED, //not playing level
+}
+
 /**
  * Game Engine class, manager game loop and refresh timing
+ * during gameplay
  * */
 public class GameEngine {
     //private model object
     //private view object
     private long period = 20; // frequencies = 1/period
+    private GameState gameState = GameState.STOPPED;
 
     public void setup(){
         //TODO: init model and view in GameEngine.setup()
@@ -22,16 +30,18 @@ public class GameEngine {
     public void gameLoop(){
         long prevCycleTime = System.currentTimeMillis();
         //TODO: it has to be always true ?
-        while(true){
+        while(gameState != GameState.STOPPED || gameState != GameState.PAUSED){
             long curCycleTime = System.currentTimeMillis();
             long elapsedTime = curCycleTime - prevCycleTime;
             processInput();
+
             updateGame(elapsedTime);
             render();
             waitForNextFrame(curCycleTime);
             prevCycleTime = curCycleTime;
         }
     }
+
 
     private void updateGame(long elapsedTime) {
         //TODO: call update method of model
