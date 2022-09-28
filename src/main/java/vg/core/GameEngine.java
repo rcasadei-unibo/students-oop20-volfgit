@@ -1,10 +1,5 @@
 package vg.core;
 
-//model
-//view
-
-import com.sun.marlin.DRenderer;
-
 enum GameState{
     PLAYING, //playing game
     PAUSED, //playing level but paused
@@ -16,6 +11,7 @@ enum GameState{
  * during gameplay
  * */
 public class GameEngine {
+    //TODO: save object model and view
     //private model object
     //private view object
     private long period = 20; // frequencies = 1/period
@@ -55,7 +51,7 @@ public class GameEngine {
 
     private void render() {
         //view.render();
-        System.out.println("render");
+        System.out.println("render gui ");
     }
 
     private void waitForNextFrame(long elapsedTime){
