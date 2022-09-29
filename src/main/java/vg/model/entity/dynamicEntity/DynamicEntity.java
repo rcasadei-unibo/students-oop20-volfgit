@@ -13,7 +13,7 @@ public abstract class DynamicEntity extends AbstractEntity {
 
     public void move(final V2D dir) {
         V2D curPos = this.getPosition();
-        V2D updatedPos = new V2D(dir.getX()*this.speed.getX(), dir.getY()*this.speed.getY());
+        V2D updatedPos = new V2D(dir.getX() * this.speed.getX(), dir.getY() * this.speed.getY());
         this.setPosition(curPos.sum(updatedPos));
     }
 
