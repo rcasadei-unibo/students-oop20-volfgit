@@ -21,4 +21,8 @@ public enum Direction {
     public double getX() {
         return x;
     }
+
+    public V2D getVector() {
+        return new V2D(this.x,this.y);
+    }
 }
