@@ -1,12 +1,10 @@
-package vg.model.player;
+package vg.model;
 
 import vg.utils.Position;
 
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
-import java.util.Optional;
-import java.util.OptionalInt;
 
 public class TailImpl implements Tail{
     private List<Position> coordinates;

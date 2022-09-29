@@ -1,6 +1,5 @@
-package vg.model.player;
+package vg.model;
 
-import vg.model.DynamicEntity;
 import vg.utils.V2D;
 
 public class Player extends DynamicEntity {
