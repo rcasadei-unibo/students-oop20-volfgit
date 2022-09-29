@@ -35,6 +35,6 @@ public abstract class DynamicEntity extends AbstractEntity {
     }
 
     private void bounces() {
-        //TODO invertire Direction
+        //TODO invertire speed
     }
 }
