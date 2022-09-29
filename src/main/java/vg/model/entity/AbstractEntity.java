@@ -1,8 +1,8 @@
-package vg.model;
+package vg.model.entity;
 
 import vg.utils.V2D;
 
-public abstract class AbstractEntity implements Entity{
+public abstract class AbstractEntity implements Entity {
     private V2D position;
     //private Shape shape;
 
@@ -14,7 +14,7 @@ public abstract class AbstractEntity implements Entity{
       return this.position;
     };
 
-    public void setPosition(V2D position) {
+    public void setPosition(final V2D position) {
         this.position = position;
     }
 
