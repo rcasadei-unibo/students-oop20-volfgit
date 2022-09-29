@@ -6,7 +6,7 @@ public abstract class AbstractEntity implements Entity {
     private V2D position;
     //private Shape shape;
 
-    AbstractEntity(final V2D position) {
+    protected AbstractEntity(final V2D position) {
         this.position = position;
     }
 
