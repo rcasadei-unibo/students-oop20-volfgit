@@ -16,4 +16,8 @@ public abstract class DynamicEntity extends AbstractEntity{
         Position updatedPos = new Position(dir.getX()*this.speed.getX(), dir.getY()*this.speed.getY());
         this.getPosition().sumPosition(updatedPos);
     }
+
+    public Speed getSpeed() {
+        return this.speed;
+    }
 }
