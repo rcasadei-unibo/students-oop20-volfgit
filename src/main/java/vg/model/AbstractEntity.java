@@ -2,6 +2,7 @@ package vg.model;
 
 import vg.utils.Direction;
 import vg.utils.Position;
+import vg.utils.Speed;
 
 public abstract class AbstractEntity implements Entity{
     private Position position;
