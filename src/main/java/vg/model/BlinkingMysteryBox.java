@@ -1,6 +1,6 @@
 package vg.model;
 
-import vg.utils.Position;
+import vg.utils.V2D;
 
 public class BlinkingMysteryBox extends MysteryBox{
 
@@ -8,7 +8,7 @@ public class BlinkingMysteryBox extends MysteryBox{
     private boolean hide;
     private boolean appearence;
 
-    BlinkingMysteryBox(Position position) {
+    BlinkingMysteryBox(V2D position) {
         super(position);
     }
 
