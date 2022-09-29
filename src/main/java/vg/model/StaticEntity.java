@@ -1,10 +1,10 @@
 package vg.model;
 
-import vg.utils.Position;
+import vg.utils.V2D;
 
 public abstract class StaticEntity extends AbstractEntity {
 
-    StaticEntity(Position position) {
+    StaticEntity(V2D position) {
         super(position);
     }
 }

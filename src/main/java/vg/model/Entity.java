@@ -1,9 +1,8 @@
 package vg.model;
 
-import vg.utils.Direction;
-import vg.utils.Position;
+import vg.utils.V2D;
 
 public interface Entity {
-    Position getPosition();
+    V2D getPosition();
     //Shape getShape();
 }

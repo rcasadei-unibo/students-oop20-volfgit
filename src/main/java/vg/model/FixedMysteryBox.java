@@ -1,10 +1,10 @@
 package vg.model;
 
-import vg.utils.Position;
+import vg.utils.V2D;
 
 public class FixedMysteryBox extends MysteryBox{
 
-    FixedMysteryBox(Position position) {
+    FixedMysteryBox(V2D position) {
         super(position);
     }
 }

@@ -1,12 +1,12 @@
 package vg.model;
 
-import vg.utils.Position;
+import vg.utils.V2D;
 
 public abstract class MysteryBox<T> extends StaticEntity {
 
     final private T bonus;
 
-    MysteryBox(Position position) {
+    MysteryBox(V2D position) {
         super(position);
         //TODO assegnare bonus correttamente
         this.bonus = null;

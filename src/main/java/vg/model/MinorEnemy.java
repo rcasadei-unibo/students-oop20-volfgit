@@ -1,10 +1,9 @@
 package vg.model;
 
-import vg.utils.Position;
-import vg.utils.Speed;
+import vg.utils.V2D;
 
 public abstract class MinorEnemy extends Enemy {
-    MinorEnemy(Position position, Speed speed) {
+    MinorEnemy(V2D position, V2D speed) {
         super(position, speed);
     }
 }
