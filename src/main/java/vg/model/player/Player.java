@@ -1,13 +1,13 @@
-package vg.model;
+package vg.model.player;
 
-import org.jetbrains.annotations.Contract;
-import org.jetbrains.annotations.NotNull;
+import vg.model.DynamicEntity;
 import vg.utils.Position;
 import vg.utils.Speed;
 
 public class Player extends DynamicEntity {
     static final int PLAYER_MAX_LIFE = 5;
     private int life;
+    private Tail tail;
     //private Shield shield;
 
     public static Player newPlayer(final Position position){
@@ -21,7 +21,7 @@ public class Player extends DynamicEntity {
     private Player(final Position position, final int life) {
         super(position,new Speed(2,2));
         this.life = life;
-
+        this.tail = TailImpl.emptyTail();
         //TODO: init shield
         //this.shield = new Shield();
     }
