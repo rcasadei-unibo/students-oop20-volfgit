@@ -1,8 +1,7 @@
 package vg.model.player;
 
 import vg.model.DynamicEntity;
-import vg.utils.Position;
-import vg.utils.Speed;
+import vg.utils.V2D;
 
 public class Player extends DynamicEntity {
     static final int PLAYER_MAX_LIFE = 5;
@@ -10,16 +9,16 @@ public class Player extends DynamicEntity {
     private Tail tail;
     //private Shield shield;
 
-    public static Player newPlayer(final Position position){
+    public static Player newPlayer(final V2D position){
         return new Player(position,PLAYER_MAX_LIFE);
     };
 
-    public static Player newPlayer(final Position position, final int life) {
+    public static Player newPlayer(final V2D position, final int life) {
         return new Player(position,life);
     };
 
-    private Player(final Position position, final int life) {
-        super(position,new Speed(2,2));
+    private Player(final V2D position, final int life) {
+        super(position,new V2D(2,2));
         this.life = life;
         this.tail = TailImpl.emptyTail();
         //TODO: init shield

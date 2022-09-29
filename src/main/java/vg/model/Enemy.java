@@ -1,11 +1,10 @@
 package vg.model;
 
-import vg.utils.Position;
-import vg.utils.Speed;
+import vg.utils.V2D;
 
 public abstract class Enemy extends DynamicEntity {
 
-    Enemy(Position position, Speed speed) {
-        super(position, speed);
+    Enemy(V2D v2D, V2D speed) {
+        super(v2D, speed);
     }
 }

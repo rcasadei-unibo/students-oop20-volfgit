@@ -1,8 +1,6 @@
 package vg.core;
 
-import vg.model.Player;
 import vg.utils.GameState;
-import vg.utils.Position;
 
 /**
  * Game Engine class, manager game loop and refresh timing

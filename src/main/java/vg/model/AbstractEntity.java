@@ -1,22 +1,20 @@
 package vg.model;
 
-import vg.utils.Direction;
-import vg.utils.Position;
-import vg.utils.Speed;
+import vg.utils.V2D;
 
 public abstract class AbstractEntity implements Entity{
-    private Position position;
+    private V2D position;
     //private Shape shape;
 
-    AbstractEntity(final Position position) {
+    AbstractEntity(final V2D position) {
         this.position = position;
     }
 
-    public Position getPosition() {
+    public V2D getPosition() {
       return this.position;
     };
 
-    public void setPosition(Position position) {
+    public void setPosition(V2D position) {
         this.position = position;
     }
 
