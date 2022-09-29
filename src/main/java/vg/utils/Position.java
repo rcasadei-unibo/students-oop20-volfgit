@@ -9,7 +9,7 @@ public class Position {
         this.y = y;
     }
 
-    public Position sumPosition(final Position pos){
+    public Position sum(final Position pos){
         return new Position(this.x+pos.x,this.y+pos.y);
     }
 

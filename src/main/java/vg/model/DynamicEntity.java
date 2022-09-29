@@ -7,14 +7,15 @@ import vg.utils.Speed;
 public abstract class DynamicEntity extends AbstractEntity{
     private Speed speed;
 
-    DynamicEntity(final Position position, final Speed speed) {
+    public DynamicEntity(final Position position, final Speed speed) {
         super(position);
         this.speed = speed;
     }
 
     public void move(final Direction dir){
+        Position curPos = this.getPosition();
         Position updatedPos = new Position(dir.getX()*this.speed.getX(), dir.getY()*this.speed.getY());
-        this.getPosition().sumPosition(updatedPos);
+        this.setPosition(curPos.sum(updatedPos));
     }
 
     public Speed getSpeed() {
