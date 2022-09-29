@@ -20,4 +20,8 @@ public abstract class DynamicEntity extends AbstractEntity{
     public Speed getSpeed() {
         return this.speed;
     }
+
+    public void afterCollisionAction(){
+
+    }
 }
