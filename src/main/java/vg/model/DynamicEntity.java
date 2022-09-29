@@ -21,7 +21,20 @@ public abstract class DynamicEntity extends AbstractEntity{
         return this.speed;
     }
 
+    /*
+    * Di questa funzione ogni tipologia di Entità farà il suo
+    * ovverride e la funzione verrà chiamata solo nel caso in
+    * cui l'entità rimbalzi, nell'altro caso in cui l'entità
+    * deve attraversare o venir distrutta non c'è bisogno di
+    * chiamare la funzione. La teniamo comunque chiamata così
+    * perché potrebbero venire creati altri casi oltre a questi
+    * e a quel punto potrebbe aver senso mettere un parametro.
+    */
     public void afterCollisionAction(){
+        this.bounces();
+    }
 
+    private void bounces() {
+        //TODO invertire Direction
     }
 }
