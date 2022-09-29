@@ -8,8 +8,4 @@ public class BasicEnemyBolt extends EnemyBolt{
         super(position, speed);
     }
 
-    @Override
-    public void afterCollisionAction(){
-        //TODO
-    }
 }
