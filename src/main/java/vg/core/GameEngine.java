@@ -1,10 +1,8 @@
 package vg.core;
 
-enum GameState{
-    PLAYING, //playing game
-    PAUSED, //playing level but paused
-    STOPPED, //not playing level
-}
+import vg.model.Player;
+import vg.utils.GameState;
+import vg.utils.Position;
 
 /**
  * Game Engine class, manager game loop and refresh timing
@@ -33,6 +31,7 @@ public class GameEngine {
 
             updateGame(elapsedTime);
             render();
+
             waitForNextFrame(curCycleTime);
             prevCycleTime = curCycleTime;
         }
