@@ -4,7 +4,7 @@ import org.jetbrains.annotations.Contract;
 import org.jetbrains.annotations.NotNull;
 import vg.utils.Position;
 
-public class Player extends AbstractEntity {
+public class Player extends DynamicEntity {
     static final int PLAYER_MAX_LIFE = 5;
     private int life;
     //private Shield shield;

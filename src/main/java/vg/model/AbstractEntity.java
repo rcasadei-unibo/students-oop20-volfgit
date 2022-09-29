@@ -11,15 +11,14 @@ public abstract class AbstractEntity implements Entity{
         this.position = position;
     }
 
-    public void move(final Direction direction){
-        double curX = this.position.getX();
-        double curY = this.position.getY();
-        this.position = new Position(curX+ direction.getX(), curY+direction.getY());
-    }
-
     public Position getPosition() {
       return this.position;
     };
+
+    public void setPosition(Position position) {
+        this.position = position;
+    }
+
     //Shape getShape();
 
 }
