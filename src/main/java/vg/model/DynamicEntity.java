@@ -3,7 +3,7 @@ package vg.model;
 import vg.utils.Direction;
 import vg.utils.V2D;
 
-public abstract class DynamicEntity extends AbstractEntity{
+public abstract class DynamicEntity extends AbstractEntity {
     private V2D speed;
 
     public DynamicEntity(final V2D position, final V2D speed) {
@@ -11,7 +11,7 @@ public abstract class DynamicEntity extends AbstractEntity{
         this.speed = speed;
     }
 
-    public void move(final Direction dir){
+    public void move(final Direction dir) {
         V2D curPos = this.getPosition();
         V2D updatedPos = new V2D(dir.getX()*this.speed.getX(), dir.getY()*this.speed.getY());
         this.setPosition(curPos.sum(updatedPos));
@@ -30,7 +30,7 @@ public abstract class DynamicEntity extends AbstractEntity{
     * perché potrebbero venire creati altri casi oltre a questi
     * e a quel punto potrebbe aver senso mettere un parametro.
     */
-    public void afterCollisionAction(){
+    public void afterCollisionAction() {
         this.bounces();
     }
 
