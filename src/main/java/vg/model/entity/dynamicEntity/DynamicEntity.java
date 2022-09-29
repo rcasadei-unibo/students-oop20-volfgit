@@ -1,5 +1,6 @@
-package vg.model;
+package vg.model.entity.dynamicEntity;
 
+import vg.model.entity.AbstractEntity;
 import vg.utils.Direction;
 import vg.utils.V2D;
 

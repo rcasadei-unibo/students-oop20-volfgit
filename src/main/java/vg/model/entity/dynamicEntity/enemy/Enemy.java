@@ -1,5 +1,6 @@
-package vg.model;
+package vg.model.entity.dynamicEntity.enemy;
 
+import vg.model.entity.dynamicEntity.DynamicEntity;
 import vg.utils.V2D;
 
 public abstract class Enemy extends DynamicEntity {

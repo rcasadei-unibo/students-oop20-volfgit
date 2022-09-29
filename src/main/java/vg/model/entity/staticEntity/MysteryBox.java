@@ -1,4 +1,4 @@
-package vg.model;
+package vg.model.entity.staticEntity;
 
 import vg.utils.V2D;
 

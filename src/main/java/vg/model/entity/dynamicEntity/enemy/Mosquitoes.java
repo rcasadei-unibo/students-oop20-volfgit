@@ -1,4 +1,4 @@
-package vg.model;
+package vg.model.entity.dynamicEntity.enemy;
 
 import vg.utils.V2D;
 

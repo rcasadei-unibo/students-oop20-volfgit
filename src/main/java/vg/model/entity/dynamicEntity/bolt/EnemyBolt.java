@@ -1,4 +1,4 @@
-package vg.model;
+package vg.model.entity.dynamicEntity.bolt;
 
 import vg.utils.V2D;
 
