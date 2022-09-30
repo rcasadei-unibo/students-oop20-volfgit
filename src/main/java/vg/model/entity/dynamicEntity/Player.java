@@ -1,58 +1,10 @@
 package vg.model.entity.dynamicEntity;
 
 import vg.model.Tail;
-import vg.model.TailImpl;
-import vg.utils.V2D;
 
-/**
- * Player Entity.*/
-public class Player extends DynamicEntity {
-    /**
-     * Maximum player life.*/
-    static final int PLAYER_MAX_LIFE = 5;
-    /**
-     * Life of player.*/
-    private int life;
-    /**
-     * Tail created by player while moves in map.*/
-    private final Tail tail;
-    //private Shield shield;
+public interface Player {
 
-    /**
-     * @param position starting position of player
-     * @return Player with default life*/
-    public static Player newPlayer(final V2D position) {
-        return new Player(position, PLAYER_MAX_LIFE);
-    };
-
-    /**
-     * If position is negative or greater than maximum life then is set to the maximum allowed.
-     * @param position starting position
-     * @param life starting life of player
-     * @return Player with user define position and life*/
-    public static Player newPlayer(final V2D position, final int life) {
-        int playerLife = life < 0 || life > PLAYER_MAX_LIFE ? PLAYER_MAX_LIFE : life;
-        return new Player(position, playerLife);
-    };
-
-    private Player(final V2D position, final int life) {
-        super(position, new V2D(2, 2));
-        this.life = life;
-        this.tail = TailImpl.emptyTail();
-        //TODO: init shield
-        //this.shield = new Shield();
-    }
-
-    public void decLife() {
-        this.life = this.life - 1;
-    }
-
-    public void incLife() {
-        this.life = this.life + 1;
-    }
-
-    public Tail getPlayerTail() {
-        return this.tail;
-    }
-
+    void decLife();
+    void incLife();
+    Tail getPlayerTail();
 }
