@@ -11,31 +11,36 @@ import java.util.Set;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
-public class StageImpl<T> implements Stage<T> {
+/**
+ * The class that implements Stage using V2D as type for positions and vectors.
+ * @see Stage
+ * @see V2D
+ */
+public class StageImpl implements Stage<V2D> {
     private int currentScore;
     private Player player;
     private Set<StaticEntity> ss;
     private Set<DynamicEntity> ds;
     private Set<AbstractEntity> toDestroy;
-    private Map<T> map;
+    private Map<V2D> map;
 
-    public StageImpl(final int currentScore, final Map<T> map) {
+    public StageImpl(final int currentScore, final Map<V2D> map) {
         this.currentScore = currentScore;
         this.map = map;
     }
 
-    public StageImpl(final Map<T> map) {
+    public StageImpl(final Map<V2D> map) {
         this.currentScore = 0;
         this.map = map;
     }
 
     @Override
-    public Map<T> getMap() {
+    public Map<V2D> getMap() {
         return map;
     }
 
     @Override
-    public void setMap(Map<T> map) {
+    public void setMap(Map<V2D> map) {
         this.map = map;
     }
 
@@ -65,7 +70,7 @@ public class StageImpl<T> implements Stage<T> {
         return toDestroy;
     }
     @Override
-    public Set<T> getBorders() {
+    public Set<V2D> getBorders() {
         return getMap().getBorders();
     }
     @Override
