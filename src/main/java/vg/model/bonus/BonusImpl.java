@@ -12,12 +12,16 @@ public class BonusImpl implements Bonus {
     public final Boolean isActive() {
         return duration > 0;
     }
-
+    /**
+     * {@inheritDoc}
+     * */
     @Override
     public final BonusType getType() {
         return this.type;
     }
-
+    /**
+     * {@inheritDoc}
+     * */
     @Override
     public void updateBonusTimer(final double elapsedTime) {
         if (this.isActive() && elapsedTime < duration) {

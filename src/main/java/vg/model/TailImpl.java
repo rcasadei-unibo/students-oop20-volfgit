@@ -8,7 +8,8 @@ import java.util.List;
 
 public final class TailImpl implements Tail {
     /**
-     * List of all extremity point of segment.*/
+     * List of all extremity point of segment.
+     * */
     private List<V2D> coordinates;
 
     public static Tail emptyTail() {

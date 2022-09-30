@@ -8,6 +8,7 @@ public interface Bonus {
 
     /**
      * Call this method in order to update timer of bonus.
-     * @param elapsedTime time elapsed from previous game loop cycle to current one*/
+     * @param elapsedTime time elapsed from previous game loop cycle to current one
+     * */
     void updateBonusTimer(double elapsedTime);
 }
