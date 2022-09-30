@@ -2,26 +2,33 @@ package vg.utils;
 
 public enum Direction {
     /**
-     * Left.*/
+     * Left.
+     */
     LEFT(-1, 0),
     /**
-     * Right.*/
+     * Right.
+     */
     RIGHT(1, 0),
     /**
-     * Up.*/
+     * Up.
+     */
     UP(0, -1),
     /**
-     * Down.*/
+     * Down.
+     */
     DOWN(0, 1),
     /**
-     * No direction.*/
+     * No direction.
+     */
     NONE(0, 0);
 
     /**
-     * Horizontal coordinate.*/
+     * Horizontal coordinate.
+     */
     private final double x;
     /**
-     * Vertical coordinate.*/
+     * Vertical coordinate.
+     */
     private final double y;
     Direction(final double x, final double y) {
         this.x = x;
@@ -38,7 +45,8 @@ public enum Direction {
 
     /**
      * Get direction as 2D vector.
-     * @return V2D vector*/
+     * @return V2D vector
+     */
     public V2D getVector() {
         return new V2D(this.x, this.y);
     }
