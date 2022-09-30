@@ -15,6 +15,16 @@ import java.util.Set;
  */
 public interface Stage<T> {
     /**
+     * Returns the value of the score of the player.
+     * @return The current score of the player
+     */
+    int getCurrentScore();
+    /**
+     * Sets the value of the score of the player.
+     * @param currentScore The value to set to
+     */
+    void setCurrentScore(int currentScore);
+    /**
      * Return the current map state.
      * @return The current state of the map.
      * @see Map
