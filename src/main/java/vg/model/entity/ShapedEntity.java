@@ -1,5 +1,6 @@
 package vg.model.entity;
 
+import vg.utils.Shape;
 import vg.utils.V2D;
 
 public abstract class ShapedEntity implements Entity {
@@ -7,7 +8,7 @@ public abstract class ShapedEntity implements Entity {
      * 2D coordinates to keep current entity position in map.
      */
     private V2D position;
-    //private Shape shape;
+    private Shape shape;
 
     protected ShapedEntity(final V2D position) {
         this.position = position;
