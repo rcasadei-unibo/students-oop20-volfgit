@@ -4,6 +4,9 @@ import vg.model.entity.AbstractEntity;
 import vg.utils.V2D;
 
 public abstract class DynamicEntity extends AbstractEntity {
+    /**
+     * Entity movement speed.
+     * */
     private V2D speed;
 
     public DynamicEntity(final V2D position, final V2D speed) {
@@ -17,7 +20,7 @@ public abstract class DynamicEntity extends AbstractEntity {
         this.setPosition(curPos.sum(updatedPos));
     }
 
-    public V2D getSpeed() {
+    public final V2D getSpeed() {
         return this.speed;
     }
 
