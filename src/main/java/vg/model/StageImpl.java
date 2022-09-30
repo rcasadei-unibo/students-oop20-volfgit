@@ -70,7 +70,7 @@ public class StageImpl<T> implements Stage<T> {
     }
     @Override
     public Set<Entity> getAllEntities() {
-        return Stream.of(getDynamicEntitySet().stream(), getStaticEntitySet().stream(), Stream.of(getPlayer())).flatMap(e->e).collect(Collectors.toSet());
+        return Stream.of(getDynamicEntitySet().stream(), getStaticEntitySet().stream(), Stream.of(getPlayer())).flatMap(e -> e).collect(Collectors.toSet());
     }
 
     @Override
