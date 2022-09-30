@@ -1,6 +1,6 @@
 package vg.model;
 
-import vg.model.entity.AbstractEntity;
+import vg.model.entity.ShapedEntity;
 import vg.model.entity.Entity;
 import vg.model.entity.dynamicEntity.DynamicEntity;
 import vg.model.entity.dynamicEntity.Player;
@@ -41,7 +41,7 @@ public class StageImpl implements Stage<V2D> {
      * The set of entities that need to be destroyed.
      * @see #getToDestroySet()
      */
-    private Set<AbstractEntity> toDestroy;
+    private Set<ShapedEntity> toDestroy;
     /**
      * The current active map of the Stage. This will change as the player
      * will progress from one level to another. The Score of the player is
@@ -143,7 +143,7 @@ public class StageImpl implements Stage<V2D> {
      * {@inheritDoc}
      */
     @Override
-    public Set<AbstractEntity> getToDestroySet() {
+    public Set<ShapedEntity> getToDestroySet() {
         return toDestroy;
     }
     /**
@@ -177,7 +177,7 @@ public class StageImpl implements Stage<V2D> {
      * {@inheritDoc}
      */
     @Override
-    public void addToDestroy(final AbstractEntity toDestroy) {
+    public void addToDestroy(final ShapedEntity toDestroy) {
         this.getToDestroySet().add(toDestroy);
     }
     /**

@@ -1,6 +1,6 @@
 package vg.model;
 
-import vg.model.entity.AbstractEntity;
+import vg.model.entity.ShapedEntity;
 import vg.model.entity.Entity;
 import vg.model.entity.dynamicEntity.DynamicEntity;
 import vg.model.entity.dynamicEntity.Player;
@@ -68,11 +68,11 @@ public interface Stage<T> {
 
     /**
      * Return a Set of all entities that will be deleted from the map before the next iteration begins.
-     * @return : Set<AbstractEntity> that contains all entities on the map that will be deleted.
+     * @return : Set<ShapedEntity> that contains all entities on the map that will be deleted.
      * @see Entity
-     * @see AbstractEntity
+     * @see ShapedEntity
      */
-    Set<AbstractEntity> getToDestroySet();
+    Set<ShapedEntity> getToDestroySet();
 
     /**
      * Return a data structure containing the current actual borders of the map.
@@ -86,7 +86,7 @@ public interface Stage<T> {
      * Return all entities on the map.
      * @return The set that contains all entities on the map.
      * @see Entity
-     * @see AbstractEntity
+     * @see ShapedEntity
      */
     Set<Entity> getAllEntities();
 
@@ -101,9 +101,9 @@ public interface Stage<T> {
      * at the end of current cycle. Usually after moving entities,
      * if they collide with entities of opposite faction then this
      * method will be called.
-     * @param toDestroy AbstractEntity : the entity to destroy.
+     * @param toDestroy ShapedEntity : the entity to destroy.
      */
-    void addToDestroy(AbstractEntity toDestroy);
+    void addToDestroy(ShapedEntity toDestroy);
 
     /**
      * After moving all the dynamic entities of the map this checks
