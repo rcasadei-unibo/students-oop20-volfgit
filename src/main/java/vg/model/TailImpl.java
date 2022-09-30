@@ -6,17 +6,19 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
-public class TailImpl implements Tail{
+public final class TailImpl implements Tail {
+    /**
+     * List of all extremity point of segment.*/
     private List<V2D> coordinates;
 
     public static Tail emptyTail() {
         return new TailImpl();
     }
-    private TailImpl(){
+    private TailImpl() {
+        this.coordinates = new ArrayList<>();
     }
-
     @Override
-    public List<V2D> getCooridnates() {
+    public List<V2D> getCoordinates() {
         return Collections.unmodifiableList(this.coordinates);
     }
 
@@ -27,6 +29,11 @@ public class TailImpl implements Tail{
 
     @Override
     public V2D getLastCoordinate() {
-        return this.coordinates.get(this.coordinates.size()-1);
+        return this.coordinates.get(this.coordinates.size() - 1);
+    }
+
+    @Override
+    public void addPoint(final V2D point) {
+        this.coordinates.add(point);
     }
 }
