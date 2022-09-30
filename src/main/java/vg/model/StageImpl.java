@@ -65,7 +65,7 @@ public class StageImpl<T> implements Stage<T> {
         return toDestroy;
     }
     @Override
-    public T getBorders() {
+    public Set<T> getBorders() {
         return getMap().getBorders();
     }
     @Override
