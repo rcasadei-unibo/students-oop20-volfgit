@@ -1,18 +1,50 @@
 package vg.model.entity;
 
+import org.jetbrains.annotations.NotNull;
 import vg.utils.Shape;
 import vg.utils.V2D;
-//TODO doc for the class, shape, radius, constructor and getPosition
+
+/**
+ * ShapedEntity implements {@link Entity} and add the {@link Shape}
+ * to it (Circle or Square). It has {@link #radius} that defines
+ * how large the entity is.
+ * @see Entity
+ * @see Shape
+ * @see V2D
+ */
 public abstract class ShapedEntity implements Entity {
     /**
      * 2D coordinates to keep current entity position in map.
      */
     private V2D position;
-    private Shape shape;
-    private int radius;
-    protected ShapedEntity(final V2D position, final int radius) {
+    /**
+     * shape defines the shape of the shaped entity.
+     * @see Shape
+     */
+    private final Shape shape;
+    /**
+     * radius defines the radius of the shaped entity,
+     * for now only squares and circles are available
+     * as Shapes, so radius is actually the radius if
+     * Shape is circle, and radius is the half-width
+     * and half-height if shape is square.
+     * @see Shape
+     */
+    private final int radius;
+
+    /**
+     * Constructor of ShapedEntity class.
+     * @param position the value of starting position
+     * @param radius the value of the radius
+     * @param shape the value of the shape
+     * @see V2D
+     * @see Shape
+     * @see Entity
+     */
+    protected ShapedEntity(final V2D position, final int radius, final Shape shape) {
         this.position = position;
         this.radius = radius;
+        this.shape = shape;
     }
     public final V2D getPosition() {
       return this.position;
@@ -60,7 +92,7 @@ public abstract class ShapedEntity implements Entity {
      * @return true if the two entities are colliding, false otherwise
      */
     @Override
-    public boolean isInShape(final ShapedEntity other) {
+    public boolean isInShape(final @NotNull ShapedEntity other) {
         return this.shape.isInShape(this.getPosition(), other.getPosition(), this.getRadius(), other.getRadius(), other.getShape());
     }
 }
