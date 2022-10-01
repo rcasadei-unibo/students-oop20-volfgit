@@ -2,7 +2,7 @@ package vg.model.entity;
 
 import vg.utils.Shape;
 import vg.utils.V2D;
-
+//TODO doc for the class, shape, radius, constructor and getPosition
 public abstract class ShapedEntity implements Entity {
     /**
      * 2D coordinates to keep current entity position in map.
