@@ -38,21 +38,21 @@ public enum Shape {
      * @return true if the two entities are colliding, false otherwise.
      */
     public boolean isInShape(final V2D p1, final V2D p2, final int r1, final int r2, final Shape p2Type) {
-        if (this == CIRCLE && p2Type == CIRCLE) {
+        if (this == Shape.CIRCLE && p2Type == Shape.CIRCLE) {
             return Math.pow(p2.getX() - p1.getX(), 2) + Math.pow(p2.getY() - p1.getY(), 2) <= Math.pow(r1 + r2, 2) - 2 * r1 * r2;
         }
-        if (this == SQUARE && p2Type == SQUARE) {
+        if (this == Shape.SQUARE && p2Type == Shape.SQUARE) {
             return p1.getX() - r1 < p2.getX() + 2 * r2 && p2.getX() < p1.getX() + r1 && p1.getY() - r1 < p2.getY() * 2 * r2 && p2.getY() < p1.getY() + r1;
         }
-        if (this == CIRCLE && p2Type == SQUARE) {
+        if (this == Shape.CIRCLE && p2Type == Shape.SQUARE) {
             var dx = Math.abs(p1.getX() - p2.getX());
             var dy = Math.abs(p1.getY() - p2.getY());
             dx = Math.max(dx - r2, 0);
             dy = Math.max(dy - r2, 0);
             return dx * dx + dy * dy <= r1 * r1;
         }
-        if (this == SQUARE && p2Type == CIRCLE) {
-            return CIRCLE.isInShape(p2, p1, r2, r1, SQUARE);
+        if (this == Shape.SQUARE && p2Type == Shape.CIRCLE) {
+            return Shape.CIRCLE.isInShape(p2, p1, r2, r1, Shape.SQUARE);
         }
         // there are no other cases for now
         return false;
