@@ -1,6 +1,5 @@
 package vg.model.entity;
 
-import org.jetbrains.annotations.NotNull;
 import vg.utils.MassTier;
 import vg.utils.Shape;
 import vg.utils.V2D;
@@ -11,6 +10,7 @@ import vg.utils.V2D;
  * how large the entity is.
  * @see Entity
  * @see Shape
+ * @see MassTier
  * @see V2D
  */
 public abstract class ShapedEntity implements Entity {
@@ -46,6 +46,7 @@ public abstract class ShapedEntity implements Entity {
      * @see V2D
      * @see Shape
      * @see Entity
+     * @see MassTier
      */
     protected ShapedEntity(final V2D position, final int radius, final Shape shape, final MassTier massTier) {
         this.position = position;
@@ -55,7 +56,7 @@ public abstract class ShapedEntity implements Entity {
     }
     public final V2D getPosition() {
       return this.position;
-    };
+    }
 
     /**
      * Update entity position with a new one.
