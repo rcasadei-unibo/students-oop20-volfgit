@@ -34,23 +34,53 @@ public class BlinkingMysteryBox extends MysteryBox<BonusImpl> {
         super(position, halfWidth, bonus);
     }
 
+    /**
+     * Returns if the box is hiding.
+     * @return true if the box is hiding, false otherwise
+     */
     public boolean isHide() {
         return hide;
     }
 
+    /**
+     * Sets the visibility state of the box.
+     * @param hide true if the box is hiding, false if the box is visible
+     */
     public void setHide(final boolean hide) {
         this.hide = hide;
     }
 
+    /**
+     * Returns if the box can appear or not. If true then the
+     * box has the "space" to appear, if false then something
+     * is traveling on the same position of the box or the
+     * player created a wall.
+     * @return true if the box can appear, false otherwise
+     */
     public boolean isAppearance() {
         return this.appearance;
     }
 
-    public void setAppearence(final boolean appearence) {
+    /**
+     * Sets the appearance boolean: true if the box can appear,
+     * false otherwise.
+     * @param appearance the state of the boolean to set to
+     */
+    public void setAppearance(final boolean appearance) {
         this.appearance = appearance;
     }
 
-    private void changeState() {
-        //TODO
+    /**
+     * This method change the state of the box from hiding
+     * to not hiding and vice-versa. It will check if the
+     * box can actually appear again through the {@link #appearance}
+     * boolean.
+     */
+    public void changeState() {
+        if (isHide()) {
+            setHide(!isAppearance());
+        } else {
+            setHide(!isHide());
+        }
     }
 }
