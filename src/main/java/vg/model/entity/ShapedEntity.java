@@ -1,6 +1,7 @@
 package vg.model.entity;
 
 import org.jetbrains.annotations.NotNull;
+import vg.utils.MassTier;
 import vg.utils.Shape;
 import vg.utils.V2D;
 
@@ -21,7 +22,7 @@ public abstract class ShapedEntity implements Entity {
      * shape defines the shape of the shaped entity.
      * @see Shape
      */
-    private final Shape shape;
+    private Shape shape;
     /**
      * radius defines the radius of the shaped entity,
      * for now only squares and circles are available
@@ -30,21 +31,27 @@ public abstract class ShapedEntity implements Entity {
      * and half-height if shape is square.
      * @see Shape
      */
-    private final int radius;
+    private int radius;
+    /**
+     * @see MassTier
+     */
+    private MassTier massTier;
 
     /**
      * Constructor of ShapedEntity class.
      * @param position the value of starting position
      * @param radius the value of the radius
      * @param shape the value of the shape
+     * @param massTier the value of the mass tier
      * @see V2D
      * @see Shape
      * @see Entity
      */
-    protected ShapedEntity(final V2D position, final int radius, final Shape shape) {
+    protected ShapedEntity(final V2D position, final int radius, final Shape shape, final MassTier massTier) {
         this.position = position;
         this.radius = radius;
         this.shape = shape;
+        this.massTier = massTier;
     }
     public final V2D getPosition() {
       return this.position;
@@ -92,7 +99,25 @@ public abstract class ShapedEntity implements Entity {
      * @return true if the two entities are colliding, false otherwise
      */
     @Override
-    public boolean isInShape(final @NotNull ShapedEntity other) {
+    public boolean isInShape(final ShapedEntity other) {
         return this.shape.isInShape(this.getPosition(), other.getPosition(), this.getRadius(), other.getRadius(), other.getShape());
+    }
+
+    /**
+     * {@inheritDoc}
+     * @return the mass tier
+     */
+    @Override
+    public MassTier getMassTier() {
+        return this.massTier;
+    }
+
+    /**
+     * {@inheritDoc}
+     * @param toSet the mass tier to set to
+     */
+    @Override
+    public void setMassTier(final MassTier toSet) {
+        this.massTier = toSet;
     }
 }
