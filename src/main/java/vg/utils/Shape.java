@@ -23,7 +23,7 @@ public enum Shape {
      * @return true is p2 is in shape of p1, false otherwise
      * @see V2D
      */
-    boolean isInShape(final V2D p1, final V2D p2, final int radius) {
+    public boolean isInShape(final V2D p1, final V2D p2, final int radius) {
         return this == CIRCLE ? Math.pow(p2.getX() - p1.getX(), 2) + Math.pow(p2.getY() - p1.getY(), 2) <= Math.pow(radius, 2) : p1.getX() - p2.getX() < radius && p1.getX() - p2.getX() > -radius && p1.getY() - p2.getY() < radius && p1.getY() - p2.getY() > -radius;
     }
 
@@ -37,14 +37,24 @@ public enum Shape {
      * @param p2Type the type of the comparing with entity (CIRCLE or SQUARE)
      * @return true if the two entities are colliding, false otherwise.
      */
-    boolean isInShape(final V2D p1, final V2D p2, final int r1, final int r2, final Shape p2Type) {
+    public boolean isInShape(final V2D p1, final V2D p2, final int r1, final int r2, final Shape p2Type) {
         if (this == CIRCLE && p2Type == CIRCLE) {
             return Math.pow(p2.getX() - p1.getX(), 2) + Math.pow(p2.getY() - p1.getY(), 2) <= Math.pow(r1 + r2, 2) - 2 * r1 * r2;
         }
         if (this == SQUARE && p2Type == SQUARE) {
             return p1.getX() - r1 < p2.getX() + 2 * r2 && p2.getX() < p1.getX() + r1 && p1.getY() - r1 < p2.getY() * 2 * r2 && p2.getY() < p1.getY() + r1;
         }
-        //TODO caso cerchio quadrato e quadrato cerchio
+        if (this == CIRCLE && p2Type == SQUARE) {
+            var dx = Math.abs(p1.getX() - p2.getX());
+            var dy = Math.abs(p1.getY() - p2.getY());
+            dx = Math.max(dx - r2, 0);
+            dy = Math.max(dy - r2, 0);
+            return dx * dx + dy * dy <= r1 * r1;
+        }
+        if (this == SQUARE && p2Type == CIRCLE) {
+            return CIRCLE.isInShape(p2, p1, r2, r1, SQUARE);
+        }
+        // there are no other cases for now
         return false;
     }
 }
