@@ -55,6 +55,8 @@ public enum Shape {
             return Shape.CIRCLE.isInShape(p2, p1, r2, r1, Shape.SQUARE);
         }
         // there are no other cases for now
-        return false;
+        // this means p2Type is not an expected one
+        throw new IllegalArgumentException();
+        //return false;
     }
 }
