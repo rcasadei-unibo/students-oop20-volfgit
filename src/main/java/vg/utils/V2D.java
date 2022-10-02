@@ -1,6 +1,7 @@
 package vg.utils;
 
 import java.text.MessageFormat;
+import java.util.Objects;
 
 public class V2D {
     /**
@@ -52,5 +53,28 @@ public class V2D {
     @Override
     public String toString() {
         return MessageFormat.format("Position'{'x={0}, y={1}'}'", x, y);
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public boolean equals(final Object o) {
+        if (this == o) {
+            return true;
+        }
+        if (!(o instanceof V2D)) {
+            return false;
+        }
+        V2D v2D = (V2D) o;
+        return Double.compare(v2D.getX(), getX()) == 0 && Double.compare(v2D.getY(), getY()) == 0;
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public int hashCode() {
+        return Objects.hash(getX(), getY());
     }
 }
