@@ -10,6 +10,8 @@ public abstract class DynamicEntity extends ShapedEntity {
     private V2D speed;
 
     public DynamicEntity(final V2D position, final V2D speed) {
+        //TODO: capire se è meglio estendere shaped entity piusttosot che Abstract entity,
+        // Shaped ha significato diverso e aggiunge una info in piu
         super(position);
         this.speed = speed;
     }
@@ -20,7 +22,11 @@ public abstract class DynamicEntity extends ShapedEntity {
         this.setPosition(curPos.sum(updatedPos));
     }
 
-    public final V2D getSpeed() {
+    /**
+     * Return vector that represent current entity speed.
+     * @return current entity speed
+     */
+    public V2D getSpeed() {
         return this.speed;
     }
 
