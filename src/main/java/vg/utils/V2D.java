@@ -4,10 +4,12 @@ import java.text.MessageFormat;
 
 public class V2D {
     /**
-     * X: Horizontal coordinate.*/
+     * X: Horizontal coordinate.
+     */
     private final double x;
     /**
-     * Y: Vertical coordinate.*/
+     * Y: Vertical coordinate.
+     */
     private final double y;
 
     public V2D(final double x, final double y) {
@@ -15,6 +17,16 @@ public class V2D {
         this.y = y;
     }
 
+    /**
+     * Constructor that builds a new V2D equal
+     * to the one that is passed.
+     * @param equal the V2D point which coordinates
+     *              will be used to create the new one
+     */
+    public V2D(final V2D equal) {
+        this.x = equal.getX();
+        this.y = equal.getY();
+    }
     public final V2D sum(final V2D pos) {
         return new V2D(this.x + pos.x, this.y + pos.y);
     }
