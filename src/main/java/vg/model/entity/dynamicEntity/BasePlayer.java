@@ -12,6 +12,7 @@ public final class BasePlayer extends DynamicEntity implements Player {
      * Maximum player life.
      * */
     static final int PLAYER_MAX_LIFE = 5;
+    static final V2D DEFAULT_PLAYER_SPEED = new V2D(1, 1);
     /**
      * Life of player.
      * */
