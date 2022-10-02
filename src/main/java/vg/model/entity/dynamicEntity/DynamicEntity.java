@@ -1,9 +1,9 @@
 package vg.model.entity.dynamicEntity;
 
-import vg.model.entity.AbstractEntity;
+import vg.model.entity.ShapedEntity;
 import vg.utils.V2D;
 
-public abstract class DynamicEntity extends AbstractEntity {
+public abstract class DynamicEntity extends ShapedEntity {
     /**
      * Entity movement speed.
      * */
