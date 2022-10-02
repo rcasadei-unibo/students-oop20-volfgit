@@ -200,7 +200,7 @@ public class StageImpl implements Stage<V2D> {
     @Override
     public void checkAllOutOfBounds() {
         getDynamicEntitySet().forEach(e -> {
-            if (!getMap().isInBorder(e)) {
+            if (getBorders().stream().anyMatch(e::isInShape)) {
                e.afterCollisionAction();
             }
         });
