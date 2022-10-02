@@ -22,7 +22,7 @@ public final class BasePlayer extends DynamicEntity implements Player {
      */
     private int life;
     /**
-     *  Alternative speed of entity. It can be bigger or smaller than actual
+     *  Alternative speed of entity. It can be bigger or smaller than actual.
      */
     private Optional<V2D> speedUp;
     /**

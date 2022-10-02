@@ -3,7 +3,7 @@ package vg.model;
 import vg.model.entity.ShapedEntity;
 import vg.model.entity.Entity;
 import vg.model.entity.dynamicEntity.DynamicEntity;
-import vg.model.entity.dynamicEntity.Player;
+import vg.model.entity.dynamicEntity.player.Player;
 import vg.model.entity.staticEntity.StaticEntity;
 import vg.utils.V2D;
 
