@@ -3,8 +3,10 @@ package vg.model;
 import vg.model.bonus.Bonus;
 import vg.model.entity.Entity;
 import vg.model.entity.dynamicEntity.DynamicEntity;
-import vg.model.entity.dynamicEntity.Player;
+import vg.model.entity.dynamicEntity.enemy.Boss;
+import vg.model.entity.dynamicEntity.player.Player;
 import vg.model.entity.staticEntity.MysteryBox;
+import vg.model.entity.staticEntity.StaticEntity;
 import vg.utils.V2D;
 
 import java.util.Set;
@@ -13,7 +15,7 @@ import java.util.Set;
  * Interface that defines what a map must do to become usable by {@link Stage}
  * that is containing all the data structures and getters for them, methods
  * for updating the border, computing if an {@link Entity} is captured by
- * the player when creating new borders using {@link Tail}.
+ * the player when creating new borders using {@link vg.model.entity.dynamicEntity.player.Tail}.
  * @param <T> the type that defines positions and dimensionless entities
  * @see V2D
  */
@@ -96,10 +98,40 @@ public interface Map<T> {
     Set<MysteryBox<Bonus>> getAllMysteryBoxes();
 
     /**
+     * Returns the set of static entities.
+     * @return the set of static entities
+     * @see StaticEntity
+     */
+    Set<StaticEntity> getAllStaticEntities();
+    /**
      * Returns the set of dynamic entities.
      * @return the set of dynamic entities
+     * @see DynamicEntity
      */
     Set<DynamicEntity> getAllDynamicEntities();
+    /**
+     * Returns the set of all bolts.
+     * @return the set of all bolts
+     * @see vg.model.entity.dynamicEntity.bolt.Bolt
+     */
+    Set<DynamicEntity> getBolts();
 
+    /**
+     * Returns the set of all enemy bolts.
+     * @return the set of all enemy bolts
+     * @see vg.model.entity.dynamicEntity.bolt.EnemyBolt
+     */
+    Set<DynamicEntity> getEnemyBolts();
 
+    /** TODO friendlyBolt
+     * Returns the set of all friendly bolts.
+     * @return the set of all friendly bolts
+     * @see vg.model.entity.dynamicEntity.bolt.Bolt
+     */
+    Set<DynamicEntity> getFriendlyBolts();
+    /**
+     * Returns the boss of the map.
+     * @return the boss of the map
+     */
+    Boss getBoss();
 }
