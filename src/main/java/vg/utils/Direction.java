@@ -18,7 +18,7 @@ public enum Direction {
      */
     DOWN(0, 1),
     /**
-     * No direction.
+     * No direction. No movement.
      */
     NONE(0, 0);
 
