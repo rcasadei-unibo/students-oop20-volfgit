@@ -1,6 +1,7 @@
 package vg.model.entity.dynamicEntity.player;
 
 import vg.model.entity.dynamicEntity.DynamicEntity;
+import vg.utils.Direction;
 import vg.utils.MassTier;
 import vg.utils.Shape;
 import vg.utils.V2D;
@@ -112,6 +113,14 @@ public final class BasePlayer extends DynamicEntity implements Player {
     @Override
     public void disableSpeedUp() {
         this.speedUp = Optional.empty();
+    }
+
+    @Override
+    public void move(final Direction dir) {
+        //TODO: controllare che venga chiamato il metodo corretto, il metodo
+        //move() viene ereditato anche da DynamiEntity con una signature diversa da quella della
+        //interfaccia Player
+        this.move(dir.getVector());
     }
 
     @Override
