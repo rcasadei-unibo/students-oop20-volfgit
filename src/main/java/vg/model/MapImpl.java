@@ -149,7 +149,7 @@ public class MapImpl implements Map<V2D> {
      */
     @Override
     public Set<DynamicEntity> getBolts() {
-        return null;
+        return this.dynamicEntitySet.stream().filter(e -> e instanceof Bolt).collect(Collectors.toSet());
     }
     /**
      * {@inheritDoc}
