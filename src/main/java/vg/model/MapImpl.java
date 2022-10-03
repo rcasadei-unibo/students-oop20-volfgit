@@ -73,6 +73,7 @@ public class MapImpl implements Map<V2D> {
      */
     @Override
     public double getOccupiedPercentage() {
+        //TODO effettivamente calcolare la percentuale per differenze immagino
         return 0;
     }
     /**
@@ -87,7 +88,20 @@ public class MapImpl implements Map<V2D> {
      */
     @Override
     public void updateBorders(final Set<V2D> tail) {
+        //internal check if the tail is actually completed
+        //and the borders can be updated from it
+        if (!isTailCompleted()) {
+            throw new IllegalStateException();
+        }
+        //TODO capire se qua dentro eliminare le entità prima di
+        //aggiornare il bordo o se farlo in Stage
 
+        getBorders().forEach(e -> {
+            if (isClosedByTail(e, tail, getBoss())) {
+               getBorders().remove(e);
+            }
+        });
+        getBorders().addAll(tail);
     }
     /**
      * {@inheritDoc}
@@ -143,7 +157,7 @@ public class MapImpl implements Map<V2D> {
     @Override
     public Set<MysteryBox<Bonus>> getAllMysteryBoxes() {
         //TODO check the cast to be safe
-        return this.staticEntitySet.stream().filter(e -> e instanceof MysteryBox).map(e -> (MysteryBox<Bonus>)e).collect(Collectors.<MysteryBox<Bonus>>toSet());
+        return this.staticEntitySet.stream().filter(e -> e instanceof MysteryBox).map(e -> (MysteryBox<Bonus>) e).collect(Collectors.<MysteryBox<Bonus>>toSet());
     }
     /**
      * {@inheritDoc}
