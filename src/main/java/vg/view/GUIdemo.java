@@ -33,7 +33,8 @@ public class GUIdemo {
                 dir = Direction.UP;
             }
             ....
-            else {
+            else if(e.getKeyChar() == "P") {
+                this.cmdInvoker.pause();
             }
 
             this.cmdInvoker.appendMovementCommand( (player) -> {

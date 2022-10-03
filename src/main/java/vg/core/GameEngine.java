@@ -82,4 +82,9 @@ public class GameEngine implements CommandInvoker {
     public void appendMovementCommand(Command cmd) {
         this.movementQueue.add(cmd);
     }
+
+    @Override
+    public void pauseGame() {
+        this.gameState = GameState.PAUSED;
+    }
 }
