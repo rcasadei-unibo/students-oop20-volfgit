@@ -26,7 +26,6 @@ public final class BasePlayer extends DynamicEntity implements Player {
      * Life of player.
      */
     private int life;
-    private int score;
     /**
      *  Alternative speed of entity. It can be bigger or smaller than actual.
      */
@@ -63,26 +62,6 @@ public final class BasePlayer extends DynamicEntity implements Player {
         //TODO: init shield
         //this.shield = new Shield();
     }
-
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    public void incScore(final int incrementScore) {
-        this.score = this.score + incrementScore;
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    public int getScore() {
-        return this.score;
-    }
-
-    /**
-     * {@inheritDoc}
-     */
     public void decLife() {
         this.life = this.life - 1;
     }
