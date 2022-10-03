@@ -5,6 +5,7 @@ import vg.model.entity.Entity;
 import vg.model.entity.dynamicEntity.DynamicEntity;
 import vg.model.entity.dynamicEntity.player.Player;
 import vg.model.entity.staticEntity.StaticEntity;
+import vg.utils.Direction;
 
 import java.util.Set;
 
@@ -91,10 +92,16 @@ public interface Stage<T> {
     Set<Entity> getAllEntities();
 
     /**
-     * For each dynamic entity on the map the method move will be called.
+     * For each dynamic entity not player on the map the method move will be called.
      * @see DynamicEntity
      */
     void moveAll();
+
+    /**
+     * Move Player by direction got from input keyboard.
+     * @param direction new direction of player movement
+     */
+    void movePlayer(Direction direction);
 
     /**
      * Add an entity to a list of entities that will be destroyed

@@ -5,6 +5,7 @@ import vg.model.entity.Entity;
 import vg.model.entity.dynamicEntity.DynamicEntity;
 import vg.model.entity.dynamicEntity.player.Player;
 import vg.model.entity.staticEntity.StaticEntity;
+import vg.utils.Direction;
 import vg.utils.V2D;
 
 import java.util.Set;
@@ -17,7 +18,6 @@ import java.util.stream.Stream;
  * @see V2D
  */
 public class StageImpl implements Stage<V2D> {
-
 
     /**
      * The current score earned by the player.
@@ -168,10 +168,17 @@ public class StageImpl implements Stage<V2D> {
      */
     @Override
     public void moveAll() {
-        //TODO dare al giocatore la giusta direzione (passarlo come argomento?)
-        getPlayer().move(new V2D(0, 0));
         getDynamicEntitySet().forEach(e -> e.move(e.getSpeed()));
     }
+    /**
+     *
+     * {@inheritDoc}
+     */
+    @Override
+    public void movePlayer(final Direction direction) {
+        getPlayer().move(direction);
+    }
+
     /**
      *
      * {@inheritDoc}

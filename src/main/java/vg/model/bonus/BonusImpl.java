@@ -1,33 +1,17 @@
 package vg.model.bonus;
 
-public class BonusImpl implements Bonus {
+public class BonusImpl extends TimedObjectImpl implements Bonus {
     /**
-     *Time duration of bonus.*/
-    private double duration;
-    /**
-     * Typology of bonus.*/
+     * Typology of bonus.
+     */
     private BonusType type;
 
-    @Override
-    public final Boolean isActive() {
-        return duration > 0;
-    }
     /**
      * {@inheritDoc}
-     * */
+     */
     @Override
     public final BonusType getType() {
         return this.type;
     }
-    /**
-     * {@inheritDoc}
-     * */
-    @Override
-    public void updateBonusTimer(final double elapsedTime) {
-        if (this.isActive() && elapsedTime < duration) {
-            this.duration = this.duration - elapsedTime;
-        } else if (this.isActive() && elapsedTime > duration) {
-            this.duration = 0;
-        }
-    }
+
 }

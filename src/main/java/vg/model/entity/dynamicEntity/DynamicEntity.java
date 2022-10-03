@@ -1,6 +1,9 @@
 package vg.model.entity.dynamicEntity;
 
 import vg.model.entity.ShapedEntity;
+import vg.utils.Direction;
+import vg.utils.MassTier;
+import vg.utils.Shape;
 import vg.utils.V2D;
 
 public abstract class DynamicEntity extends ShapedEntity {
@@ -9,10 +12,8 @@ public abstract class DynamicEntity extends ShapedEntity {
      * */
     private V2D speed;
 
-    public DynamicEntity(final V2D position, final V2D speed) {
-        //TODO: capire se è meglio estendere shaped entity piusttosot che Abstract entity,
-        // Shaped ha significato diverso e aggiunge una info in piu
-        super(position);
+    public DynamicEntity(final V2D position, final V2D speed, final int radius, final Shape shape, final MassTier massTier) {
+        super(position, radius, shape, massTier);
         this.speed = speed;
     }
 

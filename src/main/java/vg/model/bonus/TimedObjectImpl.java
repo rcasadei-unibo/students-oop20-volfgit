@@ -1,0 +1,23 @@
+package vg.model.bonus;
+
+public class TimedObjectImpl implements TimedObject {
+    /**
+     *Time duration of bonus.
+     */
+    private double duration;
+
+    public final Boolean isTimeOver() {
+        return duration <= 0;
+    }
+    /**
+     * {@inheritDoc}
+     * */
+    @Override
+    public void updateTimer(final double elapsedTime) {
+        if (this.isTimeOver() && elapsedTime < duration) {
+            this.duration = this.duration - elapsedTime;
+        } else if (this.isTimeOver() && elapsedTime > duration) {
+            this.duration = 0;
+        }
+    }
+}
