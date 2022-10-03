@@ -142,7 +142,7 @@ public class MapImpl implements Map<V2D> {
      */
     @Override
     public Set<DynamicEntity> getAllDynamicEntities() {
-        return null;
+        return this.dynamicEntitySet;
     }
     /**
      * {@inheritDoc}
