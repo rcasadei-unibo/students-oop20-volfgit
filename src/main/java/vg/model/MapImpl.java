@@ -135,7 +135,7 @@ public class MapImpl implements Map<V2D> {
      */
     @Override
     public Set<StaticEntity> getAllStaticEntities() {
-        return null;
+        return this.staticEntitySet;
     }
     /**
      * {@inheritDoc}
