@@ -6,9 +6,18 @@ public class TimedObjectImpl implements TimedObject {
      */
     private double duration;
 
+    protected TimedObjectImpl(final double duration) {
+        this.duration = duration;
+    }
+
     public final Boolean isTimeOver() {
         return duration <= 0;
     }
+
+    public double getRemainingTime() {
+        return this.duration;
+    }
+
     /**
      * {@inheritDoc}
      * */

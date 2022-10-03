@@ -6,6 +6,10 @@ public class BonusImpl extends TimedObjectImpl implements Bonus {
      */
     private BonusType type;
 
+    BonusImpl(double duration) {
+        super(duration);
+    }
+
     /**
      * {@inheritDoc}
      */
