@@ -11,6 +11,7 @@ import vg.model.entity.staticEntity.MysteryBox;
 import vg.model.entity.staticEntity.StaticEntity;
 import vg.utils.V2D;
 
+import java.util.HashSet;
 import java.util.Set;
 import java.util.stream.Collectors;
 
@@ -93,35 +94,41 @@ public class MapImpl implements Map<V2D> {
      */
     @Override
     public Player getPlayer() {
-        return null;
+        return this.player;
     }
     /**
      * {@inheritDoc}
      */
     @Override
     public Set<V2D> getTail() {
-        return null;
+        return new HashSet<>(getPlayer().getPlayerTail().getCoordinates());
     }
     /**
      * {@inheritDoc}
      */
     @Override
     public boolean isTailCompleted() {
-        return false;
+        return getBorders().contains(getPlayer().getPlayerTail().getLastCoordinate());
     }
     /**
      * {@inheritDoc}
      */
     @Override
     public boolean toCapture(final Entity toCheck) {
-        return false;
+        return isClosedByTail(toCheck.getPosition(), getTail(), getBoss());
     }
     /**
      * {@inheritDoc}
      */
     @Override
     public void removeEntity(final Entity toRemove) {
-
+        if (toRemove instanceof DynamicEntity) {
+           getAllDynamicEntities().remove(toRemove);
+        } else if (toRemove instanceof StaticEntity) {
+            getAllStaticEntities().remove(toRemove);
+        } else {
+            throw new IllegalArgumentException();
+        }
     }
     /**
      * {@inheritDoc}
