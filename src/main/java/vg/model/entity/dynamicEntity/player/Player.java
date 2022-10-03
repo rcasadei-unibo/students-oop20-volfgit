@@ -1,9 +1,21 @@
 package vg.model.entity.dynamicEntity.player;
 
 import vg.model.entity.Entity;
+import vg.utils.Direction;
 import vg.utils.V2D;
 
 public interface Player extends Entity {
+
+    /**
+     * Increment player's score.
+     * @param incrementScore score to be added to current one
+     */
+    void incScore(int incrementScore);
+
+    /**
+     * @retun player score.
+     */
+    int getScore();
 
     /**
      * Decrement player's life of one unit.
@@ -23,10 +35,10 @@ public interface Player extends Entity {
      */
     void disableSpeedUp();
     /**
-     * Move player to new position coordinate.
-     * @param newPosition new position coordinate
+     * Move player to new position coordinate by direction.
+     * @param dir direction of new movement
      */
-    void move(V2D newPosition);
+    void move(Direction dir);
 
     /**
      * Get player tail.

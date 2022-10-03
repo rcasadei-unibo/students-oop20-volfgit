@@ -1,6 +1,8 @@
 package vg.model.entity.dynamicEntity.player;
 
 import vg.model.entity.dynamicEntity.DynamicEntity;
+import vg.utils.MassTier;
+import vg.utils.Shape;
 import vg.utils.V2D;
 
 import java.util.Optional;
@@ -17,10 +19,13 @@ public final class BasePlayer extends DynamicEntity implements Player {
      */
     static final V2D DEFAULT_PLAYER_SPEED = new V2D(1, 1);
 
+    static final int DEFAULT_PLAYER_RADIUS = 2;
+
     /**
      * Life of player.
      */
     private int life;
+    private int score;
     /**
      *  Alternative speed of entity. It can be bigger or smaller than actual.
      */
@@ -29,7 +34,7 @@ public final class BasePlayer extends DynamicEntity implements Player {
      * Tail created by player while moves in map.
      */
     private final Tail tail;
-    //private Shield shield;
+    private Shield shield;
 
     /**
      * @param position starting position of player
@@ -51,11 +56,27 @@ public final class BasePlayer extends DynamicEntity implements Player {
     };
 
     private BasePlayer(final V2D position, final int life) {
-        super(position, new V2D(2, 2));
+        super(position, DEFAULT_PLAYER_SPEED, DEFAULT_PLAYER_RADIUS, Shape.CIRCLE, MassTier.LOW);
         this.life = life;
         this.tail = TailImpl.emptyTail();
         //TODO: init shield
         //this.shield = new Shield();
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public void incScore(final int incrementScore) {
+        this.score = this.score + incrementScore;
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public int getScore() {
+        return this.score;
     }
 
     /**
@@ -80,7 +101,7 @@ public final class BasePlayer extends DynamicEntity implements Player {
     @Override
     public void enableSpeedUp(final V2D speed) {
         /*
-        * In order to not chnage direction of move with speed vector
+        * In order to not change direction of move by speed vector
         * is checked if coordinates are < 0
         */
         if (this.speedUp.isEmpty() && speed.getX() >= 0 && speed.getY() > 0) {
