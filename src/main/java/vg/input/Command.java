@@ -2,7 +2,7 @@ package vg.input;
 
 import vg.model.entity.dynamicEntity.player.Player;
 
-public interface Command {
+public interface Command<T> {
 
-    void execute(Player player);
+    void execute(T receiver);
 }

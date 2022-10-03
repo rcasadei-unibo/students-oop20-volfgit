@@ -1,6 +1,7 @@
 package vg.view;
 
 import vg.input.CommandInvoker;
+import vg.model.entity.dynamicEntity.player.Player;
 import vg.utils.Direction;
 
 public class GUIdemo {
@@ -13,7 +14,6 @@ public class GUIdemo {
 
     GUIdemo(final CommandInvoker cmdInvoker) {
         this.cmdInvoker = cmdInvoker;
-
     }
 
     /*TODO: Il JPanel del campo di gioco implementa KeyListener, ad ogni evento della tastiera
@@ -37,7 +37,7 @@ public class GUIdemo {
                 this.cmdInvoker.pause();
             }
 
-            this.cmdInvoker.appendMovementCommand( (player) -> {
+            this.cmdInvoker.appendMovementCommand( (Player player) -> {
                     player.move(dir);
                 }
             );
