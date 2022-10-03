@@ -3,6 +3,8 @@ package vg.model;
 import vg.model.bonus.Bonus;
 import vg.model.entity.Entity;
 import vg.model.entity.dynamicEntity.DynamicEntity;
+import vg.model.entity.dynamicEntity.bolt.Bolt;
+import vg.model.entity.dynamicEntity.bolt.EnemyBolt;
 import vg.model.entity.dynamicEntity.enemy.Boss;
 import vg.model.entity.dynamicEntity.player.Player;
 import vg.model.entity.staticEntity.MysteryBox;
@@ -10,6 +12,7 @@ import vg.model.entity.staticEntity.StaticEntity;
 import vg.utils.V2D;
 
 import java.util.Set;
+import java.util.stream.Collectors;
 
 public class MapImpl implements Map<V2D> {
     /**
@@ -160,7 +163,8 @@ public class MapImpl implements Map<V2D> {
      */
     @Override
     public Set<DynamicEntity> getFriendlyBolts() {
-        return null;
+        //TODO updated with correct Bolt logic where there will be one
+        return this.dynamicEntitySet.stream().filter(e -> e instanceof Bolt && !(e instanceof EnemyBolt)).collect(Collectors.toSet());
     }
     /**
      * {@inheritDoc}
