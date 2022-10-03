@@ -7,7 +7,9 @@ public interface CommandInvoker {
      * */
     <T> void appendMovementCommand(Command<T> cmd);
     /**
-     * Set gameLoop state to PAUSE
+     * Set gameLoop state to PAUSE when tap on a specific key.
      * */
     void pauseGame();
+
+    void resumeGame();
 }

@@ -87,4 +87,9 @@ public class GameEngine implements CommandInvoker {
     public void pauseGame() {
         this.gameState = GameState.PAUSED;
     }
+
+    @Override
+    public void resumeGame() {
+        this.gameState = GameState.PLAYING;
+    }
 }
