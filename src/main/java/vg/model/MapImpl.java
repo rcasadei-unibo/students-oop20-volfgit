@@ -128,7 +128,8 @@ public class MapImpl implements Map<V2D> {
      */
     @Override
     public Set<MysteryBox<Bonus>> getAllMysteryBoxes() {
-        return null;
+        //TODO check the cast to be safe
+        return this.staticEntitySet.stream().filter(e -> e instanceof MysteryBox).map(e -> (MysteryBox<Bonus>)e).collect(Collectors.<MysteryBox<Bonus>>toSet());
     }
     /**
      * {@inheritDoc}
