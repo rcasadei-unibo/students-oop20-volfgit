@@ -26,6 +26,11 @@ public class MapImpl implements Map<V2D> {
      */
     private Boss boss;
     /**
+     * Set of active bonuses that affect the player.
+     * @see Bonus
+     */
+    private Set<Bonus> setBonuses;
+    /**
      * Set of all static entities on the map.
      * @see StaticEntity
      */
@@ -48,13 +53,15 @@ public class MapImpl implements Map<V2D> {
      *
      * @param player           the player of the map
      * @param boss             the boss of the map
+     * @param setBonuses       the set of active bonuses
      * @param staticEntitySet  the set of all static entities
      * @param dynamicEntitySet the set of all dynamic entities
      * @param border           the border of the map
      */
-    public MapImpl(final Player player, final Boss boss, final Set<StaticEntity> staticEntitySet, final Set<DynamicEntity> dynamicEntitySet, final Set<V2D> border) {
+    public MapImpl(final Player player, final Boss boss, final Set<Bonus> setBonuses, final Set<StaticEntity> staticEntitySet, final Set<DynamicEntity> dynamicEntitySet, final Set<V2D> border) {
         this.player = player;
         this.boss = boss;
+        this.setBonuses = setBonuses;
         this.staticEntitySet = staticEntitySet;
         this.dynamicEntitySet = dynamicEntitySet;
         this.border = border;
@@ -121,7 +128,7 @@ public class MapImpl implements Map<V2D> {
      */
     @Override
     public Set<Bonus> getActiveBonus() {
-        return null;
+        return this.setBonuses;
     }
     /**
      * {@inheritDoc}
