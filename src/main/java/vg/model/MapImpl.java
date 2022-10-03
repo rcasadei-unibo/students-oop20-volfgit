@@ -19,35 +19,35 @@ public class MapImpl implements Map<V2D> {
      * The player.
      * @see Player
      */
-    private Player player;
+    private final Player player;
     /**
      * The boss.
      * @see Boss
      */
-    private Boss boss;
+    private final Boss boss;
     /**
      * Set of active bonuses that affect the player.
      * @see Bonus
      */
-    private Set<Bonus> setBonuses;
+    private final Set<Bonus> setBonuses;
     /**
      * Set of all static entities on the map.
      * @see StaticEntity
      */
-    private Set<StaticEntity> staticEntitySet;
+    private final Set<StaticEntity> staticEntitySet;
     /**
      * Set of all dynamic entities on the map,
      * excluding the player and the boss.
      * @see DynamicEntity
      */
-    private Set<DynamicEntity> dynamicEntitySet;
+    private final Set<DynamicEntity> dynamicEntitySet;
 
     /**
      * The Set of {@link V2D} position that will indicate
      * the current border of the map.
      * @see Map#getBorders()
      */
-    private Set<V2D> border;
+    private final Set<V2D> border;
     /**
      * Constructor for MapImpl.
      *
