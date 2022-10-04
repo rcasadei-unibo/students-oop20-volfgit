@@ -22,7 +22,13 @@ public abstract class DynamicEntity extends ShapedEntity {
         V2D updatedPos = new V2D(dir.getX() * this.speed.getX(), dir.getY() * this.speed.getY());
         this.setPosition(curPos.sum(updatedPos));
     }
-
+    /**
+     * Sums the speed to position and sets the result to
+     * position.
+     */
+    public void move() {
+        setPosition(getPosition().sum(getSpeed()));
+    }
     /**
      * Return vector that represent current entity speed.
      * @return current entity speed
@@ -31,6 +37,13 @@ public abstract class DynamicEntity extends ShapedEntity {
         return this.speed;
     }
 
+    /**
+     * Sets the speed of the entity.
+     * @param newSpeed the speed to set to
+     */
+    public void setSpeed(final V2D newSpeed) {
+        this.speed = newSpeed;
+    }
     /*
     * Di questa funzione ogni tipologia di Entità farà il suo
     * ovverride e la funzione verrà chiamata solo nel caso in
