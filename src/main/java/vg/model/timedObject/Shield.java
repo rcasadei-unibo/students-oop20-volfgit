@@ -1,6 +1,6 @@
-package vg.model.entity.dynamicEntity.player;
+package vg.model.timedObject;
 
-import vg.model.bonus.TimedObjectImpl;
+import vg.model.timedObject.TimedObjectImpl;
 
 public class Shield extends TimedObjectImpl {
 

@@ -1,4 +1,4 @@
-package vg.model.bonus;
+package vg.model.timedObject;
 
 public class TimedObjectImpl implements TimedObject {
     /**
