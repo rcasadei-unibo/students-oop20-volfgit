@@ -44,17 +44,21 @@ public abstract class DynamicEntity extends ShapedEntity {
     public void setSpeed(final V2D newSpeed) {
         this.speed = newSpeed;
     }
-    /*
-    * Di questa funzione ogni tipologia di Entità farà il suo
-    * ovverride e la funzione verrà chiamata solo nel caso in
-    * cui l'entità rimbalzi, nell'altro caso in cui l'entità
-    * deve attraversare o venir distrutta non c'è bisogno di
-    * chiamare la funzione. La teniamo comunque chiamata così
-    * perché potrebbero venire creati altri casi oltre a questi
-    * e a quel punto potrebbe aver senso mettere un parametro.
-    */
-    public void afterCollisionAction() {
-        this.bounces();
+
+    /**
+     * Evaluates what happens to the entity after a
+     * collision. Generally an entity will "bounce"
+     * if a collision occurs with another entity which
+     * {@link MassTier} equal or higher, than it will
+     * bounce, otherwise not. An exception is for entities
+     * with mass tier of {@link MassTier#NOCOLLISION}, this
+     * type of mass tier will never "bounce".
+     * @param other the mass tier of the entity comparing to
+     */
+    public void afterCollisionAction(final MassTier other) {
+        if (this.getMassTier().compareTo(other) <= 0 && !this.getMassTier().equals(MassTier.NOCOLLISION)) {
+            this.bounces();
+        }
     }
 
     private void bounces() {
