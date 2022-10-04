@@ -7,17 +7,6 @@ import vg.utils.V2D;
 public interface Player extends Entity {
 
     /**
-     * Increment player's score.
-     * @param incrementScore score to be added to current one
-     */
-    void incScore(int incrementScore);
-
-    /**
-     * @retun player score.
-     */
-    int getScore();
-
-    /**
      * Decrement player's life of one unit.
      */
     void decLife();
