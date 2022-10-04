@@ -1,17 +1,20 @@
 package vg.model.timedObject;
 
-import vg.model.timedObject.TimedObjectImpl;
-
 public class Shield extends TimedObjectImpl {
 
+    public static final double DEFAULT_DURATION = 500;
     /**
      * Shield activation status.
      * */
     private boolean isActive;
 
-    public Shield(final double duration, final boolean isActive) {
+    private Shield(final double duration, final boolean isActive) {
         super(duration);
         this.isActive = isActive;
+    }
+
+    public static Shield create(final double duration, final boolean isActive) {
+        return new Shield(duration, isActive);
     }
 
     public final boolean isActive() {

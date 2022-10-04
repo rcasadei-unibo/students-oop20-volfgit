@@ -21,6 +21,9 @@ public final class BasePlayer extends DynamicEntity implements Player {
      */
     static final V2D DEFAULT_PLAYER_SPEED = new V2D(1, 1);
 
+    /**
+     * Dafeult player radius shape.
+     * */
     static final int DEFAULT_PLAYER_RADIUS = 2;
 
     /**
@@ -35,6 +38,9 @@ public final class BasePlayer extends DynamicEntity implements Player {
      * Tail created by player while moves in map.
      */
     private final Tail tail;
+    /**
+     * Player shield.
+     * */
     private Shield shield;
 
     /**
@@ -42,7 +48,7 @@ public final class BasePlayer extends DynamicEntity implements Player {
      * @return Player with default life
      */
     public static BasePlayer newPlayer(final V2D position) {
-        return new BasePlayer(position, PLAYER_MAX_LIFE);
+        return new BasePlayer(position, PLAYER_MAX_LIFE, Shield.create(Shield.DEFAULT_DURATION, true));
     };
 
     /**
@@ -53,16 +59,16 @@ public final class BasePlayer extends DynamicEntity implements Player {
      */
     public static BasePlayer newPlayer(final V2D position, final int life) {
         int playerLife = life < 0 || life > PLAYER_MAX_LIFE ? PLAYER_MAX_LIFE : life;
-        return new BasePlayer(position, playerLife);
+        return new BasePlayer(position, playerLife, Shield.create(Shield.DEFAULT_DURATION, true));
     };
 
-    private BasePlayer(final V2D position, final int life) {
+    private BasePlayer(final V2D position, final int life, final Shield shield) {
         super(position, DEFAULT_PLAYER_SPEED, DEFAULT_PLAYER_RADIUS, Shape.CIRCLE, MassTier.LOW);
         this.life = life;
         this.tail = TailImpl.emptyTail();
-        //TODO: init shield
-        //this.shield = new Shield();
+        this.shield = shield;
     }
+
     public void decLife() {
         this.life = this.life - 1;
     }
