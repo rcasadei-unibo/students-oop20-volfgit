@@ -7,7 +7,6 @@ import vg.model.entity.dynamicEntity.player.BasePlayer;
 import vg.model.entity.dynamicEntity.player.Player;
 import vg.utils.GameState;
 import vg.utils.V2D;
-import vg.view.MainFrame;
 
 import java.util.ArrayList;
 import java.util.List;
