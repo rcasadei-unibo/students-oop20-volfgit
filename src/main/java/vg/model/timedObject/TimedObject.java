@@ -12,4 +12,9 @@ public interface TimedObject {
     * @param elapsedTime time elapsed from previous game loop cycle to current one
      */
     void updateTimer(double elapsedTime);
+
+    /**
+     * @return remaining time of timer
+     * */
+    double getRemainingTime();
 }

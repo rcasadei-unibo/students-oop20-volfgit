@@ -23,9 +23,9 @@ public class TimedObjectImpl implements TimedObject {
      * */
     @Override
     public void updateTimer(final double elapsedTime) {
-        if (this.isTimeOver() && elapsedTime < duration) {
+        if (!this.isTimeOver() && elapsedTime < duration) {
             this.duration = this.duration - elapsedTime;
-        } else if (this.isTimeOver() && elapsedTime > duration) {
+        } else if (!this.isTimeOver() && elapsedTime >= duration) {
             this.duration = 0;
         }
     }
