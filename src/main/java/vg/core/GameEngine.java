@@ -3,7 +3,11 @@ package vg.core;
 import vg.input.Command;
 import vg.input.CommandInvoker;
 import vg.model.Stage;
+import vg.model.entity.dynamicEntity.player.BasePlayer;
+import vg.model.entity.dynamicEntity.player.Player;
 import vg.utils.GameState;
+import vg.utils.V2D;
+import vg.view.MainFrame;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -16,11 +20,13 @@ public class GameEngine implements CommandInvoker {
     //TODO: save object model and view
     private Stage stage;
 
-    private List<Command> movementQueue;
+    //TODO: da rimuovere
+    private Player pl = BasePlayer.newPlayer(new V2D(0,0));
 
-    private long period = 20; // frequencies = 1/period
+    private List<Command<Player>> movementQueue;
+
+    private long period = 500; // frequencies = 1/period
     private GameState gameState = GameState.STOPPED;
-
 
     public void setup() {
         //TODO: init model and view in GameEngine.setup()
@@ -30,7 +36,7 @@ public class GameEngine implements CommandInvoker {
     public void gameLoop() {
         long prevCycleTime = System.currentTimeMillis();
 
-        while (gameState != GameState.STOPPED || gameState != GameState.PAUSED) {
+        while (gameState != GameState.PAUSED) {
             long curCycleTime = System.currentTimeMillis();
             long elapsedTime = curCycleTime - prevCycleTime;
             processInput();
@@ -41,6 +47,7 @@ public class GameEngine implements CommandInvoker {
             waitForNextFrame(curCycleTime);
             prevCycleTime = curCycleTime;
         }
+
     }
 
 
@@ -51,20 +58,21 @@ public class GameEngine implements CommandInvoker {
 
     /**
      * Process command in the head of queue (the older one)
-     * in order to move player
+     * in order to move player.
      * */
     private void processInput() {
+        System.out.println("Processing input: " + this.movementQueue.size());
         if (!this.movementQueue.isEmpty()) {
-            Command cmd = this.movementQueue.get(0);
+            Command<Player> cmd = this.movementQueue.get(0);
             this.movementQueue.remove(cmd);
-            cmd.execute(this.stage.getPlayer());
+            //cmd.execute(this.stage.getPlayer());
+            cmd.execute(pl);
         }
     }
 
     private void render() {
 
-        //view.render();
-        System.out.println("render gui ");
+        //System.out.println("render gui: " + pl.getPosition().toString());
     }
 
     private void waitForNextFrame(final long elapsedTime) {
@@ -78,7 +86,6 @@ public class GameEngine implements CommandInvoker {
         }
     }
 
-    @Override
     public void appendMovementCommand(Command cmd) {
         this.movementQueue.add(cmd);
     }
