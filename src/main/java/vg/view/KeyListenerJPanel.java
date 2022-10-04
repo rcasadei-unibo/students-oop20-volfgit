@@ -8,13 +8,13 @@ import javax.swing.JPanel;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 
-public class GamePanel extends JPanel implements KeyListener {
+public class KeyListenerJPanel extends JPanel implements KeyListener {
     /**
      * Class that calls action method of command (Pattern Command) and react to key event.
      */
     private final CommandInvoker cmdInvoker;
 
-    GamePanel(final CommandInvoker cmdInvoker) {
+    KeyListenerJPanel(final CommandInvoker cmdInvoker) {
         this.cmdInvoker = cmdInvoker;
     }
 
