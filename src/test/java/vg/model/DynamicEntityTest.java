@@ -15,12 +15,6 @@ class DynamicEntityTest {
         public DynamicEntityImpl(V2D position, V2D speed, int radius, Shape shape, MassTier massTier) {
             super(position, speed, radius, shape, massTier);
         }
-
-        @Override
-        public void afterCollisionAction() {
-            this.setSpeed(this.getSpeed().mul(new V2D(-1,-1)));
-            this.move();
-        }
     }
     DynamicEntity de1 = new DynamicEntityImpl(new V2D(0,0), new V2D(1,0), 2 ,Shape.CIRCLE, MassTier.MEDIUM);
 
@@ -45,7 +39,7 @@ class DynamicEntityTest {
     void afterCollisionAction() {
         assertTrue(de2.getPosition().equals(new V2D(6,0)));
         assertTrue(de2.getSpeed().equals(new V2D(-1,4)));
-        de2.afterCollisionAction();
-        assertTrue(de2.getPosition().equals(new V2D(7,-4)));
+        //TODO remove this test and merge them in test entity collisions?
+
     }
 }
