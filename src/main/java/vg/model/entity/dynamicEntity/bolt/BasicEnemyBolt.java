@@ -6,7 +6,8 @@ import vg.utils.V2D;
 
 public class BasicEnemyBolt extends EnemyBolt {
 
-    public BasicEnemyBolt(V2D position, V2D speed, int radius, Shape shape) {
+    public BasicEnemyBolt(final V2D position, final V2D speed, final int radius, final Shape shape) {
         super(position, speed, radius, shape);
     }
+
 }

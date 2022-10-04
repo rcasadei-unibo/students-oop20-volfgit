@@ -7,7 +7,8 @@ import vg.utils.V2D;
 
 public abstract class Enemy extends DynamicEntity {
 
-    public Enemy(V2D position, V2D speed, int radius, Shape shape, MassTier massTier) {
-        super(position, speed, radius, shape, massTier);
+    Enemy(final V2D v2D, final V2D speed, final int radius, final Shape shape, final MassTier massTier) {
+        super(v2D, speed, radius, shape, massTier);
+
     }
 }

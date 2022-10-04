@@ -6,11 +6,11 @@ import vg.utils.V2D;
 
 public class Mosquitoes extends MinorEnemy {
 
-    public Mosquitoes(V2D position, V2D speed, int radius, Shape shape, MassTier massTier) {
-        super(position, speed, radius, shape, massTier);
+    Mosquitoes(final V2D v2D, final V2D speed, final int radius, final Shape shape, final MassTier massTier) {
+        super(v2D, speed, radius, shape, massTier);
     }
+    public void accelerate() {
 
-    public void accelerate(){
         //TODO use Speed
     }
 }
