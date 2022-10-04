@@ -18,7 +18,7 @@ public class Shield extends TimedObjectImpl {
     }
 
     public final boolean isActive() {
-        return this.isActive;
+        return this.isActive && !this.isTimeOver();
     }
 
     /**
@@ -32,9 +32,7 @@ public class Shield extends TimedObjectImpl {
      * Enable shield if timeout isn't expired.
      * */
     public void enableShield() {
-        if (!this.isTimeOver()) {
-            this.isActive = true;
-        }
+        this.isActive = !this.isTimeOver();
     }
 
     /**
@@ -43,7 +41,7 @@ public class Shield extends TimedObjectImpl {
      * */
     @Override
     public void updateTimer(final double elapsedTime) {
-        if (this.isActive) {
+        if (this.isActive()) {
            super.updateTimer(elapsedTime);
         }
     }
