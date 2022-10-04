@@ -24,7 +24,8 @@ class MapImplTest {
     }
     Player player = BasePlayer.newPlayer(new V2D(20,20));
     Boss boss = new BossImpl();
-    Map map = new MapImpl(player,boss,new HashSet<>(),new HashSet<>(),new HashSet<>(), Stream.of(0,200).
+    Map<V2D> map = new MapImpl(player,boss,new HashSet<>(),new HashSet<>(),new HashSet<>(), IntStream.range(0,201).boxed().
+            collect(Collectors.toSet()).stream().
             flatMap(e -> Stream.of(new V2D(e,0),new V2D(0,e), new V2D(200,e), new V2D(e,200))).
             collect(Collectors.toSet()));
     @Test
@@ -34,6 +35,10 @@ class MapImplTest {
     @Test
     void getBorders() {
         assertTrue(map.getBorders().contains(new V2D(0,0)));
+        assertFalse(map.getBorders().contains(new V2D(1,1)));
+        assertTrue(map.getBorders().contains(new V2D(180,0)));
+        assertFalse(map.getBorders().contains(new V2D(201,201)));
+
     }
 
     @Test
