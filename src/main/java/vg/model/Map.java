@@ -1,6 +1,6 @@
 package vg.model;
 
-import vg.model.bonus.Bonus;
+import vg.model.timedObject.Bonus;
 import vg.model.entity.Entity;
 import vg.model.entity.dynamicEntity.DynamicEntity;
 import vg.model.entity.dynamicEntity.enemy.Boss;
