@@ -56,7 +56,7 @@ public enum Shape {
         }
         // there are no other cases for now
         // this means p2Type is not an expected one
-        throw new IllegalArgumentException();
+        throw new EnumConstantNotPresentException(Shape.class, p2Type.toString());
         //return false;
     }
 }

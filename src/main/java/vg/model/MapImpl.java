@@ -3,55 +3,66 @@ package vg.model;
 import vg.model.timedObject.Bonus;
 import vg.model.entity.Entity;
 import vg.model.entity.dynamicEntity.DynamicEntity;
+import vg.model.entity.dynamicEntity.bolt.Bolt;
+import vg.model.entity.dynamicEntity.bolt.EnemyBolt;
 import vg.model.entity.dynamicEntity.enemy.Boss;
 import vg.model.entity.dynamicEntity.player.Player;
 import vg.model.entity.staticEntity.MysteryBox;
 import vg.model.entity.staticEntity.StaticEntity;
 import vg.utils.V2D;
 
+import java.util.HashSet;
 import java.util.Set;
+import java.util.stream.Collectors;
 
 public class MapImpl implements Map<V2D> {
     /**
      * The player.
      * @see Player
      */
-    private Player player;
+    private final Player player;
     /**
      * The boss.
      * @see Boss
      */
-    private Boss boss;
+    private final Boss boss;
+    /**
+     * Set of active bonuses that affect the player.
+     * @see Bonus
+     */
+    private final Set<Bonus> setBonuses;
     /**
      * Set of all static entities on the map.
      * @see StaticEntity
      */
-    private Set<StaticEntity> staticEntitySet;
+    private final Set<StaticEntity> staticEntitySet;
     /**
      * Set of all dynamic entities on the map,
      * excluding the player and the boss.
      * @see DynamicEntity
      */
-    private Set<DynamicEntity> dynamicEntitySet;
+    private final Set<DynamicEntity> dynamicEntitySet;
 
     /**
      * The Set of {@link V2D} position that will indicate
      * the current border of the map.
      * @see Map#getBorders()
      */
-    private Set<V2D> border;
+    private final Set<V2D> border;
     /**
      * Constructor for MapImpl.
      *
      * @param player           the player of the map
      * @param boss             the boss of the map
+     * @param setBonuses       the set of active bonuses
      * @param staticEntitySet  the set of all static entities
      * @param dynamicEntitySet the set of all dynamic entities
      * @param border           the border of the map
      */
-    public MapImpl(final Player player, final Boss boss, final Set<StaticEntity> staticEntitySet, final Set<DynamicEntity> dynamicEntitySet, final Set<V2D> border) {
+    public MapImpl(final Player player, final Boss boss, final Set<Bonus> setBonuses, final Set<StaticEntity> staticEntitySet, final Set<DynamicEntity> dynamicEntitySet, final Set<V2D> border) {
         this.player = player;
         this.boss = boss;
+        this.setBonuses = setBonuses;
         this.staticEntitySet = staticEntitySet;
         this.dynamicEntitySet = dynamicEntitySet;
         this.border = border;
@@ -62,6 +73,7 @@ public class MapImpl implements Map<V2D> {
      */
     @Override
     public double getOccupiedPercentage() {
+        //TODO effettivamente calcolare la percentuale per differenze immagino
         return 0;
     }
     /**
@@ -76,91 +88,112 @@ public class MapImpl implements Map<V2D> {
      */
     @Override
     public void updateBorders(final Set<V2D> tail) {
+        //internal check if the tail is actually completed
+        //and the borders can be updated from it
+        if (!isTailCompleted()) {
+            throw new IllegalStateException();
+        }
+        //TODO capire se qua dentro eliminare le entità prima di
+        //aggiornare il bordo o se farlo in Stage
 
+        getBorders().forEach(e -> {
+            if (isClosedByTail(e, tail, getBoss())) {
+               getBorders().remove(e);
+            }
+        });
+        getBorders().addAll(tail);
     }
     /**
      * {@inheritDoc}
      */
     @Override
     public Player getPlayer() {
-        return null;
+        return this.player;
     }
     /**
      * {@inheritDoc}
      */
     @Override
     public Set<V2D> getTail() {
-        return null;
+        return new HashSet<>(getPlayer().getPlayerTail().getCoordinates());
     }
     /**
      * {@inheritDoc}
      */
     @Override
     public boolean isTailCompleted() {
-        return false;
+        return getBorders().contains(getPlayer().getPlayerTail().getLastCoordinate());
     }
     /**
      * {@inheritDoc}
      */
     @Override
     public boolean toCapture(final Entity toCheck) {
-        return false;
+        return isClosedByTail(toCheck.getPosition(), getTail(), getBoss());
     }
     /**
      * {@inheritDoc}
      */
     @Override
     public void removeEntity(final Entity toRemove) {
-
+        if (toRemove instanceof DynamicEntity) {
+           getAllDynamicEntities().remove(toRemove);
+        } else if (toRemove instanceof StaticEntity) {
+            getAllStaticEntities().remove(toRemove);
+        } else {
+            throw new IllegalArgumentException();
+        }
     }
     /**
      * {@inheritDoc}
      */
     @Override
     public Set<Bonus> getActiveBonus() {
-        return null;
+        return this.setBonuses;
     }
     /**
      * {@inheritDoc}
      */
     @Override
     public Set<MysteryBox<Bonus>> getAllMysteryBoxes() {
-        return null;
+        //TODO check the cast to be safe
+        return this.staticEntitySet.stream().filter(e -> e instanceof MysteryBox).map(e -> (MysteryBox<Bonus>) e).collect(Collectors.<MysteryBox<Bonus>>toSet());
     }
     /**
      * {@inheritDoc}
      */
     @Override
     public Set<StaticEntity> getAllStaticEntities() {
-        return null;
+        return this.staticEntitySet;
     }
     /**
      * {@inheritDoc}
      */
     @Override
     public Set<DynamicEntity> getAllDynamicEntities() {
-        return null;
+        return this.dynamicEntitySet;
     }
     /**
      * {@inheritDoc}
      */
     @Override
     public Set<DynamicEntity> getBolts() {
-        return null;
+        return this.dynamicEntitySet.stream().filter(e -> e instanceof Bolt).collect(Collectors.toSet());
     }
     /**
      * {@inheritDoc}
      */
     @Override
     public Set<DynamicEntity> getEnemyBolts() {
-        return null;
+        return this.dynamicEntitySet.stream().filter(e -> e instanceof EnemyBolt).collect(Collectors.toSet());
     }
     /**
      * {@inheritDoc}
      */
     @Override
     public Set<DynamicEntity> getFriendlyBolts() {
-        return null;
+        //TODO updated with correct Bolt logic where there will be one
+        return this.dynamicEntitySet.stream().filter(e -> e instanceof Bolt && !(e instanceof EnemyBolt)).collect(Collectors.toSet());
     }
     /**
      * {@inheritDoc}
