@@ -1,6 +1,6 @@
 package vg.model.entity.staticEntity;
 
-import vg.model.bonus.Bonus;
+import vg.model.timedObject.Bonus;
 import vg.utils.V2D;
 
 /**

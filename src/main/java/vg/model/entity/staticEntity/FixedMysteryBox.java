@@ -1,8 +1,7 @@
 package vg.model.entity.staticEntity;
 
-import vg.model.bonus.Bonus;
-import vg.model.bonus.BonusImpl;
-import vg.model.entity.staticEntity.MysteryBox;
+import vg.model.timedObject.Bonus;
+import vg.model.timedObject.BonusImpl;
 import vg.utils.V2D;
 
 /**

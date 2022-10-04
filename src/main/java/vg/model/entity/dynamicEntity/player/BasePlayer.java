@@ -1,6 +1,7 @@
 package vg.model.entity.dynamicEntity.player;
 
 import vg.model.entity.dynamicEntity.DynamicEntity;
+import vg.model.timedObject.Shield;
 import vg.utils.Direction;
 import vg.utils.MassTier;
 import vg.utils.Shape;
