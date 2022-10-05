@@ -22,9 +22,14 @@ public final class BasePlayer extends DynamicEntity implements Player {
     static final V2D DEFAULT_PLAYER_SPEED = new V2D(1, 1);
 
     /**
-     * Dafeult player radius shape.
+     * Default player radius shape.
      * */
     static final int DEFAULT_PLAYER_RADIUS = 2;
+
+    /**
+     * Default state of capability to shoot of player.
+     * */
+    static final boolean DEFAULT_SHOOT_CAPABILITY = false;
 
     /**
      * Life of player.
@@ -42,6 +47,8 @@ public final class BasePlayer extends DynamicEntity implements Player {
      * Player shield.
      * */
     private Shield shield;
+
+    private boolean canShoot;
 
     /**
      * @param position starting position of player
@@ -67,6 +74,7 @@ public final class BasePlayer extends DynamicEntity implements Player {
         this.life = life;
         this.tail = TailImpl.emptyTail();
         this.shield = shield;
+        this.canShoot = DEFAULT_SHOOT_CAPABILITY;
     }
 
     public void decLife() {
@@ -99,6 +107,21 @@ public final class BasePlayer extends DynamicEntity implements Player {
     @Override
     public void disableSpeedUp() {
         this.speedUp = Optional.empty();
+    }
+
+    @Override
+    public boolean canShoot() {
+        return this.canShoot;
+    }
+
+    @Override
+    public void enableShoot() {
+        this.canShoot = true;
+    }
+
+    @Override
+    public void disableShoot() {
+        this.canShoot = false;
     }
 
     @Override

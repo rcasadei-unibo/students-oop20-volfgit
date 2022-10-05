@@ -20,9 +20,23 @@ public interface Player extends Entity {
      */
     void enableSpeedUp(V2D speed);
     /**
-     * Disable speed improvement enabled before, if no new speed was set nothing is disabled.
+     * Disable speed improvement if enabled.
      */
     void disableSpeedUp();
+    /**
+     * Return true if player can shoot.
+     * @return true if player can shoot, false if not
+     */
+    boolean canShoot();
+    /**
+     * Enable player capability to shoot.
+     * */
+    void enableShoot();
+    /**
+     * Disable player capability to shoot if enabled.
+     * */
+    void disableShoot();
+
     /**
      * Move player to new position coordinate by direction.
      * @param dir direction of new movement
