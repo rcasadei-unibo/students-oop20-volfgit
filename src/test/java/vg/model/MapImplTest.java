@@ -55,9 +55,8 @@ class MapImplTest {
 
     @Test
     void updateBorders() {
-        //TODO rewrite the next 2 lines
 
-        tail.stream().sorted((e, e2) -> (int) (e.getY() - e2.getY())).forEach(player.getPlayerTail()::addPoint);
+        tail.stream().sorted((e, e2) -> (int) (e.getY() - e2.getY())).forEach(player.getTail()::addPoint);
         map.updateBorders(tail);
         assertFalse(map.getBorders().contains(new V2D(0,0)));
         assertTrue(map.getBorders().contains(new V2D(5,150)));
@@ -66,8 +65,8 @@ class MapImplTest {
     @Test
     void toCapture() {
         assertTrue(map.getBorders().contains(new V2D(0,0)));
-        assertTrue(player.getPlayerTail().getCoordinates().isEmpty());
-        tail.stream().sorted((e, e2) -> (int) (e.getY() - e2.getY())).forEach(player.getPlayerTail()::addPoint);
+        assertTrue(player.getTail().getCoordinates().isEmpty());
+        tail.stream().sorted((e, e2) -> (int) (e.getY() - e2.getY())).forEach(player.getTail()::addPoint);
         assertTrue(map.isTailCompleted());
         var toCheck = new DynamicEntityImpl(new V2D(2,2), new V2D(5,0),2, Shape.CIRCLE,MassTier.HIGH);
         map.getAllDynamicEntities().add(toCheck);

@@ -120,14 +120,14 @@ public class MapImpl implements Map<V2D> {
      */
     @Override
     public Set<V2D> getTail() {
-        return new HashSet<>(getPlayer().getPlayerTail().getCoordinates());
+        return new HashSet<>(getPlayer().getTail().getCoordinates());
     }
     /**
      * {@inheritDoc}
      */
     @Override
     public boolean isTailCompleted() {
-        return getBorders().contains(getPlayer().getPlayerTail().getLastCoordinate());
+        return getBorders().contains(getPlayer().getTail().getLastCoordinate());
     }
     /**
      * {@inheritDoc}

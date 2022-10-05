@@ -15,26 +15,26 @@ public final class BasePlayer extends DynamicEntity implements Player {
     /**
      * Maximum player life.
      * */
-    static final int PLAYER_MAX_LIFE = 5;
+    public static final int PLAYER_MAX_LIFE = 5;
     /**
      * Default player speed.
      */
-    static final V2D DEFAULT_PLAYER_SPEED = new V2D(1, 1);
+    public static final V2D DEFAULT_PLAYER_SPEED = new V2D(1, 1);
 
     /**
      * Default player radius shape.
      * */
-    static final int DEFAULT_PLAYER_RADIUS = 2;
+    public static final int DEFAULT_PLAYER_RADIUS = 2;
 
     /**
      * Default state of capability to shoot of player.
      * */
-    static final boolean DEFAULT_SHOOT_CAPABILITY = false;
+    public static final boolean DEFAULT_SHOOT_CAPABILITY = false;
 
     /**
      * Default state of capability to shoot of player.
      * */
-    static final Direction DEFAULT_DIRECTION = Direction.NONE;
+    public static final Direction DEFAULT_DIRECTION = Direction.NONE;
 
     /**
      * Life of player.
@@ -84,10 +84,12 @@ public final class BasePlayer extends DynamicEntity implements Player {
         this.tail = TailImpl.emptyTail();
         this.shield = shield;
         this.canShoot = DEFAULT_SHOOT_CAPABILITY;
+        this.speedImproved = Optional.empty();
+        this.direction = DEFAULT_DIRECTION;
     }
 
     public void decLife() {
-        this.life = this.life - 1;
+        this.life = this.life > 0 ? this.life - 1 : 0;
     }
     /**
      * {@inheritDoc}
@@ -95,15 +97,21 @@ public final class BasePlayer extends DynamicEntity implements Player {
     public void incLife() {
         this.life = this.life + 1;
     }
+
+    @Override
+    public int getLife() {
+        return this.life;
+    }
+
     /**
      * {@inheritDoc}
      */
-    public Tail getPlayerTail() {
+    public Tail getTail() {
         return this.tail;
     }
 
     @Override
-    public void setShield(Shield shield) {
+    public void setShield(final Shield shield) {
         this.shield = shield;
     }
 
@@ -121,8 +129,13 @@ public final class BasePlayer extends DynamicEntity implements Player {
     }
 
     @Override
+    public Direction getDirection() {
+        return this.direction;
+    }
+
+    @Override
     public void move() {
-        setPosition(
+       setPosition(
                 this.getPosition().sum(this.getSpeed().mul(this.direction.getVector()))
         );
     }
@@ -134,8 +147,9 @@ public final class BasePlayer extends DynamicEntity implements Player {
         * is checked if coordinates are negative
         */
         if (this.speedImproved.isEmpty() && speed.getX() >= 0 && speed.getY() > 0) {
-            this.speedImproved = Optional.of(speed);
+            this.speedImproved = Optional.of(this.getSpeed().sum(speed));
         }
+        //TODO: lanciare una eccezione ?
     }
 
     @Override

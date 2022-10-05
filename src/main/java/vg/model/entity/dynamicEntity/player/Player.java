@@ -1,6 +1,7 @@
 package vg.model.entity.dynamicEntity.player;
 
 import vg.model.entity.Entity;
+import vg.model.entity.dynamicEntity.DynamicEntity;
 import vg.model.timedObject.Shield;
 import vg.utils.Direction;
 import vg.utils.V2D;
@@ -15,6 +16,12 @@ public interface Player extends Entity {
      * Increment player's life of one unit but not over maximum value.
      */
     void incLife();
+
+    /**
+     * Get current player's life.
+     * @return numeric value of player's life
+     */
+    int getLife();
     /**
      * Enable or change current player speed with new one.
      * @param speed Vector that represent speed
@@ -39,20 +46,50 @@ public interface Player extends Entity {
     void disableShoot();
 
     /**
-     * Move player to new position coordinate
+     * Move player to new position coordinate in congruence to current direction.
+     *
+     * This method overrides the one of superclass {@link DynamicEntity#move()} but
+     * its logic is totally different.
+     * The player needs to move depending on direction and the speed (that in player
+     * represent only the module of movement).
+     *
      */
     void move();
 
+    /**
+     * Change player's moving direction.
+     * @param direction new direction
+     */
     void changeDirection(Direction direction);
+
+    /**
+     * Current player direction.
+     * @return Direction
+     */
+    Direction getDirection();
 
     /**
      * Get player tail.
      * @return Tail of player
      */
-    Tail getPlayerTail();
+    Tail getTail();
 
+    /**
+     * Set new player's shield.
+     * @param shield new Shield
+     */
     void setShield(Shield shield);
 
+    /**
+     * Get current player's shield.
+     * @return player shield
+     */
     Shield getShield();
+
+    /**
+     * Get player speed.
+     * @return vector which coordinates are in absolute value
+     */
+    V2D getSpeed();
 
 }
