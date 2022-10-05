@@ -15,12 +15,6 @@ public class TestEntityCollisions {
         public DynamicEntityImpl(V2D position, V2D speed, int radius, Shape shape, MassTier massTier) {
             super(position, speed, radius, shape, massTier);
         }
-
-        @Override
-        public void afterCollisionAction() {
-            this.setSpeed(this.getSpeed().mul(new V2D(-1,-1)));
-            this.move();
-        }
     }
 
     /**

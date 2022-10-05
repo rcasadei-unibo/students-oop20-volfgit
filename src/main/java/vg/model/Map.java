@@ -39,7 +39,7 @@ public interface Map<T> {
 
     /**
      * Update the borders of the map. Must call internally {@link #isTailCompleted()}
-     * or something that checks is the player tail is actually completed.
+     * or something that checks if the player's tail is actually completed.
      * @param tail the player tail that will become part of the new border
      */
     void updateBorders(Set<T> tail);
