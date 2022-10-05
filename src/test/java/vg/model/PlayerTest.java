@@ -38,20 +38,27 @@ public class PlayerTest {
         pl.move();
         pl.move();
         assertEquals(new V2D(2, 8), pl.getPosition());
-        
+
     }
 
     @Test
-    void changeDirection() {
+    void playerSpeedup() {
         /*
          * Where speed of entity is module of movement
          * direction define in which way
          */
-        assertEquals(position, pl.getPosition());
+        Player pl1 = BasePlayer.newPlayer(new V2D(0,0));
+        V2D bonusSpeed = new V2D(3,3);
+        pl1.changeDirection(Direction.DOWN);
 
-        pl.changeDirection(Direction.DOWN);
-        pl.move();
-        assertEquals(new V2D(5, 6), pl.getPosition());
+        pl1.move();
+        assertEquals(new V2D(0, 1), pl1.getPosition());
 
+        pl1.enableSpeedUp(bonusSpeed);
+        //Speed of player must be increased of amount speedImprove
+        assertEquals(BasePlayer.DEFAULT_PLAYER_SPEED.sum(bonusSpeed), pl1.getSpeed());
+
+        pl1.move();
+        assertEquals(new V2D(0, 5), pl1.getPosition());
     }
 }

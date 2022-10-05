@@ -147,8 +147,9 @@ public final class BasePlayer extends DynamicEntity implements Player {
         * is checked if coordinates are negative
         */
         if (this.speedImproved.isEmpty() && speed.getX() >= 0 && speed.getY() > 0) {
-            this.speedImproved = Optional.of(speed);
+            this.speedImproved = Optional.of(this.getSpeed().sum(speed));
         }
+        //TODO: lanciare una eccezione ?
     }
 
     @Override
