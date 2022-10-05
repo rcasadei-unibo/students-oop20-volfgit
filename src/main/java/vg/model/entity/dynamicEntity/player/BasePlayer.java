@@ -32,6 +32,11 @@ public final class BasePlayer extends DynamicEntity implements Player {
     static final boolean DEFAULT_SHOOT_CAPABILITY = false;
 
     /**
+     * Default state of capability to shoot of player.
+     * */
+    static final Direction DEFAULT_DIRECTION = Direction.NONE;
+
+    /**
      * Life of player.
      */
     private int life;
@@ -40,6 +45,9 @@ public final class BasePlayer extends DynamicEntity implements Player {
      *  This field keep saved direction and module of speed.
      */
     private Optional<V2D> speedImproved;
+
+    private Direction direction;
+
     /**
      * Tail created by player while moves in map.
      */
@@ -94,23 +102,36 @@ public final class BasePlayer extends DynamicEntity implements Player {
         return this.tail;
     }
 
+    @Override
+    public void setShield(Shield shield) {
+        this.shield = shield;
+    }
+
+    @Override
+    public Shield getShield() {
+        return this.shield;
+    }
+
     /**
      * Update speed direction of basic speed and bonus speed if active.
      * @param dir Direction vector that define sign of speed's coordinates
      */
     public void changeDirection(final Direction dir) {
-        super.changeDirection(dir);
-        if (this.speedImproved.isPresent()) {
-            V2D bonusSpeed = this.speedImproved.get();
-            this.speedImproved = Optional.of(bonusSpeed.updateSign(dir.getVector()));
-        }
+        this.direction = dir;
+    }
+
+    @Override
+    public void move() {
+        setPosition(
+                this.getPosition().sum(this.getSpeed().mul(this.direction.getVector()))
+        );
     }
 
     @Override
     public void enableSpeedUp(final V2D speed) {
         /*
         * In order to not change direction of move by speed vector
-        * is checked if coordinates are < 0
+        * is checked if coordinates are negative
         */
         if (this.speedImproved.isEmpty() && speed.getX() >= 0 && speed.getY() > 0) {
             this.speedImproved = Optional.of(speed);

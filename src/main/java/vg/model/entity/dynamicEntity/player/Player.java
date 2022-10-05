@@ -1,6 +1,7 @@
 package vg.model.entity.dynamicEntity.player;
 
 import vg.model.entity.Entity;
+import vg.model.timedObject.Shield;
 import vg.utils.Direction;
 import vg.utils.V2D;
 
@@ -49,5 +50,9 @@ public interface Player extends Entity {
      * @return Tail of player
      */
     Tail getPlayerTail();
+
+    void setShield(Shield shield);
+
+    Shield getShield();
 
 }
