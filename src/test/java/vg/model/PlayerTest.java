@@ -43,22 +43,24 @@ public class PlayerTest {
 
     @Test
     void playerSpeedup() {
-        /*
-         * Where speed of entity is module of movement
-         * direction define in which way
-         */
-        Player pl1 = BasePlayer.newPlayer(new V2D(0,0));
-        V2D bonusSpeed = new V2D(3,3);
+        //Default player speed is (1,1)
+        Player pl1 = BasePlayer.newPlayer(new V2D(0, 0));
+        V2D bonusSpeed = new V2D(3, 3);
         pl1.changeDirection(Direction.DOWN);
 
         pl1.move();
         assertEquals(new V2D(0, 1), pl1.getPosition());
 
+        //-----ENABLE SPEEDUP BONUS-------
         pl1.enableSpeedUp(bonusSpeed);
         //Speed of player must be increased of amount speedImprove
         assertEquals(BasePlayer.DEFAULT_PLAYER_SPEED.sum(bonusSpeed), pl1.getSpeed());
 
         pl1.move();
         assertEquals(new V2D(0, 5), pl1.getPosition());
+        //-----DISABLE SPEEDUP BONUS-------
+        pl1.disableSpeedUp();
+        pl1.move();
+        assertEquals(new V2D(0, 6), pl1.getPosition());
     }
 }
