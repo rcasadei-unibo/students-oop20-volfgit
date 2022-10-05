@@ -45,7 +45,7 @@ class MapImplTest {
     void updateBorders() {
         //TODO rewrite the next 2 lines
         Set<V2D> tail = IntStream.range(0, 201).boxed().flatMap(e -> Stream.of(new V2D(5, e))).collect(Collectors.toSet());
-        tail.stream().sorted((e, e2) -> (int) (e.getY() - e2.getY())).forEach(player.getPlayerTail()::addPoint);
+        tail.stream().sorted((e, e2) -> (int) (e.getY() - e2.getY())).forEach(player.getTail()::addPoint);
         map.updateBorders(tail);
         assertFalse(map.getBorders().contains(new V2D(0,0)));
         assertTrue(map.getBorders().contains(new V2D(5,150)));
