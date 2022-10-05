@@ -85,7 +85,7 @@ class MapImplTest {
         assertTrue(map.getAllMysteryBoxes().contains(toCheckS));
         map.removeEntity(toCheckS);
         assertFalse(map.getAllMysteryBoxes().contains(toCheckS));
-        
+
     }
 
     @Test
@@ -94,5 +94,35 @@ class MapImplTest {
 
     @Test
     void getFriendlyBolts() {
+    }
+
+    @Test
+    void getAfterCollisionDirection(){
+        assertTrue( ((MapImpl) map).isPositionValid(new V2D(1,1)));
+        assertFalse( ((MapImpl) map).isPositionValid(new V2D(0,1)));
+        assertFalse( ((MapImpl) map).isPositionValid(new V2D(1,0)));
+        assertFalse( ((MapImpl) map).isPositionValid(new V2D(0,0)));
+        var toCheckD = new DynamicEntityImpl(new V2D(1,1), new V2D(-1,-1),2, Shape.CIRCLE,MassTier.HIGH);
+        var toCheckD2 = new DynamicEntityImpl(new V2D(3,100), new V2D(-3,-1),2, Shape.CIRCLE,MassTier.HIGH);
+        toCheckD.move();
+        var t = map.getAfterCollisionDirection(toCheckD);
+        assertEquals(t, new V2D(1, 1));
+        toCheckD2.move();
+        assertEquals(toCheckD2.getPosition(), new V2D(0,99) );
+        assertTrue( ((MapImpl) map).isPositionValid(new V2D(1,99)));
+        assertFalse( ((MapImpl) map).isPositionValid(new V2D(0,98)));
+        assertFalse( ((MapImpl) map).isPositionValid(new V2D(0,100)));
+        assertFalse( ((MapImpl) map).isPositionValid(new V2D(-1,99)));
+        var t2 = map.getAfterCollisionDirection(toCheckD2);
+        assertEquals(t2, new V2D(3,-1));
+
+        toCheckD.setPosition(new V2D(51,51));
+        toCheckD2.setPosition(new V2D(48,48));
+        assertFalse(toCheckD.isInShape(toCheckD2));
+        toCheckD.setSpeed( new V2D(-1,-1));
+        toCheckD.move();
+        assertFalse(toCheckD2.isInShape(toCheckD));
+        toCheckD.move();
+        assertTrue(toCheckD2.isInShape(toCheckD));
     }
 }
