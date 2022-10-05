@@ -18,13 +18,13 @@ public abstract class DynamicEntity extends ShapedEntity {
     }
 
     /**
-     * Set new position adding to the current one speed vector multiplied to direction.
-     * @param dir Vector direction of entity
-     * */
-    public void move(final V2D dir) {
-        V2D curPos = this.getPosition();
-        V2D updatedPos = new V2D(dir.getX() * this.speed.getX(), dir.getY() * this.speed.getY());
-        this.setPosition(curPos.sum(updatedPos));
+     * Update sing of coordinates with the direction ones.
+     * Example: speed = (-2,3), new direction LEFT -> new speed = (-2, -3)
+     * @param dir new direction movement
+     */
+    public void changeDirection(final Direction dir) {
+        //get new speed with updated direction
+        this.setSpeed(this.speed.updateSign(dir.getVector()));
     }
     /**
      * Sums the speed to position and sets the result to
