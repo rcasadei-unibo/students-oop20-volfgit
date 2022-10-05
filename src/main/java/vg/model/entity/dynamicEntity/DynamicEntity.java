@@ -1,7 +1,6 @@
 package vg.model.entity.dynamicEntity;
 
 import vg.model.entity.ShapedEntity;
-import vg.utils.Direction;
 import vg.utils.MassTier;
 import vg.utils.Shape;
 import vg.utils.V2D;
@@ -17,15 +16,6 @@ public abstract class DynamicEntity extends ShapedEntity {
         this.speed = speed;
     }
 
-    /**
-     * Update sing of coordinates with the direction ones.
-     * Example: speed = (-2,3), new direction LEFT -> new speed = (-2, -3)
-     * @param dir new direction movement
-     */
-    public void changeDirection(final Direction dir) {
-        //get new speed with updated direction
-        this.setSpeed(this.speed.updateSign(dir.getVector()));
-    }
     /**
      * Sums the speed to position and sets the result to
      * position.

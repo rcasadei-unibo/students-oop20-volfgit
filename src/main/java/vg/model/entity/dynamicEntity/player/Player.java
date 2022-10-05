@@ -1,6 +1,7 @@
 package vg.model.entity.dynamicEntity.player;
 
 import vg.model.entity.Entity;
+import vg.model.timedObject.Shield;
 import vg.utils.Direction;
 import vg.utils.V2D;
 
@@ -38,15 +39,20 @@ public interface Player extends Entity {
     void disableShoot();
 
     /**
-     * Move player to new position coordinate by direction.
-     * @param dir direction of new movement
+     * Move player to new position coordinate
      */
-    void move(Direction dir);
+    void move();
+
+    void changeDirection(Direction direction);
 
     /**
      * Get player tail.
      * @return Tail of player
      */
     Tail getPlayerTail();
+
+    void setShield(Shield shield);
+
+    Shield getShield();
 
 }
