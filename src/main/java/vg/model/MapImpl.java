@@ -95,14 +95,16 @@ public class MapImpl implements Map<V2D> {
         if (!isTailCompleted()) {
             throw new IllegalStateException();
         }
-        //TODO capire se qua dentro eliminare le entità prima di
-        //aggiornare il bordo o se farlo in Stage
-
+        //before updating the Borders Entity that needs to be captured
+        //must be deleted, but that is not a responsibility of this
+        //method neither this class
+        var tr = new HashSet<V2D>();
         getBorders().forEach(e -> {
             if (isClosedByTail(e, tail, getBoss())) {
-               getBorders().remove(e);
+               tr.add(e);
             }
         });
+        getBorders().removeAll(tr);
         getBorders().addAll(tail);
     }
     /**
