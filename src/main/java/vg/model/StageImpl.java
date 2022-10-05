@@ -169,7 +169,7 @@ public class StageImpl implements Stage<V2D> {
      */
     @Override
     public void moveAll() {
-        getDynamicEntitySet().forEach(e -> e.move(e.getSpeed()));
+        getDynamicEntitySet().forEach(DynamicEntity::move);
     }
     /**
      *
@@ -177,7 +177,8 @@ public class StageImpl implements Stage<V2D> {
      */
     @Override
     public void movePlayer(final Direction direction) {
-        getPlayer().move(direction);
+        getPlayer().changeDirection(direction);
+        getPlayer().move();
     }
 
     /**
