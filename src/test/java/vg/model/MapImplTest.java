@@ -9,6 +9,7 @@ import vg.utils.Shape;
 import vg.utils.V2D;
 
 import java.util.HashSet;
+import java.util.Set;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 import java.util.stream.Stream;
@@ -25,7 +26,6 @@ class MapImplTest {
     Player player = BasePlayer.newPlayer(new V2D(20,20));
     Boss boss = new BossImpl();
     Map<V2D> map = new MapImpl(player,boss,new HashSet<>(),new HashSet<>(),new HashSet<>(), IntStream.range(0,201).boxed().
-            collect(Collectors.toSet()).stream().
             flatMap(e -> Stream.of(new V2D(e,0),new V2D(0,e), new V2D(200,e), new V2D(e,200))).
             collect(Collectors.toSet()));
     @Test
@@ -43,6 +43,11 @@ class MapImplTest {
 
     @Test
     void updateBorders() {
+        Set<V2D> tail = IntStream.range(0, 201).boxed().flatMap(e -> Stream.of(new V2D(5, e))).collect(Collectors.toSet());
+        tail.stream().sorted((e, e2) -> (int) (e.getY() - e2.getY())).forEach(player.getPlayerTail()::addPoint);
+        map.updateBorders(tail);
+        assertFalse(map.getBorders().contains(new V2D(0,0)));
+        assertTrue(map.getBorders().contains(new V2D(5,150)));
     }
 
     @Test
