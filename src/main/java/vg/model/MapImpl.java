@@ -1,5 +1,6 @@
 package vg.model;
 
+import vg.model.entity.ShapedEntity;
 import vg.model.timedObject.Bonus;
 import vg.model.entity.Entity;
 import vg.model.entity.dynamicEntity.DynamicEntity;
@@ -260,6 +261,8 @@ public class MapImpl implements Map<V2D> {
         }
         return !isClosedByTail(pos, getBorders(), getBoss());
     }
+
+
     /**
      * This method will compute what is the correct direction
      * to take for an entity that is colliding.
@@ -268,8 +271,15 @@ public class MapImpl implements Map<V2D> {
      */
     public V2D getAfterCollisionDirection(final DynamicEntity de) {
         var t = Stream.of(-1, 1).flatMap(e -> Stream.of(new V2D(e, 0), new V2D(0, e))).
-                filter(this::isPositionValid).reduce(new V2D(0, 0), V2D::sum);
-        return t.getX() == t.getY() ? de.getSpeed().mul(t) : de.getSpeed().mul(t.sum(new V2D(1, 1)));
+                filter(e -> isPositionValid(e.sum(de.getPosition()), de)).reduce(new V2D(0, 0), V2D::sum);
+        if (!(t.getX() == 0 || 0 == t.getY()) || t.getX() == t.getY()) {
+            System.out.println(de.getSpeed().mul(new V2D(-1, -1)));
+            return de.getSpeed().mul(new V2D(-1, -1));
+        } else {
+            var x = t.getX() == 0 ? 1 : -1;
+            var y = t.getY() == 0 ? 1 : -1;
+            return de.getSpeed().mul(x, y);
+        }
     }
 
 }
