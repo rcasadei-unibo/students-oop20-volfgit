@@ -40,7 +40,10 @@ public enum Shape {
     public boolean isInShape(final V2D p1, final V2D p2, final int r1, final int r2, final Shape p2Type) {
 
         if (this == Shape.CIRCLE && p2Type == Shape.CIRCLE) {
-            return Math.pow(p2.getX() - p1.getX(), 2) + Math.pow(p2.getY() - p1.getY(), 2) <= Math.pow(r1 + r2, 2) - 2 * r1 * r2;
+            var sr = r1 + r2;
+            var dx = p1.getX() - p2.getX();
+            var dy = p1.getY() - p2.getY();
+            return dx * dx + dy * dy <= sr;
         }
         if (this == Shape.SQUARE && p2Type == Shape.SQUARE) {
             if (Math.abs(p1.getX() - p2.getX()) > r1 + r2) {
