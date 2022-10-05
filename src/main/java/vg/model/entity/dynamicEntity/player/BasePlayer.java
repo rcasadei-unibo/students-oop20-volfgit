@@ -36,9 +36,10 @@ public final class BasePlayer extends DynamicEntity implements Player {
      */
     private int life;
     /**
-     *  Alternative speed of entity. It can be bigger or smaller than actual.
+     *  Alternative speed of Player with speed bonus improvement applied. It can be bigger or smaller than actual.
+     *  This field keep saved direction and module of speed.
      */
-    private Optional<V2D> speedUp;
+    private Optional<V2D> speedImproved;
     /**
      * Tail created by player while moves in map.
      */
@@ -93,20 +94,32 @@ public final class BasePlayer extends DynamicEntity implements Player {
         return this.tail;
     }
 
+    /**
+     * Update speed direction of basic speed and bonus speed if active.
+     * @param dir Direction vector that define sign of speed's coordinates
+     */
+    public void changeDirection(final Direction dir) {
+        super.changeDirection(dir);
+        if (this.speedImproved.isPresent()) {
+            V2D bonusSpeed = this.speedImproved.get();
+            this.speedImproved = Optional.of(bonusSpeed.updateSign(dir.getVector()));
+        }
+    }
+
     @Override
     public void enableSpeedUp(final V2D speed) {
         /*
         * In order to not change direction of move by speed vector
         * is checked if coordinates are < 0
         */
-        if (this.speedUp.isEmpty() && speed.getX() >= 0 && speed.getY() > 0) {
-            this.speedUp = Optional.of(speed);
+        if (this.speedImproved.isEmpty() && speed.getX() >= 0 && speed.getY() > 0) {
+            this.speedImproved = Optional.of(speed);
         }
     }
 
     @Override
     public void disableSpeedUp() {
-        this.speedUp = Optional.empty();
+        this.speedImproved = Optional.empty();
     }
 
     @Override
@@ -125,17 +138,9 @@ public final class BasePlayer extends DynamicEntity implements Player {
     }
 
     @Override
-    public void move(final Direction dir) {
-        //TODO: controllare che venga chiamato il metodo corretto, il metodo
-        //move() viene ereditato anche da DynamiEntity con una signature diversa da quella della
-        //interfaccia Player
-        this.move(dir.getVector());
-    }
-
-    @Override
     public V2D getSpeed() {
         //if speedUp is set return it else return original speed
-        return this.speedUp.orElseGet(super::getSpeed);
+        return this.speedImproved.orElseGet(super::getSpeed);
     }
 
 }
