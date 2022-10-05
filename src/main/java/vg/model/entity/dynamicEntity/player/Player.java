@@ -15,6 +15,8 @@ public interface Player extends Entity {
      * Increment player's life of one unit but not over maximum value.
      */
     void incLife();
+
+    int getLife();
     /**
      * Enable or change current player speed with new one.
      * @param speed Vector that represent speed
@@ -39,20 +41,44 @@ public interface Player extends Entity {
     void disableShoot();
 
     /**
-     * Move player to new position coordinate
+     * Move player to new position coordinate in congruence to current direction.
      */
     void move();
 
+    /**
+     * Change player's moving direction.
+     * @param direction new direction
+     */
     void changeDirection(Direction direction);
+
+    /**
+     * Current player direction.
+     * @return Direction
+     */
+    Direction getDirection();
 
     /**
      * Get player tail.
      * @return Tail of player
      */
-    Tail getPlayerTail();
+    Tail getTail();
 
+    /**
+     * Set new player's shield.
+     * @param shield new Shield
+     */
     void setShield(Shield shield);
 
+    /**
+     * Get current player's shield.
+     * @return player shield
+     */
     Shield getShield();
+
+    /**
+     * Get player speed.
+     * @return vector which coordinates are in absolute value
+     */
+    V2D getSpeed();
 
 }
