@@ -3,6 +3,8 @@ package vg.utils;
 import java.text.MessageFormat;
 import java.util.Objects;
 
+import static java.lang.Math.abs;
+
 public class V2D {
     /**
      * X: Horizontal coordinate.
@@ -36,8 +38,32 @@ public class V2D {
         return new V2D(this.x * pos.getX(), this.y * pos.getY());
     }
 
+    public final V2D mul(final double x, final double y) {
+        return new V2D(this.x * x, this.y * y);
+    }
+
     public final V2D scalarMul(final double scalar) {
         return this.mul(new V2D(scalar, scalar));
+    }
+
+    /**
+     * @return vector with absolute value of coordinates
+     * */
+    public final V2D removeSign() {
+        return new V2D(abs(this.getX()), abs(this.getY()));
+    }
+
+    /**
+     * Change coordinate sign to the passed signs of signVector
+     * Each nth-coordinate of current vector gets sing of nth-sign of passed vector.
+     * @param signVector vector to get signs of coordinates
+     * */
+    public final V2D updateSign(final V2D signVector) {
+        //remove signs
+        V2D absVector = this.removeSign();
+        double xSign = signVector.getX() < 0 ? -1 : 1;
+        double ySign = signVector.getY() < 0 ? -1 : 1;
+        return absVector.mul(xSign, ySign);
     }
 
     public final double getX() {

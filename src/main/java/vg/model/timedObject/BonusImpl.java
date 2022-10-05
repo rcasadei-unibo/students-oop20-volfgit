@@ -6,8 +6,9 @@ public class BonusImpl extends TimedObjectImpl implements Bonus {
      */
     private BonusType type;
 
-    BonusImpl(double duration) {
+    BonusImpl(final BonusType type, final double duration) {
         super(duration);
+        this.type = type;
     }
 
     /**
