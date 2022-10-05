@@ -52,10 +52,6 @@ class MapImplTest {
     }
 
     @Test
-    void isTailCompleted() {
-    }
-
-    @Test
     void toCapture() {
     }
 
