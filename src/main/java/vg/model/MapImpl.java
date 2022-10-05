@@ -261,7 +261,22 @@ public class MapImpl implements Map<V2D> {
         }
         return !isClosedByTail(pos, getBorders(), getBoss());
     }
-
+    /**
+     * Overloading for checking if a position is valid but removing one
+     * entity from checks.
+     * @param pos the position to check
+     * @param toRemove the entity to remove
+     * @return true if the position is valid and can be occupied, false otherwise
+     */
+    public boolean isPositionValid(final V2D pos, final ShapedEntity toRemove) {
+        if (getAllStaticEntities().stream().anyMatch(e -> e.isInShape(pos) && !e.equals(toRemove))) {
+            return false;
+        }
+        if (getAllDynamicEntities().stream().filter(e -> e.getMassTier() != MassTier.NOCOLLISION && !e.equals(toRemove)).anyMatch(e -> e.isInShape(pos))) {
+            return false;
+        }
+        return !isClosedByTail(pos, getBorders(), getBoss());
+    }
 
     /**
      * This method will compute what is the correct direction
