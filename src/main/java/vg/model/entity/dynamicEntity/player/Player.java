@@ -1,6 +1,7 @@
 package vg.model.entity.dynamicEntity.player;
 
 import vg.model.entity.Entity;
+import vg.model.entity.dynamicEntity.DynamicEntity;
 import vg.model.timedObject.Shield;
 import vg.utils.Direction;
 import vg.utils.V2D;
@@ -16,6 +17,10 @@ public interface Player extends Entity {
      */
     void incLife();
 
+    /**
+     * Get current player's life.
+     * @return numeric value of player's life
+     */
     int getLife();
     /**
      * Enable or change current player speed with new one.
@@ -42,6 +47,12 @@ public interface Player extends Entity {
 
     /**
      * Move player to new position coordinate in congruence to current direction.
+     *
+     * This method overrides the one of superclass {@link DynamicEntity#move()} but
+     * its logic is totally different.
+     * The player needs to move depending on direction and the speed (that in player
+     * represent only the module of movement).
+     *
      */
     void move();
 
