@@ -134,4 +134,12 @@ public interface Map<T> {
      * @return the boss of the map
      */
     Boss getBoss();
+
+    /**
+     * This method will compute what is the correct speed of an
+     * {@link DynamicEntity} when a collision is happening.
+     * @param toCheckD the entity to check
+     * @return the correct new speed of the entity after a collision
+     */
+    T getAfterCollisionDirection(DynamicEntity toCheckD);
 }
