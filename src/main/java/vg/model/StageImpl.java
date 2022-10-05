@@ -6,6 +6,7 @@ import vg.model.entity.dynamicEntity.DynamicEntity;
 import vg.model.entity.dynamicEntity.player.Player;
 import vg.model.entity.staticEntity.StaticEntity;
 import vg.utils.Direction;
+import vg.utils.MassTier;
 import vg.utils.V2D;
 
 import java.util.Set;
@@ -194,9 +195,9 @@ public class StageImpl implements Stage<V2D> {
     @Override
     public void checkCollisions() {
         getDynamicEntitySet().forEach(e -> getAllEntities().forEach(t -> {
-            //TODO aggiungere la condizione per cui effettivamente stanno collidendo
-            if (!e.equals(t)) {
-                e.afterCollisionAction();
+
+            if (e.isInShape((ShapedEntity) t) && !e.equals(t)) {
+                e.afterCollisionAction(t.getMassTier());
             }
         }));
     }
@@ -208,7 +209,7 @@ public class StageImpl implements Stage<V2D> {
     public void checkAllOutOfBounds() {
         getDynamicEntitySet().forEach(e -> {
             if (getBorders().stream().anyMatch(e::isInShape)) {
-               e.afterCollisionAction();
+               e.afterCollisionAction(MassTier.HIGH);
             }
         });
     }
