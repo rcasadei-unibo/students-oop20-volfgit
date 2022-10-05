@@ -18,7 +18,7 @@ public class FixedMysteryBox extends MysteryBox<BonusImpl> {
      * @param halfWidth the half-width and height of the box
      * @param bonus the bonus contained by the box
      */
-    FixedMysteryBox(final V2D position, final int halfWidth, final BonusImpl bonus) {
+    public FixedMysteryBox(final V2D position, final int halfWidth, final BonusImpl bonus) {
         super(position, halfWidth, bonus);
     }
 }
