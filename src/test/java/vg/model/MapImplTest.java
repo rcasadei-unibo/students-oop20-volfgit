@@ -123,5 +123,7 @@ class MapImplTest {
         assertFalse(toCheckD2.isInShape(toCheckD));
         toCheckD.move();
         assertTrue(toCheckD2.isInShape(toCheckD));
+        var t3 = map.getAfterCollisionDirection(toCheckD);
+        assertEquals(t3, new V2D(1,1));
     }
 }
