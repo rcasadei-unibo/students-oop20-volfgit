@@ -6,15 +6,16 @@
 <?import javafx.scene.layout.*?>
 
 
-<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1">
+<BorderPane fx:id="panel" fx:controller="vg.view.menu.MainMenu" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1">
    <center>
       <VBox alignment="CENTER" prefHeight="320.0" prefWidth="488.0" BorderPane.alignment="CENTER">
          <children>
-            <Button mnemonicParsing="false" prefHeight="25.0" prefWidth="148.0" text="Play" />
-            <Button mnemonicParsing="false" prefHeight="25.0" prefWidth="147.0" text="Leaderboards" />
-            <Button mnemonicParsing="false" prefHeight="25.0" prefWidth="147.0" text="Settings" />
-            <Button mnemonicParsing="false" prefHeight="25.0" prefWidth="147.0" text="Quit" />
-            <Button mnemonicParsing="false" prefHeight="25.0" prefWidth="147.0" text="Other" />
+            <Button fx:id="play" onMouseClicked="playButtonClicked" mnemonicParsing="false" prefHeight="25.0" prefWidth="148.0" text="Play" />
+            <Button fx:id="leaderboards" onMouseClicked="leaderboardsButtonClicked" mnemonicParsing="false" prefHeight="25.0" prefWidth="147.0" text="Leaderboards" />
+            <Button fx:id="settings" onMouseClicked="settingsButtonClicked" mnemonicParsing="false" prefHeight="25.0" prefWidth="147.0" text="Settings" />
+            <Button fx:id="controls" onMouseClicked="settingsButtonClicked" mnemonicParsing="false" prefHeight="25.0" prefWidth="147.0" text="Controls" />
+            <Button fx:id="quit" onMouseClicked="quitButtonClicked" mnemonicParsing="false" prefHeight="25.0" prefWidth="147.0" text="Quit" />
+
          </children>
       </VBox>
    </center>
