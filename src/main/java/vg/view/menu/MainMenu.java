@@ -27,32 +27,32 @@ public class MainMenu extends AdaptableView {
     private Button quit;
     @FXML
     private void playButtonClicked() {
-        stateController.activatesEvent(StateType.PLAY);
+        getController().activatesEvent(StateType.PLAY);
     }
     @FXML
     private void leaderboardsButtonClicked() {
-        stateController.activatesEvent(StateType.LEADERBOARDS);
+        getController().activatesEvent(StateType.LEADERBOARDS);
     }
     @FXML
     private void settingsButtonClicked() {
-        stateController.activatesEvent(StateType.SETTINGS);
+        getController().activatesEvent(StateType.SETTINGS);
     }
     @FXML
     private void controlsButtonClicked() {
-        stateController.activatesEvent(StateType.CONTROLS);
+        getController().activatesEvent(StateType.CONTROLS);
     }
     @FXML
     private void quitButtonClicked() {
-        stateController.activatesEvent(StateType.QUIT);
+        getController().activatesEvent(StateType.QUIT);
     }
     @Override
     public StateController<AdaptableView> getController() {
-        return null;
+        return this.stateController;
     }
 
     @Override
     public void setController(final StateController<AdaptableView> controller) {
-
+        this.stateController = controller;
     }
 
     @Override
@@ -83,8 +83,13 @@ public class MainMenu extends AdaptableView {
                     this.selected++;
                 }
                 break;
+            case ESC:
+                getController().activatesEvent(StateType.QUIT);
+                break;
             case ENTER:
                 stateController.activatesEvent(StateType.values()[selected]);
+                break;
+            default:
                 break;
         }
     }
