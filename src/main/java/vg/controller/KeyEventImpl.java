@@ -6,7 +6,7 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.stream.Stream;
 
-public class KeyEventImpl implements KeyEvent {
+public final class KeyEventImpl implements KeyEvent {
     /**
      * The map the associates an action to a key.
      */
