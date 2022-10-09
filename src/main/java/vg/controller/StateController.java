@@ -20,4 +20,5 @@ public interface StateController<V> {
      */
     void setView(V view);
     void activatesEvent(KeyEvent e);
+    void activatesEvent(StateType e);
 }
