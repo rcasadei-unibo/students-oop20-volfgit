@@ -31,6 +31,8 @@ val jUnitVersion = "5.7.1"
 val javaFxVersion = 15
 
 dependencies {
+    implementation("org.jetbrains:annotations:20.1.0")
+    implementation("org.jetbrains:annotations:20.1.0")
     // Example library: Guava. Add what you need (and remove Guava if you don't use it)
     // implementation("com.google.guava:guava:28.1-jre")
 
@@ -57,5 +59,5 @@ tasks.withType<Test> {
 
 application {
     // Define the main class for the application
-    mainClass.set("it.unibo.samplejavafx.App")
+    mainClass.set("vg.application.Launcher")
 }
