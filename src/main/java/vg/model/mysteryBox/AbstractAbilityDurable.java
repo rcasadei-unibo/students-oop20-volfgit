@@ -1,25 +1,59 @@
 package vg.model.mysteryBox;
 
+import vg.model.mysteryBox.ability.AbilityDuration;
+import vg.utils.ThreadUtils;
+
+import java.io.Console;
+
 public abstract class AbstractAbilityDurable implements Runnable {
-    private static final float INIT_DURATION = 0;
+    private static final int INIT_DURATION = 0;
+    private  static final int STEP_TIME = 1;
 
-    protected boolean isRunning;
-    protected final float duration;
-    protected float currentDuration;
+    private final Thread thread;
+    private final int durationMillis;
 
-    public AbstractAbilityDurable(float duration) {
-        this.duration = duration;
-        this.currentDuration = INIT_DURATION;
+    private AbilityDuration objectDuration;
+    private int currentDurationMillis;
+    private boolean isRunning;
+
+
+    public AbstractAbilityDurable(int durationMillis) {
+        this.durationMillis = durationMillis;
+        this.currentDurationMillis = INIT_DURATION;
+        this.thread = new Thread(this);
+        this.thread.start();
     }
 
-    public void Start() {
+
+    protected void onStart(AbilityDuration objectDuration) {
         this.isRunning = true;
+        this.objectDuration = objectDuration;
+        this.objectDuration.functionCallOnStart();
     }
 
-    public void Stop() {
+    private void stop() {
         this.isRunning = false;
-        this.currentDuration = INIT_DURATION;
+        this.objectDuration.functionCallOnEnd();
+        this.currentDurationMillis = INIT_DURATION;
+    }
+    private void onStop() {
+        if(this.currentDurationMillis >= this.durationMillis) {
+            this.stop();
+        }
+    }
+    private void increaseCurrentDuration() {
+        this.currentDurationMillis += STEP_TIME;
     }
 
+    @Override
+    public void run() {
+        while (true) {
+            if(this.isRunning){
+                this.increaseCurrentDuration();
+                this.onStop();
+            }
+            ThreadUtils.sleep(1);
+        }
+    }
 
 }
