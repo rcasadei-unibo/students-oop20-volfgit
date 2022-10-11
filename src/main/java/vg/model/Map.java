@@ -112,21 +112,21 @@ public interface Map<T> {
     /**
      * Returns the set of all bolts.
      * @return the set of all bolts
-     * @see vg.model.entity.dynamicEntity.bolt.Bolt
+     * @see vg.model.entity.dynamicEntity.bullet.Bolt
      */
     Set<DynamicEntity> getBolts();
 
     /**
      * Returns the set of all enemy bolts.
      * @return the set of all enemy bolts
-     * @see vg.model.entity.dynamicEntity.bolt.EnemyBolt
+     * @see vg.model.entity.dynamicEntity.bullet.EnemyBolt
      */
     Set<DynamicEntity> getEnemyBolts();
 
     /** TODO friendlyBolt
      * Returns the set of all friendly bolts.
      * @return the set of all friendly bolts
-     * @see vg.model.entity.dynamicEntity.bolt.Bolt
+     * @see vg.model.entity.dynamicEntity.bullet.Bolt
      */
     Set<DynamicEntity> getFriendlyBolts();
     /**

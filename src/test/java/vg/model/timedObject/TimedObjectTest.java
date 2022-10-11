@@ -30,7 +30,7 @@ public class TimedObjectTest {
 
         timedObject.updateTimer(300);
         assertEquals(timedObject.getRemainingTime(), 0);
-        //duration = 0 --> timerIsOver = true
+        //durationMillis = 0 --> timerIsOver = true
         assertTrue(timedObject.isTimeOver());
     }
 

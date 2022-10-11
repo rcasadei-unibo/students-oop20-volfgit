@@ -2,7 +2,7 @@ package vg.model.timedObject;
 
 public class TimedObjectImpl implements TimedObject {
     /**
-     *Time duration of bonus.
+     *Time durationMillis of bonus.
      */
     private double duration;
 

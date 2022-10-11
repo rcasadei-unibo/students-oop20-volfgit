@@ -1,11 +1,13 @@
 package vg.model;
 
 import vg.model.entity.ShapedEntity;
+import vg.model.score.Score;
+import vg.model.score.ScoreImpl;
 import vg.model.timedObject.Bonus;
 import vg.model.entity.Entity;
 import vg.model.entity.dynamicEntity.DynamicEntity;
-import vg.model.entity.dynamicEntity.bolt.Bolt;
-import vg.model.entity.dynamicEntity.bolt.EnemyBolt;
+import vg.model.entity.dynamicEntity.bullet.Bolt;
+import vg.model.entity.dynamicEntity.bullet.EnemyBolt;
 import vg.model.entity.dynamicEntity.enemy.Boss;
 import vg.model.entity.dynamicEntity.player.Player;
 import vg.model.entity.staticEntity.MysteryBox;
@@ -52,6 +54,9 @@ public class MapImpl implements Map<V2D> {
      * @see Map#getBorders()
      */
     private final Set<V2D> border;
+
+    private final Score score;
+
     /**
      * Constructor for MapImpl.
      *
@@ -69,6 +74,7 @@ public class MapImpl implements Map<V2D> {
         this.staticEntitySet = staticEntitySet;
         this.dynamicEntitySet = dynamicEntitySet;
         this.border = border;
+        this.score = new ScoreImpl();
     }
 
     /**
