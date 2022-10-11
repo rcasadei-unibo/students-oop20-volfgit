@@ -21,10 +21,4 @@ public class AbilityFreezeTimeImpl extends AbstractAbilityDurable implements Abi
     public void functionCallOnEnd() {
 
     }
-
-    public static void main(String[] args) {
-        AbilityFreezeTime prova = new AbilityFreezeTimeImpl(2000);
-        prova.startFreezeTime();
-    }
-
 }
