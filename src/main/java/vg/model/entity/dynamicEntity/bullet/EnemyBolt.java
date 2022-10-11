@@ -1,4 +1,4 @@
-package vg.model.entity.dynamicEntity.bolt;
+package vg.model.entity.dynamicEntity.bullet;
 
 import vg.utils.Shape;
 import vg.utils.V2D;

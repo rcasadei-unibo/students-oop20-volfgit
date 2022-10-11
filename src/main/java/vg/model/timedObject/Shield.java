@@ -29,7 +29,7 @@ public class Shield extends TimedObjectImpl {
     }
 
     /**
-     * Enable shield if timeout isn't expired.
+     * Enable shield if timeout isn'thread expired.
      * */
     public void enableShield() {
         this.isActive = !this.isTimeOver();
