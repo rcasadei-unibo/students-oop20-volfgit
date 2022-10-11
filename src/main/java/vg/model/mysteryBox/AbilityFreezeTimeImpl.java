@@ -16,9 +16,9 @@ public class AbilityFreezeTimeImpl extends AbstractAbilityDurable implements Abi
     public void functionCallOnStart() {
 
     }
-
     @Override
     public void functionCallOnEnd() {
 
     }
+
 }
