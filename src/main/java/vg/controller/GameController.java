@@ -62,11 +62,19 @@ public class GameController<T> implements StateController<AdaptableView> {
     private void updateGameDomain(final long elapsedTime) {
         this.stage.getMap().updateBonusTimer(elapsedTime);
         this.stage.doCycle();
-        /*
+
         if (this.stage.getPlayer().getLife() <= 0) {
             gameOver();
-        }*/
+        }
+
+
+
         //TODO: check if level is end then pass to next level
+    }
+
+    private void gameOver() {
+        gameLoopIsRunning = false;
+        //TODO: show gameover screen
     }
 
     /**
