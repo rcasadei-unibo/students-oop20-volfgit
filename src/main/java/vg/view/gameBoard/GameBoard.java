@@ -8,25 +8,14 @@ import vg.utils.LoadFxmlUtils;
 
 public class GameBoard extends Application {
 
-    Rectangle rect = new Rectangle(100, 100, 100, 100);
-
-
-    public static void main(String[] args) {
-        launch(args);
-    }
-
     @Override
-    public void start(Stage stage) {
-
+    public void start(Stage stage) throws Exception {
+        Rectangle rect = new Rectangle(100, 100, 100, 100);
         Scene scene = new Scene(LoadFxmlUtils.loadFxml("layout/GameBoard.fxml"));
-
-
+        stage.setTitle("Ti pregoooooo");
         stage.setScene(scene);
         stage.sizeToScene();
         stage.show();
-
-
-
     }
 }
 

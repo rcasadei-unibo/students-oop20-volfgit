@@ -57,7 +57,5 @@ tasks.withType<Test> {
 
 application {
     // Define the main class for the application
-    // mainClass.set("vg.Volfgit")
-    // this is only for testing :)
-    mainClass.set("vg.view.gameBoard.GameBoard")
+     mainClass.set("vg.Volfgit")
 }

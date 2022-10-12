@@ -2,7 +2,6 @@ package vg.utils;
 
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
-
 import java.io.File;
 import java.io.IOException;
 
