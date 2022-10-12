@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.canvas.Canvas?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.text.Text?>
+
+<HBox alignment="CENTER" prefHeight="31.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1">
+    <children>
+        <Label contentDisplay="CENTER" minWidth="62.0" prefHeight="17.0" prefWidth="62.0" text="Shield">
+         <HBox.margin>
+            <Insets left="10.0" />
+         </HBox.margin></Label>
+        <Text fx:id="shieldTimerText" strokeType="OUTSIDE" strokeWidth="0.0" text="400" wrappingWidth="108.900146484375" />
+        <Text fx:id="percCompletedText" strokeType="OUTSIDE" strokeWidth="0.0" text="100%" textAlignment="CENTER" wrappingWidth="150.0" />
+      <HBox fx:id="lifeContainer" prefHeight="31.0" prefWidth="156.0">
+         <children>
+            <Canvas height="38.0" width="37.0" />
+         </children>
+      </HBox>
+    </children>
+</HBox>
