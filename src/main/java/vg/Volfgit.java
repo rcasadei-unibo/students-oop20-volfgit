@@ -11,14 +11,8 @@ public final class Volfgit {
 
     public static void main(final String[] args) {
 
-        System.out.println("Hello, World!");
-
+        // Launches the level
         Application.launch(GameBoard.class, args);
-        //TODO: mostrare menu principale e sol quando si clicca su "Gioca" o "Play" viene creato il GameEngine
-        GameEngine engine = new GameEngine();
-        engine.setup();
-        engine.gameLoop();
-        System.out.println("GameLoop stopped!");
 
     }
 }
