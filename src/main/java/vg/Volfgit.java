@@ -1,7 +1,6 @@
 package vg;
 
 import javafx.application.Application;
-import vg.core.GameEngine;
 import vg.view.gameBoard.GameBoard;
 
 
