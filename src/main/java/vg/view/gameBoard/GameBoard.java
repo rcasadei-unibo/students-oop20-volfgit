@@ -1,26 +1,21 @@
 package vg.view.gameBoard;
 
 import javafx.application.Application;
-import javafx.fxml.FXMLLoader;
-import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.shape.Rectangle;
 import javafx.stage.Stage;
-
-import java.io.IOException;
+import vg.utils.LoadFxmlUtils;
 
 public class GameBoard extends Application {
 
-    public static void main(String[] args) {
-        launch(args);
-    }
-
     @Override
-    public void start(Stage primaryStage) throws IOException {
-
-        Parent root = FXMLLoader.load(getClass().getResource("layout/GameBoard.fxml"));
-        Scene scene = new Scene(root);
-        primaryStage.setScene(scene);
-        primaryStage.show();
+    public void start(Stage stage) throws Exception {
+        Rectangle rect = new Rectangle(100, 100, 100, 100);
+        Scene scene = new Scene(LoadFxmlUtils.loadFxml("layout/GameBoard.fxml"));
+        stage.setTitle("Ti pregoooooo");
+        stage.setScene(scene);
+        stage.sizeToScene();
+        stage.show();
     }
 }
 
