@@ -1,19 +1,10 @@
-package vg.core;
+package vg.controller;
 
 import javafx.scene.input.KeyCode;
-import vg.controller.KeyAction;
-import vg.controller.KeyEventImpl;
-import vg.controller.StateController;
-import vg.controller.StateType;
-import vg.input.Command;
-import vg.input.CommandInvoker;
-import vg.model.Map;
+import vg.utils.Command;
 import vg.model.Stage;
-import vg.model.StageImpl;
 import vg.model.entity.dynamicEntity.player.Player;
 import vg.utils.Direction;
-import vg.utils.GameState;
-import vg.utils.V2D;
 import vg.view.AdaptableView;
 
 import java.util.ArrayList;
@@ -23,18 +14,18 @@ import java.util.List;
  * Game Engine class, manager game loop and refresh timing
  * during gameplay
  * */
-public class GameEngine implements CommandInvoker, StateController<AdaptableView> {
+public class GameController<T> implements StateController<AdaptableView> {
     private List<Command<Player>> movementQueue;
-    private long period = 500; // frequencies = 1/period
-    private GameState gameState = GameState.STOPPED;
+    private static final long CYCLE_PERIOD = 500; // frequencies = 1/period
+    private boolean gameLoopIsRunning = true;
 
-    private Stage stage;
+    private Stage<T> stage;
     private AdaptableView view;
     private KeyEventImpl keyEventSettings;
 
-    public void setup(final AdaptableView view, final KeyEventImpl keyEventSettings, final Map<V2D> map) {
+    public void setup(final AdaptableView view, final KeyEventImpl keyEventSettings, final Stage<T> stage) {
         this.movementQueue = new ArrayList<>();
-        this.stage = new StageImpl(0, map);
+        this.stage = stage;
         this.keyEventSettings = keyEventSettings;
         this.view = view;
     }
@@ -42,7 +33,7 @@ public class GameEngine implements CommandInvoker, StateController<AdaptableView
     public void gameLoop() {
         long prevCycleTime = System.currentTimeMillis();
 
-        while (gameState != GameState.PAUSED) {
+        while (gameLoopIsRunning) {
             long curCycleTime = System.currentTimeMillis();
             long elapsedTime = curCycleTime - prevCycleTime;
             processInput();
@@ -58,7 +49,12 @@ public class GameEngine implements CommandInvoker, StateController<AdaptableView
 
     private void updateGameDomain(final long elapsedTime) {
         this.stage.getMap().updateBonusTimer(elapsedTime);
-        this.stage.moveAll();
+        this.stage.doCycle();
+        /*
+        if (this.stage.getPlayer().getLife() <= 0) {
+            gameOver();
+        }*/
+        //TODO: check if level is end then pass to next level
     }
 
     /**
@@ -77,34 +73,42 @@ public class GameEngine implements CommandInvoker, StateController<AdaptableView
     }
 
     private void render() {
-        //TODO: call method refresh on view object
+        //TODO: call method refresh on view object passing domain
         //this.view.refresh();
     }
 
     private void waitForNextFrame(final long elapsedTime) {
         long dt = System.currentTimeMillis() - elapsedTime;
-        if (dt < period) {
+        if (dt < CYCLE_PERIOD) {
             try {
-                Thread.sleep(period - dt);
+                Thread.sleep(CYCLE_PERIOD - dt);
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }
         }
     }
 
-    @Override
-    public void appendMovementCommand(final Command cmd) {
+    private void appendMovementCommand(final Command cmd) {
         this.movementQueue.add(cmd);
     }
 
-    @Override
-    public void pauseGame() {
-        this.gameState = GameState.PAUSED;
+    private void closeGame() {
+        //end game and go back to home
+        gameLoopIsRunning = false;
     }
 
-    @Override
-    public void resumeGame() {
-        this.gameState = GameState.PLAYING;
+    private void pauseGame() {
+        gameLoopIsRunning = true;
+        //this.gameState = GameState.PAUSED;
+        //TODO: show pause screen
+        //this.view = pause view
+    }
+
+    private void resumeGame() {
+        gameLoopIsRunning = true;
+        //TODO: show game view
+        //this.view = show game play view
+        this.gameLoop();
     }
 
     @Override
@@ -126,16 +130,29 @@ public class GameEngine implements CommandInvoker, StateController<AdaptableView
 
     @Override
     public void activatesEvent(final KeyAction e) {
-        Direction dir;
-        switch (e) {
-            case UP: dir = Direction.UP; break;
-            case DOWN: dir = Direction.DOWN; break;
-            case LEFT: dir = Direction.LEFT; break;
-            case RIGHT: dir = Direction.RIGHT; break;
-            case P: this.pauseGame();
-            default: dir = Direction.NONE;
-        }
 
+        switch (e) {
+            case UP: appendPlayerCommand(Direction.UP); break;
+            case DOWN:  appendPlayerCommand(Direction.DOWN); break;
+            case LEFT: appendPlayerCommand(Direction.LEFT); break;
+            case RIGHT:  appendPlayerCommand(Direction.RIGHT); break;
+            case P:
+                //Toggle from pause and playing state
+                if (gameLoopIsRunning) {
+                    this.pauseGame();
+                } else {
+                    this.resumeGame();
+                }
+                break;
+            case BACK:
+            case ENTER:
+                break;
+            case ESC: this.closeGame(); break;
+            default:
+        }
+    }
+
+    private void appendPlayerCommand(final Direction dir) {
         this.appendMovementCommand((Command<Player>) pl -> pl.changeDirection(dir));
     }
 
