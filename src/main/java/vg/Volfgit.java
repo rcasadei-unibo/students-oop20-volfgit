@@ -1,6 +1,6 @@
 package vg;
 
-import vg.core.GameEngine;
+import vg.controller.GameController;
 
 public final class Volfgit {
 
@@ -8,10 +8,12 @@ public final class Volfgit {
 
     public static void main(final String[] args) {
         //TODO: mostrare menu principale e sol quano si clicca su "Gioca" o "Play" viene creato il GameEngine
-
+/*
         GameEngine engine = new GameEngine();
         engine.setup();
         engine.gameLoop();
         System.out.println("GameLoop stopped!");
+
+ */
     }
 }

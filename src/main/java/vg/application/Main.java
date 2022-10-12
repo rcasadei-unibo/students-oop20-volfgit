@@ -1,5 +1,7 @@
 package vg.application;
 import javafx.application.Application;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Scene;
 import javafx.stage.Stage;
 
 public class Main extends Application {
@@ -12,7 +14,11 @@ public class Main extends Application {
      */
     @Override
     public void start(final Stage primaryStage) throws Exception {
+
         System.out.println("da qua in poi parte la view in modo corretto");
+        Scene root = FXMLLoader.load(getClass().getResource("layout/mainMenu.fxml"));
+        Scene scene = new Scene(root);
+        primaryStage.setScene(scene);
         //per uscire: System.exit(-1);
     }
     public static void main(final String[] args) {
