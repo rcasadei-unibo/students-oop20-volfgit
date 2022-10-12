@@ -1,5 +1,7 @@
 package vg.model.timedObject;
 
+import java.util.Objects;
+
 public class BonusImpl extends TimedObjectImpl implements Bonus {
     /**
      * Typology of bonus.
@@ -23,4 +25,16 @@ public class BonusImpl extends TimedObjectImpl implements Bonus {
         return this.type;
     }
 
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        BonusImpl bonus = (BonusImpl) o;
+        return type == bonus.type;
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(type);
+    }
 }
