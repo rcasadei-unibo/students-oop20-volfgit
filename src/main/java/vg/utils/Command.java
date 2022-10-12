@@ -1,4 +1,4 @@
-package vg.input;
+package vg.utils;
 
 
 public interface Command<T> {
