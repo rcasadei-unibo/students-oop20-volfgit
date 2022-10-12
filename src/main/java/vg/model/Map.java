@@ -90,6 +90,12 @@ public interface Map<T> {
     Set<Bonus> getActiveBonus();
 
     /**
+     * Update bonus internal timer and remove from active bonus if expired.
+     * @param elapsedTime elasped time between current and previous game cycle
+     */
+    void updateBonusTimer(double elapsedTime);
+
+    /**
      * Returns the set of mystery boxes.
      * @return the set of mystery boxes
      * @see MysteryBox
