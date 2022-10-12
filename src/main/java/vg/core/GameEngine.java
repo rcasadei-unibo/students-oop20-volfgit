@@ -8,16 +8,13 @@ import vg.controller.StateType;
 import vg.input.Command;
 import vg.input.CommandInvoker;
 import vg.model.Map;
-import vg.model.MapImpl;
 import vg.model.Stage;
 import vg.model.StageImpl;
-import vg.model.entity.dynamicEntity.player.BasePlayer;
 import vg.model.entity.dynamicEntity.player.Player;
 import vg.utils.Direction;
 import vg.utils.GameState;
 import vg.utils.V2D;
 import vg.view.AdaptableView;
-import vg.view.View;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -50,7 +47,7 @@ public class GameEngine implements CommandInvoker, StateController<AdaptableView
             long elapsedTime = curCycleTime - prevCycleTime;
             processInput();
 
-            updateGame(elapsedTime);
+            updateGameDomain(elapsedTime);
             render();
 
             waitForNextFrame(curCycleTime);
@@ -59,7 +56,7 @@ public class GameEngine implements CommandInvoker, StateController<AdaptableView
 
     }
 
-    private void updateGame(final long elapsedTime) {
+    private void updateGameDomain(final long elapsedTime) {
         this.stage.getMap().updateBonusTimer(elapsedTime);
         this.stage.moveAll();
     }
@@ -82,7 +79,6 @@ public class GameEngine implements CommandInvoker, StateController<AdaptableView
     private void render() {
         //TODO: call method refresh on view object
         //this.view.refresh();
-
     }
 
     private void waitForNextFrame(final long elapsedTime) {

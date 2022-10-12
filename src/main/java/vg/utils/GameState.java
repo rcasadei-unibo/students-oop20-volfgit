@@ -4,7 +4,7 @@ public enum GameState {
         /**
          * Game level is running.
          */
-        PLAYING, //playing game
+        PLAYING,
         /**
          * Game level is paused.
          */
@@ -12,5 +12,5 @@ public enum GameState {
         /**
          * Game level is not running.
          */
-        STOPPED //not playing level
+        STOPPED
 }
