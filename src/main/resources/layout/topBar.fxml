@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Text?>
+
+<VBox fx:id="infoTopBar" prefHeight="46.0" prefWidth="600.0" BorderPane.alignment="CENTER" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/18">
+    <children>
+        <HBox alignment="CENTER" prefHeight="31.0" prefWidth="600.0">
+            <children>
+                <Label alignment="CENTER" contentDisplay="CENTER" minWidth="150" text="ROUND" textAlignment="CENTER" />
+                <Label alignment="CENTER" contentDisplay="CENTER" minWidth="150" text="PUNTEGGIO" textAlignment="CENTER" />
+                <Label alignment="CENTER" contentDisplay="CENTER" minWidth="150" text="HIGH SCORE" textAlignment="CENTER" />
+            </children>
+        </HBox>
+        <HBox alignment="CENTER" prefHeight="31.0" prefWidth="600.0">
+            <children>
+                <Text fx:id="round_text" strokeType="OUTSIDE" strokeWidth="0.0" text="1" textAlignment="CENTER" wrappingWidth="150.0" />
+                <Text fx:id="score_text" strokeType="OUTSIDE" strokeWidth="0.0" text="3004" textAlignment="CENTER" wrappingWidth="150.0" />
+                <Text fx:id="high_score_text" strokeType="OUTSIDE" strokeWidth="0.0" text="50000" textAlignment="CENTER" wrappingWidth="150.0" />
+            </children>
+        </HBox>
+    </children>
+</VBox>
