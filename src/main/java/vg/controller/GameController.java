@@ -23,6 +23,12 @@ public class GameController<T> implements StateController<AdaptableView> {
     private AdaptableView view;
     private KeyEventImpl keyEventSettings;
 
+    /**
+     * Setup view, keyEvent and domain.
+     * @param view game map view
+     * @param keyEventSettings keyboard key-action mapper
+     * @param stage Model of game
+     */
     public void setup(final AdaptableView view, final KeyEventImpl keyEventSettings, final Stage<T> stage) {
         this.movementQueue = new ArrayList<>();
         this.stage = stage;
@@ -30,6 +36,9 @@ public class GameController<T> implements StateController<AdaptableView> {
         this.view = view;
     }
 
+    /**
+     * Loop to make game running. At every cycle it processes input, update domain then update gui.
+     */
     public void gameLoop() {
         long prevCycleTime = System.currentTimeMillis();
 
@@ -44,9 +53,12 @@ public class GameController<T> implements StateController<AdaptableView> {
             waitForNextFrame(curCycleTime);
             prevCycleTime = curCycleTime;
         }
-
     }
 
+    /**
+     * Update game domain: entities position, bonuses and borders.
+     * @param elapsedTime time elapsed between current and previous gameLoop cycle
+     */
     private void updateGameDomain(final long elapsedTime) {
         this.stage.getMap().updateBonusTimer(elapsedTime);
         this.stage.doCycle();
@@ -60,7 +72,7 @@ public class GameController<T> implements StateController<AdaptableView> {
     /**
      * Process command in the head of queue (the older one)
      * in order to move player.
-     * */
+     */
     private void processInput() {
 
         System.out.println("Processing input: " + this.movementQueue.size());
@@ -72,11 +84,19 @@ public class GameController<T> implements StateController<AdaptableView> {
         }
     }
 
+    /**
+     * Update view of game.
+     */
     private void render() {
         //TODO: call method refresh on view object passing domain
         //this.view.refresh();
     }
 
+    /**
+     * Method to keep fixed time of each loop cycle,
+     * it prevents that cycle duration is less than framerate period.
+     * @param elapsedTime current time elapsed from prev. cycle
+     */
     private void waitForNextFrame(final long elapsedTime) {
         long dt = System.currentTimeMillis() - elapsedTime;
         if (dt < CYCLE_PERIOD) {
@@ -88,15 +108,25 @@ public class GameController<T> implements StateController<AdaptableView> {
         }
     }
 
+    /**
+     * Append new player command to the queue.
+     * @param cmd command to be executed on player
+     */
     private void appendMovementCommand(final Command cmd) {
         this.movementQueue.add(cmd);
     }
 
+    /**
+     * Terminate gameLoop and go back to the previous screen.
+     */
     private void closeGame() {
         //end game and go back to home
         gameLoopIsRunning = false;
     }
 
+    /**
+     * Stop gameLoop and show pause view.
+     */
     private void pauseGame() {
         gameLoopIsRunning = true;
         //this.gameState = GameState.PAUSED;
@@ -104,6 +134,9 @@ public class GameController<T> implements StateController<AdaptableView> {
         //this.view = pause view
     }
 
+    /**
+     * Restart gameLoop and show again game view.
+     */
     private void resumeGame() {
         gameLoopIsRunning = true;
         //TODO: show game view
@@ -113,8 +146,6 @@ public class GameController<T> implements StateController<AdaptableView> {
 
     @Override
     public AdaptableView getView() {
-        //if gamestate is paused --> pause screen
-        //else game is running --> show game screen
         return this.view;
     }
 
