@@ -12,9 +12,12 @@ import vg.model.entity.dynamicEntity.enemy.Boss;
 import vg.model.entity.dynamicEntity.player.Player;
 import vg.model.entity.staticEntity.MysteryBox;
 import vg.model.entity.staticEntity.StaticEntity;
+import vg.model.timedObject.BonusImpl;
+import vg.model.timedObject.BonusType;
 import vg.utils.MassTier;
 import vg.utils.V2D;
 
+import java.util.Collections;
 import java.util.HashSet;
 import java.util.Set;
 import java.util.stream.Collectors;
@@ -162,6 +165,19 @@ public class MapImpl implements Map<V2D> {
     public Set<Bonus> getActiveBonus() {
         return this.setBonuses;
     }
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public void updateBonusTimer(final double elapsedTime) {
+        this.getActiveBonus().forEach(bonus -> bonus.updateTimer(elapsedTime));
+        Set.copyOf(this.getActiveBonus()).forEach(bonus -> {
+            if (bonus.isTimeOver()) {
+                this.setBonuses.remove(bonus);
+            }
+        });
+    }
+
     /**
      * {@inheritDoc}
      */
