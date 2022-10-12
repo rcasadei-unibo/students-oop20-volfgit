@@ -4,8 +4,11 @@ import vg.model.mysteryBox.ability.AbilityWeapon;
 
 public class AbilityWeaponImpl extends AbstractAbilityDurable implements AbilityWeapon {
 
-    public AbilityWeaponImpl(int durationMillis) {
+    private final boolean canHitBoss;
+
+    public AbilityWeaponImpl(int durationMillis, boolean canHitBoss) {
         super(durationMillis);
+        this.canHitBoss = canHitBoss;
     }
 
     @Override
