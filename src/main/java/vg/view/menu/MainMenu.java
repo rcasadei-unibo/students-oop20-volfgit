@@ -83,7 +83,7 @@ public class MainMenu extends AdaptableView {
                     this.selected++;
                 }
                 break;
-            case ESC:
+            case ESCAPE:
                 getController().activatesEvent(StateType.QUIT);
                 break;
             case ENTER:

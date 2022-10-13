@@ -50,7 +50,7 @@
    <center>
       <FlowPane alignment="CENTER" prefHeight="190.0" prefWidth="600.0" BorderPane.alignment="CENTER">
          <children>
-            <Pane fx:id="gameArea" onMouseClicked="#stampa" prefHeight="280.0" prefWidth="495.0" />
+            <Pane fx:id="gameArea" prefHeight="280.0" prefWidth="495.0" />
          </children>
       </FlowPane>
    </center>

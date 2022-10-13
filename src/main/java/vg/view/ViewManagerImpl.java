@@ -14,7 +14,7 @@ import java.util.concurrent.ExecutionException;
 
 public class ViewManagerImpl implements ViewManager {
     private final Stage stage;
-    private List<Pair<EventHandlerController, Scene>> sceneStack;
+    private List<Scene> sceneStack;
 
     /**
      * Return new ViewManager with.
@@ -22,31 +22,30 @@ public class ViewManagerImpl implements ViewManager {
      */
     public ViewManagerImpl(final Stage stage) {
         this.stage = stage;
+        /*
         stage.addEventHandler(KeyEvent.KEY_PRESSED, e -> {
-            EventHandlerController ctrl = this.sceneStack.get(this.sceneStack.size() - 1).getKey();
+            EventHandlerController ctrl = this.sceneStack.get(this.sceneStack.size() - 1);
             ctrl.notifyKeyEvent(e.getCode());
-        });
+        });*/
         this.sceneStack = new ArrayList<>();
     }
 
     @Override
-    public void addScene(final Scene scene, final EventHandlerController controller) {
-        this.sceneStack.add(new Pair<>(controller, scene));
+    public void addScene(final Scene scene/*, final EventHandlerController controller*/) {
+        this.sceneStack.add(scene);
         this.stage.setScene(scene);
-        this.stage.requestFocus();
-        this.stage.show();
     }
-
 
     @Override
     public void popScene() {
         int stackSize = this.sceneStack.size();
         if (stackSize > 1) {
-            System.out.println(stackSize);
-            this.stage.setScene(this.sceneStack.get(stackSize - 1).getValue());
-            //this.sceneStack.remove(stackSize - 1);
-            this.stage.requestFocus();
-            this.stage.show();
+            this.sceneStack.remove(stackSize - 1);
+            this.stage.setScene(this.sceneStack.get(this.sceneStack.size() -1 ));
         }
+    }
+
+    public Stage getStage() {
+        return this.stage;
     }
 }
