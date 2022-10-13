@@ -2,10 +2,7 @@ package vg.view;
 
 import javafx.scene.Scene;
 import javafx.stage.Stage;
-import vg.controller.EventHandlerController;
-import vg.controller.StateController;
 
-import java.util.concurrent.ExecutionException;
 
 public interface ViewManager {
     /**
