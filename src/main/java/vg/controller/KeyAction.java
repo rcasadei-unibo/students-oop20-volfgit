@@ -5,8 +5,7 @@ public enum KeyAction {
     DOWN,
     LEFT,
     RIGHT,
-    BACK,
     ENTER,
-    ESC,
+    ESCAPE,
     P;
 }
