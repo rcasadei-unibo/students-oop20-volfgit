@@ -1,6 +1,8 @@
 package vg.controller;
 
 import javafx.scene.input.KeyCode;
+import vg.view.utils.KeyAction;
+import vg.view.utils.KeyEventHandler;
 
 /**
  * The state controller is the controller of a "state" of the software.

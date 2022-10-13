@@ -1,4 +1,4 @@
-package vg.controller;
+package vg.view.utils;
 
 import javafx.event.EventHandler;
 import javafx.scene.input.KeyCode;

@@ -1,4 +1,4 @@
-package vg.controller;
+package vg.view.utils;
 
 public enum KeyAction {
     UP,

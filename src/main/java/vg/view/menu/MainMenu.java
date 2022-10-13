@@ -5,7 +5,7 @@ import javafx.scene.control.Button;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.Pane;
-import vg.controller.KeyAction;
+import vg.view.utils.KeyAction;
 import vg.controller.StateController;
 import vg.controller.StateType;
 import vg.view.AdaptableView;
@@ -83,7 +83,7 @@ public class MainMenu extends AdaptableView {
                     this.selected++;
                 }
                 break;
-            case ESC:
+            case ESCAPE:
                 getController().activatesEvent(StateType.QUIT);
                 break;
             case ENTER:

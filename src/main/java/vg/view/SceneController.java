@@ -1,6 +1,6 @@
 package vg.view;
 
-import vg.controller.KeyAction;
+import vg.view.utils.KeyAction;
 
 /**
  * Interface for fxml controllers (single scene).

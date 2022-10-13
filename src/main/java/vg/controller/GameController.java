@@ -6,6 +6,8 @@ import vg.model.Stage;
 import vg.model.entity.dynamicEntity.player.Player;
 import vg.utils.Direction;
 import vg.view.AdaptableView;
+import vg.view.utils.KeyAction;
+import vg.view.utils.KeyEventHandler;
 
 import java.util.ArrayList;
 import java.util.List;
