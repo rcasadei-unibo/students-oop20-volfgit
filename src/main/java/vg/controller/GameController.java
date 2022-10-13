@@ -6,6 +6,7 @@ import vg.model.Stage;
 import vg.model.entity.dynamicEntity.player.Player;
 import vg.utils.Direction;
 import vg.view.AdaptableView;
+import vg.view.SceneController;
 import vg.view.utils.KeyAction;
 import vg.view.utils.KeyEventHandler;
 
@@ -16,28 +17,38 @@ import java.util.List;
  * Game Engine class, manager game loop and refresh timing
  * during gameplay
  * */
-public class GameController<T> implements StateController<AdaptableView> {
+public class GameController<T> implements SceneController {
+    /**
+     * Command queue of new player's movement got from input to be applied.
+     */
     private List<Command<Player>> movementQueue;
+    /**
+     * Period of each frame.
+     */
     private static final long CYCLE_PERIOD = 500; // frequencies = 1/period
+    /**
+     * Terminating condition of game loop.
+     */
     private boolean gameLoopIsRunning = true;
-
+    /**
+     * Game domain.
+     */
     private Stage<T> stage;
+    /**
+     * View of gameplay.
+     */
     private AdaptableView view;
-    private KeyEventHandler keyEventSettings;
-
     /**
      * Setup view, keyEvent and domain.
      * @param view game map view
-     * @param keyEventSettings keyboard key-action mapper
      * @param stage Model of game
      */
-    public void setup(final AdaptableView view, final KeyEventHandler keyEventSettings, final Stage<T> stage) {
+    public void setup(final AdaptableView view, final Stage<T> stage) {
         this.movementQueue = new ArrayList<>();
         this.stage = stage;
-        this.keyEventSettings = keyEventSettings;
+
         this.view = view;
     }
-
     /**
      * Loop to make game running. At every cycle it processes input, update domain then update gui.
      */
@@ -56,7 +67,6 @@ public class GameController<T> implements StateController<AdaptableView> {
             prevCycleTime = curCycleTime;
         }
     }
-
     /**
      * Update game domain: entities position, bonuses and borders.
      * @param elapsedTime time elapsed between current and previous gameLoop cycle
@@ -69,23 +79,20 @@ public class GameController<T> implements StateController<AdaptableView> {
             gameOver();
         }
 
-
-
         //TODO: check if level is end then pass to next level
     }
-
+    /**
+     * gameOver state, stop running game loop then show gameOver screen view.
+     */
     private void gameOver() {
         gameLoopIsRunning = false;
         //TODO: show gameover screen
     }
-
     /**
      * Process command in the head of queue (the older one)
      * in order to move player.
      */
     private void processInput() {
-
-        System.out.println("Processing input: " + this.movementQueue.size());
         if (!this.movementQueue.isEmpty()) {
             Command<Player> cmd = this.movementQueue.get(0);
             this.movementQueue.remove(cmd);
@@ -93,7 +100,6 @@ public class GameController<T> implements StateController<AdaptableView> {
             cmd.execute(this.stage.getPlayer());
         }
     }
-
     /**
      * Update view of game.
      */
@@ -101,7 +107,6 @@ public class GameController<T> implements StateController<AdaptableView> {
         //TODO: call method refresh on view object passing domain
         //this.view.refresh();
     }
-
     /**
      * Method to keep fixed time of each loop cycle,
      * it prevents that cycle duration is less than framerate period.
@@ -117,7 +122,6 @@ public class GameController<T> implements StateController<AdaptableView> {
             }
         }
     }
-
     /**
      * Append new player command to the queue.
      * @param cmd command to be executed on player
@@ -125,7 +129,6 @@ public class GameController<T> implements StateController<AdaptableView> {
     private void appendMovementCommand(final Command cmd) {
         this.movementQueue.add(cmd);
     }
-
     /**
      * Terminate gameLoop and go back to the previous screen.
      */
@@ -133,7 +136,6 @@ public class GameController<T> implements StateController<AdaptableView> {
         //end game and go back to home
         gameLoopIsRunning = false;
     }
-
     /**
      * Stop gameLoop and show pause view.
      */
@@ -143,7 +145,6 @@ public class GameController<T> implements StateController<AdaptableView> {
         //TODO: show pause screen
         //this.view = pause view
     }
-
     /**
      * Restart gameLoop and show again game view.
      */
@@ -153,24 +154,15 @@ public class GameController<T> implements StateController<AdaptableView> {
         //this.view = show game play view
         this.gameLoop();
     }
-
-    @Override
-    public AdaptableView getView() {
-        return this.view;
+    /**
+     * Append command to change player direction at the movementQueue.
+     * @param dir new direction of player to be set
+     */
+    private void appendPlayerCommand(final Direction dir) {
+        this.appendMovementCommand((Command<Player>) pl -> pl.changeDirection(dir));
     }
-
     @Override
-    public void setView(final AdaptableView view) {
-        this.view = view;
-    }
-
-    @Override
-    public KeyAction captureKeyEvent(final KeyCode key) {
-        return getKeyEventSettings().keyPressed(key);
-    }
-
-    @Override
-    public void activatesEvent(final KeyAction e) {
+    public void activateEvent(final KeyAction e) {
 
         switch (e) {
             case UP: appendPlayerCommand(Direction.UP); break;
@@ -191,24 +183,5 @@ public class GameController<T> implements StateController<AdaptableView> {
             case ESCAPE: this.closeGame(); break;
             default:
         }
-    }
-
-    private void appendPlayerCommand(final Direction dir) {
-        this.appendMovementCommand((Command<Player>) pl -> pl.changeDirection(dir));
-    }
-
-    @Override
-    public void activatesEvent(StateType e) {
-
-    }
-
-    @Override
-    public KeyEventHandler getKeyEventSettings() {
-        return this.keyEventSettings;
-    }
-
-    @Override
-    public void setKeyEventSettings(final KeyEventHandler keyEventSettings) {
-        this.keyEventSettings = keyEventSettings;
     }
 }
