@@ -10,15 +10,32 @@ import java.util.Map;
 import static javafx.scene.input.KeyEvent.KEY_PRESSED;
 import static javafx.scene.input.KeyEvent.KEY_RELEASED;
 
+/**
+ * Implementation of {@link EventHandler}.
+ * Internally using a {@link KeySettings} which will define
+ * the correct action to execute.
+ * @see EventHandler
+ * @see KeyEvent
+ */
 public final class KeyEventHandler implements EventHandler<KeyEvent> {
-    private final KeySettings keySettings = KeySettings.defaultKeySettings();
+    /**
+     * @see KeySettings
+     */
+    private KeySettings keySettings = KeySettings.defaultKeySettings();
 
+    /**
+     * Updates the key settings.
+     * @param newSettings {@link KeySettings#fromSettings(Map)}
+     */
+    public void updateKeySettings(Map<KeyCode, KeyAction> newSettings){
+        this.keySettings = KeySettings.fromSettings(newSettings);
+    }
     /**
      * {@inheritDoc}
      */
 
     public KeyAction keyPressed(final KeyCode k) {
-        return this.keySettings.currentSettings.get(k);
+        return this.keySettings.getAction(k);
     }
 
     /**
