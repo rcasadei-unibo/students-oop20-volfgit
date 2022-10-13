@@ -23,7 +23,16 @@ public interface Binder<C, V> {
      */
     void bind(C controller, V view);
 
+    /**
+     * Returns the controller.
+     * @return the controller
+     */
+    C getController();
+
+    /**
+     * Returns the view.
+     * @return the view
+     */
     V getView();
 
-    C getController();
 }

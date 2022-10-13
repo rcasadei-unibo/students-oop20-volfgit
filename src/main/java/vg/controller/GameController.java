@@ -1,6 +1,5 @@
 package vg.controller;
 
-import javafx.scene.Scene;
 import javafx.scene.input.KeyCode;
 import vg.utils.Command;
 import vg.model.Stage;
@@ -15,14 +14,14 @@ import java.util.List;
  * Game Engine class, manager game loop and refresh timing
  * during gameplay
  * */
-public class GameController<T> implements EventHandlerController {
+public class GameController<T>  {
     private List<Command<Player>> movementQueue;
     private static final long CYCLE_PERIOD = 500; // frequencies = 1/period
     private boolean gameLoopIsRunning = true;
 
-    private Stage<T> domain;
-    private Scene view;
-    private KeyEventImpl keyEventSettings;
+    private Stage<T> stage;
+    private AdaptableView view;
+    private KeyEventHandler keyEventSettings;
 
     /**
      * Setup view, keyEvent and domain.
@@ -30,9 +29,10 @@ public class GameController<T> implements EventHandlerController {
      * @param keyEventSettings keyboard key-action mapper
      * @param stage Model of game
      */
-    public void setup(final Scene view, final KeyEventImpl keyEventSettings, final Stage<T> stage) {
+
+    public void setup(final AdaptableView view, final KeyEventHandler keyEventSettings, final Stage<T> stage) {
         this.movementQueue = new ArrayList<>();
-        this.domain = stage;
+        this.stage = stage;
         this.keyEventSettings = keyEventSettings;
         this.view = view;
     }
@@ -61,10 +61,10 @@ public class GameController<T> implements EventHandlerController {
      * @param elapsedTime time elapsed between current and previous gameLoop cycle
      */
     private void updateGameDomain(final long elapsedTime) {
-        this.domain.getMap().updateBonusTimer(elapsedTime);
-        this.domain.doCycle();
+        this.stage.getMap().updateBonusTimer(elapsedTime);
+        this.stage.doCycle();
 
-        if (this.domain.getPlayer().getLife() <= 0) {
+        if (this.stage.getPlayer().getLife() <= 0) {
             gameOver();
         }
 
@@ -89,7 +89,7 @@ public class GameController<T> implements EventHandlerController {
             Command<Player> cmd = this.movementQueue.get(0);
             this.movementQueue.remove(cmd);
             //set new player direction
-            cmd.execute(this.domain.getPlayer());
+            cmd.execute(this.stage.getPlayer());
         }
     }
 
@@ -153,11 +153,11 @@ public class GameController<T> implements EventHandlerController {
         this.gameLoop();
     }
 
-    public void setView(final Scene view) {
+    public void setView(final AdaptableView view) {
         this.view = view;
     }
 
-    @Override
+    //@Override
     public void notifyKeyEvent(final KeyCode code) {
         switch (code) {
             case UP: appendPlayerCommand(Direction.UP); break;
@@ -185,7 +185,5 @@ public class GameController<T> implements EventHandlerController {
         this.appendMovementCommand((Command<Player>) pl -> pl.changeDirection(dir));
     }
 
-    public void setKeyEventSettings(final KeyEventImpl keyEventSettings) {
-        this.keyEventSettings = keyEventSettings;
-    }
+
 }
