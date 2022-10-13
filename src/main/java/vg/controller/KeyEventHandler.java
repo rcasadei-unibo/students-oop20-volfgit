@@ -11,8 +11,8 @@ import static javafx.scene.input.KeyEvent.KEY_PRESSED;
 import static javafx.scene.input.KeyEvent.KEY_RELEASED;
 
 public final class KeyEventHandler implements EventHandler<KeyEvent> {
-    private final KeySettings keySettings = KeySettings.defaultKeyEventImpl();
-    
+    private final KeySettings keySettings = KeySettings.defaultKeySettings();
+
     /**
      * {@inheritDoc}
      */

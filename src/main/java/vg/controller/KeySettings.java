@@ -12,16 +12,32 @@ public class KeySettings {
      */
     public final Map<KeyCode, KeyAction> currentSettings;
 
+    /**
+     * Private constructor.
+     * @param settings {{@link #currentSettings}}
+     * @see KeyAction
+     */
     private KeySettings(Map<KeyCode, KeyAction> settings) {
         this.currentSettings = settings;
     }
-    public static KeySettings defaultKeyEventImpl() {
+
+    /**
+     * Default constructor that associates {@link KeyAction} to
+     * {@link KeyCode} as is.
+     * @return {@link KeySettings}
+     */
+    public static KeySettings defaultKeySettings() {
         Map<KeyCode, KeyAction> settings = new HashMap<KeyCode, KeyAction>();
         Stream.of(KeyAction.values()).forEach(e -> settings.put(KeyCode.valueOf(e.toString()), e));
         return new KeySettings(settings);
     }
 
-    public static KeySettings fromSettingsKeyEventImpl(final Map<KeyCode, KeyAction> settings) {
+    /**
+     * Constructor for {@link KeySettings} from customized settings.
+     * @param settings the map from where each {@link KeyAction} will be bound
+     * @return {@link KeySettings}
+     */
+    public static KeySettings fromSettings(final Map<KeyCode, KeyAction> settings) {
         return new KeySettings(settings);
     }
 }
