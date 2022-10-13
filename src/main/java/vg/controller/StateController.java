@@ -49,7 +49,7 @@ public interface StateController<V> {
     KeyEventImpl getKeyEventSettings();
 
     /**
-     * Setter for the {@link KeyEvent}.
+     * Setter for the {@link KeyEventVg}.
      * @param keyEventSettings {@link KeyEventImpl}
      */
     void setKeyEventSettings(KeyEventImpl keyEventSettings);
