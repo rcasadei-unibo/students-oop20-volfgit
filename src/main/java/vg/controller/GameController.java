@@ -1,5 +1,6 @@
 package vg.controller;
 
+import javafx.scene.Scene;
 import javafx.scene.input.KeyCode;
 import vg.utils.Command;
 import vg.model.Stage;
@@ -14,13 +15,13 @@ import java.util.List;
  * Game Engine class, manager game loop and refresh timing
  * during gameplay
  * */
-public class GameController<T> implements StateController<AdaptableView> {
+public class GameController<T> implements EventHandlerController {
     private List<Command<Player>> movementQueue;
     private static final long CYCLE_PERIOD = 500; // frequencies = 1/period
     private boolean gameLoopIsRunning = true;
 
-    private Stage<T> stage;
-    private AdaptableView view;
+    private Stage<T> domain;
+    private Scene view;
     private KeyEventImpl keyEventSettings;
 
     /**
@@ -29,9 +30,9 @@ public class GameController<T> implements StateController<AdaptableView> {
      * @param keyEventSettings keyboard key-action mapper
      * @param stage Model of game
      */
-    public void setup(final AdaptableView view, final KeyEventImpl keyEventSettings, final Stage<T> stage) {
+    public void setup(final Scene view, final KeyEventImpl keyEventSettings, final Stage<T> stage) {
         this.movementQueue = new ArrayList<>();
-        this.stage = stage;
+        this.domain = stage;
         this.keyEventSettings = keyEventSettings;
         this.view = view;
     }
@@ -60,10 +61,10 @@ public class GameController<T> implements StateController<AdaptableView> {
      * @param elapsedTime time elapsed between current and previous gameLoop cycle
      */
     private void updateGameDomain(final long elapsedTime) {
-        this.stage.getMap().updateBonusTimer(elapsedTime);
-        this.stage.doCycle();
+        this.domain.getMap().updateBonusTimer(elapsedTime);
+        this.domain.doCycle();
 
-        if (this.stage.getPlayer().getLife() <= 0) {
+        if (this.domain.getPlayer().getLife() <= 0) {
             gameOver();
         }
 
@@ -88,7 +89,7 @@ public class GameController<T> implements StateController<AdaptableView> {
             Command<Player> cmd = this.movementQueue.get(0);
             this.movementQueue.remove(cmd);
             //set new player direction
-            cmd.execute(this.stage.getPlayer());
+            cmd.execute(this.domain.getPlayer());
         }
     }
 
@@ -152,25 +153,13 @@ public class GameController<T> implements StateController<AdaptableView> {
         this.gameLoop();
     }
 
-    @Override
-    public AdaptableView getView() {
-        return this.view;
-    }
-
-    @Override
-    public void setView(final AdaptableView view) {
+    public void setView(final Scene view) {
         this.view = view;
     }
 
     @Override
-    public KeyAction captureKeyEvent(final KeyCode key) {
-        return getKeyEventSettings().keyPressed(key);
-    }
-
-    @Override
-    public void activatesEvent(final KeyAction e) {
-
-        switch (e) {
+    public void notifyKeyEvent(final KeyCode code) {
+        switch (code) {
             case UP: appendPlayerCommand(Direction.UP); break;
             case DOWN:  appendPlayerCommand(Direction.DOWN); break;
             case LEFT: appendPlayerCommand(Direction.LEFT); break;
@@ -183,29 +172,19 @@ public class GameController<T> implements StateController<AdaptableView> {
                     this.resumeGame();
                 }
                 break;
-            case BACK:
+            case CANCEL:
             case ENTER:
                 break;
-            case ESC: this.closeGame(); break;
+            case ESCAPE: this.closeGame(); break;
             default:
         }
+        System.out.println(code.getName());
     }
 
     private void appendPlayerCommand(final Direction dir) {
         this.appendMovementCommand((Command<Player>) pl -> pl.changeDirection(dir));
     }
 
-    @Override
-    public void activatesEvent(StateType e) {
-
-    }
-
-    @Override
-    public KeyEventImpl getKeyEventSettings() {
-        return this.keyEventSettings;
-    }
-
-    @Override
     public void setKeyEventSettings(final KeyEventImpl keyEventSettings) {
         this.keyEventSettings = keyEventSettings;
     }

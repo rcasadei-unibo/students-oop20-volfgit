@@ -14,9 +14,9 @@ public final class KeyEventImpl implements KeyEvent {
     private KeyEventImpl(final Map<KeyCode, KeyAction> settings) {
         this.currentSettings = settings;
     }
-    public KeyEventImpl defaultKeyEventImpl() {
+    public static KeyEventImpl defaultKeyEventImpl() {
         Map<KeyCode, KeyAction> settings = new HashMap<>();
-        Stream.of(KeyAction.values()).forEach(e -> settings.put(KeyCode.valueOf(e.toString()), e));
+        //Stream.of(KeyAction.values()).forEach(e -> settings.put(KeyCode.valueOf(e.toString()), e));
         return new KeyEventImpl(settings);
     }
     public KeyEventImpl fromSettingsKeyEventImpl(final Map<KeyCode, KeyAction> settings) {

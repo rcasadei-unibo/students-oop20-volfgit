@@ -22,4 +22,8 @@ public interface Binder<C, V> {
      * @param view the view
      */
     void bind(C controller, V view);
+
+    V getView();
+
+    C getController();
 }
