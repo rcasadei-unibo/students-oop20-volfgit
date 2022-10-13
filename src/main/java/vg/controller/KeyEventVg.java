@@ -1,5 +1,6 @@
 package vg.controller;
 import javafx.scene.input.KeyCode;
+import vg.view.utils.KeyAction;
 
 /**
  * Interface that defines how actions and key pressing/releasing

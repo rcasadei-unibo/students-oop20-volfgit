@@ -7,6 +7,7 @@
 <?import javafx.scene.layout.FlowPane?>
 <?import javafx.scene.layout.Pane?>
 
+<?import javafx.scene.control.Button?>
 <BorderPane fx:controller="vg.view.gameBoard.GameBoardController" id="gameAreaDue" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1">
    <top>
       <SplitPane dividerPositions="0.3, 0.7" prefHeight="60.0" prefWidth="600.0" BorderPane.alignment="CENTER">
@@ -43,7 +44,11 @@
                   <TextField layoutX="85.0" layoutY="17.0" prefHeight="26.0" prefWidth="67.0" text="00.0%" />
                </children>
             </AnchorPane>
-            <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="160.0" prefWidth="100.0" />
+          <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="160.0" prefWidth="100.0">
+              <children>
+                  <Button fx:id="mainMenuButton" onMouseClicked="#mainMenuButtonClicked" mnemonicParsing="false" prefHeight="25.0" prefWidth="147.0" text="mainMenu"/>
+              </children>
+          </AnchorPane>
         </items>
       </SplitPane>
    </bottom>

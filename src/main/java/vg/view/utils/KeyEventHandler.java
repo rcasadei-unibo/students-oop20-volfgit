@@ -1,38 +1,41 @@
-package vg.controller;
+package vg.view.utils;
 
 import javafx.event.EventHandler;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 
 
-import java.util.HashMap;
 import java.util.Map;
-import java.util.stream.Stream;
 
 import static javafx.scene.input.KeyEvent.KEY_PRESSED;
+import static javafx.scene.input.KeyEvent.KEY_RELEASED;
 
+/**
+ * Implementation of {@link EventHandler}.
+ * Internally using a {@link KeySettings} which will define
+ * the correct action to execute.
+ * @see EventHandler
+ * @see KeyEvent
+ */
 public final class KeyEventHandler implements EventHandler<KeyEvent> {
     /**
-     * The map the associates an action to a key.
+     * @see KeySettings
      */
-    private final Map<KeyCode, KeyAction> currentSettings;
-    private KeyEventHandler(final Map<KeyCode, KeyAction> settings) {
-        this.currentSettings = settings;
-    }
-    public static KeyEventHandler defaultKeyEventImpl() {
-        Map<KeyCode, KeyAction> settings = new HashMap<>();
-        Stream.of(KeyAction.values()).forEach(e -> settings.put(KeyCode.valueOf(e.toString()), e));
-        return new KeyEventHandler(settings);
-    }
-    public KeyEventHandler fromSettingsKeyEventImpl(final Map<KeyCode, KeyAction> settings) {
-        return new KeyEventHandler(settings);
+    private KeySettings keySettings = KeySettings.defaultKeySettings();
+
+    /**
+     * Updates the key settings.
+     * @param newSettings {@link KeySettings#fromSettings(Map)}
+     */
+    public void updateKeySettings(Map<KeyCode, KeyAction> newSettings){
+        this.keySettings = KeySettings.fromSettings(newSettings);
     }
     /**
      * {@inheritDoc}
      */
 
     public KeyAction keyPressed(final KeyCode k) {
-        return this.currentSettings.get(k);
+        return this.keySettings.getAction(k);
     }
 
     /**
@@ -46,12 +49,15 @@ public final class KeyEventHandler implements EventHandler<KeyEvent> {
 
     @Override
     public void handle(KeyEvent event) {
-
+       // System.out.println(event);
         if (event.getEventType().equals(KEY_PRESSED)){
            //TODO do this in a non-static way ((StateController) Binder.getController()).activatesEvent(keyPressed(event.getCode()));
             System.out.println("KEY_PRESSED" + ": " + event.getCode());
-        } else {
+        } else if (event.getEventType().equals(KEY_RELEASED)){
             System.out.println("KEY_RELEASED" + ": " + event.getCode());
+        } else {
+            //TODO this is "typed"...........
+            System.out.println(event);
         }
     }
 }

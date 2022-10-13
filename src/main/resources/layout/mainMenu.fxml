@@ -10,11 +10,11 @@
    <center>
       <VBox alignment="CENTER" prefHeight="320.0" prefWidth="488.0" BorderPane.alignment="CENTER">
          <children>
-            <Button fx:id="play" onMouseClicked="playButtonClicked" mnemonicParsing="false" prefHeight="25.0" prefWidth="148.0" text="Play" />
-            <Button fx:id="leaderboards" onMouseClicked="leaderboardsButtonClicked" mnemonicParsing="false" prefHeight="25.0" prefWidth="147.0" text="Leaderboards" />
-            <Button fx:id="settings" onMouseClicked="settingsButtonClicked" mnemonicParsing="false" prefHeight="25.0" prefWidth="147.0" text="Settings" />
-            <Button fx:id="controls" onMouseClicked="settingsButtonClicked" mnemonicParsing="false" prefHeight="25.0" prefWidth="147.0" text="Controls" />
-            <Button fx:id="quit" onMouseClicked="quitButtonClicked" mnemonicParsing="false" prefHeight="25.0" prefWidth="147.0" text="Quit" />
+            <Button fx:id="play" onMouseClicked="#playButtonClicked" mnemonicParsing="false" prefHeight="25.0" prefWidth="148.0" text="Play" />
+            <Button fx:id="leaderboards" onMouseClicked="#leaderboardsButtonClicked" mnemonicParsing="false" prefHeight="25.0" prefWidth="147.0" text="Leaderboards" />
+            <Button fx:id="settings" onMouseClicked="#settingsButtonClicked" mnemonicParsing="false" prefHeight="25.0" prefWidth="147.0" text="Settings" />
+            <Button fx:id="controls" onMouseClicked="#settingsButtonClicked" mnemonicParsing="false" prefHeight="25.0" prefWidth="147.0" text="Controls" />
+            <Button fx:id="quit" onMouseClicked="#quitButtonClicked" mnemonicParsing="false" prefHeight="25.0" prefWidth="147.0" text="Quit" />
 
          </children>
       </VBox>

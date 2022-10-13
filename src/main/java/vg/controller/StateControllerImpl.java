@@ -2,6 +2,8 @@ package vg.controller;
 
 import javafx.scene.input.KeyCode;
 import vg.view.AdaptableView;
+import vg.view.utils.KeyAction;
+import vg.view.utils.KeyEventHandler;
 
 public class StateControllerImpl implements StateController<AdaptableView> {
     /**
