@@ -21,7 +21,7 @@ public class GameController<T> implements StateController<AdaptableView> {
 
     private Stage<T> stage;
     private AdaptableView view;
-    private KeyEventImpl keyEventSettings;
+    private KeyEventHandler keyEventSettings;
 
     /**
      * Setup view, keyEvent and domain.
@@ -29,7 +29,7 @@ public class GameController<T> implements StateController<AdaptableView> {
      * @param keyEventSettings keyboard key-action mapper
      * @param stage Model of game
      */
-    public void setup(final AdaptableView view, final KeyEventImpl keyEventSettings, final Stage<T> stage) {
+    public void setup(final AdaptableView view, final KeyEventHandler keyEventSettings, final Stage<T> stage) {
         this.movementQueue = new ArrayList<>();
         this.stage = stage;
         this.keyEventSettings = keyEventSettings;
@@ -183,10 +183,10 @@ public class GameController<T> implements StateController<AdaptableView> {
                     this.resumeGame();
                 }
                 break;
-            case BACK:
+
             case ENTER:
                 break;
-            case ESC: this.closeGame(); break;
+            case ESCAPE: this.closeGame(); break;
             default:
         }
     }
@@ -201,12 +201,12 @@ public class GameController<T> implements StateController<AdaptableView> {
     }
 
     @Override
-    public KeyEventImpl getKeyEventSettings() {
+    public KeyEventHandler getKeyEventSettings() {
         return this.keyEventSettings;
     }
 
     @Override
-    public void setKeyEventSettings(final KeyEventImpl keyEventSettings) {
+    public void setKeyEventSettings(final KeyEventHandler keyEventSettings) {
         this.keyEventSettings = keyEventSettings;
     }
 }

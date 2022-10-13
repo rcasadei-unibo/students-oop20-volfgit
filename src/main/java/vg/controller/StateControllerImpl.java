@@ -11,7 +11,7 @@ public class StateControllerImpl implements StateController<AdaptableView> {
     /**
      * The settings bound to keys.
      */
-    private KeyEventImpl keyEventSettings;
+    private KeyEventHandler keyEventSettings;
     /**
      * {@inheritDoc}
      */
@@ -51,11 +51,11 @@ public class StateControllerImpl implements StateController<AdaptableView> {
     public void activatesEvent(final StateType e) {
 
     }
-    public KeyEventImpl getKeyEventSettings() {
+    public KeyEventHandler getKeyEventSettings() {
         return keyEventSettings;
     }
 
-    public void setKeyEventSettings(final KeyEventImpl keyEventSettings) {
+    public void setKeyEventSettings(final KeyEventHandler keyEventSettings) {
         this.keyEventSettings = keyEventSettings;
     }
 

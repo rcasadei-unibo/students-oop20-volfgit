@@ -44,13 +44,13 @@ public interface StateController<V> {
 
     /**
      * Returns the current setting of bindings from key to actions.
-     * @return {@link KeyEventImpl}
+     * @return {@link KeyEventHandler}
      */
-    KeyEventImpl getKeyEventSettings();
+    KeyEventHandler getKeyEventSettings();
 
     /**
      * Setter for the {@link KeyEventVg}.
-     * @param keyEventSettings {@link KeyEventImpl}
+     * @param keyEventSettings {@link KeyEventHandler}
      */
-    void setKeyEventSettings(KeyEventImpl keyEventSettings);
+    void setKeyEventSettings(KeyEventHandler keyEventSettings);
 }
