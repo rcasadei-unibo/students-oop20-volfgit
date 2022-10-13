@@ -5,7 +5,7 @@ import javafx.scene.input.KeyCode;
  * Interface that defines how actions and key pressing/releasing
  * will be bound.
  */
-public interface KeyEvent {
+public interface KeyEventVg {
     /**
      * Returns the action for the specific key pressing event.
      * @param k the key that is pressed
