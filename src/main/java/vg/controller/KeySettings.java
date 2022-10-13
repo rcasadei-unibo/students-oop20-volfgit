@@ -10,7 +10,7 @@ public class KeySettings {
     /**
      * The map the associates an action to a key.
      */
-    public final Map<KeyCode, KeyAction> currentSettings;
+    private final Map<KeyCode, KeyAction> currentSettings;
 
     /**
      * Private constructor.
@@ -39,5 +39,14 @@ public class KeySettings {
      */
     public static KeySettings fromSettings(final Map<KeyCode, KeyAction> settings) {
         return new KeySettings(settings);
+    }
+
+    /**
+     * Returns the {@link KeyAction} associated with the {@link KeyCode}.
+     * @param k the {@link KeyCode}
+     * @return {@link KeyAction}
+     */
+    public KeyAction getAction(KeyCode k) {
+        return this.currentSettings.get(k);
     }
 }
