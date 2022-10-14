@@ -30,35 +30,4 @@ public class StateControllerImpl implements StateController<AdaptableView> {
         this.view = view;
     }
 
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    public KeyAction captureKeyEvent(final KeyCode key) {
-        return getKeyEventSettings().keyPressed(key);
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    public void activatesEvent(final KeyAction e) {
-
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    public void activatesEvent(final StateType e) {
-
-    }
-    public KeyEventHandler getKeyEventSettings() {
-        return keyEventSettings;
-    }
-
-    public void setKeyEventSettings(final KeyEventHandler keyEventSettings) {
-        this.keyEventSettings = keyEventSettings;
-    }
-
 }

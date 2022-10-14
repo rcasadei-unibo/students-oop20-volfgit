@@ -21,38 +21,5 @@ public interface StateController<V> {
      * @param view the view that will be bound
      */
     void setView(V view);
-    /**
-     * Captures a key pressed event from the view and
-     * transform it into a {@link KeyAction}.
-     * @param key the key pressed
-     * @return {@link KeyAction}
-     */
-    KeyAction captureKeyEvent(KeyCode key);
 
-    /**
-     * Based on what state the software currently is,
-     * certain keys will do certain actions and this
-     * method executes the correct one.
-     * @param e {@link KeyAction}
-     */
-    void activatesEvent(KeyAction e);
-
-    /**
-     * Overloading of the above method but this will
-     * actually change the state to another.
-     * @param e {@link StateType}
-     */
-    void activatesEvent(StateType e);
-
-    /**
-     * Returns the current setting of bindings from key to actions.
-     * @return {@link KeyEventHandler}
-     */
-    KeyEventHandler getKeyEventSettings();
-
-    /**
-     * Setter for the {@link KeyEventVg}.
-     * @param keyEventSettings {@link KeyEventHandler}
-     */
-    void setKeyEventSettings(KeyEventHandler keyEventSettings);
 }
