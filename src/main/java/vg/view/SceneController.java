@@ -11,6 +11,17 @@ public interface SceneController {
      * will create an effect.
      * @param k {@link KeyAction}
      */
-    void activateEvent(KeyAction k);
+    void keyTapped(KeyAction k);
+
+    /**
+     *
+     * @param k {@link KeyAction}
+     */
+    void keyPressed(KeyAction k);
+    /**
+     *
+     * @param k {@link KeyAction}
+     */
+    void keyReleased(KeyAction k);
 
 }

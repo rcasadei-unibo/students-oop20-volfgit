@@ -160,13 +160,13 @@ public class GameController<T> implements SceneController {
     private void appendPlayerCommand(final Direction dir) {
         this.appendMovementCommand((Command<Player>) pl -> pl.changeDirection(dir));
     }
+
+    /**
+     * {@inheritDoc}
+     */
     @Override
-    public void activateEvent(final KeyAction e) {
-        switch (e) {
-            case UP: appendPlayerCommand(Direction.UP); break;
-            case DOWN:  appendPlayerCommand(Direction.DOWN); break;
-            case LEFT: appendPlayerCommand(Direction.LEFT); break;
-            case RIGHT:  appendPlayerCommand(Direction.RIGHT); break;
+    public void keyTapped(final KeyAction action) {
+        switch (action) {
             case P:
                 //Toggle from pause and playing state
                 if (gameLoopIsRunning) {
@@ -179,6 +179,36 @@ public class GameController<T> implements SceneController {
                 break;
             case ESCAPE: this.closeGame(); break;
             default:
+        }
+    }
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public void keyPressed(final KeyAction action) {
+        switch (action) {
+            case UP:
+                appendPlayerCommand(Direction.UP);
+                break;
+            case DOWN:
+                appendPlayerCommand(Direction.DOWN);
+                break;
+            case LEFT:
+                appendPlayerCommand(Direction.LEFT);
+                break;
+            case RIGHT:
+                appendPlayerCommand(Direction.RIGHT);
+                break;
+            default:
+        }
+    }
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public void keyReleased(final KeyAction k) {
+        if (k == KeyAction.DOWN || k == KeyAction.UP || k == KeyAction.LEFT || k == KeyAction.RIGHT) {
+            appendPlayerCommand(Direction.NONE);
         }
     }
 }
