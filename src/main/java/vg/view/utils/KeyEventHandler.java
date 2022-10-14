@@ -20,14 +20,17 @@ import static javafx.scene.input.KeyEvent.KEY_RELEASED;
  * @see KeyEvent
  */
 public final class KeyEventHandler implements EventHandler<KeyEvent> {
+
     /**
      * @see KeySettings
      */
     private KeySettings keySettings = KeySettings.defaultKeySettings();
+
     /**
      * Active view's scene controller to be notified of keyboard events.
      */
     private Optional<SceneController> sceneController;
+
     /**
      * Updates the key settings.
      * @param newSettings {@link KeySettings#fromSettings(Map)}
@@ -35,18 +38,21 @@ public final class KeyEventHandler implements EventHandler<KeyEvent> {
     public void updateKeySettings(final Map<KeyCode, KeyAction> newSettings) {
         this.keySettings = KeySettings.fromSettings(newSettings);
     }
+
     /**
      * {@inheritDoc}
      */
     public KeyAction keyPressed(final KeyCode k) {
         return this.keySettings.getAction(k);
     }
+
     /**
      * {@inheritDoc}
      */
     public KeyAction keyReleased(final KeyCode k) {
         return null;
     }
+
     /**
      * Set controller of current scene view.
      * @param sceneController scene controller to be notified about new KeyEvent
