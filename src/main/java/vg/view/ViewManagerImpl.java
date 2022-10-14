@@ -1,11 +1,13 @@
 package vg.view;
 
 import javafx.scene.Scene;
+import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.stage.Stage;
 import vg.view.utils.KeyAction;
 import vg.view.utils.KeyEventHandler;
 
+import java.util.Map;
 import java.util.Optional;
 import java.util.Stack;
 
@@ -19,15 +21,30 @@ public class ViewManagerImpl implements ViewManager {
     private final Stack<Scene> sceneStack;
     private final KeyEventHandler keyEventHandler;
 
+    private ViewManagerImpl(final Stage stage, final KeyEventHandler keyEventHandler) {
+        this.stage = stage;
+        this.sceneStack = new Stack<>();
+        this.keyEventHandler = keyEventHandler;
+        stage.addEventHandler(KeyEvent.ANY, keyEventHandler);
+    }
+
+    /**
+     * Return new ViewManager that control scene of a stage.
+     * @param stage the main scene that cannot be removed, the entry point view
+     * @param keySetting Map association KeyCode to KeyAction.
+     */
+    public ViewManager newViewManager(final Stage stage, final Map<KeyCode, KeyAction> keySetting) {
+        KeyEventHandler keyEventHandler = new KeyEventHandler();
+        keyEventHandler.updateKeySettings(keySetting);
+        return new ViewManagerImpl(stage, keyEventHandler);
+    }
+
     /**
      * Return new ViewManager that control scene of a stage.
      * @param stage the main scene that cannot be removed, the entry point view
      */
-    public ViewManagerImpl(final Stage stage) {
-        this.stage = stage;
-        this.sceneStack = new Stack<>();
-        this.keyEventHandler = new KeyEventHandler();
-        stage.addEventHandler(KeyEvent.ANY, this.keyEventHandler);
+    public ViewManager newViewManager(final Stage stage) {
+        return new ViewManagerImpl(stage, new KeyEventHandler());
     }
 
     @Override
@@ -45,6 +62,13 @@ public class ViewManagerImpl implements ViewManager {
             //TODO: get controller of view and set
             this.stage.setScene(this.sceneStack.lastElement());
         }
+    }
+
+    @Override
+    public void backHome() {
+        Scene mainScene = this.sceneStack.firstElement();
+        this.sceneStack.removeAllElements();
+        this.sceneStack.add(mainScene);
     }
 
     public Stage getStage() {
