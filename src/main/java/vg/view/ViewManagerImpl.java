@@ -3,11 +3,11 @@ package vg.view;
 import javafx.scene.Scene;
 import javafx.scene.input.KeyEvent;
 import javafx.stage.Stage;
+import vg.view.utils.KeyAction;
 import vg.view.utils.KeyEventHandler;
 
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Optional;
+import java.util.Stack;
 
 /**
  * ViewManager is responsible to manage and the navigation stack from main page;
@@ -16,7 +16,8 @@ import java.util.Optional;
  */
 public class ViewManagerImpl implements ViewManager {
     private final Stage stage;
-    private List<Scene> sceneStack;
+    private final Stack<Scene> sceneStack;
+    private final KeyEventHandler keyEventHandler;
 
     /**
      * Return new ViewManager that control scene of a stage.
@@ -24,50 +25,29 @@ public class ViewManagerImpl implements ViewManager {
      */
     public ViewManagerImpl(final Stage stage) {
         this.stage = stage;
-        //stage.addEventHandler(KeyEvent.KEY_PRESSED,);
-        /*TODO: IDEA COSA ANDREBBE FATTO :
-           quando si verifca un evento questo deve essere comunicato al controller della view attiva attraverso
-           il metodo di interfaccia SceneController.activateEvent()
-           (event, controller) -> {
-                c.activateEvent(e.keyAction);
-           }
-        */
-        this.sceneStack = new ArrayList<>();
+        this.sceneStack = new Stack<>();
+        this.keyEventHandler = new KeyEventHandler();
+        stage.addEventHandler(KeyEvent.ANY, this.keyEventHandler);
     }
 
     @Override
-    public void addScene(final Scene scene/*, final EventHandlerController controller*/) {
-        /* TODO: remove handler ....
-        * */
-        this.stage.addEventHandler(KeyEvent.KEY_PRESSED, e -> {
-            /*TODO:
-               1) get controller from element in sceneStack
-               2) call method on controller passing event e (in order to call method activatesEvent(....))
-            */
-        });
-        this.sceneStack.add(scene);
+    public void addScene(final Scene scene) {
+        //TODO: get controller of view and set
+        //this.keyEventHandler.setSceneController(getCurrentController());
+        this.sceneStack.push(scene);
         this.stage.setScene(scene);
     }
 
     @Override
     public void popScene() {
-        int stackSize = this.sceneStack.size();
-        if (stackSize > 1) {
-            this.sceneStack.remove(stackSize - 1);
-            this.stage.setScene(this.sceneStack.get(this.sceneStack.size() -1 ));
+        if (this.sceneStack.size() > 1) {
+            this.sceneStack.pop();
+            //TODO: get controller of view and set
+            this.stage.setScene(this.sceneStack.lastElement());
         }
     }
 
     public Stage getStage() {
         return this.stage;
-    }
-
-    private Optional<Scene> currentScene() {
-        if (!this.sceneStack.isEmpty()) {
-            return Optional.of(this.sceneStack.get(sceneStack.size()-1));
-        }
-        else {
-            return Optional.empty();
-        }
     }
 }
