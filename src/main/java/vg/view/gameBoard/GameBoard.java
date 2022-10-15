@@ -7,6 +7,7 @@ import javafx.stage.Stage;
 import vg.utils.LoadFxmlUtils;
 import vg.view.ViewManager;
 
+import java.awt.Button;
 import java.io.File;
 
 public class GameBoard extends Application {
@@ -17,22 +18,11 @@ public class GameBoard extends Application {
 
     @Override
     public void start(Stage stage) throws Exception {
-        stage.setTitle("GameBoard");
-       // Rectangle rect = new Rectangle(100, 0, 100, 100);
         Scene scene = new Scene(LoadFxmlUtils.loadFxml("layout/GameBoard.fxml"));
-
+        stage.setTitle("GameBoard");
         stage.setScene(scene);
-        stage.setWidth(1160);
-        stage.setHeight(740);
-
-
-
-
-      //  scene.getRoot().lookup("#gameArea").setClip(rect);
-
-      //  controller.stampa();
-//        this.controller.initResize();
-
+        stage.minWidthProperty().bind(scene.heightProperty().multiply(2));
+        stage.minHeightProperty().bind(scene.widthProperty().divide(2));
         stage.show();
 
     }
