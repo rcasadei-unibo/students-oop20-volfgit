@@ -1,46 +1,44 @@
 package vg.view.gameBoard;
 
 import javafx.fxml.FXML;
-import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.Pane;
-import vg.view.ViewManager;
+
+
 
 public class GameBoardController {
     @FXML
-    public BorderPane gameAreaDue;
+    public BorderPane borderPane;
+
     @FXML
     public Button mainMenuButton;
     @FXML
-    private Pane gameArea = new Pane();
+    private Pane gameArea;
+    private String gameAreaProve = "#gameArea";
 
-    @FXML
+
     private void initialize() {
         try {
-            gameArea.lookup("gameArea").setStyle("-fx-background-color: #ff08d7;");
+            gameArea.lookup(gameAreaProve).setStyle("-fx-background-color: #ff08d7;");
         } catch (Exception e){
-            System.out.println("mah");
+            System.out.println("NOOOO");
         };
     }
-
     @FXML
     private void gameAreaClicked() {
         System.out.println("gameAreaClicked");
     }
 
     public void stampa() {
-        System.out.println("stampa");
+        System.out.println("Entro in stampa");
         initialize();
     }
 
-    public Pane getGameArea() {
-        return gameArea;
-    }
 
     public void mainMenuButtonClicked(MouseEvent mouseEvent) {
-        System.out.println("button clicked");
-        //gameArea = GameBoard.loadMainMenu();
+        System.out.println("Button clicked");
     }
+
 }

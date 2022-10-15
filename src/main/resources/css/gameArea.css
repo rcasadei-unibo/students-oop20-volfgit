@@ -1,0 +1,18 @@
+
+.button {
+    -fx-background-color: red;
+    -fx-text-fill: white;
+}
+
+#gameArea {
+    -fx-background-color: #20bd97;
+    -fx-padding: 5%;
+
+}
+
+#gameAreaDue {
+    -fx-min-width: 100px;
+    -fx-min-height: 6%;
+
+}
+
