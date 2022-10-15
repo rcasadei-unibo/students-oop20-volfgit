@@ -5,15 +5,24 @@ import javafx.stage.Stage;
 
 
 public interface ViewManager {
+
     /**
      * Add new scene to the stack of views and show it.
+     * Ther first view you add is considered as home view and cannot be removed.
      * @param scene new scene view to be shown.
      */
     void addScene(Scene scene);
+
     /**
-     * Removed last-added scene view from stack and show the previous one.
+     * Removed last-added scene view from stack and show the previous one;
+     * If there is only one view nothing happens.
      */
     void popScene();
+
+    /**
+     * Remove all views in stack and keep first one and show it.
+     */
+    void backHome();
 
     /**
      * @return Primary stage of application

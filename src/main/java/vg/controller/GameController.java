@@ -7,7 +7,10 @@ import vg.model.entity.dynamicEntity.player.Player;
 import vg.utils.Direction;
 import vg.view.AdaptableView;
 import vg.view.SceneController;
+import vg.view.ViewManager;
 import vg.view.utils.KeyAction;
+import vg.view.utils.KeyEventHandler;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -15,7 +18,7 @@ import java.util.List;
  * Game Engine class, manager game loop and refresh timing
  * during gameplay
  * */
-public class GameController<T> implements SceneController {
+public class GameController<T> implements SceneController, StateController<AdaptableView> {
     /**
      * Command queue of new player's movement got from input to be applied.
      */
@@ -35,18 +38,24 @@ public class GameController<T> implements SceneController {
     /**
      * View of gameplay.
      */
-    private AdaptableView view;
+    private AdaptableView gameView;
+
+    private ViewManager viewManager;
+
     /**
      * Setup view, keyEvent and domain.
      * @param view game map view
      * @param stage Model of game
      */
-    public void setup(final AdaptableView view, final Stage<T> stage) {
+    public void setup(final AdaptableView view, final Stage<T> stage, final ViewManager viewManager) {
 
         this.movementQueue = new ArrayList<>();
         this.stage = stage;
 
-        this.view = view;
+        this.viewManager = viewManager;
+        this.gameView = view;
+        //show gameBoard
+        //this.viewManager.addScene(gameView);
     }
     /**
      * Loop to make game running. At every cycle it processes input, update domain then update gui.
@@ -86,7 +95,9 @@ public class GameController<T> implements SceneController {
     private void gameOver() {
         gameLoopIsRunning = false;
         //TODO: show gameover screen
+        //this.viewManager.addScene(gameOverSceneView);
     }
+
     /**
      * Process command in the head of queue (the older one)
      * in order to move player.
@@ -99,6 +110,7 @@ public class GameController<T> implements SceneController {
             cmd.execute(this.stage.getPlayer());
         }
     }
+
     /**
      * Update view of game.
      */
@@ -106,6 +118,7 @@ public class GameController<T> implements SceneController {
         //TODO: call method refresh on view object passing domain
         //this.view.refresh();
     }
+
     /**
      * Method to keep fixed time of each loop cycle,
      * it prevents that cycle duration is less than framerate period.
@@ -121,44 +134,39 @@ public class GameController<T> implements SceneController {
             }
         }
     }
-    /**
-     * Append new player command to the queue.
-     * @param cmd command to be executed on player
-     */
-    private void appendMovementCommand(final Command cmd) {
-        this.movementQueue.add(cmd);
-    }
-    /**
-     * Terminate gameLoop and go back to the previous screen.
-     */
-    private void closeGame() {
-        //end game and go back to home
-        gameLoopIsRunning = false;
-    }
-    /**
-     * Stop gameLoop and show pause view.
-     */
-    private void pauseGame() {
-        gameLoopIsRunning = true;
-        //this.gameState = GameState.PAUSED;
-        //TODO: show pause screen
-        //this.view = pause view
-    }
-    /**
-     * Restart gameLoop and show again game view.
-     */
-    private void resumeGame() {
-        gameLoopIsRunning = true;
-        //TODO: show game view
-        //this.view = show game play view
-        this.gameLoop();
-    }
+
     /**
      * Append command to change player direction at the movementQueue.
      * @param dir new direction of player to be set
      */
     private void appendPlayerCommand(final Direction dir) {
-        this.appendMovementCommand((Command<Player>) pl -> pl.changeDirection(dir));
+        this.movementQueue.add(pl -> pl.changeDirection(dir));
+    }
+
+    /**
+     * Terminate gameLoop and go back to the previous screen.
+     */
+    private void closeGame() {
+        gameLoopIsRunning = false;
+        this.viewManager.backHome();
+    }
+
+    /**
+     * Stop gameLoop and show pause view.
+     */
+    private void pauseGame() {
+        gameLoopIsRunning = true;
+        //TODO: show pause screen
+        //this.viewManager.addScene();
+    }
+
+    /**
+     * Restart gameLoop and show again game view.
+     */
+    private void resumeGame() {
+        gameLoopIsRunning = true;
+        this.viewManager.popScene();
+        this.gameLoop();
     }
 
     /**
@@ -202,6 +210,7 @@ public class GameController<T> implements SceneController {
             default:
         }
     }
+
     /**
      * {@inheritDoc}
      */
@@ -211,4 +220,15 @@ public class GameController<T> implements SceneController {
             appendPlayerCommand(Direction.NONE);
         }
     }
+
+    @Override
+    public AdaptableView getView() {
+        return null;
+    }
+
+    @Override
+    public void setView(AdaptableView view) {
+
+    }
+
 }
