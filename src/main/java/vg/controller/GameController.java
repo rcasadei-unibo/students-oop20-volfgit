@@ -1,6 +1,7 @@
 package vg.controller;
 
 
+import javafx.application.Platform;
 import vg.utils.Command;
 import vg.model.Stage;
 import vg.model.entity.dynamicEntity.player.Player;
@@ -9,7 +10,6 @@ import vg.view.AdaptableView;
 import vg.view.SceneController;
 import vg.view.ViewManager;
 import vg.view.utils.KeyAction;
-import vg.view.utils.KeyEventHandler;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -18,7 +18,7 @@ import java.util.List;
  * Game Engine class, manager game loop and refresh timing
  * during gameplay
  * */
-public class GameController<T> implements SceneController, StateController<AdaptableView> {
+public class GameController<T> extends Controller implements SceneController {
     /**
      * Command queue of new player's movement got from input to be applied.
      */
@@ -34,40 +34,25 @@ public class GameController<T> implements SceneController, StateController<Adapt
     /**
      * Game domain.
      */
-    private Stage<T> stage;
-    /**
-     * View of gameplay.
-     */
-    private AdaptableView gameView;
+    private Stage<T> stageDomain;
 
-    private ViewManager viewManager;
-
-    /**
-     * Setup view, keyEvent and domain.
-     * @param view game map view
-     * @param stage Model of game
-     */
-    public void setup(final AdaptableView view, final Stage<T> stage, final ViewManager viewManager) {
-
+    public GameController(final Stage<T> stage, AdaptableView view, ViewManager viewManager) {
+        super(view, viewManager);
         this.movementQueue = new ArrayList<>();
-        this.stage = stage;
-
-        this.viewManager = viewManager;
-        this.gameView = view;
-        //show gameBoard
-        //this.viewManager.addScene(gameView);
+        this.stageDomain = stage;
     }
+
     /**
      * Loop to make game running. At every cycle it processes input, update domain then update gui.
      */
     public void gameLoop() {
         long prevCycleTime = System.currentTimeMillis();
-
+        System.out.println("gameLoop Is FX Thread" + Platform.isFxApplicationThread());
         while (gameLoopIsRunning) {
             long curCycleTime = System.currentTimeMillis();
             long elapsedTime = curCycleTime - prevCycleTime;
             processInput();
-
+            System.out.println("loop");
             updateGameDomain(elapsedTime);
             render();
 
@@ -80,10 +65,11 @@ public class GameController<T> implements SceneController, StateController<Adapt
      * @param elapsedTime time elapsed between current and previous gameLoop cycle
      */
     private void updateGameDomain(final long elapsedTime) {
-        this.stage.getMap().updateBonusTimer(elapsedTime);
-        this.stage.doCycle();
+        this.stageDomain.getMap().updateBonusTimer(elapsedTime);
+        //this.stage.doCycle();
+        this.stageDomain.getPlayer().move();
 
-        if (this.stage.getPlayer().getLife() <= 0) {
+        if (this.stageDomain.getPlayer().getLife() <= 0) {
             gameOver();
         }
 
@@ -107,7 +93,7 @@ public class GameController<T> implements SceneController, StateController<Adapt
             Command<Player> cmd = this.movementQueue.get(0);
             this.movementQueue.remove(cmd);
             //set new player direction
-            cmd.execute(this.stage.getPlayer());
+            cmd.execute(this.stageDomain.getPlayer());
         }
     }
 
@@ -148,7 +134,7 @@ public class GameController<T> implements SceneController, StateController<Adapt
      */
     private void closeGame() {
         gameLoopIsRunning = false;
-        this.viewManager.backHome();
+       this.getViewManager().backHome();
     }
 
     /**
@@ -165,7 +151,7 @@ public class GameController<T> implements SceneController, StateController<Adapt
      */
     private void resumeGame() {
         gameLoopIsRunning = true;
-        this.viewManager.popScene();
+        this.getViewManager().popScene();
         this.gameLoop();
     }
 
@@ -219,16 +205,6 @@ public class GameController<T> implements SceneController, StateController<Adapt
         if (k == KeyAction.DOWN || k == KeyAction.UP || k == KeyAction.LEFT || k == KeyAction.RIGHT) {
             appendPlayerCommand(Direction.NONE);
         }
-    }
-
-    @Override
-    public AdaptableView getView() {
-        return null;
-    }
-
-    @Override
-    public void setView(AdaptableView view) {
-
     }
 
 }
