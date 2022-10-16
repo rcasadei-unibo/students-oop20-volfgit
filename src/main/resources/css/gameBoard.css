@@ -1,5 +1,4 @@
-
-
+/* Game screen layout */
 #gameArea {
     -fx-background-color: #9d9c9c;
     -fx-padding: 5%;
@@ -11,27 +10,29 @@
     -fx-background-color: black;
 }
 
-/* Hide lines in split pane*/
+/* Hide lines in split pane */
 .split-pane *.split-pane-divider {
     -fx-border-color:  transparent;
     -fx-background-color: transparent;
     -fx-background-insets: 0;
 }
 
-/* Hide lines in separator*/
+/* Hide lines in separator */
 .line {
     -fx-border-insets: 0px;
     -fx-border-width: 0px;
 }
 
-
-#lf01, #lf02, #lf03, #lf04, #lf05 {
+/* Life bar */
+#lf01, #lf02, #lf03, #lf04, #lf05, #lf06 {
     -fx-background-image: url("../img/life.png");
     -fx-background-size: 80%;
     -fx-background-repeat: no-repeat;
-    -fx-border-color: none;
     -fx-background-position: center;
     -fx-background-color: transparent;
+    -fx-pref-width: 40px;
+    -fx-pref-height: 40px;
+    -fx-padding: 15px 40px 15px 20px;
 }
 
 
