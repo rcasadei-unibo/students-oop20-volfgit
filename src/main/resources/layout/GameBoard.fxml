@@ -81,7 +81,7 @@
       </SplitPane>
    </bottom>
    <center>
-      <Pane id="gameArea" prefHeight="280.0" prefWidth="524.0" BorderPane.alignment="CENTER">
+      <Pane fx:id="gameArea" id="gameArea" prefHeight="280.0" prefWidth="524.0" BorderPane.alignment="CENTER">
          <BorderPane.margin>
             <Insets />
          </BorderPane.margin>
