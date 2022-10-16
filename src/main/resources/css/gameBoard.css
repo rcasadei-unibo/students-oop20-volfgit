@@ -1,6 +1,8 @@
 /* Game screen layout */
 #gameArea {
     -fx-background-color: #9d9c9c;
+    -fx-background-image: url("../img/abstractSky2.jpeg");
+    -fx-opacity: 0.75;
     -fx-padding: 5%;
     -fx-border-color: yellow;
     -fx-border-width: 2px;
