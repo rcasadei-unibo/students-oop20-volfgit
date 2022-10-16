@@ -1,16 +1,40 @@
 
-.button {
-    -fx-background-color: red;
-    -fx-text-fill: white;
-}
 
 #gameArea {
-    -fx-background-color: #20bd97;
+    -fx-background-color: #9d9c9c;
     -fx-padding: 5%;
-
+    -fx-border-color: yellow;
+    -fx-border-width: 2px;
 }
 
-#gameAreaDue {
-
+.separator, .split-pane  {
+    -fx-background-color: black;
 }
+
+/* Hide lines in split pane*/
+.split-pane *.split-pane-divider {
+    -fx-border-color:  transparent;
+    -fx-background-color: transparent;
+    -fx-background-insets: 0;
+}
+
+/* Hide lines in separator*/
+.line {
+    -fx-border-insets: 0px;
+    -fx-border-width: 0px;
+}
+
+
+#lf01, #lf02, #lf03, #lf04, #lf05 {
+    -fx-background-image: url("../img/life.png");
+    -fx-background-size: 80%;
+    -fx-background-repeat: no-repeat;
+    -fx-border-color: none;
+    -fx-background-position: center;
+    -fx-background-color: transparent;
+}
+
+
+
+
 
