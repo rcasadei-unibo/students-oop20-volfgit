@@ -10,9 +10,9 @@ public class LoadFxmlUtils {
         File file = new File("src/main/resources/" + relativePath);
         try {
             return FXMLLoader.load(file.toURI().toURL());
-
         } catch (IOException e) {
             e.printStackTrace();
+            System.out.println("File FXML not found.");
         }
         return null;
     }
