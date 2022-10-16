@@ -2,10 +2,14 @@ package vg.controller;
 
 
 import javafx.application.Platform;
-import vg.utils.Command;
+import vg.model.Boss.BossImpl;
+import vg.model.MapImpl;
+import vg.model.StageImpl;
+import vg.model.entity.dynamicEntity.enemy.Boss;
+import vg.model.entity.dynamicEntity.player.BasePlayer;
+import vg.utils.*;
 import vg.model.Stage;
 import vg.model.entity.dynamicEntity.player.Player;
-import vg.utils.Direction;
 import vg.view.AdaptableView;
 import vg.view.SceneController;
 import vg.view.ViewManager;
@@ -13,12 +17,13 @@ import vg.view.utils.KeyAction;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Set;
 
 /**
  * Game Engine class, manager game loop and refresh timing
  * during gameplay
  * */
-public class GameController<T> extends Controller implements SceneController {
+public class GameController extends Controller implements SceneController {
     /**
      * Command queue of new player's movement got from input to be applied.
      */
@@ -30,16 +35,34 @@ public class GameController<T> extends Controller implements SceneController {
     /**
      * Terminating condition of game loop.
      */
-    private boolean gameLoopIsRunning = true;
+    private GameState gameState = GameState.PLAYING;
     /**
      * Game domain.
      */
-    private Stage<T> stageDomain;
+    private Stage<V2D> stageDomain;
 
-    public GameController(final Stage<T> stage, AdaptableView view, ViewManager viewManager) {
+    public GameController(AdaptableView view, ViewManager viewManager) {
         super(view, viewManager);
         this.movementQueue = new ArrayList<>();
-        this.stageDomain = stage;
+        this.stageDomain = loadStageModel();
+    }
+
+    private Stage<V2D> loadStageModel() {
+        Boss boss =  new BossImpl(
+                new V2D(1,1),
+                new V2D(4,4),
+                3,
+                Shape.CIRCLE,
+                MassTier.HIGH);
+
+        return new StageImpl<V2D>(0, new MapImpl(
+                BasePlayer.newPlayer(new V2D(0, 0)),
+                boss,
+                Set.of(),
+                Set.of(),
+                Set.of(),
+                Set.of()
+        ));
     }
 
     /**
@@ -48,7 +71,7 @@ public class GameController<T> extends Controller implements SceneController {
     public void gameLoop() {
         long prevCycleTime = System.currentTimeMillis();
         System.out.println("gameLoop Is FX Thread" + Platform.isFxApplicationThread());
-        while (gameLoopIsRunning) {
+        while (gameState == GameState.PLAYING) {
             long curCycleTime = System.currentTimeMillis();
             long elapsedTime = curCycleTime - prevCycleTime;
             processInput();
@@ -60,6 +83,7 @@ public class GameController<T> extends Controller implements SceneController {
             prevCycleTime = curCycleTime;
         }
     }
+
     /**
      * Update game domain: entities position, bonuses and borders.
      * @param elapsedTime time elapsed between current and previous gameLoop cycle
@@ -75,13 +99,15 @@ public class GameController<T> extends Controller implements SceneController {
 
         //TODO: check if level is end then pass to next level
     }
+
     /**
      * gameOver state, stop running game loop then show gameOver screen view.
      */
     private void gameOver() {
-        gameLoopIsRunning = false;
+        gameState = GameState.STOPPED;
+        System.out.println("GAMEOVER");
         //TODO: show gameover screen
-        //this.viewManager.addScene(gameOverSceneView);
+        //this.getViewManager().addScene();
     }
 
     /**
@@ -133,16 +159,15 @@ public class GameController<T> extends Controller implements SceneController {
      * Terminate gameLoop and go back to the previous screen.
      */
     private void closeGame() {
-        gameLoopIsRunning = false;
-       this.getViewManager().backHome();
+        this.gameState = GameState.STOPPED;
+        this.getViewManager().backHome();
     }
 
     /**
      * Stop gameLoop and show pause view.
      */
     private void pauseGame() {
-        gameLoopIsRunning = true;
-        //TODO: show pause screen
+        this.gameState = GameState.PAUSED;
         //this.viewManager.addScene();
     }
 
@@ -150,7 +175,7 @@ public class GameController<T> extends Controller implements SceneController {
      * Restart gameLoop and show again game view.
      */
     private void resumeGame() {
-        gameLoopIsRunning = true;
+        this.gameState = GameState.PLAYING;
         this.getViewManager().popScene();
         this.gameLoop();
     }
@@ -163,9 +188,9 @@ public class GameController<T> extends Controller implements SceneController {
         switch (action) {
             case P:
                 //Toggle from pause and playing state
-                if (gameLoopIsRunning) {
+                if (gameState == GameState.PLAYING) {
                     this.pauseGame();
-                } else {
+                } else if (gameState == GameState.PAUSED) {
                     this.resumeGame();
                 }
                 break;
@@ -180,21 +205,24 @@ public class GameController<T> extends Controller implements SceneController {
      */
     @Override
     public void keyPressed(final KeyAction action) {
-        switch (action) {
-            case UP:
-                appendPlayerCommand(Direction.UP);
-                break;
-            case DOWN:
-                appendPlayerCommand(Direction.DOWN);
-                break;
-            case LEFT:
-                appendPlayerCommand(Direction.LEFT);
-                break;
-            case RIGHT:
-                appendPlayerCommand(Direction.RIGHT);
-                break;
-            default:
+        if (gameState == GameState.PLAYING) {
+            switch (action) {
+                case UP:
+                    appendPlayerCommand(Direction.UP);
+                    break;
+                case DOWN:
+                    appendPlayerCommand(Direction.DOWN);
+                    break;
+                case LEFT:
+                    appendPlayerCommand(Direction.LEFT);
+                    break;
+                case RIGHT:
+                    appendPlayerCommand(Direction.RIGHT);
+                    break;
+                default:
+            }
         }
+
     }
 
     /**
@@ -202,7 +230,9 @@ public class GameController<T> extends Controller implements SceneController {
      */
     @Override
     public void keyReleased(final KeyAction k) {
-        if (k == KeyAction.DOWN || k == KeyAction.UP || k == KeyAction.LEFT || k == KeyAction.RIGHT) {
+        if (gameState == GameState.PLAYING &&
+            (k == KeyAction.DOWN || k == KeyAction.UP ||
+             k == KeyAction.LEFT || k == KeyAction.RIGHT)) {
             appendPlayerCommand(Direction.NONE);
         }
     }
