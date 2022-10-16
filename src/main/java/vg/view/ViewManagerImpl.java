@@ -1,14 +1,8 @@
 package vg.view;
 
-import javafx.scene.Scene;
-import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.stage.Stage;
-import vg.view.utils.KeyAction;
 import vg.view.utils.KeyEventHandler;
-
-import java.util.Map;
-import java.util.Optional;
 import java.util.Stack;
 
 /**
@@ -17,8 +11,18 @@ import java.util.Stack;
  * about the keyEvent registered by EventHandler of stage.
  */
 public class ViewManagerImpl implements ViewManager {
+    /**
+     * JavaFX Stage of application.
+     */
     private final Stage stage;
-    private final Stack<Scene> sceneStack;
+    /**
+     * Stack of Views and their Controller. The last one is the showing view in application.
+     */
+    private final Stack<View> sceneStack;
+    /**
+     * Key Event Handler that propagate event to view's controller.
+     * {@see KeyEventHandler}.
+     */
     private final KeyEventHandler keyEventHandler;
 
     private ViewManagerImpl(final Stage stage, final KeyEventHandler keyEventHandler) {
@@ -28,47 +32,32 @@ public class ViewManagerImpl implements ViewManager {
         stage.addEventHandler(KeyEvent.ANY, keyEventHandler);
     }
 
-    /**
-     * Return new ViewManager that control scene of a stage.
-     * @param stage the main scene that cannot be removed, the entry point view
-     * @param keySetting Map association KeyCode to KeyAction.
-     */
-    public ViewManager newViewManager(final Stage stage, final Map<KeyCode, KeyAction> keySetting) {
-        KeyEventHandler keyEventHandler = new KeyEventHandler();
-        keyEventHandler.updateKeySettings(keySetting);
-        return new ViewManagerImpl(stage, keyEventHandler);
-    }
-
-    /**
-     * Return new ViewManager that control scene of a stage.
-     * @param stage the main scene that cannot be removed, the entry point view
-     */
-    public ViewManager newViewManager(final Stage stage) {
-        return new ViewManagerImpl(stage, new KeyEventHandler());
+    private void showScene() {
+        View lastView = this.sceneStack.lastElement();
+        this.stage.setScene(lastView.getScene());
+        this.keyEventHandler.setSceneController(lastView.getController());
     }
 
     @Override
-    public void addScene(final Scene scene) {
-        //TODO: get controller of view and set
-        //this.keyEventHandler.setSceneController(getCurrentController());
-        this.sceneStack.push(scene);
-        this.stage.setScene(scene);
+    public void addScene(final View view) {
+        this.sceneStack.push(view);
+        showScene();
     }
 
     @Override
     public void popScene() {
         if (this.sceneStack.size() > 1) {
             this.sceneStack.pop();
-            //TODO: get controller of view and set
-            this.stage.setScene(this.sceneStack.lastElement());
+            showScene();
         }
     }
 
     @Override
     public void backHome() {
-        Scene mainScene = this.sceneStack.firstElement();
+        View rootView = this.sceneStack.firstElement();
         this.sceneStack.removeAllElements();
-        this.sceneStack.add(mainScene);
+        this.sceneStack.add(rootView);
+        showScene();
     }
 
     public Stage getStage() {

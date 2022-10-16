@@ -9,9 +9,9 @@ public interface ViewManager {
     /**
      * Add new scene to the stack of views and show it.
      * Ther first view you add is considered as home view and cannot be removed.
-     * @param scene new scene view to be shown.
+     * @param view new scene view to be shown.
      */
-    void addScene(Scene scene);
+    void addScene(View view);
 
     /**
      * Removed last-added scene view from stack and show the previous one;
@@ -28,4 +28,6 @@ public interface ViewManager {
      * @return Primary stage of application
      */
     Stage getStage();
+
+
 }

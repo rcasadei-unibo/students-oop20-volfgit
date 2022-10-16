@@ -1,17 +1,18 @@
 package vg.view;
 
 
+import javafx.scene.Scene;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
+import vg.controller.Controller;
 import vg.view.utils.KeyAction;
 
-public interface View<C> {
-    C getController();
-    void setController(C controller);
-    KeyEvent getKeyEvent();
-    KeyCode getKeyPressed();
-    KeyCode getKeyReleased();
-    void receiveEventFromController(KeyAction event);
+public interface View {
+
+    Controller getController();
+    void setController(Controller controller);
+    Scene getScene();
+
     void draw();
     void reset();
 }
