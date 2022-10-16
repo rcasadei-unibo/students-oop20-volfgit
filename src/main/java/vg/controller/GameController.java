@@ -69,19 +69,21 @@ public class GameController extends Controller implements SceneController {
      * Loop to make game running. At every cycle it processes input, update domain then update gui.
      */
     public void gameLoop() {
-        long prevCycleTime = System.currentTimeMillis();
-        System.out.println("gameLoop Is FX Thread" + Platform.isFxApplicationThread());
-        while (gameState == GameState.PLAYING) {
-            long curCycleTime = System.currentTimeMillis();
-            long elapsedTime = curCycleTime - prevCycleTime;
-            processInput();
-            System.out.println("loop");
-            updateGameDomain(elapsedTime);
-            render();
+        new Thread(() -> {
+            long prevCycleTime = System.currentTimeMillis();
+            System.out.println("gameLoop Is FX Thread" + Platform.isFxApplicationThread());
+            while (gameState == GameState.PLAYING) {
+                long curCycleTime = System.currentTimeMillis();
+                long elapsedTime = curCycleTime - prevCycleTime;
+                //processInput();
+                System.out.println("loop");
+                //updateGameDomain(elapsedTime);
+                //render();
 
-            waitForNextFrame(curCycleTime);
-            prevCycleTime = curCycleTime;
-        }
+                waitForNextFrame(curCycleTime);
+                prevCycleTime = curCycleTime;
+            }
+        }).start();
     }
 
     /**
@@ -159,14 +161,16 @@ public class GameController extends Controller implements SceneController {
      * Terminate gameLoop and go back to the previous screen.
      */
     private void closeGame() {
+        System.out.println("close game");
         this.gameState = GameState.STOPPED;
-        this.getViewManager().backHome();
+        //this.getViewManager().backHome();
     }
 
     /**
      * Stop gameLoop and show pause view.
      */
     private void pauseGame() {
+        System.out.println("PAUSE game");
         this.gameState = GameState.PAUSED;
         //this.viewManager.addScene();
     }
@@ -175,8 +179,9 @@ public class GameController extends Controller implements SceneController {
      * Restart gameLoop and show again game view.
      */
     private void resumeGame() {
+        System.out.println("RESUME game");
         this.gameState = GameState.PLAYING;
-        this.getViewManager().popScene();
+        //this.getViewManager().popScene();
         this.gameLoop();
     }
 
@@ -230,11 +235,15 @@ public class GameController extends Controller implements SceneController {
      */
     @Override
     public void keyReleased(final KeyAction k) {
+        System.out.println("RELEASED : " + k.name());
+        System.out.println("Thread JavaFX : " + Platform.isFxApplicationThread());
         if (gameState == GameState.PLAYING &&
             (k == KeyAction.DOWN || k == KeyAction.UP ||
              k == KeyAction.LEFT || k == KeyAction.RIGHT)) {
             appendPlayerCommand(Direction.NONE);
         }
+        keyTapped(k);
+        keyPressed(k);
     }
 
 }

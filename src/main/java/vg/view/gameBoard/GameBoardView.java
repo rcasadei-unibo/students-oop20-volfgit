@@ -12,6 +12,16 @@ public class GameBoardView extends AdaptableView {
         super(scene);
     }
 
+    /*
+    * IN QIETSA CLASSE LU DEVI METTERE TUTTI I METODI CHE POI CHIAMO IO (TEO) DAL GAMECONTROLLER PER
+    * AGGIORNARE LA POSZIONE DELLE COSE
+    *
+    * ESEMPIO:
+    *
+    * da fare il metodo drawPlayer(V2D position)  dove io ti passo la nuova positione e tu dentro poi
+    * fai le tue cose con javafx
+    *
+    * */
     public void printPlayer(final Player player) {
         System.out.println(player.getPosition().toString());
     }

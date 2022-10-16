@@ -28,15 +28,15 @@ public class GameBoard extends Application {
     public void start(final Stage stage) throws Exception {
         Scene scene = new Scene(LoadFxmlUtils.loadFxml("layout/GameBoard.fxml"));
         AdaptableView gameView = new GameBoardView(scene);
-        Controller gameController = new GameController(gameView, viewManager);
+        GameController gameController = new GameController(gameView, viewManager);
 
         gameView.setController(gameController);
 
         stage.setTitle("GameBoard");
         stage.setScene(scene);
 
-        stage.setMinWidth(1400);
-        stage.setMinHeight(950);
+        stage.setMinWidth(950);
+        stage.setMinHeight(490);
         stage.setMaxWidth(1400);
         stage.setMaxHeight(950);
 //        stage.minWidthProperty().bind(scene.heightProperty().multiply(2));
@@ -45,6 +45,7 @@ public class GameBoard extends Application {
         viewManager.addScene(gameView);
 
         stage.show();
+        gameController.gameLoop();
     }
 }
 

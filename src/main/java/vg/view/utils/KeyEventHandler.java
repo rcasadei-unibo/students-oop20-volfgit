@@ -67,10 +67,8 @@ public final class KeyEventHandler implements EventHandler<KeyEvent> {
         if (this.sceneController.isPresent()) {
             if (event.getEventType().equals(KEY_PRESSED)) {
                 this.sceneController.get().keyPressed(keyPressed(event.getCode()));
-                System.out.println("KEY_PRESSED" + ": " + event.getCode());
             } else if (event.getEventType().equals(KEY_RELEASED)) {
                 this.sceneController.get().keyReleased(keyPressed(event.getCode()));
-                System.out.println("KEY_RELEASED" + ": " + event.getCode());
             } else {
                 this.sceneController.get().keyTapped(keyPressed(event.getCode()));
                 System.out.println(event);
