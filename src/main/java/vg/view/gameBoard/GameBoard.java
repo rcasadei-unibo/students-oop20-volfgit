@@ -4,10 +4,14 @@ import javafx.application.Application;
 import javafx.scene.Scene;
 import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
+import vg.controller.GameController;
 import vg.utils.DimensionUtils;
 import vg.utils.LoadFxmlUtils;
+import vg.view.AdaptableView;
 import vg.view.ViewManager;
+import vg.view.ViewManagerImpl;
 import vg.view.block.ManagerBlock;
+import vg.view.utils.KeyEventHandler;
 
 public class GameBoard extends Application {
 
@@ -15,12 +19,16 @@ public class GameBoard extends Application {
     GameBoardController controller = new GameBoardController();
 
     ManagerBlock managerBlock = new ManagerBlock();
-
     ViewManager viewManager;
 
     @Override
-    public void start(Stage stage) throws Exception {
+    public void start(final Stage stage) throws Exception {
         Scene scene = new Scene(LoadFxmlUtils.loadFxml("layout/GameBoard.fxml"));
+        AdaptableView gameView = new GameBoardView(scene);
+        GameController gameController = new GameController(gameView, viewManager);
+
+        gameView.setController(gameController);
+
         stage.setTitle("GameBoard");
         stage.setScene(scene);
         managerBlock.createBlock();
@@ -45,8 +53,11 @@ public class GameBoard extends Application {
 
 //        stage.minWidthProperty().bind(scene.heightProperty().multiply(2));
 //        stage.minHeightProperty().bind(scene.widthProperty().divide(2));
+        viewManager = new ViewManagerImpl(stage, new KeyEventHandler());
+        viewManager.addScene(gameView);
 
         stage.show();
+        gameController.gameLoop();
     }
 }
 
