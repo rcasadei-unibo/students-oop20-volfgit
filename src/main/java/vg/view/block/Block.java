@@ -2,14 +2,12 @@ package vg.view.block;
 
 import javafx.scene.shape.Rectangle;
 
-public class Block extends Rectangle{
+public class Block extends Rectangle {
 
-    public Block() {
-        super();
-        this.setWidth(50);
-        this.setHeight(50);
-        this.setX(0);
-        this.setY(0);
-        this.setStyle("-fx-fill: #ff08d7;");
+    public Block(double width, double height) {
+        super(width, height);
+        this.setStyle("-fx-fill: rgba(42,119,255,0.59);");
     }
+
+
 }
