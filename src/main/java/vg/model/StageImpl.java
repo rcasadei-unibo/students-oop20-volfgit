@@ -18,7 +18,7 @@ import java.util.stream.Stream;
  * @see Stage
  * @see V2D
  */
-public class StageImpl implements Stage<V2D> {
+public class StageImpl<T> implements Stage<V2D> {
 
     /**
      * The current score earned by the player.
