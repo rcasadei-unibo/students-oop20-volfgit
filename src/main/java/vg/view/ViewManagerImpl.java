@@ -10,7 +10,7 @@ import java.util.Stack;
  * it keeps Stage and set/remove scene to be shown and notify the controller of visible view (scene)
  * about the keyEvent registered by EventHandler of stage.
  */
-public class ViewManagerImpl implements ViewManager {
+public final class ViewManagerImpl implements ViewManager {
     /**
      * JavaFX Stage of application.
      */
@@ -25,7 +25,7 @@ public class ViewManagerImpl implements ViewManager {
      */
     private final KeyEventHandler keyEventHandler;
 
-    private ViewManagerImpl(final Stage stage, final KeyEventHandler keyEventHandler) {
+    public ViewManagerImpl(final Stage stage, final KeyEventHandler keyEventHandler) {
         this.stage = stage;
         this.sceneStack = new Stack<>();
         this.keyEventHandler = keyEventHandler;
