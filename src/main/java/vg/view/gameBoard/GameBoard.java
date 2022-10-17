@@ -25,14 +25,15 @@ public class GameBoard extends Application {
 
     @Override
     public void start(final Stage stage) throws Exception {
-        Scene scene = new Scene(LoadFxmlUtils.loadFxml("layout/GameBoard.fxml"));
-        AdaptableView gameView = new GameBoardView(scene);
+
+        AdaptableView gameView = new GameBoardView();
+        viewManager = new ViewManagerImpl(stage, new KeyEventHandler());
         GameController gameController = new GameController(gameView, viewManager);
 
         gameView.setController(gameController);
+        viewManager.addScene(gameView);
 
         stage.setTitle("GameBoard");
-        stage.setScene(scene);
 
         stage.setMinWidth(950);
         stage.setMinHeight(490);
@@ -40,12 +41,10 @@ public class GameBoard extends Application {
         stage.setMaxHeight(950);
 //        stage.minWidthProperty().bind(scene.heightProperty().multiply(2));
 //        stage.minHeightProperty().bind(scene.widthProperty().divide(2));
-        viewManager = new ViewManagerImpl(stage, new KeyEventHandler());
-        viewManager.addScene(gameView);
 
         //Stop game thread when window app is closing
         stage.setOnCloseRequest(event -> {
-            gameController.closeGame( );
+            gameController.closeGame();
         });
 
         stage.show();
