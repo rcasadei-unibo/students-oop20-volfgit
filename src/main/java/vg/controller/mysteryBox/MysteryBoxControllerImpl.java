@@ -29,4 +29,9 @@ public class MysteryBoxControllerImpl<T extends AbilityInTheBox> implements Myst
     public Vec2d GetPosition() {
         return this.view.getPosition();
     }
+
+    @Override
+    public void SetPosition(Vec2d position) {
+        this.view.setPosition(position);
+    }
 }
