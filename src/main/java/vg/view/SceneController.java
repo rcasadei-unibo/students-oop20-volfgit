@@ -18,6 +18,7 @@ public interface SceneController {
      * @param k {@link KeyAction}
      */
     void keyPressed(KeyAction k);
+
     /**
      *
      * @param k {@link KeyAction}

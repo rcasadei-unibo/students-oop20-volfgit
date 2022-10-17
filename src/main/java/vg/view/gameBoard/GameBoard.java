@@ -20,40 +20,34 @@ import java.io.IOException;
 
 public class GameBoard extends Application {
 
-    private static Stage stage;
     private GameBoardControllerImpl controller;
-    private MysteryBoxManager mysteryBoxManager;
 
-    ViewManager viewManager;
+    /**
+     * View Manager.
+     * {@see ViewManager}
+     */
+    private ViewManager viewManager;
 
     @Override
-    public void start(final Stage stage) throws IOException {
-        FXMLLoader load = LoaderFXMLUtils.GetLoader("/layout/GameBoard1.fxml");
-        Parent root = load.load();
-        this.controller = load.getController();
-        Scene scene = new Scene(root, DimensionUtils.DEFAULT_WIDTH, DimensionUtils.DEFAULT_HEIGHT);
+    public void start(final Stage stage) {
+        AdaptableView gameView = new GameBoardView();
 
-        this.mysteryBoxManager = new MysteryBoxManagerImpl();
+        viewManager = new ViewManagerImpl(stage, new KeyEventHandler());
+        //this.controller = load.getController();
+        MysteryBoxManager mysteryBoxManager = new MysteryBoxManagerImpl();
 
-
-        AdaptableView gameView = new GameBoardView(scene);
         GameController gameController = new GameController(gameView, viewManager);
         gameView.setController(gameController);
 
+        //add first view to viewStack then set scene to the stage.
+        viewManager.addScene(gameView);
         stage.setTitle("GameBoard");
         stage.setResizable(false);
-        stage.setScene(scene);
         stage.show();
 
-        this.mysteryBoxManager.initializeRound(this.controller);
-
-
-        viewManager = new ViewManagerImpl(stage, new KeyEventHandler());
-        viewManager.addScene(gameView);
-
+        //mysteryBoxManager.initializeRound(this.controller);
 
         stage.setOnCloseRequest(event -> gameController.closeGame());
-
         gameController.gameLoop();
 
     }

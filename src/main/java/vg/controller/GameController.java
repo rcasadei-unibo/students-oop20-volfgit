@@ -1,7 +1,6 @@
 package vg.controller;
 
 
-import javafx.application.Platform;
 import vg.model.Boss.BossImpl;
 import vg.model.MapImpl;
 import vg.model.StageImpl;
@@ -12,7 +11,9 @@ import vg.model.Stage;
 import vg.model.entity.dynamicEntity.player.Player;
 import vg.view.AdaptableView;
 import vg.view.SceneController;
+import vg.view.View;
 import vg.view.ViewManager;
+import vg.view.gameBoard.GameViewFactory;
 import vg.view.utils.KeyAction;
 
 import java.util.ArrayList;
@@ -72,7 +73,7 @@ public class GameController extends Controller implements SceneController {
     public void gameLoop() {
 
         new Thread(() -> {
-            System.out.println("gameloop THREAD");
+            //System.out.println("gameloop THREAD");
             long prevCycleTime = System.currentTimeMillis();
             //System.out.println("gameLoop Is FX Thread" + Platform.isFxApplicationThread());
             while (gameState == GameState.PLAYING) {
@@ -102,16 +103,6 @@ public class GameController extends Controller implements SceneController {
         }
 
         //TODO: check if level is end then pass to next level
-    }
-
-    /**
-     * gameOver state, stop running game loop then show gameOver screen view.
-     */
-    private void gameOver() {
-        gameState = GameState.STOPPED;
-        System.out.println("GAMEOVER");
-        //TODO: show gameover screen
-        //this.getViewManager().addScene();
     }
 
     /**
@@ -166,7 +157,7 @@ public class GameController extends Controller implements SceneController {
     public void closeGame() {
         System.out.println("close game");
         this.gameState = GameState.STOPPED;
-        //this.getViewManager().backHome();
+        this.getViewManager().backHome();
     }
 
     /**
@@ -175,7 +166,8 @@ public class GameController extends Controller implements SceneController {
     private void pauseGame() {
         System.out.println("PAUSE game");
         this.gameState = GameState.PAUSED;
-        //this.viewManager.addScene();
+        View pauseView = GameViewFactory.viewState(this.gameState);
+        showView(pauseView);
     }
 
     /**
@@ -184,8 +176,23 @@ public class GameController extends Controller implements SceneController {
     private void resumeGame() {
         System.out.println("RESUME game");
         this.gameState = GameState.PLAYING;
-        //this.getViewManager().popScene();
+        this.getViewManager().popScene();
         this.gameLoop();
+    }
+
+    /**
+     * gameOver state, stop running game loop then show gameOver screen view.
+     */
+    private void gameOver() {
+        this.gameState = GameState.STOPPED;
+        System.out.println("GAMEOVER");
+        View gameOverView = GameViewFactory.viewState(this.gameState);
+        this.showView(gameOverView);
+    }
+
+    private void showView(final View view) {
+        view.setController(this);
+        this.getViewManager().addScene(view);
     }
 
     /**
@@ -193,20 +200,21 @@ public class GameController extends Controller implements SceneController {
      */
     @Override
     public void keyTapped(final KeyAction action) {
-        //TODO: find out why these type of event are not seen
-        switch (action) {
-            case P:
-                //Toggle from pause and playing state
-                if (gameState == GameState.PLAYING) {
-                    this.pauseGame();
-                } else if (gameState == GameState.PAUSED) {
-                    this.resumeGame();
-                }
-                break;
-            case ENTER:
-                break;
-            case ESCAPE: this.closeGame(); break;
-            default:
+        if (action != null) {
+            switch (action) {
+                case P:
+                    //Toggle from pause and playing state
+                    if (gameState == GameState.PLAYING) {
+                        this.pauseGame();
+                    } else if (gameState == GameState.PAUSED) {
+                        this.resumeGame();
+                    }
+                    break;
+                case ENTER:
+                    break;
+                case ESCAPE: this.closeGame(); break;
+                default:
+            }
         }
     }
     /**
@@ -231,7 +239,6 @@ public class GameController extends Controller implements SceneController {
                 default:
             }
         }
-
     }
 
     /**
@@ -245,6 +252,8 @@ public class GameController extends Controller implements SceneController {
              k == KeyAction.LEFT || k == KeyAction.RIGHT)) {
             appendPlayerCommand(Direction.NONE);
         }
+
+        keyTapped(k);
     }
 
 }

@@ -9,7 +9,8 @@ public enum GameState {
          * Game level is paused.
          */
         PAUSED,
-        /**
+    GAMEOVER,
+    /**
          * Game level is not running.
          */
         STOPPED
