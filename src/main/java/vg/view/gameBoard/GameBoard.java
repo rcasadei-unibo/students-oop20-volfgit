@@ -10,6 +10,7 @@ import vg.controller.gameBoard.GameBoardControllerImpl;
 import vg.controller.mysteryBox.manager.MysteryBoxManager;
 import vg.controller.mysteryBox.manager.MysteryBoxManagerImpl;
 import vg.utils.DimensionUtils;
+import vg.utils.LoaderFXMLUtils;
 import vg.view.AdaptableView;
 import vg.view.ViewManager;
 import vg.view.ViewManagerImpl;
@@ -29,7 +30,6 @@ public class GameBoard extends Application {
 
     @Override
     public void start(final Stage stage) {
-
         AdaptableView gameView = new GameBoardView();
 
         viewManager = new ViewManagerImpl(stage, new KeyEventHandler());

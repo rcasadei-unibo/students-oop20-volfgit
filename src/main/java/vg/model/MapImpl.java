@@ -17,9 +17,7 @@ import vg.model.timedObject.BonusType;
 import vg.utils.MassTier;
 import vg.utils.V2D;
 
-import java.util.Collections;
-import java.util.HashSet;
-import java.util.Set;
+import java.util.*;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 import java.util.stream.Stream;
@@ -90,8 +88,8 @@ public class MapImpl implements Map<V2D> {
      */
     @Override
     public double getOccupiedPercentage() {
-        //this is sadly not working, isClosedByTail fault
-        return ((double)IntStream.rangeClosed(0,maxBorderX).boxed().flatMap( e -> IntStream.rangeClosed(0,maxBorderY).boxed().flatMap(e2 -> Stream.of(new V2D(e, e2)) )).filter( e -> isClosedByTail(e, this.border, this.boss)).count())/(maxBorderX*maxBorderY);
+        //approximate and slow, to upgrade
+        return ((double)IntStream.rangeClosed(0,maxBorderX).boxed().flatMap( e -> IntStream.rangeClosed(0,maxBorderY).boxed().flatMap(e2 -> Stream.of(new V2D(e, e2)) )).filter(e -> !isInBorders(e)).count())/(maxBorderX*maxBorderY);
     }
     /**
      * {@inheritDoc}
@@ -108,11 +106,12 @@ public class MapImpl implements Map<V2D> {
         //internal check if the tail is actually completed
         //and the borders can be updated from it
         if (!isTailCompleted()) {
-            throw new IllegalStateException();
+            throw new IllegalStateException("Attempted to call updateBorders while the tail is not completed");
         }
         //before updating the Borders Entity that needs to be captured
         //must be deleted, but that is not a responsibility of this
         //method neither this class
+        /*
         var tr = new HashSet<V2D>();
         getBorders().forEach(e -> {
             if (isClosedByTail(e, tail, getBoss())) {
@@ -121,6 +120,10 @@ public class MapImpl implements Map<V2D> {
         });
         getBorders().removeAll(tr);
         getBorders().addAll(tail);
+        */
+        var tr = createNewBorder(tail,getBoss().getPosition());
+        this.getBorders().addAll(tr);
+        this.getBorders().retainAll(tr);
     }
     /**
      * {@inheritDoc}
@@ -235,15 +238,37 @@ public class MapImpl implements Map<V2D> {
         return this.boss;
     }
 
+    private Set<V2D> createNewBorder(final Set<V2D> tail, final V2D boss){
+        List<V2D> t = new LinkedList<>();
+        t.add(player.getTail().getLastCoordinate());
+        try {
+            while (true) {
+                t.add(this.getBorders().stream().filter(e -> !t.contains(e) && e.isAdj(t.get(t.size() - 1))).findFirst().orElseThrow());
+            }
+        } catch ( NoSuchElementException e) {
+            if (!t.get(0).isAdj(t.get(t.size()-1))){
+                throw new IllegalStateException("The list of points is not closed; first: "+t.get(0)+" last: "+ t.get(t.size()-1) );
+            }
+        }
+
+        var indInit = t.indexOf(player.getTail().getLastCoordinate());
+        var indHalf = t.indexOf(player.getTail().getCoordinates().get(0));
+        if (indInit > indHalf) {
+            var tmp = indHalf;
+            indHalf = indInit;
+            indInit = tmp;
+        }
+        var t1 = Stream.concat(t.subList(indInit, indHalf).stream(), tail.stream()).collect(Collectors.toSet());
+        var t2 = Stream.concat(t.subList(indHalf, t.size()).stream(), tail.stream()).collect(Collectors.toSet());
+        if(isInBorders(boss, t1)){
+            return t1;
+        } else if (isInBorders(boss, t2)) {
+            return t2;
+        } else throw new IllegalStateException("Failed to create a new border (Boss too big?)");
+    }
     /**
-     * Function that checks if a position is on the same "side"
-     * as the boss or not, this means that only 1 boss at the
-     * same time can be present on the map. The final parameter,
-     * boss, is there for a possible future overloading of this
-     * method so more than one boss will be possible to have.
-     * If the position to check is on the tail, this return true.
-     * This method can be used to check if a position is "outside"
-     * the current borders.
+     * Method to check if a point will be closed by the border
+     * or not. Works only with points
      * @param pos the starting position from which to check
      * @param tail the tail that will become the new border
      * @param boss the boss of the map
@@ -276,6 +301,33 @@ public class MapImpl implements Map<V2D> {
     }
 
     /**
+     * Checks if a position is inside the current borders.
+     * @param pos the position to check
+     * @return true if the position is inside the borders, false otherwise
+     */
+    public boolean isInBorders(final V2D pos){
+        List<Integer> segments = new ArrayList<>();
+        var t = IntStream.rangeClosed(1,this.maxBorderX)
+                .filter(e -> getBorders().contains(new V2D(e,pos.getY()))!=getBorders().contains(new V2D(e-1,pos.getY())))
+                .peek(segments::add).filter(e -> pos.getX()<e).findFirst();
+
+        Collections.reverse(segments);
+        if(t.isPresent()){
+            return  segments.indexOf(t.getAsInt())%2==0;
+        } else return false;
+    }
+    private boolean isInBorders(final V2D pos, Set<V2D> borders){
+        List<Integer> segments = new ArrayList<>();
+        var t = IntStream.rangeClosed(1,this.maxBorderX)
+                .filter(e -> borders.contains(new V2D(e,pos.getY()))!=borders.contains(new V2D(e-1,pos.getY())))
+                .peek(segments::add).filter(e -> pos.getX()<e).findFirst();
+
+        Collections.reverse(segments);
+        if(t.isPresent()){
+            return  segments.indexOf(t.getAsInt())%2==0;
+        } else return false;
+    }
+    /**
      * This method tell if a position is valid on the
      * map (not out of borders and is not on the same
      * position with other entities that has a mass
@@ -290,7 +342,7 @@ public class MapImpl implements Map<V2D> {
         if (getAllDynamicEntities().stream().filter(e -> e.getMassTier() != MassTier.NOCOLLISION).anyMatch(e -> e.isInShape(pos))) {
             return false;
         }
-        return !isClosedByTail(pos, getBorders(), getBoss());
+        return isInBorders(pos);
     }
     /**
      * Overloading for checking if a position is valid but removing one
@@ -307,7 +359,7 @@ public class MapImpl implements Map<V2D> {
         if (getAllDynamicEntities().stream().filter(e -> e.getMassTier() != MassTier.NOCOLLISION && !e.equals(toRemove)).anyMatch(e -> e.isInShape(pos))) {
             return false;
         }
-        return !isClosedByTail(pos, getBorders(), getBoss());
+        return isInBorders(pos);
     }
 
     /**
@@ -320,7 +372,6 @@ public class MapImpl implements Map<V2D> {
         var t = Stream.of(-1, 1).flatMap(e -> Stream.of(new V2D(e, 0), new V2D(0, e))).
                 filter(e -> isPositionValid(e.sum(de.getPosition()), de)).reduce(new V2D(0, 0), V2D::sum);
         if (!(t.getX() == 0 || 0 == t.getY()) || t.getX() == t.getY()) {
-            System.out.println(de.getSpeed().mul(new V2D(-1, -1)));
             return de.getSpeed().mul(new V2D(-1, -1));
         } else {
             var x = t.getX() == 0 ? 1 : -1;
