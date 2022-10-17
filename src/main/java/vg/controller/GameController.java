@@ -73,7 +73,7 @@ public class GameController extends Controller implements SceneController {
     public void gameLoop() {
 
         new Thread(() -> {
-            System.out.println("gameloop THREAD");
+            //System.out.println("gameloop THREAD");
             long prevCycleTime = System.currentTimeMillis();
             //System.out.println("gameLoop Is FX Thread" + Platform.isFxApplicationThread());
             while (gameState == GameState.PLAYING) {
@@ -124,7 +124,7 @@ public class GameController extends Controller implements SceneController {
     private void render() {
         //TODO: call method refresh on view object passing domain
         //this.view.refresh();
-        //System.out.println(this.stageDomain.getPlayer().getPosition());
+        System.out.println(this.stageDomain.getPlayer().getPosition());
     }
 
     /**
@@ -200,21 +200,21 @@ public class GameController extends Controller implements SceneController {
      */
     @Override
     public void keyTapped(final KeyAction action) {
-        System.out.println("Game contorller Tapped: " + action.name());
-
-        switch (action) {
-            case P:
-                //Toggle from pause and playing state
-                if (gameState == GameState.PLAYING) {
-                    this.pauseGame();
-                } else if (gameState == GameState.PAUSED) {
-                    this.resumeGame();
-                }
-                break;
-            case ENTER:
-                break;
-            case ESCAPE: this.closeGame(); break;
-            default:
+        if (action != null) {
+            switch (action) {
+                case P:
+                    //Toggle from pause and playing state
+                    if (gameState == GameState.PLAYING) {
+                        this.pauseGame();
+                    } else if (gameState == GameState.PAUSED) {
+                        this.resumeGame();
+                    }
+                    break;
+                case ENTER:
+                    break;
+                case ESCAPE: this.closeGame(); break;
+                default:
+            }
         }
     }
     /**
@@ -239,7 +239,6 @@ public class GameController extends Controller implements SceneController {
                 default:
             }
         }
-
     }
 
     /**
@@ -254,8 +253,7 @@ public class GameController extends Controller implements SceneController {
             appendPlayerCommand(Direction.NONE);
         }
 
-        this.keyTapped(k);
-        this.keyPressed(k);
+        keyTapped(k);
     }
 
 }

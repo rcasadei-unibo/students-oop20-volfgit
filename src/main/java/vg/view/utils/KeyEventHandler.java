@@ -9,8 +9,7 @@ import vg.view.SceneController;
 import java.util.Map;
 import java.util.Optional;
 
-import static javafx.scene.input.KeyEvent.KEY_PRESSED;
-import static javafx.scene.input.KeyEvent.KEY_RELEASED;
+import static javafx.scene.input.KeyEvent.*;
 
 /**
  * Implementation of {@link EventHandler}.
@@ -69,9 +68,8 @@ public final class KeyEventHandler implements EventHandler<KeyEvent> {
                 this.sceneController.get().keyPressed(keyPressed(event.getCode()));
             } else if (event.getEventType().equals(KEY_RELEASED)) {
                 this.sceneController.get().keyReleased(keyPressed(event.getCode()));
-            } else {
+            } else if (event.getEventType().equals(KEY_TYPED)) {
                 this.sceneController.get().keyTapped(keyPressed(event.getCode()));
-                System.out.println(event);
             }
         }
     }
