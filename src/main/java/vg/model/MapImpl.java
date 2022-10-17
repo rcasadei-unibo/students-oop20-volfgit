@@ -17,9 +17,7 @@ import vg.model.timedObject.BonusType;
 import vg.utils.MassTier;
 import vg.utils.V2D;
 
-import java.util.Collections;
-import java.util.HashSet;
-import java.util.Set;
+import java.util.*;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 import java.util.stream.Stream;
@@ -90,8 +88,8 @@ public class MapImpl implements Map<V2D> {
      */
     @Override
     public double getOccupiedPercentage() {
-        //this is sadly not working, isClosedByTail fault
-        return ((double)IntStream.rangeClosed(0,maxBorderX).boxed().flatMap( e -> IntStream.rangeClosed(0,maxBorderY).boxed().flatMap(e2 -> Stream.of(new V2D(e, e2)) )).filter( e -> isClosedByTail(e, this.border, this.boss)).count())/(maxBorderX*maxBorderY);
+        //approximate and slow, to upgrade
+        return ((double)IntStream.rangeClosed(0,maxBorderX).boxed().flatMap( e -> IntStream.rangeClosed(0,maxBorderY).boxed().flatMap(e2 -> Stream.of(new V2D(e, e2)) )).filter(e -> !isInBorders(e)).count())/(maxBorderX*maxBorderY);
     }
     /**
      * {@inheritDoc}
@@ -276,6 +274,22 @@ public class MapImpl implements Map<V2D> {
     }
 
     /**
+     * Checks if a position is inside the current borders.
+     * @param pos the position to check
+     * @return true if the position is inside the borders, false otherwise
+     */
+    public boolean isInBorders(final V2D pos){
+        List<Integer> segments = new ArrayList<>();
+        var t = IntStream.rangeClosed(1,this.maxBorderX)
+                .filter(e -> getBorders().contains(new V2D(e,pos.getY()))!=getBorders().contains(new V2D(e-1,pos.getY())))
+                .peek(segments::add).filter(e -> pos.getX()<e).findFirst();
+
+        Collections.reverse(segments);
+        if(t.isPresent()){
+            return  segments.indexOf(t.getAsInt())%2==0;
+        } else return false;
+    }
+    /**
      * This method tell if a position is valid on the
      * map (not out of borders and is not on the same
      * position with other entities that has a mass
@@ -290,7 +304,7 @@ public class MapImpl implements Map<V2D> {
         if (getAllDynamicEntities().stream().filter(e -> e.getMassTier() != MassTier.NOCOLLISION).anyMatch(e -> e.isInShape(pos))) {
             return false;
         }
-        return !isClosedByTail(pos, getBorders(), getBoss());
+        return isInBorders(pos);
     }
     /**
      * Overloading for checking if a position is valid but removing one
@@ -307,7 +321,7 @@ public class MapImpl implements Map<V2D> {
         if (getAllDynamicEntities().stream().filter(e -> e.getMassTier() != MassTier.NOCOLLISION && !e.equals(toRemove)).anyMatch(e -> e.isInShape(pos))) {
             return false;
         }
-        return !isClosedByTail(pos, getBorders(), getBoss());
+        return isInBorders(pos);
     }
 
     /**
@@ -320,7 +334,6 @@ public class MapImpl implements Map<V2D> {
         var t = Stream.of(-1, 1).flatMap(e -> Stream.of(new V2D(e, 0), new V2D(0, e))).
                 filter(e -> isPositionValid(e.sum(de.getPosition()), de)).reduce(new V2D(0, 0), V2D::sum);
         if (!(t.getX() == 0 || 0 == t.getY()) || t.getX() == t.getY()) {
-            System.out.println(de.getSpeed().mul(new V2D(-1, -1)));
             return de.getSpeed().mul(new V2D(-1, -1));
         } else {
             var x = t.getX() == 0 ? 1 : -1;
