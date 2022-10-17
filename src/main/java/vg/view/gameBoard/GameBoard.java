@@ -43,8 +43,9 @@ public class GameBoard extends Application {
         viewManager = new ViewManagerImpl(stage, new KeyEventHandler());
         viewManager.addScene(gameView);
 
-        stage.addEventHandler(WindowEvent.WINDOW_CLOSE_REQUEST, event -> {
-            gameController.closeGame();
+        //Stop game thread when window app is closing
+        stage.setOnCloseRequest(event -> {
+            gameController.closeGame( );
         });
 
         stage.show();
