@@ -9,8 +9,8 @@ import vg.utils.path.PathImageMysteryBox;
 
 public class BlockImpl extends Rectangle implements Block {
 
-    public BlockImpl(double x, double y, double width, double height) {
-        super(x, y, width, height);
+    public BlockImpl(double width, double height) {
+        super(width, height);
         this.setImage(PathImageMysteryBox.MYSTERY_BOX);
     }
 
@@ -29,5 +29,11 @@ public class BlockImpl extends Rectangle implements Block {
     @Override
     public Vec2d getPosition() {
         return new Vec2d(this.getX(), this.getY());
+    }
+
+    @Override
+    public void setPosition(Vec2d position) {
+        this.setX(position.x);
+        this.setY(position.y);
     }
 }

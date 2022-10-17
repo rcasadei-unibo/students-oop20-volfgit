@@ -1,6 +1,8 @@
 package vg.controller.mysteryBox.manager;
 
+import com.sun.javafx.geom.Vec2d;
 import vg.controller.mysteryBox.MysteryBoxController;
+import vg.utils.Round.MysteryBoxPositionUtils;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -15,6 +17,12 @@ public class MysteryBoxManagerImpl implements MysteryBoxManager {
         this.round = 0;
     }
 
+
+    @Override
+    public void initializeRound() {
+        List<Vec2d> pos = MysteryBoxPositionUtils.POSITION_ROUND.get(round);
+
+    }
 
     @Override
     public int getRound() {

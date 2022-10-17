@@ -8,4 +8,6 @@ public interface MysteryBoxController<T extends AbilityInTheBox> {
     public Node getNode();
 
     public Vec2d GetPosition();
+
+    public void SetPosition(Vec2d position);
 }

@@ -10,4 +10,6 @@ public interface Block {
     public Node getNode();
 
     public Vec2d getPosition();
+
+    public void setPosition(Vec2d position);
 }
