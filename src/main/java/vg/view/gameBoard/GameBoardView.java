@@ -12,7 +12,7 @@ public class GameBoardView extends AdaptableView {
 
     protected GameBoardView() {
 
-        super(new Scene(LoadFxmlUtils.loadFxml("layout/GameBoard.fxml"),
+        super(new Scene(LoadFxmlUtils.loadFxml("layout/GameBoard1.fxml"),
                 DimensionUtils.DEFAULT_WIDTH,
                 DimensionUtils.DEFAULT_HEIGHT));
     }

@@ -20,17 +20,21 @@ import java.io.IOException;
 public class GameBoard extends Application {
 
     private GameBoardControllerImpl controller;
-    private MysteryBoxManager mysteryBoxManager;
 
-    ViewManager viewManager;
+    /**
+     * View Manager.
+     * {@see ViewManager}
+     */
+    private ViewManager viewManager;
 
     @Override
     public void start(final Stage stage) {
 
         AdaptableView gameView = new GameBoardView();
+
         viewManager = new ViewManagerImpl(stage, new KeyEventHandler());
         //this.controller = load.getController();
-        this.mysteryBoxManager = new MysteryBoxManagerImpl();
+        MysteryBoxManager mysteryBoxManager = new MysteryBoxManagerImpl();
 
         GameController gameController = new GameController(gameView, viewManager);
         gameView.setController(gameController);
@@ -41,7 +45,7 @@ public class GameBoard extends Application {
         stage.setResizable(false);
         stage.show();
 
-        this.mysteryBoxManager.initializeRound(this.controller);
+        //mysteryBoxManager.initializeRound(this.controller);
 
         stage.setOnCloseRequest(event -> gameController.closeGame());
         gameController.gameLoop();

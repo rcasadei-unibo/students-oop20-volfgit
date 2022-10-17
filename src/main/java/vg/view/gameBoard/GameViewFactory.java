@@ -1,6 +1,7 @@
 package vg.view.gameBoard;
 
 import javafx.scene.Scene;
+import vg.utils.DimensionUtils;
 import vg.utils.GameState;
 import vg.utils.LoadFxmlUtils;
 import vg.view.AdaptableView;
@@ -8,7 +9,9 @@ import vg.view.AdaptableView;
 public class GameViewFactory {
 
     static private AdaptableView makeAdaptableView(final String relativePath) {
-        Scene scene = new Scene(LoadFxmlUtils.loadFxml(relativePath));
+        Scene scene = new Scene(LoadFxmlUtils.loadFxml(relativePath),
+                DimensionUtils.DEFAULT_WIDTH,
+                DimensionUtils.DEFAULT_HEIGHT);
         return new AdaptableView(scene) {
             @Override
             public void draw() {
