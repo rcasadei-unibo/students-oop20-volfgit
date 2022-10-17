@@ -126,6 +126,7 @@ class MapImplTest {
         assertFalse( ((MapImpl) map).isPositionValid(new V2D(0,1)));
         assertFalse( ((MapImpl) map).isPositionValid(new V2D(1,0)));
         assertFalse( ((MapImpl) map).isPositionValid(new V2D(0,0)));
+
         var toCheckD = new DynamicEntityImpl(new V2D(1,1), new V2D(-1,-1),2, Shape.CIRCLE,MassTier.HIGH);
         var toCheckD2 = new DynamicEntityImpl(new V2D(3,100), new V2D(-3,-1),2, Shape.CIRCLE,MassTier.HIGH);
         toCheckD.move();
@@ -133,10 +134,12 @@ class MapImplTest {
         assertEquals(t, new V2D(1, 1));
         toCheckD2.move();
         assertEquals(toCheckD2.getPosition(), new V2D(0,99) );
+
         assertTrue( ((MapImpl) map).isPositionValid(new V2D(1,99)));
         assertFalse( ((MapImpl) map).isPositionValid(new V2D(0,98)));
         assertFalse( ((MapImpl) map).isPositionValid(new V2D(0,100)));
-        assertFalse( ((MapImpl) map).isPositionValid(new V2D(-1,99)));
+        assertFalse( ((MapImpl) map).isPositionValid(new V2D(10,-99)));
+        assertFalse( ((MapImpl) map).isPositionValid(new V2D(-10,99)));
         var t2 = map.getAfterCollisionDirection(toCheckD2);
         assertEquals(t2, new V2D(3,-1));
 
