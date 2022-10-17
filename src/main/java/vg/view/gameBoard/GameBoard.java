@@ -6,12 +6,14 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
 import vg.controller.GameController;
+import vg.controller.gameBoard.GameBoardControllerImpl;
+import vg.controller.mysteryBox.manager.MysteryBoxManager;
+import vg.controller.mysteryBox.manager.MysteryBoxManagerImpl;
 import vg.utils.DimensionUtils;
+import vg.utils.LoaderFXMLUtils;
 import vg.view.AdaptableView;
 import vg.view.ViewManager;
 import vg.view.ViewManagerImpl;
-import vg.view.block.ManagerBlock;
-import vg.view.controller.GameBoardControllerImpl;
 import vg.view.utils.KeyEventHandler;
 
 import java.io.IOException;
@@ -19,17 +21,20 @@ import java.io.IOException;
 public class GameBoard extends Application {
 
     private static Stage stage;
-    GameBoardControllerImpl controller;
+    private GameBoardControllerImpl controller;
+    private MysteryBoxManager mysteryBoxManager;
 
-    ManagerBlock managerBlock = new ManagerBlock();
     ViewManager viewManager;
 
     @Override
     public void start(final Stage stage) throws IOException {
-        FXMLLoader load = new FXMLLoader(getClass().getResource("/layout/GameBoard1.fxml"));
+        FXMLLoader load = LoaderFXMLUtils.GetLoader("/layout/GameBoard1.fxml");
         Parent root = load.load();
         this.controller = load.getController();
         Scene scene = new Scene(root, DimensionUtils.DEFAULT_WIDTH, DimensionUtils.DEFAULT_HEIGHT);
+
+        this.mysteryBoxManager = new MysteryBoxManagerImpl();
+
 
         AdaptableView gameView = new GameBoardView(scene);
         GameController gameController = new GameController(gameView, viewManager);
@@ -40,20 +45,17 @@ public class GameBoard extends Application {
         stage.setScene(scene);
         stage.show();
 
+        this.mysteryBoxManager.initializeRound(this.controller);
+
 
         viewManager = new ViewManagerImpl(stage, new KeyEventHandler());
         viewManager.addScene(gameView);
 
 
-        managerBlock.createBlock(this.controller.getGameArea());
-
-        stage.setOnCloseRequest(event -> {
-            System.out.println("close");
-            System.exit(0);
-            // TODO teo metti la funzione per chiudere il gioco... il thread
-        });
+        stage.setOnCloseRequest(event -> gameController.closeGame());
 
         gameController.gameLoop();
+
     }
 }
 

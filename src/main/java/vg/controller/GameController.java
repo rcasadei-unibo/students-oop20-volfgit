@@ -31,7 +31,7 @@ public class GameController extends Controller implements SceneController {
     /**
      * Period of each frame.
      */
-    private static final long CYCLE_PERIOD = 500; // frequencies = 1/period
+    private static final long CYCLE_PERIOD = 50; // frequencies = 1/period
     /**
      * Terminating condition of game loop.
      */
@@ -55,7 +55,7 @@ public class GameController extends Controller implements SceneController {
                 Shape.CIRCLE,
                 MassTier.HIGH);
 
-        return new StageImpl<V2D>(0, new MapImpl(
+        Stage stage =  new StageImpl<V2D>(0, new MapImpl(
                 BasePlayer.newPlayer(new V2D(0, 0)),
                 boss,
                 Set.of(),
@@ -63,23 +63,25 @@ public class GameController extends Controller implements SceneController {
                 Set.of(),
                 Set.of()
         ));
+        return stage;
     }
 
     /**
      * Loop to make game running. At every cycle it processes input, update domain then update gui.
      */
     public void gameLoop() {
+
         new Thread(() -> {
+            System.out.println("gameloop THREAD");
             long prevCycleTime = System.currentTimeMillis();
-            System.out.println("gameLoop Is FX Thread" + Platform.isFxApplicationThread());
+            //System.out.println("gameLoop Is FX Thread" + Platform.isFxApplicationThread());
             while (gameState == GameState.PLAYING) {
                 long curCycleTime = System.currentTimeMillis();
                 long elapsedTime = curCycleTime - prevCycleTime;
-                //processInput();
-                System.out.println("loop");
-                //updateGameDomain(elapsedTime);
-                //render();
+                this.processInput();
 
+                updateGameDomain(elapsedTime);
+                render();
                 waitForNextFrame(curCycleTime);
                 prevCycleTime = curCycleTime;
             }
@@ -121,7 +123,7 @@ public class GameController extends Controller implements SceneController {
             Command<Player> cmd = this.movementQueue.get(0);
             this.movementQueue.remove(cmd);
             //set new player direction
-            cmd.execute(this.stageDomain.getPlayer());
+            cmd.execute(this.stageDomain.getMap().getPlayer());
         }
     }
 
@@ -131,6 +133,7 @@ public class GameController extends Controller implements SceneController {
     private void render() {
         //TODO: call method refresh on view object passing domain
         //this.view.refresh();
+        System.out.println(this.stageDomain.getPlayer().getPosition());
     }
 
     /**
@@ -158,9 +161,9 @@ public class GameController extends Controller implements SceneController {
     }
 
     /**
-     * Terminate gameLoop and go back to the previous screen.
+     * Terminate gameLoop thread and go back to the previous screen.
      */
-    private void closeGame() {
+    public void closeGame() {
         System.out.println("close game");
         this.gameState = GameState.STOPPED;
         //this.getViewManager().backHome();
@@ -190,6 +193,7 @@ public class GameController extends Controller implements SceneController {
      */
     @Override
     public void keyTapped(final KeyAction action) {
+        //TODO: find out why these type of event are not seen
         switch (action) {
             case P:
                 //Toggle from pause and playing state
@@ -236,14 +240,11 @@ public class GameController extends Controller implements SceneController {
     @Override
     public void keyReleased(final KeyAction k) {
         System.out.println("RELEASED : " + k.name());
-        System.out.println("Thread JavaFX : " + Platform.isFxApplicationThread());
         if (gameState == GameState.PLAYING &&
             (k == KeyAction.DOWN || k == KeyAction.UP ||
              k == KeyAction.LEFT || k == KeyAction.RIGHT)) {
             appendPlayerCommand(Direction.NONE);
         }
-        keyTapped(k);
-        keyPressed(k);
     }
 
 }
