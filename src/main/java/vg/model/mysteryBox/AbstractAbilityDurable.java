@@ -14,8 +14,8 @@ public abstract class AbstractAbilityDurable extends AbstractAbility implements 
     private boolean isRunning;
 
 
-    public AbstractAbilityDurable(String pathReveled, int durationMillis) {
-        super(pathReveled);
+    public AbstractAbilityDurable(EAbility idAbility, int durationMillis) {
+        super(idAbility);
         this.durationMillis = durationMillis;
         this.currentDurationMillis = INIT_DURATION;
         this.thread = new Thread(this);

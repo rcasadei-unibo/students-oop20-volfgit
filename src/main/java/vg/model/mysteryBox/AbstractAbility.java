@@ -4,10 +4,10 @@ import vg.utils.path.PathImageMysteryBox;
 
 public abstract class AbstractAbility {
     protected final String pathImage;
-    protected final String pathReveled;
+    protected final EAbility idAbility;
 
-    public AbstractAbility(String pathReveled) {
+    public AbstractAbility(EAbility idAbility) {
         this.pathImage = PathImageMysteryBox.MYSTERY_BOX;
-        this.pathReveled = pathReveled;
+        this.idAbility = idAbility;
     }
 }
