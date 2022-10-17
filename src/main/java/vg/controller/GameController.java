@@ -13,7 +13,11 @@ import vg.view.AdaptableView;
 import vg.view.SceneController;
 import vg.view.View;
 import vg.view.ViewManager;
-import vg.view.gameBoard.GameViewFactory;
+import vg.view.GameViewFactory;
+import vg.view.menu.confirmMenu.ConfirmOption;
+import vg.view.menu.confirmMenu.ConfirmView;
+import vg.view.menu.confirmMenu.ConfirmViewController;
+import vg.view.menu.confirmMenu.ResumeObserver;
 import vg.view.utils.KeyAction;
 
 import java.util.ArrayList;
@@ -24,7 +28,7 @@ import java.util.Set;
  * Game Engine class, manager game loop and refresh timing
  * during gameplay
  * */
-public class GameController extends Controller implements SceneController {
+public class GameController extends Controller implements SceneController, ResumeObserver {
     /**
      * Command queue of new player's movement got from input to be applied.
      */
@@ -157,7 +161,13 @@ public class GameController extends Controller implements SceneController {
     public void closeGame() {
         System.out.println("close game");
         this.gameState = GameState.STOPPED;
-        this.getViewManager().backHome();
+        ConfirmView confirmView = new ConfirmView();
+        ConfirmViewController confirmViewController = new ConfirmViewController(confirmView, this.getViewManager(), this);
+        confirmView.setController(confirmViewController);
+        this.getViewManager().addScene(confirmView);
+
+        //if in confirm view is selcted to exit -> confirmView tells viewMnager to backHome
+        //id is deny exit -> confirmView is removed and it is back gameplay
     }
 
     /**
@@ -193,6 +203,15 @@ public class GameController extends Controller implements SceneController {
     private void showView(final View view) {
         view.setController(this);
         this.getViewManager().addScene(view);
+    }
+
+    @Override
+    public void notifyDialogAnswer(final ConfirmOption answer) {
+        if (answer == ConfirmOption.CONFIRM) {
+            this.getViewManager().backHome();
+        } else if (answer == ConfirmOption.DENY) {
+            this.resumeGame();
+        }
     }
 
     /**
@@ -255,5 +274,4 @@ public class GameController extends Controller implements SceneController {
 
         keyTapped(k);
     }
-
 }
