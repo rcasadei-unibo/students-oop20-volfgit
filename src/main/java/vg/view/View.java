@@ -19,11 +19,4 @@ public interface View {
      */
     void setController(Controller controller);
     Scene getScene();
-
-    /**
-     * This draw must use {@link vg.view.utils.ScreenLoader} utilities when
-     * implemented to resize correctly.
-     */
-    void draw();
-    void reset();
 }

@@ -1,4 +1,4 @@
-package vg.view.gameBoard;
+package vg.view;
 
 import javafx.scene.Scene;
 import vg.utils.DimensionUtils;
@@ -15,13 +15,6 @@ public class GameViewFactory {
                 DimensionUtils.DEFAULT_WIDTH,
                 DimensionUtils.DEFAULT_HEIGHT);
         return new AdaptableView(scene) {
-            @Override
-            public void draw() {
-            }
-
-            @Override
-            public void reset() {
-            }
         };
     }
 
