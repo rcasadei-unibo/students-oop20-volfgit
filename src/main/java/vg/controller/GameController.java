@@ -1,7 +1,6 @@
 package vg.controller;
 
 
-import javafx.application.Platform;
 import vg.model.Boss.BossImpl;
 import vg.model.MapImpl;
 import vg.model.StageImpl;
@@ -12,7 +11,9 @@ import vg.model.Stage;
 import vg.model.entity.dynamicEntity.player.Player;
 import vg.view.AdaptableView;
 import vg.view.SceneController;
+import vg.view.View;
 import vg.view.ViewManager;
+import vg.view.gameBoard.GameViewFactory;
 import vg.view.utils.KeyAction;
 
 import java.util.ArrayList;
@@ -105,16 +106,6 @@ public class GameController extends Controller implements SceneController {
     }
 
     /**
-     * gameOver state, stop running game loop then show gameOver screen view.
-     */
-    private void gameOver() {
-        gameState = GameState.STOPPED;
-        System.out.println("GAMEOVER");
-        //TODO: show gameover screen
-        //this.getViewManager().addScene();
-    }
-
-    /**
      * Process command in the head of queue (the older one)
      * in order to move player.
      */
@@ -133,7 +124,7 @@ public class GameController extends Controller implements SceneController {
     private void render() {
         //TODO: call method refresh on view object passing domain
         //this.view.refresh();
-        System.out.println(this.stageDomain.getPlayer().getPosition());
+        //System.out.println(this.stageDomain.getPlayer().getPosition());
     }
 
     /**
@@ -166,7 +157,7 @@ public class GameController extends Controller implements SceneController {
     public void closeGame() {
         System.out.println("close game");
         this.gameState = GameState.STOPPED;
-        //this.getViewManager().backHome();
+        this.getViewManager().backHome();
     }
 
     /**
@@ -175,7 +166,8 @@ public class GameController extends Controller implements SceneController {
     private void pauseGame() {
         System.out.println("PAUSE game");
         this.gameState = GameState.PAUSED;
-        //this.viewManager.addScene();
+        View pauseView = GameViewFactory.viewState(this.gameState);
+        showView(pauseView);
     }
 
     /**
@@ -184,8 +176,23 @@ public class GameController extends Controller implements SceneController {
     private void resumeGame() {
         System.out.println("RESUME game");
         this.gameState = GameState.PLAYING;
-        //this.getViewManager().popScene();
+        this.getViewManager().popScene();
         this.gameLoop();
+    }
+
+    /**
+     * gameOver state, stop running game loop then show gameOver screen view.
+     */
+    private void gameOver() {
+        this.gameState = GameState.STOPPED;
+        System.out.println("GAMEOVER");
+        View gameOverView = GameViewFactory.viewState(this.gameState);
+        this.showView(gameOverView);
+    }
+
+    private void showView(final View view) {
+        view.setController(this);
+        this.getViewManager().addScene(view);
     }
 
     /**
@@ -193,7 +200,8 @@ public class GameController extends Controller implements SceneController {
      */
     @Override
     public void keyTapped(final KeyAction action) {
-        //TODO: find out why these type of event are not seen
+        System.out.println("Game contorller Tapped: " + action.name());
+
         switch (action) {
             case P:
                 //Toggle from pause and playing state
@@ -245,6 +253,9 @@ public class GameController extends Controller implements SceneController {
              k == KeyAction.LEFT || k == KeyAction.RIGHT)) {
             appendPlayerCommand(Direction.NONE);
         }
+
+        this.keyTapped(k);
+        this.keyPressed(k);
     }
 
 }
