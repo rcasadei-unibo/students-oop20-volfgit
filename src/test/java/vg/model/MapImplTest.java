@@ -42,6 +42,7 @@ class MapImplTest {
             collect(Collectors.toSet()));
     @Test
     void getOccupiedPercentage() {
+        player.getTail().resetTail();
         IntStream.rangeClosed(0,200).boxed().flatMap(e -> Stream.of(new V2D(e,150))).sorted((e1,e2) -> (int) (e1.getX() - e2.getX())).forEach(e -> player.getTail().addPoint(e));
         map.updateBorders(Set.copyOf(player.getTail().getCoordinates()));
         assertFalse(map.getBorders().contains(new V2D(199,151)));
@@ -49,6 +50,7 @@ class MapImplTest {
         assertTrue(map.getBorders().contains(new V2D(133, 0)));
         assertTrue(map.getBorders().contains(new V2D(0, 150)));
         assertTrue(map.getOccupiedPercentage()<0.05);
+        player.getTail().resetTail();
         IntStream.rangeClosed(0,200).boxed().flatMap(e -> Stream.of(new V2D(e,75))).sorted((e1,e2) -> (int) (e1.getX() - e2.getX())).forEach(e -> player.getTail().addPoint(e));
         map.updateBorders(Set.copyOf(player.getTail().getCoordinates()));
         assertFalse(map.getBorders().contains(new V2D(199,91)));
