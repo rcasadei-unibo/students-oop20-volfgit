@@ -3,7 +3,9 @@ package vg.view;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
 
-
+/**
+ * Manages scenes and their controller.
+ */
 public interface ViewManager {
 
     /**

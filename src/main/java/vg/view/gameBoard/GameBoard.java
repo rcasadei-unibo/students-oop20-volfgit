@@ -25,7 +25,7 @@ public class GameBoard extends Application {
     ViewManager viewManager;
 
     @Override
-    public void start(final Stage stage) throws Exception {
+    public void start(final Stage stage) {
 
         AdaptableView gameView = new GameBoardView();
         viewManager = new ViewManagerImpl(stage, new KeyEventHandler());
@@ -35,6 +35,7 @@ public class GameBoard extends Application {
 
         GameController gameController = new GameController(gameView, viewManager);
         gameView.setController(gameController);
+        //add first view to viewStack then set scene to the stage
         viewManager.addScene(gameView);
 
         stage.setTitle("GameBoard");
