@@ -1,11 +1,10 @@
 package vg.view.gameBoard;
 
 import javafx.application.Application;
+import javafx.event.EventType;
 import javafx.scene.Scene;
-import javafx.scene.shape.Rectangle;
-import javafx.scene.shape.SVGPath;
 import javafx.stage.Stage;
-import vg.controller.Controller;
+import javafx.stage.WindowEvent;
 import vg.controller.GameController;
 import vg.model.MapImpl;
 import vg.model.StageImpl;
@@ -43,6 +42,10 @@ public class GameBoard extends Application {
 //        stage.minHeightProperty().bind(scene.widthProperty().divide(2));
         viewManager = new ViewManagerImpl(stage, new KeyEventHandler());
         viewManager.addScene(gameView);
+
+        stage.addEventHandler(WindowEvent.WINDOW_CLOSE_REQUEST, event -> {
+            gameController.closeGame();
+        });
 
         stage.show();
         gameController.gameLoop();
