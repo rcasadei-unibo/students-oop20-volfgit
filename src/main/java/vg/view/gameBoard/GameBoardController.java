@@ -22,7 +22,7 @@ public class GameBoardController {
     private void initialize() {
         try {
             gameArea.lookup(gameAreaProve).setStyle("-fx-background-color: #ff08d7;");
-        } catch (Exception e){
+        } catch (Exception e) {
             System.out.println("NOOOO");
         };
     }
