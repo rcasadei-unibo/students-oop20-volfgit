@@ -1,25 +1,26 @@
 package vg.view.gameBoard;
 
 import javafx.application.Application;
-import javafx.event.EventType;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
-import javafx.stage.WindowEvent;
 import vg.controller.GameController;
-import vg.model.MapImpl;
-import vg.model.StageImpl;
-import vg.utils.LoadFxmlUtils;
-import vg.utils.V2D;
+import vg.controller.gameBoard.GameBoardControllerImpl;
+import vg.controller.mysteryBox.manager.MysteryBoxManager;
+import vg.controller.mysteryBox.manager.MysteryBoxManagerImpl;
+import vg.utils.DimensionUtils;
 import vg.view.AdaptableView;
-import vg.view.View;
 import vg.view.ViewManager;
 import vg.view.ViewManagerImpl;
 import vg.view.utils.KeyEventHandler;
 
-import java.awt.Button;
-import java.io.File;
+import java.io.IOException;
 
 public class GameBoard extends Application {
+
+    private GameBoardControllerImpl controller;
+    private MysteryBoxManager mysteryBoxManager;
 
     ViewManager viewManager;
 
@@ -28,8 +29,11 @@ public class GameBoard extends Application {
 
         AdaptableView gameView = new GameBoardView();
         viewManager = new ViewManagerImpl(stage, new KeyEventHandler());
-        GameController gameController = new GameController(gameView, viewManager);
+        //this.controller = load.getController();
+        //Scene scene = new Scene(root, DimensionUtils.DEFAULT_WIDTH, DimensionUtils.DEFAULT_HEIGHT);
+        this.mysteryBoxManager = new MysteryBoxManagerImpl();
 
+        GameController gameController = new GameController(gameView, viewManager);
         gameView.setController(gameController);
         viewManager.addScene(gameView);
 
@@ -42,13 +46,17 @@ public class GameBoard extends Application {
 //        stage.minWidthProperty().bind(scene.heightProperty().multiply(2));
 //        stage.minHeightProperty().bind(scene.widthProperty().divide(2));
 
-        //Stop game thread when window app is closing
-        stage.setOnCloseRequest(event -> {
-            gameController.closeGame();
-        });
-
+        stage.setResizable(false);
         stage.show();
+
+        this.mysteryBoxManager.initializeRound(this.controller);
+
+        viewManager = new ViewManagerImpl(stage, new KeyEventHandler());
+        viewManager.addScene(gameView);
+
+        stage.setOnCloseRequest(event -> gameController.closeGame());
         gameController.gameLoop();
+
     }
 }
 

@@ -1,4 +1,4 @@
-package vg.model.mysteryBox.ability;
+package vg.model.mysteryBox;
 
 public interface AbilityDuration {
     public void functionCallOnStart();

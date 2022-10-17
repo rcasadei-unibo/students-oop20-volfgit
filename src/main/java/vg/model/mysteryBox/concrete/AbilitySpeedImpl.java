@@ -1,11 +1,13 @@
-package vg.model.mysteryBox;
+package vg.model.mysteryBox.concrete;
 
+import vg.model.mysteryBox.AbstractAbilityDurable;
+import vg.model.mysteryBox.EAbility;
 import vg.model.mysteryBox.ability.AbilitySpeed;
 
 public class AbilitySpeedImpl extends AbstractAbilityDurable implements AbilitySpeed {
 
-    public AbilitySpeedImpl(int duration) {
-        super(duration);
+    public AbilitySpeedImpl(EAbility idAbility, int duration) {
+        super(idAbility, duration);
     }
 
 

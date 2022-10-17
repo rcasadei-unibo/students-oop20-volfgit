@@ -3,12 +3,11 @@
     -fx-background-color: #9d9c9c;
     -fx-background-image: url("../img/abstractSky2.jpeg");
     -fx-opacity: 0.75;
-    -fx-padding: 5%;
     -fx-border-color: yellow;
     -fx-border-width: 2px;
 }
 
-.separator, .split-pane  {
+FlowPane, BorderPane{
     -fx-background-color: black;
 }
 
@@ -38,6 +37,17 @@
 }
 
 
+
+.label {
+    -fx-font-size: 25px;
+    -fx-text-fill: white;
+    -fx-font-weight: bold;
+    -fx-font-family: "Copperplate";
+}
+
+#percentage {
+    -fx-font-size: 40px;
+}
 
 
 

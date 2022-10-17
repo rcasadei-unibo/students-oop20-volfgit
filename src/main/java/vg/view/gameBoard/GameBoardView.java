@@ -3,6 +3,7 @@ package vg.view.gameBoard;
 import javafx.scene.Scene;
 import vg.controller.GameController;
 import vg.model.entity.dynamicEntity.player.Player;
+import vg.utils.DimensionUtils;
 import vg.utils.LoadFxmlUtils;
 import vg.utils.V2D;
 import vg.view.AdaptableView;
@@ -10,7 +11,10 @@ import vg.view.AdaptableView;
 public class GameBoardView extends AdaptableView {
 
     protected GameBoardView() {
-        super(new Scene(LoadFxmlUtils.loadFxml("layout/GameBoard.fxml")));
+
+        super(new Scene(LoadFxmlUtils.loadFxml("layout/GameBoard.fxml"),
+                DimensionUtils.DEFAULT_WIDTH,
+                DimensionUtils.DEFAULT_HEIGHT));
     }
 
     /*

@@ -1,21 +1,23 @@
 package vg.model.mysteryBox.factory;
 
-import vg.model.mysteryBox.AbilityScoreImpl;
+import vg.model.mysteryBox.EAbility;
+import vg.model.mysteryBox.concrete.AbilityScoreImpl;
 import vg.model.mysteryBox.ability.AbilityScore;
+import vg.utils.path.PathImageMysteryBox;
 
 public class StaticFactoryScoreAbility {
 
 
     public static AbilityScore createScoreSmall() {
-        return new AbilityScoreImpl(100);
+        return new AbilityScoreImpl(EAbility.Score, 100);
     }
 
     public static AbilityScore createScoreMedium() {
-        return new AbilityScoreImpl(200);
+        return new AbilityScoreImpl(EAbility.Score, 200);
     }
 
     public static AbilityScore createScoreBig() {
-        return new AbilityScoreImpl(300);
+        return new AbilityScoreImpl(EAbility.Score, 300);
     }
 
 
