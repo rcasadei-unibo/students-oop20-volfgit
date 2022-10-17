@@ -106,11 +106,12 @@ public class MapImpl implements Map<V2D> {
         //internal check if the tail is actually completed
         //and the borders can be updated from it
         if (!isTailCompleted()) {
-            throw new IllegalStateException();
+            throw new IllegalStateException("Attempted to call updateBorders while the tail is not completed");
         }
         //before updating the Borders Entity that needs to be captured
         //must be deleted, but that is not a responsibility of this
         //method neither this class
+        /*
         var tr = new HashSet<V2D>();
         getBorders().forEach(e -> {
             if (isClosedByTail(e, tail, getBoss())) {
@@ -119,6 +120,10 @@ public class MapImpl implements Map<V2D> {
         });
         getBorders().removeAll(tr);
         getBorders().addAll(tail);
+        */
+        var tr = createNewBorder(tail,getBoss().getPosition());
+        this.getBorders().addAll(tr);
+        this.getBorders().retainAll(tr);
     }
     /**
      * {@inheritDoc}
@@ -234,21 +239,32 @@ public class MapImpl implements Map<V2D> {
     }
 
     private Set<V2D> createNewBorder(final Set<V2D> tail, final V2D boss){
-        var t = this.getBorders().stream().sorted( (e1,e2) -> {
-            if (e1.isAdj(e2)){
-                return 0;
-            } else if (e1.equals(player.getTail().getLastCoordinate())){
-                return -1;
-            } else return 1;
-        }).collect(Collectors.toList());
-        var t1 = Stream.concat(t.subList(t.indexOf(player.getTail().getLastCoordinate()), t.indexOf(player.getTail().getCoordinates().get(0))).stream(), tail.stream()).collect(Collectors.toSet());
+        List<V2D> t = new LinkedList<>();
+        t.add(player.getTail().getLastCoordinate());
+        try {
+            while (true) {
+                t.add(this.getBorders().stream().filter(e -> !t.contains(e) && e.isAdj(t.get(t.size() - 1))).findFirst().orElseThrow());
+            }
+        } catch ( NoSuchElementException e) {
+            if (!t.get(0).isAdj(t.get(t.size()-1))){
+                throw new IllegalStateException("The list of points is not closed; first: "+t.get(0)+" last: "+ t.get(t.size()-1) );
+            }
+        }
 
-        var t2 = Stream.concat(t.subList(t.indexOf(player.getTail().getCoordinates().get(0)), t.size()-1).stream(), tail.stream()).collect(Collectors.toSet());
+        var indInit = t.indexOf(player.getTail().getLastCoordinate());
+        var indHalf = t.indexOf(player.getTail().getCoordinates().get(0));
+        if (indInit > indHalf) {
+            var tmp = indHalf;
+            indHalf = indInit;
+            indInit = tmp;
+        }
+        var t1 = Stream.concat(t.subList(indInit, indHalf).stream(), tail.stream()).collect(Collectors.toSet());
+        var t2 = Stream.concat(t.subList(indHalf, t.size()).stream(), tail.stream()).collect(Collectors.toSet());
         if(isInBorders(boss, t1)){
             return t1;
         } else if (isInBorders(boss, t2)) {
             return t2;
-        } else throw new IllegalStateException("Failed to create a new border");
+        } else throw new IllegalStateException("Failed to create a new border (Boss too big?)");
     }
     /**
      * Method to check if a point will be closed by the border
