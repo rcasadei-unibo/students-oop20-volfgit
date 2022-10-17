@@ -1,7 +1,10 @@
 package vg.controller.mysteryBox.manager;
 
 import com.sun.javafx.geom.Vec2d;
+import javafx.scene.layout.Pane;
+import vg.controller.gameBoard.GameBoardController;
 import vg.controller.mysteryBox.MysteryBoxController;
+import vg.controller.mysteryBox.StaticFactoryMysteryBox;
 import vg.utils.Round.MysteryBoxPositionUtils;
 
 import java.util.ArrayList;
@@ -14,14 +17,20 @@ public class MysteryBoxManagerImpl implements MysteryBoxManager {
 
     public MysteryBoxManagerImpl() {
         this.mysteryBoxList = new ArrayList<>();
-        this.round = 0;
+        this.round = 1;
     }
 
 
     @Override
-    public void initializeRound() {
-        List<Vec2d> pos = MysteryBoxPositionUtils.POSITION_ROUND.get(round);
+    public void initializeRound(GameBoardController gameBoard) {
+        List<Vec2d> pos = MysteryBoxPositionUtils.POSITION_ROUND.get(this.round);
 
+        pos.forEach(vec2d -> {
+            MysteryBoxController mysteryBox = StaticFactoryMysteryBox.createRandomMysteryBox();
+            mysteryBox.setPosition(vec2d);
+            this.mysteryBoxList.add(mysteryBox);
+            gameBoard.addInGameArea(mysteryBox.getNode());
+        });
     }
 
     @Override

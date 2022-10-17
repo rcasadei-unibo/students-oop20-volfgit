@@ -7,6 +7,8 @@ import javafx.scene.Scene;
 import javafx.stage.Stage;
 import vg.controller.GameController;
 import vg.controller.gameBoard.GameBoardControllerImpl;
+import vg.controller.mysteryBox.manager.MysteryBoxManager;
+import vg.controller.mysteryBox.manager.MysteryBoxManagerImpl;
 import vg.utils.DimensionUtils;
 import vg.view.AdaptableView;
 import vg.view.ViewManager;
@@ -19,6 +21,7 @@ public class GameBoard extends Application {
 
     private static Stage stage;
     private GameBoardControllerImpl controller;
+    private MysteryBoxManager mysteryBoxManager;
 
     ViewManager viewManager;
 
@@ -29,6 +32,8 @@ public class GameBoard extends Application {
         this.controller = load.getController();
         Scene scene = new Scene(root, DimensionUtils.DEFAULT_WIDTH, DimensionUtils.DEFAULT_HEIGHT);
 
+        this.mysteryBoxManager = new MysteryBoxManagerImpl();
+
 
         AdaptableView gameView = new GameBoardView(scene);
         GameController gameController = new GameController(gameView, viewManager);
@@ -38,6 +43,8 @@ public class GameBoard extends Application {
         stage.setResizable(false);
         stage.setScene(scene);
         stage.show();
+
+        this.mysteryBoxManager.initializeRound(this.controller);
 
 
         viewManager = new ViewManagerImpl(stage, new KeyEventHandler());

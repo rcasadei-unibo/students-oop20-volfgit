@@ -12,7 +12,26 @@ import vg.model.mysteryBox.factory.StaticFactorySpeedAbility;
 import vg.model.mysteryBox.factory.StaticFactoryWeaponAbility;
 import vg.view.mysteryBox.StaticFactoryBlock;
 
+import java.util.Random;
+
 public class StaticFactoryMysteryBox {
+
+    public static MysteryBoxController createRandomMysteryBox() {
+        int rnd = new Random().nextInt(5);
+        switch (rnd) {
+            case 0:
+                return createFreezeTime();
+            case 1:
+                return createKillMosquitoes();
+            case 2:
+                return createScore();
+            case 3:
+                return createSpeed();
+            case 4:
+                return createWeaponForMosquitoes();
+        }
+        return null;
+    }
 
     public static MysteryBoxController<AbilityFreezeTime> createFreezeTime() {
         var model = StaticFactoryFreezeTimeAbility.createSmallTime();
