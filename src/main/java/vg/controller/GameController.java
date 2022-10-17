@@ -17,7 +17,7 @@ import vg.view.GameViewFactory;
 import vg.view.menu.confirmMenu.ConfirmOption;
 import vg.view.menu.confirmMenu.ConfirmView;
 import vg.view.menu.confirmMenu.ConfirmViewController;
-import vg.view.menu.confirmMenu.ResumeObserver;
+import vg.view.menu.confirmMenu.DialogAnswerObserver;
 import vg.view.utils.KeyAction;
 
 import java.util.ArrayList;
@@ -28,7 +28,7 @@ import java.util.Set;
  * Game Engine class, manager game loop and refresh timing
  * during gameplay
  * */
-public class GameController extends Controller implements SceneController, ResumeObserver {
+public class GameController extends Controller implements SceneController, DialogAnswerObserver {
     /**
      * Command queue of new player's movement got from input to be applied.
      */
@@ -156,18 +156,29 @@ public class GameController extends Controller implements SceneController, Resum
     }
 
     /**
-     * Terminate gameLoop thread and go back to the previous screen.
+     * Terminate gameLoop then show a dialog to ask if user wants stop playing and go back to main menu.
+     * The response is received by the method {{@link #notifyDialogAnswer(ConfirmOption)}} of interface
+     * {@link DialogAnswerObserver}.
      */
     public void closeGame() {
         System.out.println("close game");
         this.gameState = GameState.STOPPED;
         ConfirmView confirmView = new ConfirmView();
-        ConfirmViewController confirmViewController = new ConfirmViewController(confirmView, this.getViewManager(), this);
+        ConfirmViewController confirmViewController = new ConfirmViewController(confirmView,
+                this.getViewManager(),
+                this);
         confirmView.setController(confirmViewController);
         this.getViewManager().addScene(confirmView);
+        //the response is communicated through method notifyDialogAnswer
+    }
 
-        //if in confirm view is selcted to exit -> confirmView tells viewMnager to backHome
-        //id is deny exit -> confirmView is removed and it is back gameplay
+    @Override
+    public void notifyDialogAnswer(final ConfirmOption answer) {
+        if (answer == ConfirmOption.CONFIRM) {
+            this.getViewManager().backHome();
+        } else if (answer == ConfirmOption.DENY) {
+            this.resumeGame();
+        }
     }
 
     /**
@@ -203,15 +214,6 @@ public class GameController extends Controller implements SceneController, Resum
     private void showView(final View view) {
         view.setController(this);
         this.getViewManager().addScene(view);
-    }
-
-    @Override
-    public void notifyDialogAnswer(final ConfirmOption answer) {
-        if (answer == ConfirmOption.CONFIRM) {
-            this.getViewManager().backHome();
-        } else if (answer == ConfirmOption.DENY) {
-            this.resumeGame();
-        }
     }
 
     /**

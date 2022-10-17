@@ -7,15 +7,15 @@ import vg.view.utils.KeyAction;
 public class ConfirmViewController extends Controller {
     private ConfirmView confirmView;
     private ConfirmOption selection = ConfirmOption.DENY;
-    private ResumeObserver resumeObserver;
+    private DialogAnswerObserver dialogAnswerObserver;
 
     public ConfirmViewController(final ConfirmView view,
                                  final ViewManager viewManager,
-                                 final ResumeObserver resumeObserver) {
+                                 final DialogAnswerObserver dialogAnswerObserver) {
         super(view, viewManager);
         this.confirmView = view;
         this.confirmView.selectDeny();
-        this.resumeObserver = resumeObserver;
+        this.dialogAnswerObserver = dialogAnswerObserver;
     }
 
     @Override
@@ -29,7 +29,7 @@ public class ConfirmViewController extends Controller {
     }
 
     private void applySelection() {
-        this.resumeObserver.notifyDialogAnswer(this.selection);
+        this.dialogAnswerObserver.notifyDialogAnswer(this.selection);
     }
 
     private void selectConfirm() {
