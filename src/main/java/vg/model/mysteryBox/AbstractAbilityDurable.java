@@ -1,11 +1,8 @@
 package vg.model.mysteryBox;
 
-import vg.model.mysteryBox.ability.AbilityDuration;
 import vg.utils.ThreadUtils;
 
-import java.io.Console;
-
-public abstract class AbstractAbilityDurable implements Runnable {
+public abstract class AbstractAbilityDurable extends AbstractAbility implements Runnable {
     private static final int INIT_DURATION = 0;
     private  static final int STEP_TIME = 1;
 
@@ -17,7 +14,8 @@ public abstract class AbstractAbilityDurable implements Runnable {
     private boolean isRunning;
 
 
-    public AbstractAbilityDurable(int durationMillis) {
+    public AbstractAbilityDurable(String pathReveled, int durationMillis) {
+        super(pathReveled);
         this.durationMillis = durationMillis;
         this.currentDurationMillis = INIT_DURATION;
         this.thread = new Thread(this);
