@@ -6,12 +6,11 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
 import vg.controller.GameController;
-import vg.controller.mysteryBox.StaticFactoryMysteryBox;
+import vg.controller.gameBoard.GameBoardControllerImpl;
 import vg.utils.DimensionUtils;
 import vg.view.AdaptableView;
 import vg.view.ViewManager;
 import vg.view.ViewManagerImpl;
-import vg.controller.gameBoard.GameBoardControllerImpl;
 import vg.view.utils.KeyEventHandler;
 
 import java.io.IOException;
@@ -44,18 +43,8 @@ public class GameBoard extends Application {
         viewManager = new ViewManagerImpl(stage, new KeyEventHandler());
         viewManager.addScene(gameView);
 
-        var mysteryBoxFreezeTime = StaticFactoryMysteryBox.createFreezeTime();
-        this.controller.addInGameArea(mysteryBoxFreezeTime.getNode());
 
-//        managerBlock.createBlock(this.controller.getGameArea());
-
-
-
-        stage.setOnCloseRequest(event -> {
-            System.out.println("close");
-            System.exit(0);
-            // TODO teo metti la funzione per chiudere il gioco... il thread
-        });
+        stage.setOnCloseRequest(event -> gameController.closeGame());
 
         gameController.gameLoop();
 

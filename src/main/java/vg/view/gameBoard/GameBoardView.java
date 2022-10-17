@@ -21,6 +21,8 @@ public class GameBoardView extends AdaptableView {
     * da fare il metodo drawPlayer(V2D position)  dove io ti passo la nuova positione e tu dentro poi
     * fai le tue cose con javafx
     *
+    * se fai this.getScene() ottieni la scena del gioco che viene poi visualizzata
+    *
     * */
     public void printPlayer(final Player player) {
         System.out.println(player.getPosition().toString());
