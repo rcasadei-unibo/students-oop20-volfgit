@@ -233,15 +233,26 @@ public class MapImpl implements Map<V2D> {
         return this.boss;
     }
 
+    private Set<V2D> createNewBorder(final Set<V2D> tail, final V2D boss){
+        var t = this.getBorders().stream().sorted( (e1,e2) -> {
+            if (e1.isAdj(e2)){
+                return 0;
+            } else if (e1.equals(player.getTail().getLastCoordinate())){
+                return -1;
+            } else return 1;
+        }).collect(Collectors.toList());
+        var t1 = Stream.concat(t.subList(t.indexOf(player.getTail().getLastCoordinate()), t.indexOf(player.getTail().getCoordinates().get(0))).stream(), tail.stream()).collect(Collectors.toSet());
+
+        var t2 = Stream.concat(t.subList(t.indexOf(player.getTail().getCoordinates().get(0)), t.size()-1).stream(), tail.stream()).collect(Collectors.toSet());
+        if(isInBorders(boss, t1)){
+            return t1;
+        } else if (isInBorders(boss, t2)) {
+            return t2;
+        } else throw new IllegalStateException("Failed to create a new border");
+    }
     /**
-     * Function that checks if a position is on the same "side"
-     * as the boss or not, this means that only 1 boss at the
-     * same time can be present on the map. The final parameter,
-     * boss, is there for a possible future overloading of this
-     * method so more than one boss will be possible to have.
-     * If the position to check is on the tail, this return true.
-     * This method can be used to check if a position is "outside"
-     * the current borders.
+     * Method to check if a point will be closed by the border
+     * or not. Works only with points
      * @param pos the starting position from which to check
      * @param tail the tail that will become the new border
      * @param boss the boss of the map
@@ -282,6 +293,17 @@ public class MapImpl implements Map<V2D> {
         List<Integer> segments = new ArrayList<>();
         var t = IntStream.rangeClosed(1,this.maxBorderX)
                 .filter(e -> getBorders().contains(new V2D(e,pos.getY()))!=getBorders().contains(new V2D(e-1,pos.getY())))
+                .peek(segments::add).filter(e -> pos.getX()<e).findFirst();
+
+        Collections.reverse(segments);
+        if(t.isPresent()){
+            return  segments.indexOf(t.getAsInt())%2==0;
+        } else return false;
+    }
+    private boolean isInBorders(final V2D pos, Set<V2D> borders){
+        List<Integer> segments = new ArrayList<>();
+        var t = IntStream.rangeClosed(1,this.maxBorderX)
+                .filter(e -> borders.contains(new V2D(e,pos.getY()))!=borders.contains(new V2D(e-1,pos.getY())))
                 .peek(segments::add).filter(e -> pos.getX()<e).findFirst();
 
         Collections.reverse(segments);
