@@ -1,4 +1,4 @@
-package vg.view.block;
+package vg.view.mysteryBox;
 
 public class StaticFactoryBlock {
 

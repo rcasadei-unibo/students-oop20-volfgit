@@ -10,7 +10,7 @@ import vg.model.mysteryBox.factory.StaticFactoryMosquitoesAbility;
 import vg.model.mysteryBox.factory.StaticFactoryScoreAbility;
 import vg.model.mysteryBox.factory.StaticFactorySpeedAbility;
 import vg.model.mysteryBox.factory.StaticFactoryWeaponAbility;
-import vg.view.block.StaticFactoryBlock;
+import vg.view.mysteryBox.StaticFactoryBlock;
 
 public class StaticFactoryMysteryBox {
 
