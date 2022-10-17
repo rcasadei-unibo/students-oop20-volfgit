@@ -6,9 +6,11 @@ import vg.utils.GameState;
 import vg.utils.LoadFxmlUtils;
 import vg.view.AdaptableView;
 
+import java.security.PublicKey;
+
 public class GameViewFactory {
 
-    static private AdaptableView makeAdaptableView(final String relativePath) {
+     private static AdaptableView makeAdaptableView(final String relativePath) {
         Scene scene = new Scene(LoadFxmlUtils.loadFxml(relativePath),
                 DimensionUtils.DEFAULT_WIDTH,
                 DimensionUtils.DEFAULT_HEIGHT);
@@ -23,7 +25,7 @@ public class GameViewFactory {
         };
     }
 
-    static public AdaptableView viewState(final GameState gameState) {
+     public static AdaptableView viewState(final GameState gameState) {
         if (gameState == GameState.PAUSED) {
             return makeAdaptableView("layout/PauseView.fxml");
         } else if (gameState == GameState.GAMEOVER) {
