@@ -112,7 +112,7 @@ public class StageImpl<T> implements Stage<V2D> {
      */
     @Override
     public Player getPlayer() {
-        return player;
+        return this.map.getPlayer();
     }
 
     /**
