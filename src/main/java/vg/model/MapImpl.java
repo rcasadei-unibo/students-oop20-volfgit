@@ -1,6 +1,7 @@
 package vg.model;
 
 import vg.model.entity.ShapedEntity;
+import vg.model.entity.dynamicEntity.player.Tail;
 import vg.model.score.Score;
 import vg.model.score.ScoreImpl;
 import vg.model.timedObject.Bonus;
@@ -108,19 +109,7 @@ public class MapImpl implements Map<V2D> {
         if (!isTailCompleted()) {
             throw new IllegalStateException("Attempted to call updateBorders while the tail is not completed");
         }
-        //before updating the Borders Entity that needs to be captured
-        //must be deleted, but that is not a responsibility of this
-        //method neither this class
-        /*
-        var tr = new HashSet<V2D>();
-        getBorders().forEach(e -> {
-            if (isClosedByTail(e, tail, getBoss())) {
-               tr.add(e);
-            }
-        });
-        getBorders().removeAll(tr);
-        getBorders().addAll(tail);
-        */
+
         var tr = createNewBorder(tail,getBoss().getPosition());
         this.getBorders().addAll(tr);
         this.getBorders().retainAll(tr);
@@ -238,7 +227,16 @@ public class MapImpl implements Map<V2D> {
         return this.boss;
     }
 
-    private Set<V2D> createNewBorder(final Set<V2D> tail, final V2D boss){
+    /**
+     * Creates the new border using the {@link vg.model.entity.dynamicEntity.player.Tail} of the
+     * {@link Player} and the position ({@link V2D}) of the {@link Boss}. This method will not update
+     * the borders, it is called internally by {@link #updateBorders(Set)}. A side note: the {@link Set}
+     * can be extracted by {@link Tail#getCoordinates()}.
+     * @param tail a set of {@link V2D}.
+     * @param boss the {@link Boss} of the map.
+     * @return {@link #getBorders()}
+     */
+    private Set<V2D> createNewBorder(final Collection<V2D> tail, final V2D boss){
         List<V2D> t = new LinkedList<>();
         t.add(player.getTail().getLastCoordinate());
         try {
@@ -306,12 +304,15 @@ public class MapImpl implements Map<V2D> {
      * @return true if the position is inside the borders, false otherwise
      */
     public boolean isInBorders(final V2D pos){
+        if(getBorders().contains(pos) || pos.getX()<0 ){
+            return false;
+        }
         List<Integer> segments = new ArrayList<>();
         var t = IntStream.rangeClosed(1,this.maxBorderX)
                 .filter(e -> getBorders().contains(new V2D(e,pos.getY()))!=getBorders().contains(new V2D(e-1,pos.getY())))
                 .peek(segments::add).filter(e -> pos.getX()<e).findFirst();
+         Collections.reverse(segments);
 
-        Collections.reverse(segments);
         if(t.isPresent()){
             return  segments.indexOf(t.getAsInt())%2==0;
         } else return false;
@@ -346,7 +347,9 @@ public class MapImpl implements Map<V2D> {
     }
     /**
      * Overloading for checking if a position is valid but removing one
-     * entity from checks.
+     * entity from checks. This is used in {@link MapImpl#getAfterCollisionDirection(DynamicEntity)}
+     * where it checks for every entity how to "bounce" but it excludes itself from computations
+     * (and the entities that has a mass tier lower).
      * @param pos the position to check
      * @param toRemove the entity to remove
      * @return true if the position is valid and can be occupied, false otherwise
@@ -355,8 +358,10 @@ public class MapImpl implements Map<V2D> {
         if (getAllStaticEntities().stream().anyMatch(e -> e.isInShape(pos) && !e.equals(toRemove))) {
             return false;
         }
-        //TODO correct massTier interaction
-        if (getAllDynamicEntities().stream().filter(e -> e.getMassTier() != MassTier.NOCOLLISION && !e.equals(toRemove)).anyMatch(e -> e.isInShape(pos))) {
+        if (getAllDynamicEntities().stream()
+                .filter(e -> e.getMassTier() != MassTier.NOCOLLISION && !e.equals(toRemove))
+                .filter(e -> e.getMassTier().ordinal() >= toRemove.getMassTier().ordinal())
+                .anyMatch(e -> e.isInShape(pos))) {
             return false;
         }
         return isInBorders(pos);
