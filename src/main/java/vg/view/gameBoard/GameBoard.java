@@ -6,12 +6,12 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
 import vg.controller.GameController;
+import vg.controller.mysteryBox.StaticFactoryMysteryBox;
 import vg.utils.DimensionUtils;
 import vg.view.AdaptableView;
 import vg.view.ViewManager;
 import vg.view.ViewManagerImpl;
-import vg.view.block.ManagerBlock;
-import vg.view.controller.GameBoardControllerImpl;
+import vg.controller.gameBoard.GameBoardControllerImpl;
 import vg.view.utils.KeyEventHandler;
 
 import java.io.IOException;
@@ -19,9 +19,8 @@ import java.io.IOException;
 public class GameBoard extends Application {
 
     private static Stage stage;
-    GameBoardControllerImpl controller;
+    private GameBoardControllerImpl controller;
 
-    ManagerBlock managerBlock = new ManagerBlock();
     ViewManager viewManager;
 
     @Override
@@ -30,6 +29,7 @@ public class GameBoard extends Application {
         Parent root = load.load();
         this.controller = load.getController();
         Scene scene = new Scene(root, DimensionUtils.DEFAULT_WIDTH, DimensionUtils.DEFAULT_HEIGHT);
+
 
         AdaptableView gameView = new GameBoardView(scene);
         GameController gameController = new GameController(gameView, viewManager);
@@ -44,8 +44,12 @@ public class GameBoard extends Application {
         viewManager = new ViewManagerImpl(stage, new KeyEventHandler());
         viewManager.addScene(gameView);
 
+        var mysteryBoxFreezeTime = StaticFactoryMysteryBox.createFreezeTime();
+        this.controller.addInGameArea(mysteryBoxFreezeTime.getNode());
 
-        managerBlock.createBlock(this.controller.getGameArea());
+//        managerBlock.createBlock(this.controller.getGameArea());
+
+
 
         stage.setOnCloseRequest(event -> {
             System.out.println("close");
@@ -54,6 +58,7 @@ public class GameBoard extends Application {
         });
 
         gameController.gameLoop();
+
     }
 }
 
