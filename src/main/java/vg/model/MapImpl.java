@@ -21,6 +21,7 @@ import java.util.Collections;
 import java.util.HashSet;
 import java.util.Set;
 import java.util.stream.Collectors;
+import java.util.stream.IntStream;
 import java.util.stream.Stream;
 
 public class MapImpl implements Map<V2D> {
@@ -57,7 +58,11 @@ public class MapImpl implements Map<V2D> {
      * @see Map#getBorders()
      */
     private final Set<V2D> border;
-
+    /**
+     * Default max X and Y coordinates.
+     */
+    private final int maxBorderX = 200;
+    private final int maxBorderY = 150;
     private final Score score;
 
     /**
@@ -85,8 +90,8 @@ public class MapImpl implements Map<V2D> {
      */
     @Override
     public double getOccupiedPercentage() {
-        //TODO effettivamente calcolare la percentuale per differenze immagino
-        return 0;
+        //this is sadly not working, isClosedByTail fault
+        return ((double)IntStream.rangeClosed(0,maxBorderX).boxed().flatMap( e -> IntStream.rangeClosed(0,maxBorderY).boxed().flatMap(e2 -> Stream.of(new V2D(e, e2)) )).filter( e -> isClosedByTail(e, this.border, this.boss)).count())/(maxBorderX*maxBorderY);
     }
     /**
      * {@inheritDoc}
@@ -245,11 +250,14 @@ public class MapImpl implements Map<V2D> {
      * @return true if the position will be outside the map
      *         and will be captured/deleted, false otherwise
      */
-    private boolean isClosedByTail(final V2D pos, final Set<V2D> tail, final Boss boss) {
+    public boolean isClosedByTail(final V2D pos, final Set<V2D> tail, final Boss boss) {
 
+
+        if(tail.contains(pos)) return false;
         V2D step = new V2D(pos);
         var dx = pos.getX() - boss.getPosition().getX();
         var dy = pos.getY() - boss.getPosition().getY();
+
         for (int i = 0; i <= Math.abs(dx); i++) {
             if (tail.contains(step.sum(new V2D(Math.signum(-dx) * i, 0)))) {
                 //the original point is between the tail and the boss
@@ -257,8 +265,9 @@ public class MapImpl implements Map<V2D> {
             }
         }
         for (int i = 0; i <= Math.abs(dy); i++) {
-            if (tail.contains(step.sum(new V2D(pos.getX() - dx, Math.signum(-dx) * i)))) {
+            if (tail.contains(step.sum(new V2D(-dx, Math.signum(-dy) * i)))) {
                 //the original point is between the tail and the boss
+
                 return true;
             }
         }
@@ -270,7 +279,7 @@ public class MapImpl implements Map<V2D> {
      * This method tell if a position is valid on the
      * map (not out of borders and is not on the same
      * position with other entities that has a mass
-     * tier higher then {@link vg.utils.MassTier#NOCOLLISION}.
+     * tier higher then {@link vg.utils.MassTier#NOCOLLISION}).
      * @param pos the position to check
      * @return true if the position can be occupied, false otherwise
      */
@@ -294,6 +303,7 @@ public class MapImpl implements Map<V2D> {
         if (getAllStaticEntities().stream().anyMatch(e -> e.isInShape(pos) && !e.equals(toRemove))) {
             return false;
         }
+        //TODO correct massTier interaction
         if (getAllDynamicEntities().stream().filter(e -> e.getMassTier() != MassTier.NOCOLLISION && !e.equals(toRemove)).anyMatch(e -> e.isInShape(pos))) {
             return false;
         }
