@@ -1,6 +1,5 @@
-package vg.view.controller;
+package vg.controller.gameBoard;
 
-import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.geometry.Dimension2D;
 import javafx.scene.Node;
@@ -46,6 +45,11 @@ public class GameBoardControllerImpl implements GameBoardController {
     @Override
     public Pane getGameArea() {
         return this.gameArea;
+    }
+
+    @Override
+    public void addInGameArea(Node node) {
+        this.gameArea.getChildren().add(node);
     }
 
 

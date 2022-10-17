@@ -1,13 +1,10 @@
 package vg.view.block;
 
-import javafx.scene.shape.Rectangle;
+import javafx.scene.Node;
 
-public class Block extends Rectangle {
+public interface Block {
 
-    public Block(double width, double height) {
-        super(width, height);
-        this.setStyle("-fx-fill: rgba(42,119,255,0.59);");
-    }
+    public void setImage(String pathImage);
 
-
+    public Node getNode();
 }
