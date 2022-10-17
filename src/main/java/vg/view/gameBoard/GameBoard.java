@@ -10,6 +10,7 @@ import vg.controller.gameBoard.GameBoardControllerImpl;
 import vg.controller.mysteryBox.manager.MysteryBoxManager;
 import vg.controller.mysteryBox.manager.MysteryBoxManagerImpl;
 import vg.utils.DimensionUtils;
+import vg.utils.LoaderFXMLUtils;
 import vg.view.AdaptableView;
 import vg.view.ViewManager;
 import vg.view.ViewManagerImpl;
@@ -27,7 +28,7 @@ public class GameBoard extends Application {
 
     @Override
     public void start(final Stage stage) throws IOException {
-        FXMLLoader load = new FXMLLoader(getClass().getResource("/layout/GameBoard1.fxml"));
+        FXMLLoader load = LoaderFXMLUtils.GetLoader("/layout/GameBoard1.fxml");
         Parent root = load.load();
         this.controller = load.getController();
         Scene scene = new Scene(root, DimensionUtils.DEFAULT_WIDTH, DimensionUtils.DEFAULT_HEIGHT);
