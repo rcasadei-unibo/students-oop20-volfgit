@@ -6,34 +6,69 @@ import javafx.scene.paint.Paint;
 import javafx.scene.text.Text;
 
 public class ConfirmViewController {
+    /**
+     * Accent color of selected button.
+     */
+    static final Paint SELECTED_COLOR = Paint.valueOf("#fff600");
 
-    final static Paint selectedColor = Paint.valueOf("#fff600");
-    final static Paint unselectedColor = Paint.valueOf("#515151");
+    /**
+     * Color of button not selected.
+     */
+    static final Paint UNSELECTED_COLOR = Paint.valueOf("#515151");
 
+    /**
+     *
+     */
     @FXML
     private Text titleText;
 
+    /**
+     *
+     */
     @FXML
     private Text hintText;
 
+    /**
+     *
+     */
     @FXML
     private Label confirmBtn;
 
+    /**
+     *
+     */
     @FXML
     private Label denyBtn;
 
-    @FXML
+    /**
+     * Apply selection style. Set CONFIRM button with {@link ConfirmViewController#SELECTED_COLOR}
+     */
     public void highlightConfirm() {
-        this.confirmBtn.setTextFill(selectedColor);
-        this.denyBtn.setTextFill(unselectedColor);
-
+        this.confirmBtn.setTextFill(SELECTED_COLOR);
+        this.denyBtn.setTextFill(UNSELECTED_COLOR);
     }
 
-    @FXML
+    /**
+     * Apply selection style. Set DENY button with {@link ConfirmViewController#SELECTED_COLOR}
+     */
     public void highlightDeny() {
-        this.titleText.setText("DENYYYY");
-        this.confirmBtn.setTextFill(unselectedColor);
-        this.denyBtn.setTextFill(selectedColor);
+        this.confirmBtn.setTextFill(UNSELECTED_COLOR);
+        this.denyBtn.setTextFill(SELECTED_COLOR);
     }
 
+    /**
+     * Set title of dialog view.
+     * @param title Question to ask to user.
+     */
+    public void setTitle(final String title) {
+        this.titleText.setText(title);
+    }
+
+    /**
+     * Set hint description of dialog view to explain user keys to be used in selection.
+     * @param hintText Suggestion text.
+     */
+    public void setHint(final String hintText) {
+        this.hintText.setText(hintText);
+    }
 }

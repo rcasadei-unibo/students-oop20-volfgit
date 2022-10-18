@@ -9,6 +9,7 @@ import java.util.Optional;
 /**
  * A view that resize and correctly puts elements on the screen
  * based on the resolution.
+ * It keeps logic controller ({@link Controller}) and javafx scene ({@link Scene}).
  */
 public abstract class AdaptableView implements View {
     private final Scene scene;
