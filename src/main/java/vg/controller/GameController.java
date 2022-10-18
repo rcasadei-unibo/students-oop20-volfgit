@@ -1,14 +1,18 @@
 package vg.controller;
 
-
 import vg.model.Boss.BossImpl;
 import vg.model.MapImpl;
 import vg.model.StageImpl;
 import vg.model.entity.dynamicEntity.enemy.Boss;
 import vg.model.entity.dynamicEntity.player.BasePlayer;
-import vg.utils.*;
 import vg.model.Stage;
 import vg.model.entity.dynamicEntity.player.Player;
+import vg.utils.Command;
+import vg.utils.Direction;
+import vg.utils.GameState;
+import vg.utils.MassTier;
+import vg.utils.Shape;
+import vg.utils.V2D;
 import vg.view.AdaptableView;
 import vg.view.SceneController;
 import vg.view.View;
@@ -16,7 +20,7 @@ import vg.view.ViewManager;
 import vg.view.GameViewFactory;
 import vg.view.menu.confirmMenu.ConfirmOption;
 import vg.view.menu.confirmMenu.ConfirmView;
-import vg.view.menu.confirmMenu.ConfirmViewController;
+import vg.view.menu.confirmMenu.DialogConfirmController;
 import vg.view.menu.confirmMenu.DialogAnswerObserver;
 import vg.view.utils.KeyAction;
 
@@ -163,11 +167,11 @@ public class GameController extends Controller implements SceneController, Dialo
     public void closeGame() {
         System.out.println("close game");
         this.gameState = GameState.STOPPED;
-        ConfirmView confirmView = new ConfirmView();
-        ConfirmViewController confirmViewController = new ConfirmViewController(confirmView,
-                this.getViewManager(),
-                this);
-        confirmView.setController(confirmViewController);
+        ConfirmView confirmView = ConfirmView.newConfirmDialogView();
+        DialogConfirmController dialogConfirmController =
+                new DialogConfirmController(confirmView, this.getViewManager(), this);
+        confirmView.setIoLogicController(dialogConfirmController);
+        //launch confirmation dialog
         this.getViewManager().addScene(confirmView);
         //the response is communicated through method notifyDialogAnswer
     }
@@ -212,7 +216,7 @@ public class GameController extends Controller implements SceneController, Dialo
     }
 
     private void showView(final View view) {
-        view.setController(this);
+        view.setIoLogicController(this);
         this.getViewManager().addScene(view);
     }
 
