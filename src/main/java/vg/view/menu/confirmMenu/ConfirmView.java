@@ -1,10 +1,6 @@
 package vg.view.menu.confirmMenu;
 
-import javafx.fxml.FXMLLoader;
-import javafx.scene.Scene;
-import vg.utils.DimensionUtils;
 import vg.view.AdaptableView;
-import java.io.IOException;
 
 /**
  * A specific adaptable view to show a dialog with two selection: confirm and deny.
