@@ -6,6 +6,8 @@ import vg.controller.GameController;
 import vg.controller.gameBoard.GameBoardController;
 import vg.controller.mysteryBox.manager.MysteryBoxManager;
 import vg.controller.mysteryBox.manager.MysteryBoxManagerImpl;
+import vg.controller.player.PlayerController;
+import vg.controller.player.PlayerControllerImpl;
 import vg.view.AdaptableView;
 import vg.view.ViewFactory;
 import vg.view.ViewManager;
@@ -30,6 +32,8 @@ public class GameBoard extends Application {
         AdaptableView<GameBoardController> gameView = ViewFactory.newGameBoardView();
         // 2) CREATE create logic controller
         GameController gameController = new GameController(gameView, viewManager);
+        PlayerController playerController = new PlayerControllerImpl();
+        playerController.setPlayerInGameArea(gameView.getViewController());
         // 3) set logic controller in view
         gameView.setIoLogicController(gameController);
 
