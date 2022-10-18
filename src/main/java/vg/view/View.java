@@ -4,7 +4,7 @@ package vg.view;
 import javafx.scene.Scene;
 import vg.controller.Controller;
 
-public interface View {
+public interface View<T> {
     /**
      * Return logic controller (that interact with domain) of this view.
      * @return {@link Controller}
@@ -16,6 +16,8 @@ public interface View {
      * @param ioLogicController controller that controls this view.
      */
     void setIoLogicController(Controller ioLogicController);
+
+    T getViewController();
 
     /**
      * Get javaFX scene of this view.

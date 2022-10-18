@@ -5,21 +5,15 @@ import javafx.scene.Scene;
 import vg.utils.DimensionUtils;
 import vg.view.AdaptableView;
 import java.io.IOException;
-import java.util.Optional;
 
 /**
  * A specific adaptable view to show a dialog with two selection: confirm and deny.
  * {@inheritDoc}
  */
-public final class ConfirmView extends AdaptableView {
-    /**
-     * JavaFX controller loaded from file associated to file fxml.
-     */
-    private final Optional<ConfirmViewController> viewController;
+public class ConfirmView extends AdaptableView<ConfirmViewController> {
 
     private ConfirmView(final Scene scene, final ConfirmViewController viewController) {
-        super(scene);
-        this.viewController = Optional.ofNullable(viewController);
+        super(scene, viewController);
     }
 
     /**
@@ -45,7 +39,7 @@ public final class ConfirmView extends AdaptableView {
      * @param title new title string
      */
     public void setTitle(final String title) {
-        this.viewController.ifPresent(confirmViewController -> confirmViewController.setTitle(title));
+        this.getViewController().setTitle(title);
     }
 
     /**
@@ -53,7 +47,7 @@ public final class ConfirmView extends AdaptableView {
      * @param hintText new subtitle string
      */
     public void setHint(final String hintText) {
-        this.viewController.ifPresent(confirmViewController -> confirmViewController.setHint(hintText));
+        this.getViewController().setHint(hintText);
     }
 
     /**
@@ -61,7 +55,7 @@ public final class ConfirmView extends AdaptableView {
      * This method delegates to {@link ConfirmViewController#highlightConfirm()}
      */
     public void selectConfirm() {
-        this.viewController.ifPresent(ConfirmViewController::highlightConfirm);
+        this.getViewController().highlightConfirm();
     }
 
     /**
@@ -69,7 +63,7 @@ public final class ConfirmView extends AdaptableView {
      *  * This method delegates to {@link ConfirmViewController#highlightDeny()}}
      */
     public void selectDeny() {
-        this.viewController.ifPresent(ConfirmViewController::highlightDeny);
+        this.getViewController().highlightDeny();
     }
 
 }

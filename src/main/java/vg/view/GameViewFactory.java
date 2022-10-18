@@ -10,11 +10,12 @@ import java.security.PublicKey;
 
 public class GameViewFactory {
 
+    //TODO: create view contorller fo these views
      private static AdaptableView makeAdaptableView(final String relativePath) {
         Scene scene = new Scene(LoadFxmlUtils.loadFxml(relativePath),
                 DimensionUtils.DEFAULT_WIDTH,
                 DimensionUtils.DEFAULT_HEIGHT);
-        return new AdaptableView(scene) {
+        return new AdaptableView(scene, null) {
         };
     }
 

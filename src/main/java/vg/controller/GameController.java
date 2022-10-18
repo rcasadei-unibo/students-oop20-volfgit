@@ -181,7 +181,17 @@ public class GameController extends Controller implements SceneController, Dialo
         if (answer == ConfirmOption.CONFIRM) {
             this.getViewManager().backHome();
         } else if (answer == ConfirmOption.DENY) {
-            this.resumeGame();
+            this.getViewManager().popScene();
+            System.out.println(this.gameState.name()); //STOOPED
+            //TODO: fix-> put in pause, escape tha game then deny quitting
+            // screen is in pause but gameloop is running
+            if (gameState == GameState.PAUSED) {
+                this.getViewManager().popScene();
+            } else {
+                System.out.println("");
+                this.gameState = GameState.PLAYING;
+                this.gameLoop();
+            }
         }
     }
 
