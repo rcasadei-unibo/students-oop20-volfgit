@@ -16,7 +16,7 @@ import vg.view.ViewManager;
 import vg.view.GameViewFactory;
 import vg.view.menu.confirmMenu.ConfirmOption;
 import vg.view.menu.confirmMenu.ConfirmView;
-import vg.view.menu.confirmMenu.ConfirmViewController;
+import vg.view.menu.confirmMenu.DialogConfirmController;
 import vg.view.menu.confirmMenu.DialogAnswerObserver;
 import vg.view.utils.KeyAction;
 
@@ -164,10 +164,10 @@ public class GameController extends Controller implements SceneController, Dialo
         System.out.println("close game");
         this.gameState = GameState.STOPPED;
         ConfirmView confirmView = new ConfirmView();
-        ConfirmViewController confirmViewController = new ConfirmViewController(confirmView,
-                this.getViewManager(),
-                this);
-        confirmView.setController(confirmViewController);
+        DialogConfirmController dialogConfirmController =
+                new DialogConfirmController(confirmView, this.getViewManager(), this);
+        confirmView.setController(dialogConfirmController);
+        //launch confirmation dialog
         this.getViewManager().addScene(confirmView);
         //the response is communicated through method notifyDialogAnswer
     }
