@@ -39,17 +39,14 @@ public final class KeyEventHandler implements EventHandler<KeyEvent> {
     }
 
     /**
-     * {@inheritDoc}
+     * Uses the saved {@link KeySettings} and transforms a
+     * {@link KeyCode} into a {@link KeyAction}.
+     * {@link KeySettings#getAction(KeyCode)}.
+     * @param k the {@link KeyCode}
+     * @return {@link KeyAction}
      */
-    public KeyAction keyPressed(final KeyCode k) {
+    public KeyAction getActionFromKeyCode(final KeyCode k) {
         return this.keySettings.getAction(k);
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    public KeyAction keyReleased(final KeyCode k) {
-        return null;
     }
 
     /**
@@ -65,11 +62,11 @@ public final class KeyEventHandler implements EventHandler<KeyEvent> {
        // System.out.println(event);
         if (this.sceneController.isPresent()) {
             if (event.getEventType().equals(KEY_PRESSED)) {
-                this.sceneController.get().keyPressed(keyPressed(event.getCode()));
+                this.sceneController.get().keyPressed(getActionFromKeyCode(event.getCode()));
             } else if (event.getEventType().equals(KEY_RELEASED)) {
-                this.sceneController.get().keyReleased(keyPressed(event.getCode()));
+                this.sceneController.get().keyReleased(getActionFromKeyCode(event.getCode()));
             } else if (event.getEventType().equals(KEY_TYPED)) {
-                this.sceneController.get().keyTapped(keyPressed(event.getCode()));
+                this.sceneController.get().keyTapped(getActionFromKeyCode(event.getCode()));
             }
         }
     }
