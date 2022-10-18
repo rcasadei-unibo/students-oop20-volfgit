@@ -3,17 +3,18 @@ package vg.controller.mysteryBox;
 import com.sun.javafx.geom.Vec2d;
 import javafx.scene.Node;
 import vg.model.mysteryBox.AbilityInTheBox;
-import vg.view.mysteryBox.Block;
+import vg.view.entity.EntityBlock;
 
 public class MysteryBoxControllerImpl<T extends AbilityInTheBox> implements MysteryBoxController<T> {
 
     private final AbilityInTheBox model;
-    private final Block view;
+    private final EntityBlock view;
 
-    public MysteryBoxControllerImpl(AbilityInTheBox model, Block view) {
+    public MysteryBoxControllerImpl(AbilityInTheBox model, EntityBlock view) {
         this.model = model;
         this.view = view;
         this.view.setImage(this.model.getPathImage());
+//        this.view.setDimension(this.model.getDimension());
     }
 
     public T getModel() {
