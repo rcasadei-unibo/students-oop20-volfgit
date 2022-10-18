@@ -1,6 +1,7 @@
 package vg.view.menu.confirmMenu;
 
 import javafx.fxml.FXMLLoader;
+import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.text.Text;
 import vg.utils.DimensionUtils;
@@ -14,22 +15,20 @@ public class ConfirmView extends AdaptableView {
     private Optional<ConfirmViewController> viewController;
 
     private ConfirmView(final Scene scene, final ConfirmViewController viewController) {
-        super(new Scene(LoadFxmlUtils.loadFxml("layout/ConfirmationView.fxml"),
-                DimensionUtils.DEFAULT_WIDTH,
-                DimensionUtils.DEFAULT_HEIGHT));
-        this.viewController = Optional.ofNullable(viewController);
+        super(scene);
+        this.viewController = Optional.of(viewController);
     }
 
     public static ConfirmView newConfirmDialogView() {
         FXMLLoader loader = new FXMLLoader(ConfirmView.class.getResource("/layout/ConfirmationView.fxml"));
         Scene scene = null;
-        //TODO: review and do it better
         try {
-            scene = new Scene(loader.load());
+            scene = new Scene(loader.load(),
+                    DimensionUtils.DEFAULT_WIDTH,
+                    DimensionUtils.DEFAULT_HEIGHT);
         } catch (IOException e) {
             e.printStackTrace();
         }
-
         ConfirmViewController viewController = loader.getController();
         return new ConfirmView(scene, viewController);
     }
@@ -49,7 +48,7 @@ public class ConfirmView extends AdaptableView {
 
     public void selectDeny() {
         this.viewController.ifPresent(ConfirmViewController::highlightDeny);
-        System.out.println("DENY");
+        System.out.println(" select DENY");
     }
 
 }

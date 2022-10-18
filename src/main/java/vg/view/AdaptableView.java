@@ -14,7 +14,7 @@ public abstract class AdaptableView implements View {
     private final Scene scene;
     private Optional<Controller> logicController;
 
-    protected AdaptableView(Scene scene) {
+    protected AdaptableView(final Scene scene) {
         this.scene = scene;
     }
 
