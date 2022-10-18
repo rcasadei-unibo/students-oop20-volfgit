@@ -17,6 +17,13 @@
                <cursor>
                   <Cursor fx:constant="DISAPPEAR" />
                </cursor>
+               <content>
+                  <VBox fx:id="list" alignment="CENTER">
+                     <padding>
+                        <Insets left="50.0" right="50.0" />
+                     </padding>
+                  </VBox>
+               </content>
             </ScrollPane>
          </children></VBox>
    </center>
