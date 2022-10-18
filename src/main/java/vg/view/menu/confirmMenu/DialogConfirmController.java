@@ -4,18 +4,16 @@ import vg.controller.Controller;
 import vg.view.ViewManager;
 import vg.view.utils.KeyAction;
 
-public class DialogConfirmController extends Controller {
-    private ConfirmView confirmView;
+public class DialogConfirmController extends Controller<ConfirmView> {
     private ConfirmOption selection = ConfirmOption.DENY;
-    private DialogAnswerObserver dialogAnswerObserver;
+    private final DialogAnswerObserver dialogAnswerObserver;
 
     public DialogConfirmController(final ConfirmView view,
                                    final ViewManager viewManager,
                                    final DialogAnswerObserver dialogAnswerObserver) {
         super(view, viewManager);
-        this.confirmView = view;
         this.dialogAnswerObserver = dialogAnswerObserver;
-        this.confirmView.selectDeny();
+        this.selectDeny();
     }
 
     @Override
@@ -33,12 +31,12 @@ public class DialogConfirmController extends Controller {
     }
 
     private void selectConfirm() {
-        this.confirmView.selectConfirm();
+        this.getView().selectConfirm();
         this.selection = ConfirmOption.CONFIRM;
     }
 
     private void selectDeny() {
-        this.confirmView.selectDeny();
+        this.getView().selectDeny();
         this.selection = ConfirmOption.DENY;
     }
 

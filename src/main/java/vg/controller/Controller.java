@@ -5,17 +5,17 @@ import vg.view.SceneController;
 import vg.view.View;
 import vg.view.ViewManager;
 
-public abstract class Controller implements SceneController {
+public abstract class Controller<T extends AdaptableView<?>> implements SceneController {
     /**
      * View to be controlled.
      */
-    private AdaptableView view;
+    private final T view;
     /**
      * View manager used to add new view to application window.
      */
-    private ViewManager viewManager;
+    private final ViewManager viewManager;
 
-    public Controller(final AdaptableView view, final ViewManager viewManager) {
+    public Controller(final T view, final ViewManager viewManager) {
         this.view = view;
         this.viewManager = viewManager;
     }
@@ -23,7 +23,7 @@ public abstract class Controller implements SceneController {
     /**
      * @return view that depends on this controller
      */
-    public AdaptableView getView() {
+    public T getView() {
         return this.view;
     }
 
