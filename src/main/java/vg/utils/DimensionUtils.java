@@ -1,5 +1,7 @@
 package vg.utils;
 
+import javafx.stage.Screen;
+
 /**
  *  Static class with resolutions in pixels.
  */
@@ -44,5 +46,45 @@ public final class DimensionUtils {
      * Scaling factor for HD (0.333).
      */
     private static final double SCALE_HD  = HEIGHT_HD  / HEIGHT_4K;
+    /**
+     * The width of the primary screen.
+     */
+    private static final double SCREEN_WIDTH = Screen.getPrimary().getBounds().getWidth();
+    /**
+     * The height of the primary screen.
+     */
+    private static final double SCREEN_HEIGHT = Screen.getPrimary().getBounds().getHeight();
 
+    /**
+     * The width that is currently used.
+     */
+    private static double currentWidth;
+    /**
+     * The height that is currently used.
+     */
+    private static double currentHeight;
+    /**
+     * The current scaling factor that is applied.
+     */
+    private static double currentScale;
+    /**
+     * The boolean that indicates if the application mode is fullscreen or not.
+     */
+    private static Boolean fullscreen = true;
+
+    /**
+     * Sets the current fields to the ones compatible from the screen.
+     */
+    public static void init() {
+        if (SCREEN_WIDTH == WIDTH_4K && SCREEN_HEIGHT == HEIGHT_4K) {
+            currentHeight = HEIGHT_4K;
+            currentWidth = WIDTH_4K;
+        } else if (SCREEN_WIDTH == WIDTH_FHD && SCREEN_HEIGHT == HEIGHT_FHD) {
+            currentHeight = HEIGHT_FHD;
+            currentWidth = WIDTH_FHD;
+        } else {
+            currentHeight = HEIGHT_HD;
+            currentWidth = WIDTH_HD;
+        }
+    }
 }
