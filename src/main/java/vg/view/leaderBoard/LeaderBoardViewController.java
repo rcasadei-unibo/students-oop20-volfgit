@@ -1,9 +1,13 @@
 package vg.view.leaderBoard;
 
 import javafx.fxml.FXML;
+import javafx.scene.Node;
 import javafx.scene.control.Label;
+import javafx.scene.control.Separator;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Paint;
+
+import java.util.Optional;
 
 public class LeaderBoardViewController {
 
@@ -13,17 +17,22 @@ public class LeaderBoardViewController {
     @FXML
     private VBox list;
 
-    public void closeBtnPressing() {
+    @FXML
+    private Separator sep1;
 
+    @FXML
+    private Separator sep2;
+
+    public void closeBtnPressing() {
         closeBtn.setTextFill(Paint.valueOf("#fff600"));
     }
 
     public void showList() {
-        //TODO: refresh list with updated data
-        for(int i=0; i< 40; i++) {
-            Label lb = new Label("CIAOo");
-            lb.setTextFill(Paint.valueOf("#fff600"));
-            list.getChildren().add(lb);
+        //TODO: showList(Data data) refresh list with updated data
+
+        for (int i = 0; i < 20; i++) {
+            Optional<Node> itemRow = LeaderBoardView.listItem(i, i*2, 0);
+            itemRow.ifPresent(node -> list.getChildren().add(node));
         }
     }
 
