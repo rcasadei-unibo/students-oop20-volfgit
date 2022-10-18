@@ -1,4 +1,4 @@
-package vg.view.mysteryBox;
+package vg.view.entity;
 
 import com.sun.javafx.geom.Vec2d;
 import javafx.scene.Node;
@@ -7,9 +7,9 @@ import javafx.scene.image.Image;
 import javafx.scene.paint.ImagePattern;
 import vg.utils.path.PathImageMysteryBox;
 
-public class BlockImpl extends Rectangle implements Block {
+public class EntityBlockImpl extends Rectangle implements EntityBlock {
 
-    public BlockImpl(double width, double height) {
+    public EntityBlockImpl(double width, double height) {
         super(width, height);
         this.setImage(PathImageMysteryBox.MYSTERY_BOX);
     }
