@@ -13,6 +13,7 @@ public class MysteryBoxControllerImpl<T extends AbilityInTheBox> implements Myst
     public MysteryBoxControllerImpl(AbilityInTheBox model, Block view) {
         this.model = model;
         this.view = view;
+        this.view.setImage(this.model.getPathImage());
     }
 
     public T getModel() {

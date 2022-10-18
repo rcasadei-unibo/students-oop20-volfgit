@@ -9,7 +9,7 @@ public abstract class AbstractAbility {
     private final double HEIGHT = 60;
 
     public final Dimension2D dimension;
-    protected final String pathImage;
+    protected String pathImage;
     protected final EAbility idAbility;
 
     public AbstractAbility(EAbility idAbility) {
@@ -20,5 +20,9 @@ public abstract class AbstractAbility {
 
     public Dimension2D getDimension() {
         return this.dimension;
+    }
+
+    public String getPathImage() {
+        return this.pathImage;
     }
 }
