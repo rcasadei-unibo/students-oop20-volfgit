@@ -17,7 +17,7 @@ import vg.view.AdaptableView;
 import vg.view.SceneController;
 import vg.view.View;
 import vg.view.ViewManager;
-import vg.view.GameViewFactory;
+import vg.view.ViewFactory;
 import vg.view.menu.confirmMenu.ConfirmOption;
 import vg.view.menu.confirmMenu.ConfirmView;
 import vg.view.menu.confirmMenu.DialogConfirmController;
@@ -201,7 +201,7 @@ public class GameController extends Controller implements SceneController, Dialo
     private void pauseGame() {
         System.out.println("PAUSE game");
         this.gameState = GameState.PAUSED;
-        View pauseView = GameViewFactory.viewState(this.gameState);
+        View pauseView = ViewFactory.viewState(this.gameState);
         showView(pauseView);
     }
 
@@ -221,7 +221,7 @@ public class GameController extends Controller implements SceneController, Dialo
     private void gameOver() {
         this.gameState = GameState.STOPPED;
         System.out.println("GAMEOVER");
-        View gameOverView = GameViewFactory.viewState(this.gameState);
+        View gameOverView = ViewFactory.viewState(this.gameState);
         this.showView(gameOverView);
     }
 

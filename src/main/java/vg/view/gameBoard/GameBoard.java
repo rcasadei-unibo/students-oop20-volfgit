@@ -7,6 +7,7 @@ import vg.controller.gameBoard.GameBoardController;
 import vg.controller.mysteryBox.manager.MysteryBoxManager;
 import vg.controller.mysteryBox.manager.MysteryBoxManagerImpl;
 import vg.view.AdaptableView;
+import vg.view.ViewFactory;
 import vg.view.ViewManager;
 import vg.view.ViewManagerImpl;
 import vg.view.utils.KeyEventHandler;
@@ -21,16 +22,18 @@ public class GameBoard extends Application {
 
     @Override
     public void start(final Stage stage) {
-        AdaptableView<GameBoardController> gameView = GameBoardView.newGameBoardView();
-
         viewManager = new ViewManagerImpl(stage, new KeyEventHandler());
 
         MysteryBoxManager mysteryBoxManager = new MysteryBoxManagerImpl();
 
+        // 1) CREATE view
+        AdaptableView<GameBoardController> gameView = ViewFactory.newGameBoardView();
+        // 2) CREATE create logic controller
         GameController gameController = new GameController(gameView, viewManager);
+        // 3) set logic controller in view
         gameView.setIoLogicController(gameController);
 
-        //add first view to viewStack then set scene to the stage.
+        //4) if you wanna see add it to the viewManager
         viewManager.addScene(gameView);
         stage.setTitle("GameBoard");
         stage.setResizable(false);

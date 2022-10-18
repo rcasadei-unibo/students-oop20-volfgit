@@ -12,8 +12,8 @@ import java.io.IOException;
  */
 public class ConfirmView extends AdaptableView<ConfirmViewController> {
 
-    private ConfirmView(final Scene scene, final ConfirmViewController viewController) {
-        super(scene, viewController);
+    private ConfirmView(final String resName) {
+        super(resName);
     }
 
     /**
@@ -21,17 +21,7 @@ public class ConfirmView extends AdaptableView<ConfirmViewController> {
      * @return new confirmation dialog screen.
      */
     public static ConfirmView newConfirmDialogView() {
-        FXMLLoader loader = new FXMLLoader(ConfirmView.class.getResource("/layout/ConfirmationView.fxml"));
-        Scene scene = null;
-        try {
-            scene = new Scene(loader.load(),
-                    DimensionUtils.DEFAULT_WIDTH,
-                    DimensionUtils.DEFAULT_HEIGHT);
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-        ConfirmViewController viewController = loader.getController();
-        return new ConfirmView(scene, viewController);
+        return new ConfirmView("/layout/ConfirmationView.fxml");
     }
 
     /**
