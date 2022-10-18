@@ -111,7 +111,7 @@ public class V2D {
      * @return true if the difference between the two points
      * is either (-1,0) (0,-1) (1,0) or (0,1)
      */
-    public boolean isAdj(V2D other){
-        return Stream.of(-1,1).flatMap( e -> Stream.of(new V2D(e,0), new V2D(0,e))).anyMatch(e -> e.equals(other.sum(this.scalarMul(-1))));
+    public boolean isAdj(final V2D other) {
+        return Stream.of(-1, 1).flatMap(e -> Stream.of(new V2D(e, 0), new V2D(0, e))).anyMatch(e -> e.equals(other.sum(this.scalarMul(-1))));
     }
 }
