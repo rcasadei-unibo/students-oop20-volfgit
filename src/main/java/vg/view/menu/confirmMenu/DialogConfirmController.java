@@ -4,14 +4,14 @@ import vg.controller.Controller;
 import vg.view.ViewManager;
 import vg.view.utils.KeyAction;
 
-public class ConfirmViewController extends Controller {
+public class DialogConfirmController extends Controller {
     private ConfirmView confirmView;
     private ConfirmOption selection = ConfirmOption.DENY;
     private DialogAnswerObserver dialogAnswerObserver;
 
-    public ConfirmViewController(final ConfirmView view,
-                                 final ViewManager viewManager,
-                                 final DialogAnswerObserver dialogAnswerObserver) {
+    public DialogConfirmController(final ConfirmView view,
+                                   final ViewManager viewManager,
+                                   final DialogAnswerObserver dialogAnswerObserver) {
         super(view, viewManager);
         this.confirmView = view;
         this.dialogAnswerObserver = dialogAnswerObserver;
