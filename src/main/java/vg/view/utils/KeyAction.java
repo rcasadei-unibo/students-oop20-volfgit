@@ -7,5 +7,6 @@ public enum KeyAction {
     RIGHT,
     ENTER,
     ESCAPE,
-    P;
+    P,
+	NOACTION;
 }
