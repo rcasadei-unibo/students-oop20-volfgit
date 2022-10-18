@@ -14,8 +14,8 @@ public class ConfirmViewController extends Controller {
                                  final DialogAnswerObserver dialogAnswerObserver) {
         super(view, viewManager);
         this.confirmView = view;
-        this.confirmView.selectDeny();
         this.dialogAnswerObserver = dialogAnswerObserver;
+        this.confirmView.selectDeny();
     }
 
     @Override
