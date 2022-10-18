@@ -28,7 +28,7 @@ public class KeySettings {
      */
     public static KeySettings defaultKeySettings() {
         Map<KeyCode, KeyAction> settings = new HashMap<KeyCode, KeyAction>();
-        Stream.of(KeyAction.values()).forEach(e -> settings.put(KeyCode.valueOf(e.toString()), e));
+        Stream.of(KeyAction.values()).limit(KeyAction.values().length-1).forEach(e -> settings.put(KeyCode.valueOf(e.toString()), e));
         return new KeySettings(settings);
     }
 
@@ -47,6 +47,9 @@ public class KeySettings {
      * @return {@link KeyAction}
      */
     public KeyAction getAction(KeyCode k) {
-        return this.currentSettings.get(k);
+        var t =  this.currentSettings.get(k);
+        if (t==null){
+           return KeyAction.NOACTION;
+        } else return t;
     }
 }
