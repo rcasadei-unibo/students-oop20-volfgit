@@ -58,7 +58,8 @@ public class V2D {
      * Change coordinate sign to the passed signs of signVector
      * Each nth-coordinate of current vector gets sing of nth-sign of passed vector.
      * @param signVector vector to get signs of coordinates
-     * */
+     * @return a {@link V2D} with the updated sign
+     */
     public final V2D updateSign(final V2D signVector) {
         //remove signs
         V2D absVector = this.removeSign();
