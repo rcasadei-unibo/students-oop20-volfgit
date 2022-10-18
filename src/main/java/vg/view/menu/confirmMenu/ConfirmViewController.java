@@ -22,12 +22,16 @@ public class ConfirmViewController {
     @FXML
     private Label denyBtn;
 
+    @FXML
     public void highlightConfirm() {
         this.confirmBtn.setTextFill(selectedColor);
         this.denyBtn.setTextFill(unselectedColor);
+
     }
 
+    @FXML
     public void highlightDeny() {
+        this.titleText.setText("DENYYYY");
         this.confirmBtn.setTextFill(unselectedColor);
         this.denyBtn.setTextFill(selectedColor);
     }
