@@ -27,7 +27,7 @@ public class GameBoard extends Application {
         MysteryBoxManager mysteryBoxManager = new MysteryBoxManagerImpl();
 
         GameController gameController = new GameController(gameView, viewManager);
-        gameView.setController(gameController);
+        gameView.setIoLogicController(gameController);
 
         //add first view to viewStack then set scene to the stage.
         viewManager.addScene(gameView);

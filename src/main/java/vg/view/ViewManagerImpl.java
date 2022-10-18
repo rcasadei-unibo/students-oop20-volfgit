@@ -35,7 +35,7 @@ public final class ViewManagerImpl implements ViewManager {
     private void showScene() {
         View lastView = this.sceneStack.lastElement();
         this.stage.setScene(lastView.getScene());
-        this.keyEventHandler.setSceneController(lastView.getController());
+        this.keyEventHandler.setSceneController(lastView.getIoLogicController());
     }
 
     @Override

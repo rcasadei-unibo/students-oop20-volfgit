@@ -3,7 +3,6 @@ package vg.view;
 import javafx.scene.Scene;
 import vg.controller.Controller;
 import vg.utils.NoSuchControllerException;
-import vg.view.utils.KeyAction;
 
 import java.util.Optional;
 
@@ -13,24 +12,24 @@ import java.util.Optional;
  */
 public abstract class AdaptableView implements View {
     private final Scene scene;
-    private Optional<Controller> controller;
+    private Optional<Controller> logicController;
 
     protected AdaptableView(Scene scene) {
         this.scene = scene;
     }
 
     @Override
-    public Controller getController() throws NoSuchControllerException {
-        if (this.controller.isPresent()) {
-            return this.controller.get();
-        } else {
-            throw new NoSuchControllerException();
-        }
+    public void setIoLogicController(final Controller controller) {
+        this.logicController = Optional.of(controller);
     }
 
     @Override
-    public void setController(Controller controller) {
-        this.controller = Optional.of(controller);
+    public Controller getIoLogicController() throws NoSuchControllerException {
+        if (this.logicController.isPresent()) {
+            return this.logicController.get();
+        } else {
+            throw new NoSuchControllerException();
+        }
     }
 
     @Override
