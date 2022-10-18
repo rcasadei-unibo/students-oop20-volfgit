@@ -28,7 +28,7 @@ public class KeySettings {
      */
     public static KeySettings defaultKeySettings() {
         Map<KeyCode, KeyAction> settings = new HashMap<KeyCode, KeyAction>();
-        Stream.of(KeyAction.values()).limit(KeyAction.values().length-1).forEach(e -> settings.put(KeyCode.valueOf(e.toString()), e));
+        Stream.of(KeyAction.values()).filter(e -> !e.equals(KeyAction.NOACTION)).forEach(e -> settings.put(KeyCode.valueOf(e.toString()), e));
         return new KeySettings(settings);
     }
 
