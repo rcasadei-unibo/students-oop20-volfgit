@@ -72,7 +72,7 @@ public class levelGenerator {
         FileOutputStream fileOutLv1 = new FileOutputStream("1");
         ObjectOutputStream lv1 = new ObjectOutputStream(fileOutLv1);
         //TODO: FIX
-        //lv1.writeObject(this.lv1);
+        lv1.writeObject(this.lv1);
         lv1.flush();
         lv1.close();
         //do this for every level
