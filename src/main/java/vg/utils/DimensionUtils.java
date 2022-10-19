@@ -87,4 +87,56 @@ public final class DimensionUtils {
             currentWidth = WIDTH_HD;
         }
     }
+
+
+    /**
+     * Getters and setters.
+     */
+    public static int getDefaultWidth() {
+        return DEFAULT_WIDTH;
+    }
+
+    public static void setDefaultWidth(int defaultWidth) {
+        DEFAULT_WIDTH = defaultWidth;
+    }
+
+    public static int getDefaultHeight() {
+        return DEFAULT_HEIGHT;
+    }
+
+    public static void setDefaultHeight(int defaultHeight) {
+        DEFAULT_HEIGHT = defaultHeight;
+    }
+
+    public static double getCurrentWidth() {
+        return currentWidth;
+    }
+
+    public static void setCurrentWidth(double currentWidth) {
+        DimensionUtils.currentWidth = currentWidth;
+    }
+
+    public static double getCurrentHeight() {
+        return currentHeight;
+    }
+
+    public static void setCurrentHeight(double currentHeight) {
+        DimensionUtils.currentHeight = currentHeight;
+    }
+
+    public static double getCurrentScale() {
+        return currentScale;
+    }
+
+    public static void setCurrentScale(double currentScale) {
+        DimensionUtils.currentScale = currentScale;
+    }
+
+    public static Boolean getFullscreen() {
+        return fullscreen;
+    }
+
+    public static void setFullscreen(Boolean fullscreen) {
+        DimensionUtils.fullscreen = fullscreen;
+    }
 }
