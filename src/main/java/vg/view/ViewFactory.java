@@ -2,20 +2,23 @@ package vg.view;
 
 import vg.controller.gameBoard.GameBoardController;
 import vg.utils.GameState;
-import vg.view.utils.NoViewController;
+
+import java.util.Optional;
 
 public class ViewFactory {
 
-     private static AdaptableView<NoViewController> makeAdaptableView(final String resName) {
+     private static AdaptableView<ViewController> makeAdaptableView(final String resName) {
         return new AdaptableView<>(resName);
     }
 
-     public static AdaptableView<NoViewController> viewState(final GameState gameState) {
+    public static Optional<View> viewState(final GameState gameState) {
+        AdaptableView<ViewController> adaptableView = null;
         if (gameState == GameState.PAUSED) {
-            return makeAdaptableView("/layout/PauseView.fxml");
+            adaptableView = makeAdaptableView("/layout/PauseView.fxml");
         } else if (gameState == GameState.GAMEOVER) {
-            return makeAdaptableView("/layout/GameOver.fxml");
-        } else return null;
+            adaptableView = makeAdaptableView("/layout/GameOver.fxml");
+        }
+        return Optional.ofNullable(adaptableView);
      }
 
     /**
