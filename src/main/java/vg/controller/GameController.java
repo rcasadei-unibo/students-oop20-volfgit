@@ -26,6 +26,7 @@ import vg.view.menu.confirmMenu.DialogConfirmController;
 import vg.view.menu.confirmMenu.DialogAnswerObserver;
 import vg.view.utils.KeyAction;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -57,27 +58,18 @@ public class GameController extends Controller implements SceneController, Dialo
     public GameController(final AdaptableView<GameBoardController> view, final ViewManager viewManager) {
         super(view, viewManager);
         this.movementQueue = new ArrayList<>();
-        this.stageDomain = loadStageModel();
-        ((GameBoardController) this.getView().getViewController()).initMapView(this.stageDomain.getPlayer().getPosition());
+        try {
+            this.stageDomain = loadStageModel();
+        } catch (Exception e) {
+
+        }
+
+        this.getGameViewController().initMapView(this.stageDomain.getPlayer().getPosition());
     }
 
-    private Stage<V2D> loadStageModel() {
-        Boss boss =  new BossImpl(
-                new V2D(1,1),
-                new V2D(4,4),
-                3,
-                Shape.CIRCLE,
-                MassTier.HIGH);
+    private Stage<V2D> loadStageModel() throws IOException, ClassNotFoundException {
 
-        Stage stage =  new StageImpl<V2D>(0, new MapImpl(
-                BasePlayer.newPlayer(new V2D(0, 0)),
-                boss,
-                Set.of(),
-                Set.of(),
-                Set.of(),
-                Set.of()
-        ));
-        return stage;
+        return new StageImpl<V2D>();
     }
 
     /**
@@ -112,16 +104,15 @@ public class GameController extends Controller implements SceneController, Dialo
         //this.stageDomain.doCycle();
         this.stageDomain.getPlayer().move();
 
-        if (this.stageDomain.getPlayer().getPosition().getX() == 6) {
+        if (this.stageDomain.getPlayer().getLife() <= 0) {
             this.gameState = GameState.GAMEOVER;
+            //TODO: save current score and level then show gameover scree
             Platform.runLater(this::gameOver);
         }
 
-        if (this.stageDomain.getPlayer().getLife() <= 0) {
-            this.gameState = GameState.GAMEOVER;
-        }
-
         //TODO: check if level is end then pass to next level
+        //TODO: show screen for 5 sec then pass to new level
+        //this.stageDomain.createNextLevel();
     }
 
     /**
@@ -142,7 +133,7 @@ public class GameController extends Controller implements SceneController, Dialo
      */
     private void render() {
         getGameViewController().updatePlayerPosition(this.stageDomain.getPlayer().getPosition());
-        //getGameViewController().updataBossPosition(this.stageDomain.getDynamicEntitySet());
+        getGameViewController().updateBossPosition(this.stageDomain.getBoss().getPosition());
         System.out.println(this.stageDomain.getPlayer().getPosition());
     }
 
@@ -266,6 +257,7 @@ public class GameController extends Controller implements SceneController, Dialo
             }
         }
     }
+
     /**
      * {@inheritDoc}
      */

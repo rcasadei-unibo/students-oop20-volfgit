@@ -1,6 +1,5 @@
 package vg.controller.gameBoard;
 
-import com.sun.javafx.geom.Vec2d;
 import javafx.fxml.FXML;
 import javafx.geometry.Dimension2D;
 import javafx.scene.Node;
@@ -9,7 +8,6 @@ import javafx.scene.control.Label;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.Pane;
 import vg.model.entity.dynamicEntity.DynamicEntity;
-import vg.model.entity.dynamicEntity.enemy.Mosquitoes;
 import vg.view.entity.EntityBlock;
 import vg.view.entity.EntityBlockImpl;
 import vg.view.player.PlayerViewController;
@@ -17,11 +15,9 @@ import vg.view.player.PlayerViewControllerImpl;
 import vg.utils.V2D;
 import vg.view.ViewController;
 
-import java.util.Iterator;
 import java.util.Set;
-import java.util.stream.IntStream;
 
-public class GameBoardControllerImpl extends ViewController implements GameBoardController {
+public class GameBoardViewControllerImpl extends ViewController implements GameBoardController {
 
     @FXML
     private BorderPane borderPane;
@@ -71,9 +67,11 @@ public class GameBoardControllerImpl extends ViewController implements GameBoard
     public void initMapView(final V2D initPlayerPos) {
         //Set player in view map
         this.player = new PlayerViewControllerImpl();
-        this.player.setPosition(initPlayerPos.getVec2d());
         this.addInGameArea(this.player.getNode());
 
+        this.boss = new EntityBlockImpl(50, 50);
+        //this.boss.setImage("img/boss.png");
+        this.addInGameArea(this.boss.getNode());
         //TODO: Create and set boss view node and add it to map view
     }
 
