@@ -48,6 +48,17 @@ public interface Stage<T> {
     Player getPlayer();
 
     /**
+     * Get the current level played.
+     * @return the current level played
+     */
+    int getLv();
+
+    /**
+     * Sets the current level.
+     * @param lv the level
+     */
+    void setLv(int lv);
+    /**
      * Sets the player in this stage.
      * @param player The player to set to.
      * @see Player
