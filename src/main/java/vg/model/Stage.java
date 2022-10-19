@@ -5,6 +5,7 @@ import vg.model.entity.Entity;
 import vg.model.entity.dynamicEntity.DynamicEntity;
 import vg.model.entity.dynamicEntity.player.Player;
 import vg.model.entity.staticEntity.StaticEntity;
+import vg.model.levels.LEVEL;
 import vg.utils.Direction;
 
 import java.util.Set;
@@ -144,6 +145,9 @@ public interface Stage<T> {
      */
     void doCycle();
 
-    /*TODO in più creare il metodo Map<T, Pair<MassTier,FactionType>> getCollidble().
+    /**
+     * Creates a {@link Map}, must use {@link LEVEL} or better
+     * {@link MapFactoryImpl}.
      */
+    void createLevel();
 }

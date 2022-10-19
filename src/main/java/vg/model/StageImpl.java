@@ -5,6 +5,7 @@ import vg.model.entity.Entity;
 import vg.model.entity.dynamicEntity.DynamicEntity;
 import vg.model.entity.dynamicEntity.player.Player;
 import vg.model.entity.staticEntity.StaticEntity;
+import vg.model.levels.LEVEL;
 import vg.utils.Direction;
 import vg.utils.MassTier;
 import vg.utils.V2D;
@@ -20,6 +21,10 @@ import java.util.stream.Stream;
  */
 public class StageImpl<T> implements Stage<V2D> {
 
+    /**
+     * The current {@link LEVEL}.
+     */
+    private LEVEL lv;
     /**
      * The current score earned by the player.
      */
@@ -240,5 +245,10 @@ public class StageImpl<T> implements Stage<V2D> {
         checkAllOutOfBounds();
         checkCollisions();
         destroyAll();
+    }
+
+    @Override
+    public void createLevel() {
+        new MapFactoryImpl(getPlayer()).fromEnum(LEVEL.values()[this.lv.ordinal() + 1]);
     }
 }
