@@ -85,25 +85,14 @@ public interface Map<T> {
      * Return a list of active bonus collected by player.
      * @return the set of bonuses currently activate
      */
-    //TODO: Fix
-    //Set<Bonus> getActiveBonus();
+    //TODO: delegate bonus controller the request
+    <R> Set<R> getActiveBonus();
 
     /**
      * Update bonus internal timer and remove from active bonus if expired.
      * @param elapsedTime elasped time between current and previous game cycle
      */
     void updateBonusTimer(double elapsedTime);
-
-
-    /**
-     * Returns the set of mystery boxes.
-     * @return the set of mystery boxes
-     * @see MysteryBox
-     * @see Bonus
-     */
-    //TODO: Fix
-    //Set<MysteryBox<Bonus>> getAllMysteryBoxes();
-
 
     /**
      * Returns the set of static entities.

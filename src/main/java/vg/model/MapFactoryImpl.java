@@ -26,13 +26,9 @@ public class MapFactoryImpl implements MapFactory<V2D> {
     @Override
     public Map<V2D> fromEnum(final LEVEL lv) {
         //TODO: fix
-       /* return new MapImpl(this.player, lv.getBoss(), new HashSet<Bonus>(),new HashSet<StaticEntity>(), lv.getEnemies(), IntStream.rangeClosed(0,200).boxed().
+        return new MapImpl(this.player, lv.getBoss(), new HashSet<>(), lv.getEnemies(), IntStream.rangeClosed(0,200).boxed().
                 flatMap(e -> Stream.of(new V2D(e, 0), new V2D(0, e), new V2D(200, e), new V2D(e, 150))).filter(e -> e.getY() <= 150).
                 collect(Collectors.toSet()));
-
-        */
-        //TODO: remove it
-        return null;
     }
 
     @Override

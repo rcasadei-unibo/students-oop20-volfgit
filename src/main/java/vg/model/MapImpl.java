@@ -35,8 +35,8 @@ public class MapImpl implements Map<V2D>, Serializable {
      * Set of active bonuses that affect the player.
      * @see Bonus
      */
-    //TODO: Fix
-    //private final Set<Bonus> setBonuses;
+    //TODO: salvare contorller bonus
+
     /**
      * Set of all static entities on the map.
      * @see StaticEntity
@@ -71,8 +71,7 @@ public class MapImpl implements Map<V2D>, Serializable {
      * @param dynamicEntitySet the set of all dynamic entities
      * @param border           the border of the map
      */
-    // * @param setBonuses       the set of active bonuses
-    public MapImpl(final Player player, final Boss boss/*, final Set<Bonus> setBonuses*/, final Set<StaticEntity> staticEntitySet, final Set<DynamicEntity> dynamicEntitySet, final Set<V2D> border) {
+    public MapImpl(final Player player, final Boss boss, final Set<StaticEntity> staticEntitySet, final Set<DynamicEntity> dynamicEntitySet, final Set<V2D> border) {
         this.player = player;
         this.boss = boss;
         //this.setBonuses = setBonuses;
@@ -153,14 +152,16 @@ public class MapImpl implements Map<V2D>, Serializable {
             throw new IllegalArgumentException();
         }
     }
+
     /**
      * {@inheritDoc}
      */
-    //TODO: Fix
-    /*@Override
-    public Set<Bonus> getActiveBonus() {
-        return this.setBonuses;
-    }*/
+    @Override
+    public <R> Set<R> getActiveBonus() {
+        //TODO: luanaaaa
+        return null;
+    }
+
     /**
      * {@inheritDoc}
      */
@@ -175,15 +176,6 @@ public class MapImpl implements Map<V2D>, Serializable {
         });*/
     }
 
-    /**
-     * {@inheritDoc}
-     */
-    //TODO: Fix
-   /* @Override
-    public Set<MysteryBox<Bonus>> getAllMysteryBoxes() {
-        //TODO check the cast to be safe
-        return this.staticEntitySet.stream().filter(e -> e instanceof MysteryBox).map(e -> (MysteryBox<Bonus>) e).collect(Collectors.<MysteryBox<Bonus>>toSet());
-    }*/
     /**
      * {@inheritDoc}
      */
@@ -237,7 +229,7 @@ public class MapImpl implements Map<V2D>, Serializable {
      * @param boss the {@link Boss} of the map.
      * @return {@link #getBorders()}
      */
-    private Set<V2D> createNewBorder(final Collection<V2D> tail, final V2D boss){
+    private Set<V2D> createNewBorder(final Collection<V2D> tail, final V2D boss) {
         List<V2D> t = new LinkedList<>();
         t.add(player.getTail().getLastCoordinate());
         try {
@@ -245,7 +237,7 @@ public class MapImpl implements Map<V2D>, Serializable {
                 t.add(this.getBorders().stream().filter(e -> !t.contains(e) && e.isAdj(t.get(t.size() - 1))).findFirst().orElseThrow());
             }
         } catch ( NoSuchElementException e) {
-            if (!t.get(0).isAdj(t.get(t.size()-1))){
+            if (!t.get(0).isAdj(t.get(t.size()-1))) {
                 throw new IllegalStateException("The list of points is not closed; first: "+t.get(0)+" last: "+ t.get(t.size()-1) );
             }
         }

@@ -54,7 +54,7 @@ public class GameController extends Controller implements SceneController, Dialo
      */
     private Stage<V2D> stageDomain;
 
-
+    //TODO: pass satgeDomain as parameter
     public GameController(final AdaptableView<GameBoardController> view, final ViewManager viewManager) {
         super(view, viewManager);
         this.movementQueue = new ArrayList<>();
@@ -133,7 +133,7 @@ public class GameController extends Controller implements SceneController, Dialo
     private void render() {
         getGameViewController().updatePlayerPosition(this.stageDomain.getPlayer().getPosition());
         getGameViewController().updateBossPosition(this.stageDomain.getBoss().getPosition());
-
+        //TODO: fare anche con i mosquitoes
     }
 
     private GameBoardController getGameViewController() {

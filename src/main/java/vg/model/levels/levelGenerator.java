@@ -37,17 +37,16 @@ public class levelGenerator {
             .flatMap(e -> Stream.of(new V2D(e,148)))
             .flatMap(e -> Stream.of(new FixedMysteryBox(e,2, BonusImpl.createBonus(BonusType.EXTRA_SCORE,10))))
             .collect(Collectors.toSet()));
-
-    private Set<DynamicEntity> dsLv1 = generatesEnemies(ssLv1, bossLv1, 5 );
 */
-    /*
+    private Set<DynamicEntity> dsLv1 = generatesEnemies(null, bossLv1, 5 );
+
+
     private Map<V2D> lv1 = new MapImpl(BasePlayer.newPlayer(new V2D(0, 0)),
             bossLv1,
-            new HashSet<Bonus>(),
-            ssLv1,
+            null, //TODO: !!!!!
             dsLv1,
             defaultBorders);
-*/
+
 
     /**
      * Generates n {@link Mosquitoes} that are in borders and not colliding
