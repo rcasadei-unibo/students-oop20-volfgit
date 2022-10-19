@@ -1,5 +1,6 @@
 package vg.controller.gameBoard;
 
+import com.sun.javafx.geom.Vec2d;
 import javafx.fxml.FXML;
 import javafx.geometry.Dimension2D;
 import javafx.scene.Node;
@@ -7,9 +8,20 @@ import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.Pane;
+import vg.model.entity.dynamicEntity.DynamicEntity;
+import vg.model.entity.dynamicEntity.enemy.Mosquitoes;
+import vg.view.entity.EntityBlock;
+import vg.view.entity.EntityBlockImpl;
+import vg.view.player.PlayerViewController;
+import vg.view.player.PlayerViewControllerImpl;
+import vg.utils.V2D;
+import vg.view.ViewController;
 
-public class GameBoardControllerImpl implements GameBoardController {
+import java.util.Iterator;
+import java.util.Set;
+import java.util.stream.IntStream;
 
+public class GameBoardControllerImpl extends ViewController implements GameBoardController {
 
     @FXML
     private BorderPane borderPane;
@@ -33,9 +45,12 @@ public class GameBoardControllerImpl implements GameBoardController {
     public Button life5;
     public Button life6;
 
+    private PlayerViewController player;
+    private EntityBlock boss;
+    private Set<V2D> mosquitoesPos;
+
     @FXML
     private Pane gameArea;
-
 
     @Override
     public Dimension2D getGameAreaDimension() {
@@ -52,5 +67,31 @@ public class GameBoardControllerImpl implements GameBoardController {
         this.gameArea.getChildren().add(node);
     }
 
+    @Override
+    public void initMapView(final V2D initPlayerPos) {
+        //Set player in view map
+        this.player = new PlayerViewControllerImpl();
+        this.player.setPosition(initPlayerPos.getVec2d());
+        this.addInGameArea(this.player.getNode());
 
+        //TODO: Create and set boss view node and add it to map view
+    }
+
+    @Override
+    public void updateMosquitoesPosition(final Set<DynamicEntity> mosquitoes) {
+        this.mosquitoesPos.clear();
+        for (DynamicEntity mosquito : mosquitoes) {
+            this.mosquitoesPos.add(mosquito.getPosition());
+        }
+    }
+
+    @Override
+    public void updateBossPosition(final V2D bossPos) {
+        this.boss.setPosition(bossPos.getVec2d());
+    }
+
+    @Override
+    public void updatePlayerPosition(final V2D position) {
+        this.player.setPosition(position.getVec2d());
+    }
 }

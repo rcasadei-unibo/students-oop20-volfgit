@@ -1,10 +1,8 @@
-package vg.controller.player;
+package vg.view.player;
 
-import com.sun.javafx.geom.Vec2d;
-import javafx.scene.Node;
-import vg.controller.gameBoard.GameBoardController;
+import vg.view.entity.EntityBlock;
 
-public interface PlayerViewController {
-    void setPosition(Vec2d position);
-    Node getNode();
+public interface PlayerViewController extends EntityBlock {
+    void showShield();
+    void hideShield();
 }

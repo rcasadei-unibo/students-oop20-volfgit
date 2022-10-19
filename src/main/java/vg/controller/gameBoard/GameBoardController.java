@@ -3,12 +3,24 @@ package vg.controller.gameBoard;
 import javafx.geometry.Dimension2D;
 import javafx.scene.Node;
 import javafx.scene.layout.Pane;
+import vg.model.entity.dynamicEntity.DynamicEntity;
+import vg.utils.V2D;
+
+import java.util.Set;
 
 public interface GameBoardController {
 
-    public Dimension2D getGameAreaDimension();
+    Dimension2D getGameAreaDimension();
 
-    public Pane getGameArea();
+    Pane getGameArea();
 
-    public void addInGameArea(Node node);
+    void addInGameArea(Node node);
+
+    void updatePlayerPosition(V2D position);
+
+    void initMapView(V2D initialPlayerPos);
+
+    void updateMosquitoesPosition(Set<DynamicEntity> mosquitoes);
+
+    void updateBossPosition(V2D bossPos);
 }

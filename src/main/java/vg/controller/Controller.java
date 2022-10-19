@@ -2,7 +2,6 @@ package vg.controller;
 
 import vg.view.AdaptableView;
 import vg.view.SceneController;
-import vg.view.View;
 import vg.view.ViewManager;
 
 public abstract class Controller<T extends AdaptableView<?>> implements SceneController {
