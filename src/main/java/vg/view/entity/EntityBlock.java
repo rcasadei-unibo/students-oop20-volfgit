@@ -12,4 +12,8 @@ public interface EntityBlock {
     public Vec2d getPosition();
 
     public void setPosition(Vec2d position);
+
+    public void setImageOverlay(String pathImage);
+    public void showImageOverlay();
+    public void hideImageOverlay();
 }
