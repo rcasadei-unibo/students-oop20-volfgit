@@ -8,9 +8,11 @@ import javafx.scene.paint.ImagePattern;
 import vg.utils.path.PathImageMysteryBox;
 
 public class EntityBlockImpl extends Rectangle implements EntityBlock {
+    private final Rectangle rectangleOverlay;
 
     public EntityBlockImpl(double width, double height) {
         super(width, height);
+        this.rectangleOverlay = new Rectangle(width, height);
         this.setImage(PathImageMysteryBox.MYSTERY_BOX);
     }
 
@@ -35,5 +37,22 @@ public class EntityBlockImpl extends Rectangle implements EntityBlock {
     public void setPosition(Vec2d position) {
         this.setX(position.x);
         this.setY(position.y);
+        this.rectangleOverlay.setX(position.x);
+        this.rectangleOverlay.setY(position.y);
     }
+
+    public void setImageOverlay(String pathImage){
+        Image dots = new Image(pathImage);
+        this.setFill(new ImagePattern(dots));
+    }
+
+    public void showImageOverlay(){
+        this.rectangleOverlay.setOpacity(1);
+    }
+
+    public void hideImageOverlay(){
+        this.rectangleOverlay.setOpacity(0);
+    }
+
+
 }
