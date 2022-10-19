@@ -20,7 +20,7 @@ public final class BasePlayer extends DynamicEntity implements Player {
     /**
      * Default player speed.
      */
-    public static final V2D DEFAULT_PLAYER_SPEED = new V2D(1, 1);
+    public static final V2D DEFAULT_PLAYER_SPEED = new V2D(5, 5);
 
     /**
      * Default player radius shape.
@@ -65,7 +65,7 @@ public final class BasePlayer extends DynamicEntity implements Player {
      * @return Player with default life
      */
     public static BasePlayer newPlayer(final V2D position) {
-        return new BasePlayer(position, PLAYER_MAX_LIFE, Shield.create(Shield.DEFAULT_DURATION, true));
+        return new BasePlayer(position, PLAYER_MAX_LIFE, DEFAULT_PLAYER_SPEED, Shield.create(Shield.DEFAULT_DURATION, true));
     };
 
     /**
@@ -76,11 +76,14 @@ public final class BasePlayer extends DynamicEntity implements Player {
      */
     public static BasePlayer newPlayer(final V2D position, final int life) {
         int playerLife = life < 0 || life > PLAYER_MAX_LIFE ? PLAYER_MAX_LIFE : life;
-        return new BasePlayer(position, playerLife, Shield.create(Shield.DEFAULT_DURATION, true));
+        return new BasePlayer(position,
+                playerLife,
+                DEFAULT_PLAYER_SPEED,
+                Shield.create(Shield.DEFAULT_DURATION, true));
     };
 
-    private BasePlayer(final V2D position, final int life, final Shield shield) {
-        super(position, DEFAULT_PLAYER_SPEED, DEFAULT_PLAYER_RADIUS, Shape.CIRCLE, MassTier.LOW);
+    private BasePlayer(final V2D position, final int life, final V2D speed, final Shield shield) {
+        super(position, speed, DEFAULT_PLAYER_RADIUS, Shape.CIRCLE, MassTier.LOW);
         this.life = life;
         this.tail = TailImpl.emptyTail();
         this.shield = shield;
@@ -147,10 +150,9 @@ public final class BasePlayer extends DynamicEntity implements Player {
         * In order to not change direction of move by speed vector
         * is checked if coordinates are negative
         */
-        if (this.speedImproved.isPresent() && speed.getX() >= 0 && speed.getY() > 0) {
+        if (!this.speedImproved.isPresent() && speed.getX() >= 0 && speed.getY() > 0) {
             this.speedImproved = Optional.of(this.getSpeed().sum(speed));
         }
-        //TODO: lanciare una eccezione ?
     }
 
     @Override
@@ -179,7 +181,7 @@ public final class BasePlayer extends DynamicEntity implements Player {
         if (this.speedImproved.isPresent()) {
             return this.speedImproved.get();
         } else {
-            return DEFAULT_PLAYER_SPEED;
+            return super.getSpeed();
         }
     }
 
