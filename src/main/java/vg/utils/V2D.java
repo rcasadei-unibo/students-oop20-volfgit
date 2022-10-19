@@ -1,5 +1,7 @@
 package vg.utils;
 
+import com.sun.javafx.geom.Vec2d;
+
 import java.text.MessageFormat;
 import java.util.Objects;
 import java.util.stream.Stream;
@@ -74,6 +76,10 @@ public class V2D {
 
     public final double getY() {
         return y;
+    }
+
+    public final Vec2d getVec2d() {
+        return new Vec2d(this.getX(), this.getY());
     }
 
     /**

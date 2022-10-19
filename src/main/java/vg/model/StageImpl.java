@@ -137,7 +137,8 @@ public class StageImpl<T> implements Stage<V2D> {
      */
     @Override
     public Set<DynamicEntity> getDynamicEntitySet() {
-        return ds;
+        return this.map.getAllDynamicEntities();
+        //return ds;
     }
     /**
      *
