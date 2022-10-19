@@ -81,11 +81,11 @@ public interface Map<T> {
      */
     void removeEntity(Entity toRemove);
 
+    //TODO: delegate bonus controller the request
     /**
      * Return a list of active bonus collected by player.
      * @return the set of bonuses currently activate
      */
-    //TODO: delegate bonus controller the request
     <R> Set<R> getActiveBonus();
 
     /**
