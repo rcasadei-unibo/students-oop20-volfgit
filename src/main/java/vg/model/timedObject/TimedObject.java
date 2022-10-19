@@ -1,6 +1,8 @@
 package vg.model.timedObject;
 
-public interface TimedObject {
+import java.io.Serializable;
+
+public interface TimedObject extends Serializable {
 
     /**
      * @return True if timeout expired.

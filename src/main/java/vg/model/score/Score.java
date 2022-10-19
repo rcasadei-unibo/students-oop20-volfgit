@@ -1,4 +1,6 @@
 package vg.model.score;
 
-public interface Score {
+import java.io.Serializable;
+
+public interface Score extends Serializable {
 }
