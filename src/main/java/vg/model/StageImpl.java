@@ -184,11 +184,20 @@ public class StageImpl<T> implements Stage<V2D> {
         return Stream.of(getDynamicEntitySet().stream(), getStaticEntitySet().stream(), Stream.of(getPlayer())).flatMap(e -> e).collect(Collectors.toSet());
     }
 
+    /**
+     *
+     * {@inheritDoc}
+     */
+
     public int getLv() {
         return lv;
     }
 
-    public void setLv(int lv) {
+    /**
+     *
+     * {@inheritDoc}
+     */
+    public void setLv(final int lv) {
         this.lv = lv;
     }
 
@@ -271,15 +280,26 @@ public class StageImpl<T> implements Stage<V2D> {
         destroyAll();
     }
 
+    /**
+     *
+     * {@inheritDoc}
+     */
     @Override
     public void createNextLevel() {
         try {
             nextLevelFromSerialized();
         } catch (IOException | ClassNotFoundException e) {
-            
+
             throw new RuntimeException(e);
         }
     }
+
+    /**
+     * Uses {@link MapFactoryImpl#fromSerialized(int)} to create the map for the next level,
+     * set up the {@link #currentScore} and the {@link #lv}.
+     * @throws IOException may be launched attempting to read serialized data
+     * @throws ClassNotFoundException may be launched if Map class is changed and the saved one is not updated.
+     */
     private void nextLevelFromSerialized() throws IOException, ClassNotFoundException {
         if (getMap().getOccupiedPercentage() > 80) {
             this.setCurrentScore(getCurrentScore() + (int) (getMap().getOccupiedPercentage() * 1000));
