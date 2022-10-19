@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Separator?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
+<?import javafx.scene.text.Text?>
+
+<BorderPane prefHeight="400.0" prefWidth="600.0" style="-fx-background-color: black;" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="vg.view.nextLevel.NextLevelViewController">
+   <center>
+      <VBox alignment="CENTER" prefHeight="200.0" prefWidth="100.0" BorderPane.alignment="CENTER">
+         <children>
+            <Text fill="WHITE" strokeType="OUTSIDE" strokeWidth="0.0" text="You WIN!" textAlignment="CENTER">
+               <font>
+                  <Font name="Copperplate" size="36.0" />
+               </font>
+            </Text>
+            <Text fill="WHITE" strokeType="OUTSIDE" strokeWidth="0.0" text="next level" textAlignment="CENTER">
+               <font>
+                  <Font name="Copperplate" size="18.0" />
+               </font>
+            </Text>
+            <Separator focusTraversable="false" prefHeight="40.0" prefWidth="200.0" visible="false" />
+            <Text fx:id="countdown" fill="#f54040" strokeType="OUTSIDE" strokeWidth="0.0" text="5" textAlignment="CENTER">
+               <font>
+                  <Font name="Copperplate" size="36.0" />
+               </font>
+            </Text>
+         </children>
+      </VBox>
+   </center>
+</BorderPane>
