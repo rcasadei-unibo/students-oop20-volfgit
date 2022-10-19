@@ -72,14 +72,6 @@ public interface Stage<T> {
      * @see Player
      */
     void setPlayer(Player player);
-
-    /**
-     * Return boss of level.
-     * @return Boss entity of current level
-     * @see Boss
-     */
-    Boss getBoss();
-
     /**
      * Return a Set of all static entities on the map.
      * @return The Set that contains all staticEntity on the map.
