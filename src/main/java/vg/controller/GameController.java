@@ -64,7 +64,11 @@ public class GameController extends Controller implements SceneController, Dialo
 
         }
 
-        this.getGameViewController().initMapView(this.stageDomain.getPlayer().getPosition());
+        this.getGameViewController()
+                .initMapView(
+                        this.stageDomain.getPlayer().getPosition(),
+                        this.stageDomain.getBoss().getPosition(),
+                        Set.of());
     }
 
     private Stage<V2D> loadStageModel() throws IOException, ClassNotFoundException {
