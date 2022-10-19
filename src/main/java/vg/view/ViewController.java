@@ -1,4 +1,4 @@
 package vg.view;
 
-public class EmptyViewController {
+public class ViewController {
 }
