@@ -6,10 +6,11 @@ import javafx.scene.control.Label;
 import javafx.scene.control.Separator;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Paint;
+import vg.view.ViewController;
 
 import java.util.Optional;
 
-public class LeaderBoardViewController {
+public class LeaderBoardViewController extends ViewController {
 
     @FXML
     private Label closeBtn;

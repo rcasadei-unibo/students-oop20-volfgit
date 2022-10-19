@@ -4,8 +4,9 @@ import javafx.fxml.FXML;
 import javafx.scene.control.Label;
 import javafx.scene.paint.Paint;
 import javafx.scene.text.Text;
+import vg.view.ViewController;
 
-public class ConfirmViewController {
+public class ConfirmViewController extends ViewController {
     /**
      * Accent color of selected button.
      */
