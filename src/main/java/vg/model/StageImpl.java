@@ -135,7 +135,7 @@ public class StageImpl<T> implements Stage<V2D> {
      */
     @Override
     public Player getPlayer() {
-        return this.map.getPlayer();
+        return this.player;
     }
 
     @Override
@@ -151,6 +151,12 @@ public class StageImpl<T> implements Stage<V2D> {
     public void setPlayer(final Player player) {
         this.player = player;
     }
+
+    @Override
+    public Boss getBoss() {
+        return this.map.getBoss();
+    }
+
     /**
      *
      * {@inheritDoc}
@@ -165,8 +171,7 @@ public class StageImpl<T> implements Stage<V2D> {
      */
     @Override
     public Set<DynamicEntity> getDynamicEntitySet() {
-        return this.map.getAllDynamicEntities();
-        //return ds;
+        return ds;
     }
     /**
      *

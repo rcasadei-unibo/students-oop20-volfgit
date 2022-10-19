@@ -2,11 +2,8 @@ package vg.controller;
 
 import javafx.application.Platform;
 import vg.controller.gameBoard.GameBoardController;
-import vg.model.Boss.BossImpl;
-import vg.model.MapImpl;
 import vg.model.StageImpl;
-import vg.model.entity.dynamicEntity.enemy.Boss;
-import vg.model.entity.dynamicEntity.player.BasePlayer;
+import vg.model.entity.dynamicEntity.enemy.Mosquitoes;
 import vg.model.Stage;
 import vg.model.entity.dynamicEntity.player.Player;
 import vg.utils.Command;
@@ -25,7 +22,6 @@ import vg.view.menu.confirmMenu.ConfirmView;
 import vg.view.menu.confirmMenu.DialogConfirmController;
 import vg.view.menu.confirmMenu.DialogAnswerObserver;
 import vg.view.utils.KeyAction;
-
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
@@ -54,7 +50,7 @@ public class GameController extends Controller implements SceneController, Dialo
      */
     private Stage<V2D> stageDomain;
 
-
+    //TODO: pass satgeDomain as parameter
     public GameController(final AdaptableView<GameBoardController> view, final ViewManager viewManager) {
         super(view, viewManager);
         this.movementQueue = new ArrayList<>();
@@ -64,7 +60,12 @@ public class GameController extends Controller implements SceneController, Dialo
 
         }
 
-        this.getGameViewController().initMapView(this.stageDomain.getPlayer().getPosition());
+        this.getGameViewController()
+                .initMapView(
+                        this.stageDomain.getPlayer().getPosition(),
+                        this.stageDomain.getBoss().getPosition(),
+                        //TODO: stageDomain.getMosquitoes
+                        Set.of(new Mosquitoes(new V2D(4,4),new V2D(4,4),7,Shape.CIRCLE,MassTier.LOW)));
     }
 
     private Stage<V2D> loadStageModel() throws IOException, ClassNotFoundException {
@@ -80,8 +81,6 @@ public class GameController extends Controller implements SceneController, Dialo
         new Thread(() -> {
             //System.out.println("gameloop THREAD");
             long prevCycleTime = System.currentTimeMillis();
-            //System.out.println("gameLoop Is FX Thread" + Platform.isFxApplicationThread());
-            this.stageDomain.getPlayer().enableSpeedUp(new V2D(5,5));
             while (gameState == GameState.PLAYING) {
                 long curCycleTime = System.currentTimeMillis();
                 long elapsedTime = curCycleTime - prevCycleTime;
@@ -101,7 +100,6 @@ public class GameController extends Controller implements SceneController, Dialo
      */
     private void updateGameDomain(final long elapsedTime) {
         this.stageDomain.getMap().updateBonusTimer(elapsedTime);
-        //this.stageDomain.doCycle();
         this.stageDomain.getPlayer().move();
 
         if (this.stageDomain.getPlayer().getLife() <= 0) {
@@ -134,7 +132,7 @@ public class GameController extends Controller implements SceneController, Dialo
     private void render() {
         getGameViewController().updatePlayerPosition(this.stageDomain.getPlayer().getPosition());
         getGameViewController().updateBossPosition(this.stageDomain.getBoss().getPosition());
-        System.out.println(this.stageDomain.getPlayer().getPosition());
+        //TODO: fare anche con i mosquitoes
     }
 
     private GameBoardController getGameViewController() {

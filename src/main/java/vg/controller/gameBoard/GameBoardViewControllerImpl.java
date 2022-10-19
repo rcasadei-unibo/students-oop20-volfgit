@@ -7,14 +7,18 @@ import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.Pane;
+import javafx.scene.shape.Rectangle;
 import vg.model.entity.dynamicEntity.DynamicEntity;
 import vg.view.entity.EntityBlock;
 import vg.view.entity.EntityBlockImpl;
+import vg.view.entity.StaticFactoryEntityBlock;
 import vg.view.player.PlayerViewController;
 import vg.view.player.PlayerViewControllerImpl;
 import vg.utils.V2D;
 import vg.view.ViewController;
 
+import java.util.HashSet;
+import java.util.Map;
 import java.util.Set;
 
 public class GameBoardViewControllerImpl extends ViewController implements GameBoardController {
@@ -43,7 +47,7 @@ public class GameBoardViewControllerImpl extends ViewController implements GameB
 
     private PlayerViewController player;
     private EntityBlock boss;
-    private Set<V2D> mosquitoesPos;
+    private Set<Node> mosquitoesNode;
 
     @FXML
     private Pane gameArea;
@@ -64,23 +68,28 @@ public class GameBoardViewControllerImpl extends ViewController implements GameB
     }
 
     @Override
-    public void initMapView(final V2D initPlayerPos) {
+    public void initMapView(final V2D initPlayerPos, final V2D initBossPos, final Set<DynamicEntity> mosquitoes) {
         //Set player in view map
         this.player = new PlayerViewControllerImpl();
         this.addInGameArea(this.player.getNode());
 
-        this.boss = new EntityBlockImpl(50, 50);
-        //this.boss.setImage("img/boss.png");
+        this.boss = StaticFactoryEntityBlock.createBoss(initBossPos);
         this.addInGameArea(this.boss.getNode());
-        //TODO: Create and set boss view node and add it to map view
+
+        this.mosquitoesNode = new HashSet<>();
+        updateMosquitoesPosition(mosquitoes);
+
     }
 
     @Override
     public void updateMosquitoesPosition(final Set<DynamicEntity> mosquitoes) {
-        this.mosquitoesPos.clear();
-        for (DynamicEntity mosquito : mosquitoes) {
-            this.mosquitoesPos.add(mosquito.getPosition());
-        }
+        this.gameArea.getChildren().removeAll(mosquitoesNode);
+
+        mosquitoes.forEach(mosq -> {
+            EntityBlock entityBlock =  StaticFactoryEntityBlock.createMosquito(mosq.getPosition());
+            this.mosquitoesNode.add(entityBlock.getNode());
+            this.addInGameArea(entityBlock.getNode());
+        });
     }
 
     @Override

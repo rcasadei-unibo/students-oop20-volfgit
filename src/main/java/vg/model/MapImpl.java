@@ -4,20 +4,15 @@ import vg.model.entity.ShapedEntity;
 import vg.model.entity.dynamicEntity.player.Tail;
 import vg.model.score.Score;
 import vg.model.score.ScoreImpl;
-import vg.model.timedObject.Bonus;
 import vg.model.entity.Entity;
 import vg.model.entity.dynamicEntity.DynamicEntity;
 import vg.model.entity.dynamicEntity.bullet.Bolt;
 import vg.model.entity.dynamicEntity.bullet.EnemyBolt;
 import vg.model.entity.dynamicEntity.enemy.Boss;
 import vg.model.entity.dynamicEntity.player.Player;
-import vg.model.entity.staticEntity.MysteryBox;
 import vg.model.entity.staticEntity.StaticEntity;
-import vg.model.timedObject.BonusImpl;
-import vg.model.timedObject.BonusType;
 import vg.utils.MassTier;
 import vg.utils.V2D;
-
 import java.io.Serializable;
 import java.util.*;
 import java.util.stream.Collectors;
@@ -39,7 +34,8 @@ public class MapImpl implements Map<V2D>, Serializable {
      * Set of active bonuses that affect the player.
      * @see Bonus
      */
-    private final Set<Bonus> setBonuses;
+    //TODO: salvare contorller bonus
+
     /**
      * Set of all static entities on the map.
      * @see StaticEntity
@@ -73,15 +69,14 @@ public class MapImpl implements Map<V2D>, Serializable {
      *
      * @param player           the player of the map
      * @param boss             the boss of the map
-     * @param setBonuses       the set of active bonuses
      * @param staticEntitySet  the set of all static entities
      * @param dynamicEntitySet the set of all dynamic entities
      * @param border           the border of the map
      */
-    public MapImpl(final Player player, final Boss boss, final Set<Bonus> setBonuses, final Set<StaticEntity> staticEntitySet, final Set<DynamicEntity> dynamicEntitySet, final Set<V2D> border) {
+    public MapImpl(final Player player, final Boss boss, final Set<StaticEntity> staticEntitySet, final Set<DynamicEntity> dynamicEntitySet, final Set<V2D> border) {
         this.player = player;
         this.boss = boss;
-        this.setBonuses = setBonuses;
+        //this.setBonuses = setBonuses;
         this.staticEntitySet = staticEntitySet;
         this.dynamicEntitySet = dynamicEntitySet;
         this.border = border;
@@ -159,34 +154,29 @@ public class MapImpl implements Map<V2D>, Serializable {
             throw new IllegalArgumentException();
         }
     }
+
     /**
      * {@inheritDoc}
      */
-    @Override
-    public Set<Bonus> getActiveBonus() {
-        return this.setBonuses;
-    }
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    public void updateBonusTimer(final double elapsedTime) {
-        this.getActiveBonus().forEach(bonus -> bonus.updateTimer(elapsedTime));
-        Set.copyOf(this.getActiveBonus()).forEach(bonus -> {
-            if (bonus.isTimeOver()) {
-                this.setBonuses.remove(bonus);
-            }
-        });
+    public <R> Set<R> getActiveBonus() {
+        //TODO: luanaaaa
+        return null;
     }
 
     /**
      * {@inheritDoc}
      */
     @Override
-    public Set<MysteryBox<Bonus>> getAllMysteryBoxes() {
-        //TODO check the cast to be safe
-        return this.staticEntitySet.stream().filter(e -> e instanceof MysteryBox).map(e -> (MysteryBox<Bonus>) e).collect(Collectors.<MysteryBox<Bonus>>toSet());
+    public void updateBonusTimer(final double elapsedTime) {
+        //TODO: Fix
+        /*this.getActiveBonus().forEach(bonus -> bonus.updateTimer(elapsedTime));
+        Set.copyOf(this.getActiveBonus()).forEach(bonus -> {
+            if (bonus.isTimeOver()) {
+                this.setBonuses.remove(bonus);
+            }
+        });*/
     }
+
     /**
      * {@inheritDoc}
      */
@@ -247,6 +237,7 @@ public class MapImpl implements Map<V2D>, Serializable {
             while (true) {
                 t.add(this.getBorders().stream().filter(e -> !t.contains(e) && e.isAdj(t.get(t.size() - 1))).findFirst().orElseThrow());
             }
+
         } catch (NoSuchElementException e) {
             if (!t.get(0).isAdj(t.get(t.size() - 1))) {
                 throw new IllegalStateException("The list of points is not closed; first: " + t.get(0) + " last: " + t.get(t.size() - 1));
@@ -378,7 +369,13 @@ public class MapImpl implements Map<V2D>, Serializable {
         }
         return isInBorders(pos);
     }
-
+    /**
+     * Returns true if the player is in {@link #border}.
+     * @return true if the player is on the boards
+     */
+    public boolean isPlayerOnBorders() {
+        return this.getBorders().contains(getPlayer().getPosition());
+    }
     /**
      * This method will compute what is the correct direction
      * to take for an entity that is colliding.

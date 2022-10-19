@@ -5,7 +5,6 @@ import vg.model.entity.dynamicEntity.player.Player;
 import vg.model.entity.staticEntity.StaticEntity;
 import vg.model.levels.LEVEL;
 import vg.model.levels.levelGenerator;
-import vg.model.timedObject.Bonus;
 import vg.utils.V2D;
 
 import java.io.IOException;
@@ -26,7 +25,8 @@ public class MapFactoryImpl implements MapFactory<V2D> {
 
     @Override
     public Map<V2D> fromEnum(final LEVEL lv) {
-        return new MapImpl(BasePlayer.newPlayer(new V2D(0, 0)), lv.getBoss(), new HashSet<Bonus>(), new HashSet<StaticEntity>(), lv.getEnemies(), IntStream.rangeClosed(0,200).boxed().
+        return new MapImpl(BasePlayer.newPlayer(new V2D(0, 0)), lv.getBoss(), new HashSet<>(), lv.getEnemies(), IntStream.rangeClosed(0, 200).boxed().
+
                 flatMap(e -> Stream.of(new V2D(e, 0), new V2D(0, e), new V2D(200, e), new V2D(e, 150))).filter(e -> e.getY() <= 150).
                 collect(Collectors.toSet()));
     }
@@ -47,7 +47,7 @@ public class MapFactoryImpl implements MapFactory<V2D> {
                 map = lg.deserializeLevel(Integer.toString(lv));
             } catch (Exception ex) {
                 System.out.println("IO error in MapFactoryImpl.fromSerialized");
-                map = fromEnum(LEVEL.values()[lv-1]);
+                map = fromEnum(LEVEL.values()[lv - 1]);
             }
         }
         return map;
