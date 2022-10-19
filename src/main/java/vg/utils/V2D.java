@@ -1,14 +1,14 @@
 package vg.utils;
 
 import com.sun.javafx.geom.Vec2d;
-
+import java.io.Serializable;
 import java.text.MessageFormat;
 import java.util.Objects;
 import java.util.stream.Stream;
 
 import static java.lang.Math.abs;
 
-public class V2D {
+public class V2D implements Serializable {
     /**
      * X: Horizontal coordinate.
      */

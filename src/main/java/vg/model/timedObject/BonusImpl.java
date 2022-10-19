@@ -1,8 +1,9 @@
 package vg.model.timedObject;
 
+import java.io.Serializable;
 import java.util.Objects;
 
-public class BonusImpl extends TimedObjectImpl implements Bonus {
+public class BonusImpl extends TimedObjectImpl implements Bonus, Serializable {
     /**
      * Typology of bonus.
      */

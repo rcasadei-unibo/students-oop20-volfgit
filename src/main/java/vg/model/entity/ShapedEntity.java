@@ -4,6 +4,8 @@ import vg.utils.MassTier;
 import vg.utils.Shape;
 import vg.utils.V2D;
 
+import java.io.Serializable;
+
 /**
  * ShapedEntity implements {@link Entity} and add the {@link Shape}
  * to it (Circle or Square). It has {@link #radius} that defines
@@ -13,7 +15,7 @@ import vg.utils.V2D;
  * @see MassTier
  * @see V2D
  */
-public abstract class ShapedEntity implements Entity {
+public abstract class ShapedEntity implements Entity, Serializable {
     /**
      * 2D coordinates to keep current entity position in map.
      */

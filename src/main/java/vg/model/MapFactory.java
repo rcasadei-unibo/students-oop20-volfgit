@@ -1,5 +1,11 @@
 package vg.model;
 
+import vg.model.levels.LEVEL;
+import vg.model.levels.levelGenerator;
+import vg.utils.V2D;
+
+import java.io.IOException;
+
 /**
  * Factory interface for creating {@link Map}.
  * @param <T> the type of position, usually {@link vg.utils.V2D}
@@ -11,20 +17,30 @@ public interface MapFactory<T> {
     /**
      * Using an enum as an entry point, generates a playable map.
      * Usually for a standard level this will be used.
+     * @param lv the
      * @return the generated map
      */
-    Map<T> fromEnum();
+    Map<T> fromEnum(LEVEL lv);
 
     /**
-     * If the save staved is saved in a file, this will read the
-     * file and generate the correct map from data written in the
-     * file after correctly parsing them.
+     * {@link levelGenerator} creates defaults level and
+     * serialize them. This will use {@link levelGenerator}
+     * to read the appropriate map and return it.
+     * @param lv the level to generate.
      * @return the generated map
      */
-    Map<T> fromFile();
+    Map<T> fromSerialized(int lv) throws IOException, ClassNotFoundException;
 
     /**
-     * Similar to the {@link #fromFile()} but the data are directly
+     * Similar to {@link #fromSerialized(int)} but it will use
+     * {@link levelGenerator} to take a map saved that is not
+     * generated as default. Saves are unique and will overwrite
+     * each other when a new one is created.
+     * @return {@link Map}
+     */
+    Map<T> fromSave() throws IOException, ClassNotFoundException;
+    /**
+     * Similar to the {@link #fromFile(int)} but the data are directly
      * passed to this method and must only be parsed.
      * @return the generated map
      */

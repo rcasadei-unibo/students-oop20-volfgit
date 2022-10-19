@@ -1,5 +1,6 @@
 package vg.model.entity.dynamicEntity.player;
 
+import com.google.common.base.Optional;
 import vg.model.entity.dynamicEntity.DynamicEntity;
 import vg.model.timedObject.Shield;
 import vg.utils.Direction;
@@ -7,7 +8,7 @@ import vg.utils.MassTier;
 import vg.utils.Shape;
 import vg.utils.V2D;
 
-import java.util.Optional;
+
 
 /**
  * Player Entity.*/
@@ -84,7 +85,7 @@ public final class BasePlayer extends DynamicEntity implements Player {
         this.tail = TailImpl.emptyTail();
         this.shield = shield;
         this.canShoot = DEFAULT_SHOOT_CAPABILITY;
-        this.speedImproved = Optional.empty();
+        this.speedImproved = Optional.absent();
         this.direction = DEFAULT_DIRECTION;
     }
 
@@ -146,7 +147,7 @@ public final class BasePlayer extends DynamicEntity implements Player {
         * In order to not change direction of move by speed vector
         * is checked if coordinates are negative
         */
-        if (this.speedImproved.isEmpty() && speed.getX() >= 0 && speed.getY() > 0) {
+        if (this.speedImproved.isPresent() && speed.getX() >= 0 && speed.getY() > 0) {
             this.speedImproved = Optional.of(this.getSpeed().sum(speed));
         }
         //TODO: lanciare una eccezione ?
@@ -154,7 +155,7 @@ public final class BasePlayer extends DynamicEntity implements Player {
 
     @Override
     public void disableSpeedUp() {
-        this.speedImproved = Optional.empty();
+        this.speedImproved = Optional.absent();
     }
 
     @Override
@@ -175,7 +176,11 @@ public final class BasePlayer extends DynamicEntity implements Player {
     @Override
     public V2D getSpeed() {
         //if speedUp is set return it else return original speed
-        return this.speedImproved.orElseGet(super::getSpeed);
+        if (this.speedImproved.isPresent()) {
+            return this.speedImproved.get();
+        } else {
+            return DEFAULT_PLAYER_SPEED;
+        }
     }
 
 }

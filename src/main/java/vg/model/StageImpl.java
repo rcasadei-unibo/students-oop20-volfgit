@@ -3,12 +3,15 @@ package vg.model;
 import vg.model.entity.ShapedEntity;
 import vg.model.entity.Entity;
 import vg.model.entity.dynamicEntity.DynamicEntity;
+import vg.model.entity.dynamicEntity.player.BasePlayer;
 import vg.model.entity.dynamicEntity.player.Player;
 import vg.model.entity.staticEntity.StaticEntity;
+import vg.model.levels.LEVEL;
 import vg.utils.Direction;
 import vg.utils.MassTier;
 import vg.utils.V2D;
 
+import java.io.IOException;
 import java.util.Set;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
@@ -20,6 +23,10 @@ import java.util.stream.Stream;
  */
 public class StageImpl<T> implements Stage<V2D> {
 
+    /**
+     * The current level.
+     */
+    private int lv;
     /**
      * The current score earned by the player.
      */
@@ -63,6 +70,7 @@ public class StageImpl<T> implements Stage<V2D> {
     public StageImpl(final int currentScore, final Map<V2D> map) {
         this.currentScore = currentScore;
         this.map = map;
+        this.lv = 1;
     }
     /**
      * Constructor with only map as parameter, useful if the
@@ -75,6 +83,18 @@ public class StageImpl<T> implements Stage<V2D> {
     public StageImpl(final Map<V2D> map) {
         this.currentScore = 0;
         this.map = map;
+        this.lv = 1;
+    }
+
+    /**
+     * Constructor with no parameters, when a new game is started (not from a save),
+     * this will set up everything needed to play.
+     */
+    public StageImpl() throws IOException, ClassNotFoundException {
+        this.currentScore = 0;
+        this.map = new MapFactoryImpl(this.player).fromSerialized(1);
+        this.player = map.getPlayer();
+        this.lv = 1;
     }
     /**
      *
@@ -164,6 +184,24 @@ public class StageImpl<T> implements Stage<V2D> {
     public Set<Entity> getAllEntities() {
         return Stream.of(getDynamicEntitySet().stream(), getStaticEntitySet().stream(), Stream.of(getPlayer())).flatMap(e -> e).collect(Collectors.toSet());
     }
+
+    /**
+     *
+     * {@inheritDoc}
+     */
+
+    public int getLv() {
+        return lv;
+    }
+
+    /**
+     *
+     * {@inheritDoc}
+     */
+    public void setLv(final int lv) {
+        this.lv = lv;
+    }
+
     /**
      *
      * {@inheritDoc}
@@ -241,5 +279,34 @@ public class StageImpl<T> implements Stage<V2D> {
         checkAllOutOfBounds();
         checkCollisions();
         destroyAll();
+    }
+
+    /**
+     *
+     * {@inheritDoc}
+     */
+    @Override
+    public void createNextLevel() {
+        try {
+            nextLevelFromSerialized();
+        } catch (IOException | ClassNotFoundException e) {
+
+            throw new RuntimeException(e);
+        }
+    }
+
+    /**
+     * Uses {@link MapFactoryImpl#fromSerialized(int)} to create the map for the next level,
+     * set up the {@link #currentScore} and the {@link #lv}.
+     * @throws IOException may be launched attempting to read serialized data
+     * @throws ClassNotFoundException may be launched if Map class is changed and the saved one is not updated.
+     */
+    private void nextLevelFromSerialized() throws IOException, ClassNotFoundException {
+        if (getMap().getOccupiedPercentage() > 80) {
+            this.setCurrentScore(getCurrentScore() + (int) (getMap().getOccupiedPercentage() * 1000));
+            var mf = new MapFactoryImpl(getPlayer());
+            this.setLv(getLv() + 1);
+            this.setMap(mf.fromSerialized(getLv()));
+        }
     }
 }
