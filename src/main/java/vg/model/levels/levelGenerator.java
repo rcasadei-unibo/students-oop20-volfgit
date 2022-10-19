@@ -73,7 +73,7 @@ public class levelGenerator {
         return rt;
     }
 
-    void serializeDefaults() throws IOException {
+    public void serializeDefaults() throws IOException {
         FileOutputStream fileOutLv1 = new FileOutputStream("1");
         ObjectOutputStream lv1 = new ObjectOutputStream(fileOutLv1);
         lv1.writeObject(this.lv1);
@@ -82,7 +82,7 @@ public class levelGenerator {
         //do this for every level
     }
 
-    void serializeState(final Map<V2D> map) throws IOException {
+    public void serializeState(final Map<V2D> map) throws IOException {
         FileOutputStream out = new FileOutputStream("save");
         ObjectOutputStream oOut = new ObjectOutputStream(out);
         oOut.writeObject(map);
@@ -90,14 +90,14 @@ public class levelGenerator {
         oOut.close();
     }
 
-    Map<V2D> deserializeLevel(final String lv) throws IOException, ClassNotFoundException {
+    public Map<V2D> deserializeLevel(final String lv) throws IOException, ClassNotFoundException {
         FileInputStream in = new FileInputStream(lv);
         ObjectInputStream oIn = new ObjectInputStream(in);
         var map = (Map<V2D>)oIn.readObject();
         oIn.close();
         return map;
     }
-    Map<V2D> deserializeSaved() throws IOException, ClassNotFoundException {
+    public Map<V2D> deserializeSaved() throws IOException, ClassNotFoundException {
         FileInputStream in = new FileInputStream("save");
         ObjectInputStream oIn = new ObjectInputStream(in);
         var map = (Map<V2D>)oIn.readObject();

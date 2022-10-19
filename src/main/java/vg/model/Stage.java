@@ -48,6 +48,17 @@ public interface Stage<T> {
     Player getPlayer();
 
     /**
+     * Get the current level played.
+     * @return the current level played
+     */
+    int getLv();
+
+    /**
+     * Sets the current level.
+     * @param lv the level
+     */
+    void setLv(int lv);
+    /**
      * Sets the player in this stage.
      * @param player The player to set to.
      * @see Player
@@ -149,5 +160,5 @@ public interface Stage<T> {
      * Creates a {@link Map}, must use {@link LEVEL} or better
      * {@link MapFactoryImpl}.
      */
-    void createLevel();
+    void createNextLevel();
 }

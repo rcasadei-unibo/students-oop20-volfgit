@@ -1,5 +1,6 @@
 package vg.utils;
 
+import com.sun.javafx.geom.Vec2d;
 import java.io.Serializable;
 import java.text.MessageFormat;
 import java.util.Objects;
@@ -75,6 +76,10 @@ public class V2D implements Serializable {
 
     public final double getY() {
         return y;
+    }
+
+    public final Vec2d getVec2d() {
+        return new Vec2d(this.getX(), this.getY());
     }
 
     /**
