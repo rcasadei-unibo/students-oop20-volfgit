@@ -71,9 +71,10 @@ public class GameBoardControllerImpl extends ViewController implements GameBoard
     public void initMapView(final V2D initPlayerPos) {
         //Set player in view map
         this.player = new PlayerViewControllerImpl();
-        this.player.setPosition(initPlayerPos.getVec2d());
         this.addInGameArea(this.player.getNode());
 
+        this.boss = new EntityBlockImpl(50, 50);
+        this.addInGameArea(this.boss.getNode());
         //TODO: Create and set boss view node and add it to map view
     }
 
