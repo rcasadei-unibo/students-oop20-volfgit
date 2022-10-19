@@ -92,9 +92,11 @@ public class StageImpl<T> implements Stage<V2D> {
      */
     public StageImpl() throws IOException, ClassNotFoundException {
         this.currentScore = 0;
-        this.map = new MapFactoryImpl(this.player).fromSerialized(1);
+        this.map = new MapFactoryImpl().fromSerialized(1);
         this.player = map.getPlayer();
         this.lv = 1;
+        this.ss = map.getAllStaticEntities();
+        this.ds = map.getAllDynamicEntities();
     }
     /**
      *
@@ -247,6 +249,7 @@ public class StageImpl<T> implements Stage<V2D> {
      */
     @Override
     public void checkAllOutOfBounds() {
+        //TODO controllare che player non vada fuori
         getDynamicEntitySet().forEach(e -> {
             if (getBorders().stream().anyMatch(e::isInShape)) {
                e.afterCollisionAction(MassTier.HIGH);
@@ -304,7 +307,7 @@ public class StageImpl<T> implements Stage<V2D> {
     private void nextLevelFromSerialized() throws IOException, ClassNotFoundException {
         if (getMap().getOccupiedPercentage() > 80) {
             this.setCurrentScore(getCurrentScore() + (int) (getMap().getOccupiedPercentage() * 1000));
-            var mf = new MapFactoryImpl(getPlayer());
+            var mf = new MapFactoryImpl();
             this.setLv(getLv() + 1);
             this.setMap(mf.fromSerialized(getLv()));
         }
