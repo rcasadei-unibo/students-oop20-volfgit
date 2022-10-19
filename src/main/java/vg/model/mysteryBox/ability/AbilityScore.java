@@ -5,4 +5,5 @@ import vg.model.mysteryBox.AbilityInTheBox;
 public interface AbilityScore extends AbilityInTheBox {
 
     public void increaseScore();
+
 }

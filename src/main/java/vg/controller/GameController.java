@@ -174,6 +174,7 @@ public class GameController extends Controller implements SceneController, Dialo
         //launch confirmation dialog
         this.getViewManager().addScene(confirmView);
         //the response is communicated through method notifyDialogAnswer
+        System.exit(0);
     }
 
     @Override

@@ -5,6 +5,7 @@ public class PathImageMysteryBox {
     private static final String PATH_COIN = PATH_RADICE + "coins/";
 
     public static final String MYSTERY_BOX = PATH_RADICE + "box.png";
+    public static final String MYSTERY_BOSS = PATH_RADICE + "BoxBoss.png";
 
 
     public static final String COIN_TIME = PATH_COIN + "coin-T.png";

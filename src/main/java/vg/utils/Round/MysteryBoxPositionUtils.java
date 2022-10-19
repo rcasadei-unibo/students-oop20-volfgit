@@ -3,7 +3,6 @@ package vg.utils.Round;
 
 import com.sun.javafx.geom.Vec2d;
 
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -11,10 +10,10 @@ public class MysteryBoxPositionUtils {
 
     //Round 1
     private static final List<Vec2d> ROUND1 = List.of(
+            new Vec2d(660, 450),
             new Vec2d(2, 791),
             new Vec2d(302, 790),
             new Vec2d(660, 790),
-            new Vec2d(660, 450),
             new Vec2d(1016, 790),
             new Vec2d(1316, 790)
     );

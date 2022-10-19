@@ -1,9 +1,9 @@
-package vg.view.mysteryBox;
+package vg.view.entity;
 
 import com.sun.javafx.geom.Vec2d;
 import javafx.scene.Node;
 
-public interface Block {
+public interface EntityBlock {
 
     public void setImage(String pathImage);
 
