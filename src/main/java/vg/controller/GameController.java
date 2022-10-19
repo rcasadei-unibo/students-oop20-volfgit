@@ -6,6 +6,7 @@ import vg.model.Boss.BossImpl;
 import vg.model.MapImpl;
 import vg.model.StageImpl;
 import vg.model.entity.dynamicEntity.enemy.Boss;
+import vg.model.entity.dynamicEntity.enemy.Mosquitoes;
 import vg.model.entity.dynamicEntity.player.BasePlayer;
 import vg.model.Stage;
 import vg.model.entity.dynamicEntity.player.Player;
@@ -68,7 +69,8 @@ public class GameController extends Controller implements SceneController, Dialo
                 .initMapView(
                         this.stageDomain.getPlayer().getPosition(),
                         this.stageDomain.getBoss().getPosition(),
-                        Set.of());
+                        //TODO: stageDomain.getMosquitoes
+                        Set.of(new Mosquitoes(new V2D(4,4),new V2D(4,4),7,Shape.CIRCLE,MassTier.LOW)));
     }
 
     private Stage<V2D> loadStageModel() throws IOException, ClassNotFoundException {
