@@ -3,6 +3,7 @@ package vg.model;
 import vg.model.entity.ShapedEntity;
 import vg.model.entity.Entity;
 import vg.model.entity.dynamicEntity.DynamicEntity;
+import vg.model.entity.dynamicEntity.enemy.Boss;
 import vg.model.entity.dynamicEntity.player.Player;
 import vg.model.entity.staticEntity.StaticEntity;
 import vg.model.levels.LEVEL;
@@ -46,6 +47,13 @@ public interface Stage<T> {
      * @see Player
      */
     Player getPlayer();
+
+    /**
+     * Return current level boss.
+     * @return Boss of level
+     * @see Boss
+     */
+    Boss getBoss();
 
     /**
      * Get the current level played.
