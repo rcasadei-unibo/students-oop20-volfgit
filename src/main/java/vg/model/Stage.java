@@ -149,5 +149,5 @@ public interface Stage<T> {
      * Creates a {@link Map}, must use {@link LEVEL} or better
      * {@link MapFactoryImpl}.
      */
-    void createLevel();
+    void createNextLevel();
 }
