@@ -42,6 +42,7 @@ public class GameBoard extends Application {
         //4) if you want to see add it to the viewManager
         viewManager.addScene(gameView);
 
+
         LeaderBoardView leaderBoardView = new LeaderBoardView();
         LeaderBoardController leaderBoardController = new LeaderBoardController(leaderBoardView, viewManager);
         leaderBoardView.setIoLogicController(leaderBoardController);
@@ -51,11 +52,11 @@ public class GameBoard extends Application {
         stage.setTitle("GameBoard");
         stage.setResizable(false);
         stage.show();
-/*
+
         mysteryBoxManager.initializeRound(gameView.getViewController());
 
         stage.setOnCloseRequest(event -> gameController.closeGame());
-        gameController.gameLoop();*/
+        gameController.gameLoop();
 
     }
 }
