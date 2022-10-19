@@ -55,4 +55,3 @@ public class GameBoard extends Application {
         gameController.gameLoop();
     }
 }
-

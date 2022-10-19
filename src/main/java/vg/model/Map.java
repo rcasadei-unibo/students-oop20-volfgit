@@ -1,11 +1,9 @@
 package vg.model;
 
-import vg.model.timedObject.Bonus;
 import vg.model.entity.Entity;
 import vg.model.entity.dynamicEntity.DynamicEntity;
 import vg.model.entity.dynamicEntity.enemy.Boss;
 import vg.model.entity.dynamicEntity.player.Player;
-import vg.model.entity.staticEntity.MysteryBox;
 import vg.model.entity.staticEntity.StaticEntity;
 import vg.utils.V2D;
 
@@ -87,21 +85,14 @@ public interface Map<T> {
      * Return a list of active bonus collected by player.
      * @return the set of bonuses currently activate
      */
-    Set<Bonus> getActiveBonus();
+    //TODO: delegate bonus controller the request
+    <R> Set<R> getActiveBonus();
 
     /**
      * Update bonus internal timer and remove from active bonus if expired.
      * @param elapsedTime elasped time between current and previous game cycle
      */
     void updateBonusTimer(double elapsedTime);
-
-    /**
-     * Returns the set of mystery boxes.
-     * @return the set of mystery boxes
-     * @see MysteryBox
-     * @see Bonus
-     */
-    Set<MysteryBox<Bonus>> getAllMysteryBoxes();
 
     /**
      * Returns the set of static entities.

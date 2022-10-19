@@ -7,12 +7,7 @@ import vg.model.entity.dynamicEntity.DynamicEntity;
 import vg.model.entity.dynamicEntity.enemy.Boss;
 import vg.model.entity.dynamicEntity.enemy.Mosquitoes;
 import vg.model.entity.dynamicEntity.player.BasePlayer;
-import vg.model.entity.dynamicEntity.player.Player;
-import vg.model.entity.staticEntity.FixedMysteryBox;
 import vg.model.entity.staticEntity.StaticEntity;
-import vg.model.timedObject.Bonus;
-import vg.model.timedObject.BonusImpl;
-import vg.model.timedObject.BonusType;
 import vg.utils.MassTier;
 import vg.utils.Shape;
 import vg.utils.V2D;
@@ -37,18 +32,18 @@ public class levelGenerator {
      * Lv1.
      */
     private Boss bossLv1 = new BossImpl(new V2D(110, 40), new V2D(3, 3), 5, Shape.SQUARE, MassTier.HIGH);
-
+/*
     private Set<StaticEntity> ssLv1 = new HashSet<>(Stream.of(5, 100, 195)
             .flatMap(e -> Stream.of(new V2D(e,148)))
             .flatMap(e -> Stream.of(new FixedMysteryBox(e,2, BonusImpl.createBonus(BonusType.EXTRA_SCORE,10))))
             .collect(Collectors.toSet()));
+*/
+    private Set<DynamicEntity> dsLv1 = generatesEnemies(null, bossLv1, 5 );
 
-    private Set<DynamicEntity> dsLv1 = generatesEnemies(ssLv1, bossLv1, 5 );
 
     private Map<V2D> lv1 = new MapImpl(BasePlayer.newPlayer(new V2D(0, 0)),
             bossLv1,
-            new HashSet<Bonus>(),
-            ssLv1,
+            null, //TODO: !!!!!
             dsLv1,
             defaultBorders);
 
@@ -76,7 +71,8 @@ public class levelGenerator {
     public void serializeDefaults() throws IOException {
         FileOutputStream fileOutLv1 = new FileOutputStream("1");
         ObjectOutputStream lv1 = new ObjectOutputStream(fileOutLv1);
-        lv1.writeObject(this.lv1);
+        //TODO: FIX
+        //lv1.writeObject(this.lv1);
         lv1.flush();
         lv1.close();
         //do this for every level

@@ -78,6 +78,7 @@ public class GameBoardViewControllerImpl extends ViewController implements GameB
 
         this.mosquitoesNode = new HashSet<>();
         updateMosquitoesPosition(mosquitoes);
+
     }
 
     @Override
