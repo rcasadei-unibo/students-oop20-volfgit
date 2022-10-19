@@ -1,5 +1,7 @@
 package vg.controller;
 
+import javafx.application.Platform;
+import vg.controller.gameBoard.GameBoardController;
 import vg.model.Boss.BossImpl;
 import vg.model.MapImpl;
 import vg.model.StageImpl;
@@ -26,6 +28,7 @@ import vg.view.utils.KeyAction;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 import java.util.Set;
 
 /**
@@ -50,10 +53,12 @@ public class GameController extends Controller implements SceneController, Dialo
      */
     private Stage<V2D> stageDomain;
 
-    public GameController(AdaptableView view, ViewManager viewManager) {
+
+    public GameController(final AdaptableView<GameBoardController> view, final ViewManager viewManager) {
         super(view, viewManager);
         this.movementQueue = new ArrayList<>();
         this.stageDomain = loadStageModel();
+        ((GameBoardController) this.getView().getViewController()).initMapView(this.stageDomain.getPlayer().getPosition());
     }
 
     private Stage<V2D> loadStageModel() {
@@ -84,6 +89,7 @@ public class GameController extends Controller implements SceneController, Dialo
             //System.out.println("gameloop THREAD");
             long prevCycleTime = System.currentTimeMillis();
             //System.out.println("gameLoop Is FX Thread" + Platform.isFxApplicationThread());
+            this.stageDomain.getPlayer().enableSpeedUp(new V2D(5,5));
             while (gameState == GameState.PLAYING) {
                 long curCycleTime = System.currentTimeMillis();
                 long elapsedTime = curCycleTime - prevCycleTime;
@@ -103,11 +109,16 @@ public class GameController extends Controller implements SceneController, Dialo
      */
     private void updateGameDomain(final long elapsedTime) {
         this.stageDomain.getMap().updateBonusTimer(elapsedTime);
-        //this.stage.doCycle();
+        //this.stageDomain.doCycle();
         this.stageDomain.getPlayer().move();
 
+        if (this.stageDomain.getPlayer().getPosition().getX() == 6) {
+            this.gameState = GameState.GAMEOVER;
+            Platform.runLater(this::gameOver);
+        }
+
         if (this.stageDomain.getPlayer().getLife() <= 0) {
-            gameOver();
+            this.gameState = GameState.GAMEOVER;
         }
 
         //TODO: check if level is end then pass to next level
@@ -130,9 +141,13 @@ public class GameController extends Controller implements SceneController, Dialo
      * Update view of game.
      */
     private void render() {
-        //TODO: call method refresh on view object passing domain
-        //this.view.refresh();
+        getGameViewController().updatePlayerPosition(this.stageDomain.getPlayer().getPosition());
+        //getGameViewController().updataBossPosition(this.stageDomain.getDynamicEntitySet());
         System.out.println(this.stageDomain.getPlayer().getPosition());
+    }
+
+    private GameBoardController getGameViewController() {
+        return ((GameBoardController) this.getView().getViewController());
     }
 
     /**
@@ -174,7 +189,6 @@ public class GameController extends Controller implements SceneController, Dialo
         //launch confirmation dialog
         this.getViewManager().addScene(confirmView);
         //the response is communicated through method notifyDialogAnswer
-        System.exit(0);
     }
 
     @Override
@@ -189,7 +203,6 @@ public class GameController extends Controller implements SceneController, Dialo
             if (gameState == GameState.PAUSED) {
                 this.getViewManager().popScene();
             } else {
-                System.out.println("");
                 this.gameState = GameState.PLAYING;
                 this.gameLoop();
             }
@@ -200,17 +213,17 @@ public class GameController extends Controller implements SceneController, Dialo
      * Stop gameLoop and show pause view.
      */
     private void pauseGame() {
-        System.out.println("PAUSE game");
+        System.out.println("PAUSE");
         this.gameState = GameState.PAUSED;
-        View pauseView = ViewFactory.viewState(this.gameState);
-        showView(pauseView);
+        Optional<View> pauseView = ViewFactory.viewState(this.gameState);
+        pauseView.ifPresent(this::showView);
     }
 
     /**
      * Restart gameLoop and show again game view.
      */
     private void resumeGame() {
-        System.out.println("RESUME game");
+        System.out.println("RESUME");
         this.gameState = GameState.PLAYING;
         this.getViewManager().popScene();
         this.gameLoop();
@@ -220,10 +233,10 @@ public class GameController extends Controller implements SceneController, Dialo
      * gameOver state, stop running game loop then show gameOver screen view.
      */
     private void gameOver() {
-        this.gameState = GameState.STOPPED;
         System.out.println("GAMEOVER");
-        View gameOverView = ViewFactory.viewState(this.gameState);
-        this.showView(gameOverView);
+        this.gameState = GameState.GAMEOVER;
+        Optional<View> gameOverView = ViewFactory.viewState(GameState.GAMEOVER);
+        gameOverView.ifPresent(this::showView);
     }
 
     private void showView(final View view) {
