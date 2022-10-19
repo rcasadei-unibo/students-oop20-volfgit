@@ -26,6 +26,7 @@ import vg.view.menu.confirmMenu.DialogConfirmController;
 import vg.view.menu.confirmMenu.DialogAnswerObserver;
 import vg.view.utils.KeyAction;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -57,27 +58,16 @@ public class GameController extends Controller implements SceneController, Dialo
     public GameController(final AdaptableView<GameBoardController> view, final ViewManager viewManager) {
         super(view, viewManager);
         this.movementQueue = new ArrayList<>();
-        this.stageDomain = loadStageModel();
-        ((GameBoardController) this.getView().getViewController()).initMapView(this.stageDomain.getPlayer().getPosition());
+        try {
+            this.stageDomain = loadStageModel();
+        } catch (Exception e) {
+
+        }
+        getGameViewController().initMapView();
     }
 
-    private Stage<V2D> loadStageModel() {
-        Boss boss =  new BossImpl(
-                new V2D(1,1),
-                new V2D(4,4),
-                3,
-                Shape.CIRCLE,
-                MassTier.HIGH);
-
-        Stage stage =  new StageImpl<V2D>(0, new MapImpl(
-                BasePlayer.newPlayer(new V2D(0, 0)),
-                boss,
-                Set.of(),
-                Set.of(),
-                Set.of(),
-                Set.of()
-        ));
-        return stage;
+    private Stage<V2D> loadStageModel() throws IOException, ClassNotFoundException {
+        return new StageImpl<V2D>();
     }
 
     /**
@@ -88,8 +78,6 @@ public class GameController extends Controller implements SceneController, Dialo
         new Thread(() -> {
             //System.out.println("gameloop THREAD");
             long prevCycleTime = System.currentTimeMillis();
-            //System.out.println("gameLoop Is FX Thread" + Platform.isFxApplicationThread());
-            this.stageDomain.getPlayer().enableSpeedUp(new V2D(5,5));
             while (gameState == GameState.PLAYING) {
                 long curCycleTime = System.currentTimeMillis();
                 long elapsedTime = curCycleTime - prevCycleTime;
@@ -109,18 +97,20 @@ public class GameController extends Controller implements SceneController, Dialo
      */
     private void updateGameDomain(final long elapsedTime) {
         this.stageDomain.getMap().updateBonusTimer(elapsedTime);
-        //this.stageDomain.doCycle();
         this.stageDomain.getPlayer().move();
 
+/*
         if (this.stageDomain.getPlayer().getPosition().getX() == 6) {
             this.gameState = GameState.GAMEOVER;
             Platform.runLater(this::gameOver);
-        }
+        }*/
 
         if (this.stageDomain.getPlayer().getLife() <= 0) {
             this.gameState = GameState.GAMEOVER;
         }
 
+        //TODO: wait 5 sec then next level, nextlevel view
+        //this.stageDomain.createNextLevel();
         //TODO: check if level is end then pass to next level
     }
 
@@ -142,8 +132,8 @@ public class GameController extends Controller implements SceneController, Dialo
      */
     private void render() {
         getGameViewController().updatePlayerPosition(this.stageDomain.getPlayer().getPosition());
-        //getGameViewController().updataBossPosition(this.stageDomain.getDynamicEntitySet());
-        System.out.println(this.stageDomain.getPlayer().getPosition());
+        getGameViewController().updateBossPosition(this.stageDomain.getBoss().getPosition());
+
     }
 
     private GameBoardController getGameViewController() {

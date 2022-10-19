@@ -3,6 +3,7 @@ package vg.model;
 import vg.model.entity.ShapedEntity;
 import vg.model.entity.Entity;
 import vg.model.entity.dynamicEntity.DynamicEntity;
+import vg.model.entity.dynamicEntity.enemy.Boss;
 import vg.model.entity.dynamicEntity.player.Player;
 import vg.model.entity.staticEntity.StaticEntity;
 import vg.model.levels.LEVEL;
@@ -64,6 +65,13 @@ public interface Stage<T> {
      * @see Player
      */
     void setPlayer(Player player);
+
+    /**
+     * Return boss of level.
+     * @return Boss entity of current level
+     * @see Boss
+     */
+    Boss getBoss();
 
     /**
      * Return a Set of all static entities on the map.

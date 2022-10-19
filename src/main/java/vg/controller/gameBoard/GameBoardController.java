@@ -18,7 +18,7 @@ public interface GameBoardController {
 
     void updatePlayerPosition(V2D position);
 
-    void initMapView(V2D initialPlayerPos);
+    void initMapView();
 
     void updateMosquitoesPosition(Set<DynamicEntity> mosquitoes);
 

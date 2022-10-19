@@ -3,6 +3,7 @@ package vg.model;
 import vg.model.entity.ShapedEntity;
 import vg.model.entity.Entity;
 import vg.model.entity.dynamicEntity.DynamicEntity;
+import vg.model.entity.dynamicEntity.enemy.Boss;
 import vg.model.entity.dynamicEntity.player.BasePlayer;
 import vg.model.entity.dynamicEntity.player.Player;
 import vg.model.entity.staticEntity.StaticEntity;
@@ -132,7 +133,7 @@ public class StageImpl<T> implements Stage<V2D> {
      */
     @Override
     public Player getPlayer() {
-        return this.map.getPlayer();
+        return this.player;
     }
 
     /**
@@ -143,6 +144,12 @@ public class StageImpl<T> implements Stage<V2D> {
     public void setPlayer(final Player player) {
         this.player = player;
     }
+
+    @Override
+    public Boss getBoss() {
+        return this.map.getBoss();
+    }
+
     /**
      *
      * {@inheritDoc}
@@ -157,8 +164,7 @@ public class StageImpl<T> implements Stage<V2D> {
      */
     @Override
     public Set<DynamicEntity> getDynamicEntitySet() {
-        return this.map.getAllDynamicEntities();
-        //return ds;
+        return ds;
     }
     /**
      *
