@@ -152,10 +152,6 @@ public class StageImpl<T> implements Stage<V2D> {
         this.player = player;
     }
 
-    @Override
-    public Boss getBoss() {
-        return this.map.getBoss();
-    }
 
     /**
      *
