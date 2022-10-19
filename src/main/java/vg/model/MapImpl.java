@@ -18,12 +18,13 @@ import vg.model.timedObject.BonusType;
 import vg.utils.MassTier;
 import vg.utils.V2D;
 
+import java.io.Serializable;
 import java.util.*;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 import java.util.stream.Stream;
 
-public class MapImpl implements Map<V2D> {
+public class MapImpl implements Map<V2D>, Serializable {
     /**
      * The player.
      * @see Player
