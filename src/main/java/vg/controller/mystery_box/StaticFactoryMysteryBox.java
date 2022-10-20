@@ -33,44 +33,63 @@ public class StaticFactoryMysteryBox {
         return null;
     }
 
+    public static MysteryBoxController createRandomMysteryBoxWithWeaponBoss() {
+        int rnd = new Random().nextInt(6);
+        switch (rnd) {
+            case 0:
+                return createFreezeTime();
+            case 1:
+                return createKillMosquitoes();
+            case 2:
+                return createScore();
+            case 3:
+                return createSpeed();
+            case 4:
+                return createWeaponForMosquitoes();
+            case 5:
+                return createWeaponForBoss();
+        }
+        return null;
+    }
+
     public static MysteryBoxController<AbilityFreezeTime> createFreezeTime() {
         var model = StaticFactoryFreezeTimeAbility.createSmallTime();
-        var view = StaticFactoryEntityBlock.create(model.getDimension());
+        var view = StaticFactoryEntityBlock.createMysteryBox(model.getPosition(), model.getDimension());
 
         return new MysteryBoxControllerImpl<>(model, view);
     }
 
     public static MysteryBoxController<AbilityKillMosquitoes> createKillMosquitoes() {
         var model = StaticFactoryMosquitoesAbility.createKillMosquitoes();
-        var view = StaticFactoryEntityBlock.create(model.getDimension());
+        var view = StaticFactoryEntityBlock.createMysteryBox(model.getPosition(), model.getDimension());
 
         return new MysteryBoxControllerImpl<>(model, view);
     }
 
     public static MysteryBoxController<AbilityScore> createScore() {
         var model = StaticFactoryScoreAbility.createScoreMedium();
-        var view = StaticFactoryEntityBlock.create(model.getDimension());
+        var view = StaticFactoryEntityBlock.createMysteryBox(model.getPosition(), model.getDimension());
 
         return new MysteryBoxControllerImpl<>(model, view);
     }
 
     public static MysteryBoxController<AbilitySpeed> createSpeed() {
         var model = StaticFactorySpeedAbility.createMediumSpeed();
-        var view = StaticFactoryEntityBlock.create(model.getDimension());
+        var view = StaticFactoryEntityBlock.createMysteryBox(model.getPosition(), model.getDimension());
 
         return new MysteryBoxControllerImpl<>(model, view);
     }
 
     public static MysteryBoxController<AbilityWeapon> createWeaponForMosquitoes() {
         var model = StaticFactoryWeaponAbility.createWeaponForMosquitoes();
-        var view = StaticFactoryEntityBlock.create(model.getDimension());
+        var view = StaticFactoryEntityBlock.createMysteryBox(model.getPosition(), model.getDimension());
 
         return new MysteryBoxControllerImpl<>(model, view);
     }
 
     public static MysteryBoxController<AbilityWeapon> createWeaponForBoss() {
         var model = StaticFactoryWeaponAbility.createWeaponForBoss();
-        var view = StaticFactoryEntityBlock.create(model.getDimension());
+        var view = StaticFactoryEntityBlock.createMysteryBox(model.getPosition(), model.getDimension());
 
         return new MysteryBoxControllerImpl<>(model, view);
     }

@@ -2,25 +2,28 @@ package vg.view.entity;
 
 import javafx.geometry.Dimension2D;
 import vg.utils.V2D;
+import vg.utils.path.PathImageMysteryBox;
 
 public class StaticFactoryEntityBlock {
 
-    public static EntityBlockImpl create(Dimension2D dimension) {
-        return new EntityBlockImpl(dimension.getWidth(), dimension.getHeight());
+    public static EntityBlock createMysteryBox(V2D position, Dimension2D dimension) {
+        EntityBlock block = new EntityBlockImpl(position, dimension);
+        block.setImage(PathImageMysteryBox.MYSTERY_BOX);
+        return block;
     }
 
-    public static EntityBlock createBoss(final V2D position) {
-        EntityBlock boss = new EntityBlockImpl(40, 40);
-        //this.boss.setImage("img/boss.png");
-        boss.setPosition(position.getVec2d());
-        return boss;
+    public static EntityBlock createMosquitoes(V2D position, Dimension2D dimension) {
+        EntityBlock block = new EntityBlockImpl(position, dimension);
+//        block.setImage(PathImageMysteryBox.MOSQUITOES);
+        return new EntityBlockImpl(position, dimension);
     }
 
-    public static EntityBlock createMosquito(final V2D position) {
-        EntityBlock mosq = new EntityBlockImpl(40, 40);
-        //this.boss.setImage("img/mosquito.png");
-        mosq.setPosition(position.getVec2d());
-        return mosq;
+    public static EntityBlock createBoss(V2D position, Dimension2D dimension) {
+        EntityBlock block = new EntityBlockImpl(position, dimension);
+//        block.setImage(PathImageMysteryBox.BOSS);
+        return new EntityBlockImpl(position, dimension);
     }
+
+
 
 }

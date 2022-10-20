@@ -24,7 +24,7 @@ public abstract class StaticEntity extends ShapedEntity {
      * @see Shape
      * @see MassTier
      */
-    StaticEntity(final V2D position, final int radius) {
+    protected StaticEntity(final V2D position, final int radius) {
         super(position, radius, Shape.SQUARE, MassTier.HIGH);
     }
 }

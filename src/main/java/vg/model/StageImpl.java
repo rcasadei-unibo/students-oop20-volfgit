@@ -306,7 +306,7 @@ public class StageImpl<T> implements Stage<V2D> {
     }
 
     /**
-     * Uses {@link MapFactoryImpl#fromSerialized(int)} to create the map for the next level,
+     * Uses {@link MapFactoryImpl#fromSerialized(int)} to createMysteryBox the map for the next level,
      * set up the {@link #currentScore} and the {@link #lv}.
      * @throws IOException may be launched attempting to read serialized data
      * @throws ClassNotFoundException may be launched if Map class is changed and the saved one is not updated.
