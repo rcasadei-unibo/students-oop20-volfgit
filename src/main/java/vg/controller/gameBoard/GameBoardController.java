@@ -1,5 +1,6 @@
 package vg.controller.gameBoard;
 
+import javafx.collections.ObservableList;
 import javafx.geometry.Dimension2D;
 import javafx.scene.Node;
 import javafx.scene.layout.Pane;
@@ -15,6 +16,8 @@ public interface GameBoardController {
     Pane getGameArea();
 
     void addInGameArea(Node node);
+
+    ObservableList<Node> getGameAreaNode();
 
     void updatePlayerPosition(V2D position);
 
