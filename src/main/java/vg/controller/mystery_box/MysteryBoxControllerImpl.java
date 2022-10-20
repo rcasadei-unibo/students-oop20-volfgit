@@ -1,8 +1,9 @@
 package vg.controller.mystery_box;
 
-import com.sun.javafx.geom.Vec2d;
+import javafx.collections.ObservableList;
 import javafx.scene.Node;
 import vg.model.mysteryBox.AbilityInTheBox;
+import vg.utils.V2D;
 import vg.view.entity.EntityBlock;
 
 public class MysteryBoxControllerImpl<T extends AbilityInTheBox> implements MysteryBoxController<T> {
@@ -13,27 +14,25 @@ public class MysteryBoxControllerImpl<T extends AbilityInTheBox> implements Myst
     public MysteryBoxControllerImpl(AbilityInTheBox model, EntityBlock view) {
         this.model = model;
         this.view = view;
-        this.view.setImage(this.model.getPathImage());
-//        this.view.setDimension(this.model.getDimension());
     }
 
     public T getModel() {
         return (T)this.model;
     }
 
-
     @Override
-    public Node getNode() {
-        return this.view.getNode();
-    }
-
-    @Override
-    public Vec2d getPosition() {
+    public V2D getPosition() {
         return this.view.getPosition();
     }
 
     @Override
-    public void setPosition(Vec2d position) {
-        this.view.setPosition(position);
+    public void setPosition(V2D position) {
+        this.model.setPosition(position);
+        this.view.setPosition(this.model.getPosition());
+    }
+
+    @Override
+    public void setInParentNode(ObservableList<Node> gameAreaNode) {
+        this.view.setInParentNode(gameAreaNode);
     }
 }
