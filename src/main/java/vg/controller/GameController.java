@@ -86,8 +86,8 @@ public class GameController extends Controller implements SceneController, Dialo
                 this.processInput();
                 updateGameDomain(elapsedTime);
                 render();
-                checkGameoverCondition();
-                checkVictory();
+                //checkGameoverCondition();
+                //checkVictory();
                 waitForNextFrame(curCycleTime);
                 prevCycleTime = curCycleTime;
             }
@@ -180,7 +180,6 @@ public class GameController extends Controller implements SceneController, Dialo
         this.gameState = GameState.PAUSED;
         Optional<View> pauseView = ViewFactory.viewState(this.gameState);
         pauseView.ifPresent(this::showView);
-        Platform.runLater(this::gameOver);
     }
 
     /**
