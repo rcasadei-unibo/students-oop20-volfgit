@@ -13,7 +13,6 @@ import vg.model.entity.dynamicEntity.player.Player;
 import vg.model.entity.staticEntity.StaticEntity;
 import vg.utils.MassTier;
 import vg.utils.V2D;
-
 import java.io.Serializable;
 import java.util.*;
 import java.util.stream.Collectors;
@@ -56,10 +55,13 @@ public class MapImpl implements Map<V2D>, Serializable {
      */
     private final Set<V2D> border;
     /**
-     * Default max X and Y coordinates.
+     * Default max X coordinate.
      */
-    private final int maxBorderX = 200;
-    private final int maxBorderY = 150;
+    private static final int maxBorderX = 200;
+    /**
+     * Default max Y coordinate.
+     */
+    private static final int maxBorderY = 150;
     private final Score score;
 
     /**
@@ -87,7 +89,7 @@ public class MapImpl implements Map<V2D>, Serializable {
     @Override
     public double getOccupiedPercentage() {
         //approximate and slow, to upgrade
-        return ((double)IntStream.rangeClosed(0,maxBorderX).boxed().flatMap( e -> IntStream.rangeClosed(0,maxBorderY).boxed().flatMap(e2 -> Stream.of(new V2D(e, e2)) )).filter(e -> !isInBorders(e)).count())/(maxBorderX*maxBorderY);
+        return ((double) IntStream.rangeClosed(0, maxBorderX).boxed().flatMap(e -> IntStream.rangeClosed(0, maxBorderY).boxed().flatMap(e2 -> Stream.of(new V2D(e, e2)))).filter(e -> !isInBorders(e)).count()) / (maxBorderX * maxBorderY);
     }
     /**
      * {@inheritDoc}
@@ -107,7 +109,7 @@ public class MapImpl implements Map<V2D>, Serializable {
             throw new IllegalStateException("Attempted to call updateBorders while the tail is not completed");
         }
 
-        var tr = createNewBorder(tail,getBoss().getPosition());
+        var tr = createNewBorder(tail, getBoss().getPosition());
         this.getBorders().addAll(tr);
         this.getBorders().retainAll(tr);
     }
@@ -156,7 +158,6 @@ public class MapImpl implements Map<V2D>, Serializable {
     /**
      * {@inheritDoc}
      */
-    @Override
     public <R> Set<R> getActiveBonus() {
         //TODO: luanaaaa
         return null;
@@ -236,9 +237,10 @@ public class MapImpl implements Map<V2D>, Serializable {
             while (true) {
                 t.add(this.getBorders().stream().filter(e -> !t.contains(e) && e.isAdj(t.get(t.size() - 1))).findFirst().orElseThrow());
             }
-        } catch ( NoSuchElementException e) {
-            if (!t.get(0).isAdj(t.get(t.size()-1))) {
-                throw new IllegalStateException("The list of points is not closed; first: "+t.get(0)+" last: "+ t.get(t.size()-1) );
+
+        } catch (NoSuchElementException e) {
+            if (!t.get(0).isAdj(t.get(t.size() - 1))) {
+                throw new IllegalStateException("The list of points is not closed; first: " + t.get(0) + " last: " + t.get(t.size() - 1));
             }
         }
 
@@ -251,11 +253,13 @@ public class MapImpl implements Map<V2D>, Serializable {
         }
         var t1 = Stream.concat(t.subList(indInit, indHalf).stream(), tail.stream()).collect(Collectors.toSet());
         var t2 = Stream.concat(t.subList(indHalf, t.size()).stream(), tail.stream()).collect(Collectors.toSet());
-        if(isInBorders(boss, t1)){
+        if (isInBorders(boss, t1)) {
             return t1;
         } else if (isInBorders(boss, t2)) {
             return t2;
-        } else throw new IllegalStateException("Failed to create a new border (Boss too big?)");
+        } else {
+            throw new IllegalStateException("Failed to create a new border (Boss too big?)");
+        }
     }
     /**
      * Method to check if a point will be closed by the border
@@ -269,7 +273,9 @@ public class MapImpl implements Map<V2D>, Serializable {
     public boolean isClosedByTail(final V2D pos, final Set<V2D> tail, final Boss boss) {
 
 
-        if(tail.contains(pos)) return false;
+        if (tail.contains(pos)) {
+            return false;
+        }
         V2D step = new V2D(pos);
         var dx = pos.getX() - boss.getPosition().getX();
         var dy = pos.getY() - boss.getPosition().getY();
@@ -296,30 +302,34 @@ public class MapImpl implements Map<V2D>, Serializable {
      * @param pos the position to check
      * @return true if the position is inside the borders, false otherwise
      */
-    public boolean isInBorders(final V2D pos){
-        if(getBorders().contains(pos) || pos.getX()<0 ){
+    public boolean isInBorders(final V2D pos) {
+        if (getBorders().contains(pos) || pos.getX() < 0) {
             return false;
         }
         List<Integer> segments = new ArrayList<>();
-        var t = IntStream.rangeClosed(1,this.maxBorderX)
-                .filter(e -> getBorders().contains(new V2D(e,pos.getY()))!=getBorders().contains(new V2D(e-1,pos.getY())))
-                .peek(segments::add).filter(e -> pos.getX()<e).findFirst();
+        var t = IntStream.rangeClosed(1, this.maxBorderX)
+                .filter(e -> getBorders().contains(new V2D(e, pos.getY())) != getBorders().contains(new V2D(e - 1, pos.getY())))
+                .peek(segments::add).filter(e -> pos.getX() < e).findFirst();
          Collections.reverse(segments);
 
-        if(t.isPresent()){
-            return  segments.indexOf(t.getAsInt())%2==0;
-        } else return false;
+        if (t.isPresent()) {
+            return segments.indexOf(t.getAsInt()) % 2 == 0;
+        } else {
+            return false;
+        }
     }
-    private boolean isInBorders(final V2D pos, Set<V2D> borders){
+    private boolean isInBorders(final V2D pos, final Set<V2D> borders) {
         List<Integer> segments = new ArrayList<>();
-        var t = IntStream.rangeClosed(1,this.maxBorderX)
-                .filter(e -> borders.contains(new V2D(e,pos.getY()))!=borders.contains(new V2D(e-1,pos.getY())))
-                .peek(segments::add).filter(e -> pos.getX()<e).findFirst();
+        var t = IntStream.rangeClosed(1, this.maxBorderX)
+                .filter(e -> borders.contains(new V2D(e, pos.getY())) != borders.contains(new V2D(e - 1, pos.getY())))
+                .peek(segments::add).filter(e -> pos.getX() < e).findFirst();
 
         Collections.reverse(segments);
-        if(t.isPresent()){
-            return  segments.indexOf(t.getAsInt())%2==0;
-        } else return false;
+        if (t.isPresent()) {
+            return segments.indexOf(t.getAsInt()) % 2 == 0;
+        } else {
+            return false;
+        }
     }
     /**
      * This method tell if a position is valid on the
@@ -359,7 +369,13 @@ public class MapImpl implements Map<V2D>, Serializable {
         }
         return isInBorders(pos);
     }
-
+    /**
+     * Returns true if the player is in {@link #border}.
+     * @return true if the player is on the boards
+     */
+    public boolean isPlayerOnBorders() {
+        return this.getBorders().contains(getPlayer().getPosition());
+    }
     /**
      * This method will compute what is the correct direction
      * to take for an entity that is colliding.

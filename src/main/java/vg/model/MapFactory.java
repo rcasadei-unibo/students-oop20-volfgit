@@ -29,7 +29,7 @@ public interface MapFactory<T> {
      * @param lv the level to generate.
      * @return the generated map
      */
-    Map<T> fromSerialized(int lv) throws IOException, ClassNotFoundException;
+    Map<T> fromSerialized(int lv);
 
     /**
      * Similar to {@link #fromSerialized(int)} but it will use
@@ -38,9 +38,9 @@ public interface MapFactory<T> {
      * each other when a new one is created.
      * @return {@link Map}
      */
-    Map<T> fromSave() throws IOException, ClassNotFoundException;
+    Map<T> fromSave();
     /**
-     * Similar to the {@link #fromFile(int)} but the data are directly
+     * Similar to the {@link #fromSerialized(int)} but the data are directly
      * passed to this method and must only be parsed.
      * @return the generated map
      */

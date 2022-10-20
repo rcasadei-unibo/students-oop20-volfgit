@@ -13,7 +13,7 @@ public class NextLevelController extends Controller<NextLevelView> {
     }
 
     private void showTimedView() {
-        this.getViewManager().
+        //this.getViewManager().
         new Thread(() -> {
             while (waitingTime > 0) {
                 this.waitingTime--;
