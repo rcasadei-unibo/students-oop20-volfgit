@@ -46,7 +46,7 @@ public class GameBoard extends Application {
         stage.setResizable(false);
         stage.show();
 
-        mysteryBoxManager.initializeRound(gameView.getViewController());
+//        mysteryBoxManager.initializeRound(gameView.getViewController());
 
         stage.setOnCloseRequest(event -> {
             gameController.closeGame();

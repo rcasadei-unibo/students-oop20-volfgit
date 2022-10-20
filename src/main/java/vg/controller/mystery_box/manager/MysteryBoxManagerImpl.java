@@ -24,7 +24,7 @@ public class MysteryBoxManagerImpl implements MysteryBoxManager {
     public void initializeRound(GameBoardController gameBoard) {
         List<Vec2d> pos = MysteryBoxPositionUtils.POSITION_ROUND.get(this.round);
 
-        MysteryBoxController mysteryBoxBoss = StaticFactoryMysteryBox.createWeaponForBoss();
+        MysteryBoxController mysteryBoxBoss = StaticFactoryMysteryBox.createRandomMysteryBoxWithWeaponBoss();
         mysteryBoxBoss.setPosition(pos.get(0));
         this.mysteryBoxList.add(mysteryBoxBoss);
         gameBoard.addInGameArea(mysteryBoxBoss.getNode());

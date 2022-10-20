@@ -73,8 +73,8 @@ public class GameBoardViewControllerImpl extends ViewController implements GameB
         this.player = new PlayerViewControllerImpl();
         this.addInGameArea(this.player.getNode());
 
-        this.boss = StaticFactoryEntityBlock.createBoss(initBossPos);
-        this.addInGameArea(this.boss.getNode());
+//        this.boss = StaticFactoryEntityBlock.createBoss(initBossPos);
+//        this.addInGameArea(this.boss.getNode());
 
         this.mosquitoesNode = new HashSet<>();
         updateMosquitoesPosition(mosquitoes);
@@ -85,11 +85,11 @@ public class GameBoardViewControllerImpl extends ViewController implements GameB
     public void updateMosquitoesPosition(final Set<DynamicEntity> mosquitoes) {
         this.gameArea.getChildren().removeAll(mosquitoesNode);
 
-        mosquitoes.forEach(mosq -> {
-            EntityBlock entityBlock =  StaticFactoryEntityBlock.createMosquito(mosq.getPosition());
-            this.mosquitoesNode.add(entityBlock.getNode());
-            this.addInGameArea(entityBlock.getNode());
-        });
+//        mosquitoes.forEach(mosq -> {
+//            EntityBlock entityBlock =  StaticFactoryEntityBlock.createMosquito(mosq.getPosition());
+//            this.mosquitoesNode.add(entityBlock.getNode());
+//            this.addInGameArea(entityBlock.getNode());
+//        });
     }
 
     @Override
