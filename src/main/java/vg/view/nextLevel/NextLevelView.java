@@ -5,6 +5,6 @@ import vg.view.View;
 
 public class NextLevelView extends AdaptableView<NextLevelViewController> {
     protected NextLevelView() {
-        super("");
+        super("/layout/NextLevel.fxml");
     }
 }
