@@ -20,5 +20,5 @@ public enum GameState {
     /**
      * Game level is not running.
      */
-    STOPPED
+    QUITTING
 }

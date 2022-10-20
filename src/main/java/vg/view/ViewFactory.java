@@ -11,14 +11,8 @@ public class ViewFactory {
         return new AdaptableView<>(resName);
     }
 
-    public static Optional<View> viewState(final GameState gameState) {
-        AdaptableView<ViewController> adaptableView = null;
-        if (gameState == GameState.PAUSED) {
-            adaptableView = makeAdaptableView("/layout/PauseView.fxml");
-        } else if (gameState == GameState.GAMEOVER) {
-            adaptableView = makeAdaptableView("/layout/GameOver.fxml");
-        }
-        return Optional.ofNullable(adaptableView);
+    public static View gameoverView(final GameState gameState) {
+        return makeAdaptableView("/layout/GameOver.fxml");
      }
 
     /**
@@ -29,5 +23,7 @@ public class ViewFactory {
         return new AdaptableView<>("/layout/GameBoard1.fxml");
     }
 
-
+    public static View pauseView() {
+        return makeAdaptableView("/layout/PauseView.fxml");
+    }
 }

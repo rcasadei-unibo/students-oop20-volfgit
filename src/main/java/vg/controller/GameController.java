@@ -56,16 +56,13 @@ public class GameController extends Controller implements SceneController, Dialo
         this.movementQueue = new ArrayList<>();
         try {
             this.stageDomain = loadStageModel();
-        } catch (Exception e) {
-
-        }
+        } catch (Exception e) { }
 
         this.getGameViewController()
-                .initMapView(
-                        this.stageDomain.getPlayer().getPosition(),
-                        this.stageDomain.getBoss().getPosition(),
-                        //TODO: stageDomain.getMosquitoes
-                        Set.of(new Mosquitoes(new V2D(4,4),new V2D(4,4),7,Shape.CIRCLE,MassTier.LOW)));
+            .initMapView(this.stageDomain.getPlayer().getPosition(),
+                         this.stageDomain.getBoss().getPosition(),
+                         //TODO: stageDomain.getMosquitoes
+                         Set.of(new Mosquitoes(new V2D(4,4),new V2D(4,4),7,Shape.CIRCLE,MassTier.LOW)));
     }
 
     private Stage<V2D> loadStageModel() throws IOException, ClassNotFoundException {
@@ -81,13 +78,14 @@ public class GameController extends Controller implements SceneController, Dialo
         new Thread(() -> {
             long prevCycleTime = System.currentTimeMillis();
             while (gameState == GameState.PLAYING) {
+                System.out.println("lloopp");
                 long curCycleTime = System.currentTimeMillis();
                 long elapsedTime = curCycleTime - prevCycleTime;
                 this.processInput();
                 updateGameDomain(elapsedTime);
                 render();
-                //checkGameoverCondition();
-                //checkVictory();
+                checkGameoverCondition();
+                //checkVictory(); ---> RALLENTA TUTTO
                 waitForNextFrame(curCycleTime);
                 prevCycleTime = curCycleTime;
             }
@@ -96,7 +94,7 @@ public class GameController extends Controller implements SceneController, Dialo
             } else if (this.gameState == GameState.VICTORY) {
                 this.victory();
             } else if (gameState == GameState.PAUSED) {
-                this.pause();
+                this.showPause();
             }
         }).start();
     }
@@ -161,8 +159,8 @@ public class GameController extends Controller implements SceneController, Dialo
      * {@link DialogAnswerObserver} and resume or go home depending on response.
      */
     public void closeGame() {
-        System.out.println("close game");
-        this.gameState = GameState.PAUSED;
+        System.out.println("close game???");
+        this.gameState = GameState.QUITTING;
         ConfirmView confirmView = ConfirmView.newConfirmDialogView();
         DialogConfirmController dialogConfirmController =
                 new DialogConfirmController(confirmView, this.getViewManager(), this);
@@ -175,11 +173,10 @@ public class GameController extends Controller implements SceneController, Dialo
     /**
      * Put gameplay in pause state and show pause screen.
      */
-    private void pause() {
+    private void showPause() {
         System.out.println("PAUSE");
-        this.gameState = GameState.PAUSED;
-        Optional<View> pauseView = ViewFactory.viewState(this.gameState);
-        pauseView.ifPresent(this::showView);
+        View pauseView = ViewFactory.pauseView();
+        showView(pauseView);
     }
 
     /**
@@ -199,8 +196,8 @@ public class GameController extends Controller implements SceneController, Dialo
     private void gameOver() {
         System.out.println("GAMEOVER");
         //TODO: add viewcontroller tipe in OPtional<View<T>>
-        Optional<View> gameOverView = ViewFactory.viewState(GameState.GAMEOVER);
-        gameOverView.ifPresent(this::showView);
+        View gameOverView = ViewFactory.gameoverView(GameState.GAMEOVER);
+        this.showView(gameOverView);
     }
 
     /**
@@ -260,15 +257,7 @@ public class GameController extends Controller implements SceneController, Dialo
             this.getViewManager().backHome();
         } else if (answer == ConfirmOption.DENY) {
             this.getViewManager().popScene();
-            System.out.println(this.gameState.name()); //STOOPED
-            //TODO: fix-> put in pause, escape tha game then deny quitting
-            // screen is in pause but gameloop is running
-            if (gameState == GameState.PAUSED) {
-                this.getViewManager().popScene();
-            } else {
-                this.gameState = GameState.PLAYING;
-                this.gameLoop();
-            }
+            resumeGame();
         }
     }
 
@@ -289,7 +278,8 @@ public class GameController extends Controller implements SceneController, Dialo
                     break;
                 case ENTER:
                     break;
-                case ESCAPE: this.closeGame(); break;
+                case ESCAPE: this.closeGame();
+                    break;
                 default:
             }
         }
