@@ -67,6 +67,12 @@ public interface Map<T> {
     boolean isTailCompleted();
 
     /**
+     * Returns true if the player is on borders.
+     * @return true if the player is on the boards
+     */
+     boolean isPlayerOnBorders();
+
+    /**
      * Checks if an entity is captured by the player when he created a new border
      * completing a tail. The Boss of the level cannot be captured (as the boss will
      * be used to compute what part of the map to capture).
