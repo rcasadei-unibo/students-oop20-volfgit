@@ -77,40 +77,161 @@ public class GameController extends Controller implements SceneController, Dialo
      * Loop to make game running. At every cycle it processes input, update domain then update gui.
      */
     public void gameLoop() {
-
+        //Launch on new thread game loop in order to not block gui.
         new Thread(() -> {
-            //System.out.println("gameloop THREAD");
             long prevCycleTime = System.currentTimeMillis();
             while (gameState == GameState.PLAYING) {
                 long curCycleTime = System.currentTimeMillis();
                 long elapsedTime = curCycleTime - prevCycleTime;
                 this.processInput();
-
                 updateGameDomain(elapsedTime);
                 render();
+                checkGameoverCondition();
+                checkVictory();
                 waitForNextFrame(curCycleTime);
                 prevCycleTime = curCycleTime;
+            }
+            if (this.gameState == GameState.GAMEOVER) {
+                this.gameOver();
+            } else if (this.gameState == GameState.VICTORY) {
+                this.victory();
+            } else if (gameState == GameState.PAUSED) {
+                this.pause();
             }
         }).start();
     }
 
     /**
-     * Update game domain: entities position, bonuses and borders.
+     * Method to keep each loop cycle duration at a fixed time,
+     * it prevents that cycle duration is less than framerate period.
+     * @param elapsedTime current time elapsed from prev. cycle
+     */
+    private void waitForNextFrame(final long elapsedTime) {
+        long dt = System.currentTimeMillis() - elapsedTime;
+        if (dt < CYCLE_PERIOD) {
+            try {
+                Thread.sleep(CYCLE_PERIOD - dt);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+        }
+    }
+
+    /**
+     * Update game domain: move entities, check collision and refresh bonus timer.
      * @param elapsedTime time elapsed between current and previous gameLoop cycle
      */
     private void updateGameDomain(final long elapsedTime) {
         this.stageDomain.getMap().updateBonusTimer(elapsedTime);
+        //this.stageDomain.doCycle();
         this.stageDomain.getPlayer().move();
+    }
 
+    /**
+     * Checks game over conditions then if player loose set {@link GameController#gameState} to {@link GameState#GAMEOVER}.
+     */
+    private void checkGameoverCondition() {
         if (this.stageDomain.getPlayer().getLife() <= 0) {
             this.gameState = GameState.GAMEOVER;
             //TODO: save current score and level then show gameover scree
-            Platform.runLater(this::gameOver);
         }
+    }
 
-        //TODO: check if level is end then pass to next level
+    /**
+     * Check condition of victory then set {@link GameController#gameState} if player complete current level.
+     */
+    private void checkVictory() {
+        if (this.stageDomain.getMap().getOccupiedPercentage() > 80) {
+            this.gameState = GameState.VICTORY;
+        }
+    }
+
+    /**
+     * Update view of game.
+     */
+    private void render() {
+        getGameViewController().updatePlayerPosition(this.stageDomain.getPlayer().getPosition());
+        getGameViewController().updateBossPosition(this.stageDomain.getBoss().getPosition());
+        //TODO: fare anche con i mosquitoes
+    }
+
+    /**
+     * Put game in pause then show a dialog to ask if user wants stop playing and go back to main menu.
+     * The response is received by the method {{@link #notifyDialogAnswer(ConfirmOption)}} of interface
+     * {@link DialogAnswerObserver} and resume or go home depending on response.
+     */
+    public void closeGame() {
+        System.out.println("close game");
+        this.gameState = GameState.PAUSED;
+        ConfirmView confirmView = ConfirmView.newConfirmDialogView();
+        DialogConfirmController dialogConfirmController =
+                new DialogConfirmController(confirmView, this.getViewManager(), this);
+        confirmView.setIoLogicController(dialogConfirmController);
+        //launch confirmation dialog
+        this.getViewManager().addScene(confirmView);
+        //the response is communicated through method notifyDialogAnswer
+    }
+
+    /**
+     * Put gameplay in pause state and show pause screen.
+     */
+    private void pause() {
+        System.out.println("PAUSE");
+        this.gameState = GameState.PAUSED;
+        Optional<View> pauseView = ViewFactory.viewState(this.gameState);
+        pauseView.ifPresent(this::showView);
+        Platform.runLater(this::gameOver);
+    }
+
+    /**
+     * Resume gameplay setting {@link GameController#gameState} to {@link GameState#PLAYING},
+     * removing pause view and starting {@linkplain GameController#gameLoop()}
+     */
+    private void resumeGame() {
+        System.out.println("RESUME");
+        this.gameState = GameState.PLAYING;
+        this.getViewManager().popScene();
+        this.gameLoop();
+    }
+
+    /**
+     * Show game-over view.
+     */
+    private void gameOver() {
+        System.out.println("GAMEOVER");
+        //TODO: add viewcontroller tipe in OPtional<View<T>>
+        Optional<View> gameOverView = ViewFactory.viewState(GameState.GAMEOVER);
+        gameOverView.ifPresent(this::showView);
+    }
+
+    /**
+     *  Show victory view then load next level domain.
+     */
+    private void victory() {
+        System.out.println("Player WIN: go to next level");
         //TODO: show screen for 5 sec then pass to new level
-        //this.stageDomain.createNextLevel();
+        //this.showView();
+        this.stageDomain.createNextLevel();
+    }
+
+    /**
+     * Gets {@link javafx.scene.Scene}'s controller of game view.
+     * @return {@link GameBoardController}
+     */
+    private GameBoardController getGameViewController() {
+        return ((GameBoardController) this.getView().getViewController());
+    }
+
+    /**
+     * Show passed view on screen;
+     * this method delegates {@link ViewManager#addScene(View)} to do it.
+     * @param view View to show on screen
+     */
+    private void showView(final View view) {
+        Platform.runLater(() -> {
+            view.setIoLogicController(this);
+            this.getViewManager().addScene(view);
+        });
     }
 
     /**
@@ -127,57 +248,11 @@ public class GameController extends Controller implements SceneController, Dialo
     }
 
     /**
-     * Update view of game.
-     */
-    private void render() {
-        getGameViewController().updatePlayerPosition(this.stageDomain.getPlayer().getPosition());
-        getGameViewController().updateBossPosition(this.stageDomain.getBoss().getPosition());
-        //TODO: fare anche con i mosquitoes
-    }
-
-    private GameBoardController getGameViewController() {
-        return ((GameBoardController) this.getView().getViewController());
-    }
-
-    /**
-     * Method to keep fixed time of each loop cycle,
-     * it prevents that cycle duration is less than framerate period.
-     * @param elapsedTime current time elapsed from prev. cycle
-     */
-    private void waitForNextFrame(final long elapsedTime) {
-        long dt = System.currentTimeMillis() - elapsedTime;
-        if (dt < CYCLE_PERIOD) {
-            try {
-                Thread.sleep(CYCLE_PERIOD - dt);
-            } catch (InterruptedException e) {
-                e.printStackTrace();
-            }
-        }
-    }
-
-    /**
      * Append command to change player direction at the movementQueue.
      * @param dir new direction of player to be set
      */
     private void appendPlayerCommand(final Direction dir) {
         this.movementQueue.add(pl -> pl.changeDirection(dir));
-    }
-
-    /**
-     * Terminate gameLoop then show a dialog to ask if user wants stop playing and go back to main menu.
-     * The response is received by the method {{@link #notifyDialogAnswer(ConfirmOption)}} of interface
-     * {@link DialogAnswerObserver}.
-     */
-    public void closeGame() {
-        System.out.println("close game");
-        this.gameState = GameState.STOPPED;
-        ConfirmView confirmView = ConfirmView.newConfirmDialogView();
-        DialogConfirmController dialogConfirmController =
-                new DialogConfirmController(confirmView, this.getViewManager(), this);
-        confirmView.setIoLogicController(dialogConfirmController);
-        //launch confirmation dialog
-        this.getViewManager().addScene(confirmView);
-        //the response is communicated through method notifyDialogAnswer
     }
 
     @Override
@@ -199,41 +274,6 @@ public class GameController extends Controller implements SceneController, Dialo
     }
 
     /**
-     * Stop gameLoop and show pause view.
-     */
-    private void pauseGame() {
-        System.out.println("PAUSE");
-        this.gameState = GameState.PAUSED;
-        Optional<View> pauseView = ViewFactory.viewState(this.gameState);
-        pauseView.ifPresent(this::showView);
-    }
-
-    /**
-     * Restart gameLoop and show again game view.
-     */
-    private void resumeGame() {
-        System.out.println("RESUME");
-        this.gameState = GameState.PLAYING;
-        this.getViewManager().popScene();
-        this.gameLoop();
-    }
-
-    /**
-     * gameOver state, stop running game loop then show gameOver screen view.
-     */
-    private void gameOver() {
-        System.out.println("GAMEOVER");
-        this.gameState = GameState.GAMEOVER;
-        Optional<View> gameOverView = ViewFactory.viewState(GameState.GAMEOVER);
-        gameOverView.ifPresent(this::showView);
-    }
-
-    private void showView(final View view) {
-        view.setIoLogicController(this);
-        this.getViewManager().addScene(view);
-    }
-
-    /**
      * {@inheritDoc}
      */
     @Override
@@ -243,7 +283,7 @@ public class GameController extends Controller implements SceneController, Dialo
                 case P:
                     //Toggle from pause and playing state
                     if (gameState == GameState.PLAYING) {
-                        this.pauseGame();
+                        this.gameState = GameState.PAUSED;
                     } else if (gameState == GameState.PAUSED) {
                         this.resumeGame();
                     }
@@ -291,7 +331,6 @@ public class GameController extends Controller implements SceneController, Dialo
              k == KeyAction.LEFT || k == KeyAction.RIGHT)) {
             appendPlayerCommand(Direction.NONE);
         }
-
         keyTapped(k);
     }
 }

@@ -14,6 +14,10 @@ public enum GameState {
      */
     GAMEOVER,
     /**
+     * Player has completed current level.
+     */
+    VICTORY,
+    /**
      * Game level is not running.
      */
     STOPPED
