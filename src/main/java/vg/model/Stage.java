@@ -117,12 +117,6 @@ public interface Stage<T> {
     void moveAll();
 
     /**
-     * Move Player by direction got from input keyboard.
-     * @param direction new direction of player movement
-     */
-    void movePlayer(Direction direction);
-
-    /**
      * Add an entity to a list of entities that will be destroyed
      * at the end of current cycle. Usually after moving entities,
      * if they collide with entities of opposite faction then this

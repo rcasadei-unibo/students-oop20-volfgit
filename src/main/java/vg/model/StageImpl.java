@@ -219,15 +219,6 @@ public class StageImpl<T> implements Stage<V2D> {
     public void moveAll() {
         getDynamicEntitySet().forEach(DynamicEntity::move);
     }
-    /**
-     *
-     * {@inheritDoc}
-     */
-    @Override
-    public void movePlayer(final Direction direction) {
-        getPlayer().changeDirection(direction);
-        getPlayer().move();
-    }
 
     /**
      *
@@ -285,6 +276,13 @@ public class StageImpl<T> implements Stage<V2D> {
      */
     @Override
     public void doCycle() {
+        getPlayer().move();
+        if (!getMap().isPlayerOnBorders() && !getMap().isTailCompleted()) {
+            getPlayer().getTail().addPoint(getPlayer().getPosition());
+        }
+        if (getMap().isTailCompleted()) {
+            getPlayer().getTail().resetTail();
+        }
         moveAll();
         checkAllOutOfBounds();
         checkCollisions();
