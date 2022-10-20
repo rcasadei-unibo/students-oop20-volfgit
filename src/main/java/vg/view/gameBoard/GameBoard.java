@@ -3,9 +3,9 @@ package vg.view.gameBoard;
 import javafx.application.Application;
 import javafx.stage.Stage;
 import vg.controller.GameController;
+import vg.controller.entity.EntityManager;
+import vg.controller.entity.EntityManagerImpl;
 import vg.controller.gameBoard.GameBoardController;
-import vg.controller.mystery_box.manager.MysteryBoxManager;
-import vg.controller.mystery_box.manager.MysteryBoxManagerImpl;
 import vg.view.AdaptableView;
 import vg.view.ViewFactory;
 import vg.view.ViewManager;
@@ -23,8 +23,6 @@ public class GameBoard extends Application {
     @Override
     public void start(final Stage stage) {
         viewManager = new ViewManagerImpl(stage, new KeyEventHandler());
-
-        MysteryBoxManager mysteryBoxManager = new MysteryBoxManagerImpl();
 
         // 1) CREATE view
         AdaptableView<GameBoardController> gameView = ViewFactory.newGameBoardView();
@@ -46,7 +44,6 @@ public class GameBoard extends Application {
         stage.setResizable(false);
         stage.show();
 
-//        mysteryBoxManager.initializeRound(gameView.getViewController());
 
         stage.setOnCloseRequest(event -> {
             gameController.closeGame();

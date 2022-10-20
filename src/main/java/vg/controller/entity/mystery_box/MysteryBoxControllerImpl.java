@@ -1,8 +1,9 @@
-package vg.controller.mystery_box;
+package vg.controller.entity.mystery_box;
 
 import javafx.collections.ObservableList;
 import javafx.scene.Node;
 import vg.model.mysteryBox.AbilityInTheBox;
+import vg.model.mysteryBox.dataRound.DataRound;
 import vg.utils.V2D;
 import vg.view.entity.EntityBlock;
 
@@ -32,7 +33,18 @@ public class MysteryBoxControllerImpl<T extends AbilityInTheBox> implements Myst
     }
 
     @Override
+    public void setBlinking(boolean blinking) {
+        this.model.setBlinking(blinking);
+    }
+
+    @Override
     public void setInParentNode(ObservableList<Node> gameAreaNode) {
         this.view.setInParentNode(gameAreaNode);
+    }
+
+    @Override
+    public void setDataRound(DataRound dataRound) {
+        this.setPosition(dataRound.getPosition());
+        this.setBlinking(dataRound.isBlinking());
     }
 }

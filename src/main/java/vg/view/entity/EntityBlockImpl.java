@@ -14,6 +14,7 @@ public class EntityBlockImpl extends Rectangle implements EntityBlock {
         super(dimension.getWidth(), dimension.getHeight());
         this.rectangleOverlay = new Rectangle(dimension.getWidth(), dimension.getHeight());
         this.setPosition(position);
+        this.hideImageOverlay();
     }
 
 
@@ -40,11 +41,6 @@ public class EntityBlockImpl extends Rectangle implements EntityBlock {
         this.setY(position.getY());
         this.rectangleOverlay.setX(position.getX());
         this.rectangleOverlay.setY(position.getY());
-    }
-
-    public void setDimensionImageOverlay(Dimension2D dimension) {
-        this.rectangleOverlay.setWidth(dimension.getWidth());
-        this.rectangleOverlay.setHeight(dimension.getHeight());
     }
 
     @Override

@@ -1,4 +1,4 @@
-package vg.controller.mystery_box;
+package vg.controller.entity.mystery_box;
 
 import vg.model.mysteryBox.ability.AbilityFreezeTime;
 import vg.model.mysteryBox.ability.AbilityKillMosquitoes;

@@ -1,6 +1,8 @@
 package vg.controller;
 
 import javafx.application.Platform;
+import vg.controller.entity.EntityManager;
+import vg.controller.entity.EntityManagerImpl;
 import vg.controller.gameBoard.GameBoardController;
 import vg.model.StageImpl;
 import vg.model.entity.dynamicEntity.enemy.Mosquitoes;
@@ -51,9 +53,15 @@ public class GameController extends Controller<AdaptableView<GameBoardController
      */
     private Stage<V2D> stageDomain;
 
+    private final EntityManager entityManager;
+
+
+
     //TODO: pass satgeDomain as parameter
     public GameController(final AdaptableView<GameBoardController> view, final ViewManager viewManager) {
         super(view, viewManager);
+        this.entityManager = new EntityManagerImpl();
+        this.entityManager.initializeRound(view.getViewController());
         this.movementQueue = new ArrayList<>();
         try {
             this.stageDomain = loadStageModel();
@@ -122,6 +130,7 @@ public class GameController extends Controller<AdaptableView<GameBoardController
      */
     private void updateGameDomain(final long elapsedTime) {
         this.stageDomain.getMap().updateBonusTimer(elapsedTime);
+        this.entityManager.updateBlinkingMysteryBox(elapsedTime);
         //this.stageDomain.doCycle();
         this.stageDomain.getPlayer().move();
     }
@@ -349,4 +358,5 @@ public class GameController extends Controller<AdaptableView<GameBoardController
         }
         keyTapped(k);
     }
+
 }
