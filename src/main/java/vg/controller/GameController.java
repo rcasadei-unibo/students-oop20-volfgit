@@ -1,42 +1,45 @@
 package vg.controller;
 
 import javafx.application.Platform;
+import vg.controller.entity.EntityManager;
+import vg.controller.entity.EntityManagerImpl;
 import vg.controller.gameBoard.GameBoardController;
 import vg.model.StageImpl;
 import vg.model.entity.dynamicEntity.enemy.Mosquitoes;
 import vg.model.Stage;
 import vg.model.entity.dynamicEntity.player.Player;
-import vg.utils.Command;
-import vg.utils.Direction;
-import vg.utils.GameState;
-import vg.utils.MassTier;
-import vg.utils.Shape;
-import vg.utils.V2D;
+import vg.utils.*;
 import vg.view.AdaptableView;
 import vg.view.SceneController;
 import vg.view.View;
 import vg.view.ViewManager;
 import vg.view.ViewFactory;
+import vg.view.gameOver.GameOverViewController;
 import vg.view.menu.confirmMenu.ConfirmOption;
 import vg.view.menu.confirmMenu.ConfirmView;
 import vg.view.menu.confirmMenu.DialogConfirmController;
 import vg.view.menu.confirmMenu.DialogAnswerObserver;
+import vg.view.transition.TransitionViewController;
+import vg.view.utils.CountdownView;
 import vg.view.utils.KeyAction;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
 import java.util.Set;
 
 /**
  * Game Engine class, manager game loop and refresh timing
- * during gameplay
+ * during gameplay.
  * */
-public class GameController extends Controller implements SceneController, DialogAnswerObserver {
+public class GameController extends Controller<AdaptableView<GameBoardController>> implements SceneController, DialogAnswerObserver {
+    /**
+     * Waiting time of timed screens.
+     */
+    private static final int WAITING_TIME = 5;
     /**
      * Command queue of new player's movement got from input to be applied.
      */
-    private List<Command<Player>> movementQueue;
+    private final List<Command<Player>> movementQueue;
     /**
      * Period of each frame.
      */
@@ -50,9 +53,15 @@ public class GameController extends Controller implements SceneController, Dialo
      */
     private Stage<V2D> stageDomain;
 
+    private final EntityManager entityManager;
+
+
+
     //TODO: pass satgeDomain as parameter
     public GameController(final AdaptableView<GameBoardController> view, final ViewManager viewManager) {
         super(view, viewManager);
+        this.entityManager = new EntityManagerImpl();
+        this.entityManager.initializeRound(view.getViewController());
         this.movementQueue = new ArrayList<>();
         try {
             this.stageDomain = loadStageModel();
@@ -78,7 +87,6 @@ public class GameController extends Controller implements SceneController, Dialo
         new Thread(() -> {
             long prevCycleTime = System.currentTimeMillis();
             while (gameState == GameState.PLAYING) {
-                System.out.println("lloopp");
                 long curCycleTime = System.currentTimeMillis();
                 long elapsedTime = curCycleTime - prevCycleTime;
                 this.processInput();
@@ -121,6 +129,7 @@ public class GameController extends Controller implements SceneController, Dialo
      */
     private void updateGameDomain(final long elapsedTime) {
         this.stageDomain.getMap().updateBonusTimer(elapsedTime);
+        this.entityManager.updateBlinkingMysteryBox(elapsedTime);
         //this.stageDomain.doCycle();
         this.stageDomain.getPlayer().move();
     }
@@ -129,6 +138,7 @@ public class GameController extends Controller implements SceneController, Dialo
      * Checks game over conditions then if player loose set {@link GameController#gameState} to {@link GameState#GAMEOVER}.
      */
     private void checkGameoverCondition() {
+//        this.gameState = GameState.GAMEOVER;   TODO: Condizione continua di GAMEOVER commento perchè blocca il gameLoop LUANA test
         if (this.stageDomain.getPlayer().getLife() <= 0) {
             this.gameState = GameState.GAMEOVER;
             //TODO: save current score and level then show gameover scree
@@ -159,15 +169,13 @@ public class GameController extends Controller implements SceneController, Dialo
      * {@link DialogAnswerObserver} and resume or go home depending on response.
      */
     public void closeGame() {
-        System.out.println("close game???");
-        this.gameState = GameState.QUITTING;
         ConfirmView confirmView = ConfirmView.newConfirmDialogView();
         DialogConfirmController dialogConfirmController =
                 new DialogConfirmController(confirmView, this.getViewManager(), this);
         confirmView.setIoLogicController(dialogConfirmController);
         //launch confirmation dialog
-        this.getViewManager().addScene(confirmView);
         //the response is communicated through method notifyDialogAnswer
+        this.getViewManager().addScene(confirmView);
     }
 
     /**
@@ -191,23 +199,51 @@ public class GameController extends Controller implements SceneController, Dialo
     }
 
     /**
-     * Show game-over view.
+     * Show game-over view for {@link GameController#WAITING_TIME} then back to the previous screen.
      */
     private void gameOver() {
-        System.out.println("GAMEOVER");
-        //TODO: add viewcontroller tipe in OPtional<View<T>>
-        View gameOverView = ViewFactory.gameOverView();
-        this.showView(gameOverView);
+        //System.out.println("GAMEOVER");
+        CountdownView<GameOverViewController> gameOverView = ViewFactory.gameOverView();
+        gameOverView.setIoLogicController(this);
+        gameOverView.getViewController().setScore(this.stageDomain.getCurrentScore());
+        showTimedView(gameOverView, WAITING_TIME);
     }
 
     /**
-     *  Show victory view then load next level domain.
+     *  Show victory screen then load next level domain and when are elapsed 3 second is called
+     *  {@link GameController#resumeGame()}.
      */
     private void victory() {
-        System.out.println("Player WIN: go to next level");
-        //TODO: show screen for 5 sec then pass to new level
-        //this.showView();
+        System.out.println("VICTORY");
         this.stageDomain.createNextLevel();
+        CountdownView<TransitionViewController> transView = ViewFactory.transitionView();
+        transView.setIoLogicController(this);
+        transView.getViewController().setLevel(this.stageDomain.getLv());
+        transView.getViewController().setScore(this.stageDomain.getCurrentScore());
+        showTimedView(transView, 3);
+        resumeGame();
+    }
+
+    /**
+     * Show for an amount of time a view then remove it.
+     *
+     * @param view View to be temporary showed that implements {@link CountdownView}
+     * @param duration amount of time to show the view
+     */
+    private void showTimedView(final CountdownView view, final int duration) {
+        this.showView(view);
+            int i = duration;
+            while (i > 0) {
+                i--;
+                final int r = i;
+                Platform.runLater(() -> view.setCountdown(r));
+                try {
+                    Thread.sleep(1000);
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+            }
+            Platform.runLater(() -> getViewManager().popScene());
     }
 
     /**
@@ -215,7 +251,7 @@ public class GameController extends Controller implements SceneController, Dialo
      * @return {@link GameBoardController}
      */
     private GameBoardController getGameViewController() {
-        return ((GameBoardController) this.getView().getViewController());
+        return this.getView().getViewController();
     }
 
     /**
@@ -322,4 +358,5 @@ public class GameController extends Controller implements SceneController, Dialo
         }
         keyTapped(k);
     }
+
 }

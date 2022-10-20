@@ -1,23 +1,24 @@
 package vg.view.gameOver;
 
 import javafx.fxml.FXML;
-import org.w3c.dom.Text;
+
+import javafx.scene.text.Text;
 import vg.view.ViewController;
 
 public class GameOverViewController extends ViewController {
 
     @FXML
-    private Text countdown;
+    private Text timeout;
 
     @FXML
     private Text score;
 
-    public void setCountdown(final int time) {
-        this.countdown.setTextContent(String.valueOf(time));
+   public void setCountdown(final int time) {
+        this.timeout.setText(String.valueOf(time));
     }
 
     public void setScore(final int score) {
-        this.score.setTextContent(String.valueOf(score));
+        this.score.setText(String.valueOf(score));
     }
 
 }

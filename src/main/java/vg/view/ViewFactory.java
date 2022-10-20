@@ -1,18 +1,19 @@
 package vg.view;
 
 import vg.controller.gameBoard.GameBoardController;
-import vg.utils.GameState;
-
-import java.util.Optional;
+import vg.view.gameOver.GameOverView;
+import vg.view.gameOver.GameOverViewController;
+import vg.view.transition.TransitionView;
+import vg.view.utils.CountdownView;
 
 public class ViewFactory {
 
-     private static AdaptableView<ViewController> makeAdaptableView(final String resName) {
-        return new AdaptableView<>(resName);
+     private static <T> AdaptableView<T> makeAdaptableView(final String resName) {
+        return new AdaptableView<T>(resName);
     }
 
-    public static View gameOverView() {
-        return makeAdaptableView("/layout/GameOver.fxml");
+    public static CountdownView<GameOverViewController> gameOverView() {
+        return new GameOverView();
      }
 
     /**
@@ -23,7 +24,11 @@ public class ViewFactory {
         return new AdaptableView<>("/layout/GameBoard1.fxml");
     }
 
-    public static View pauseView() {
+    public static View<ViewController> pauseView() {
         return makeAdaptableView("/layout/PauseView.fxml");
+    }
+
+    public static TransitionView transitionView() {
+        return new TransitionView();
     }
 }

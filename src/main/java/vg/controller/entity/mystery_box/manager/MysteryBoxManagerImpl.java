@@ -1,10 +1,10 @@
-package vg.controller.mystery_box.manager;
+package vg.controller.entity.mystery_box.manager;
 
 import vg.controller.gameBoard.GameBoardController;
-import vg.controller.mystery_box.MysteryBoxController;
-import vg.controller.mystery_box.StaticFactoryMysteryBox;
+import vg.controller.entity.mystery_box.MysteryBoxController;
+import vg.controller.entity.mystery_box.StaticFactoryMysteryBox;
+import vg.model.mysteryBox.dataRound.DataRound;
 import vg.utils.Round.MysteryBoxPositionUtils;
-import vg.utils.V2D;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -22,17 +22,17 @@ public class MysteryBoxManagerImpl implements MysteryBoxManager {
 
     @Override
     public void initializeRound(GameBoardController gameBoard) {
-        List<V2D> pos = MysteryBoxPositionUtils.POSITION_ROUND.get(this.round);
+        List<DataRound> dataRoundList = MysteryBoxPositionUtils.POSITION_ROUND.get(this.round);
 
         MysteryBoxController mysteryBoxBoss = StaticFactoryMysteryBox.createRandomMysteryBoxWithWeaponBoss();
-        mysteryBoxBoss.setPosition(pos.get(0));
+        mysteryBoxBoss.setDataRound(dataRoundList.get(0));
         this.mysteryBoxList.add(mysteryBoxBoss);
         mysteryBoxBoss.setInParentNode(gameBoard.getGameAreaNode());
 
 
-        pos.stream().skip(1).forEach(vec2d -> {
+        dataRoundList.stream().skip(1).forEach(dataRound -> {
             MysteryBoxController mysteryBox = StaticFactoryMysteryBox.createRandomMysteryBox();
-            mysteryBox.setPosition(vec2d);
+            mysteryBox.setDataRound(dataRound);
             this.mysteryBoxList.add(mysteryBox);
             mysteryBox.setInParentNode(gameBoard.getGameAreaNode());
         });
@@ -46,5 +46,10 @@ public class MysteryBoxManagerImpl implements MysteryBoxManager {
     @Override
     public void increaseRound() {
         this.round++;
+    }
+
+    @Override
+    public void updateBlinkingMysteryBox(long elapsedTime) {
+        this.mysteryBoxList.forEach(mysteryBox -> mysteryBox.updateBlinking(elapsedTime));
     }
 }

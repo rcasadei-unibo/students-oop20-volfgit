@@ -3,12 +3,9 @@ package vg.view;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import vg.controller.Controller;
-import vg.controller.gameBoard.GameBoardController;
 import vg.utils.DimensionUtils;
 import vg.utils.NoSuchControllerException;
 import vg.view.menu.confirmMenu.ConfirmView;
-import vg.view.menu.confirmMenu.ConfirmViewController;
-
 import java.io.IOException;
 import java.util.Optional;
 

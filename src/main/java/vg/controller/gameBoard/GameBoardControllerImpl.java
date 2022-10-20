@@ -18,7 +18,7 @@ import vg.view.player.PlayerViewControllerImpl;
 import java.util.HashSet;
 import java.util.Set;
 
-public class GameBoardViewControllerImpl extends ViewController implements GameBoardController {
+public class GameBoardControllerImpl extends ViewController implements GameBoardController {
 
     @FXML
     private BorderPane borderPane;
@@ -96,7 +96,7 @@ public class GameBoardViewControllerImpl extends ViewController implements GameB
 
     @Override
     public void updateBossPosition(final V2D bossPos) {
-        this.boss.setPosition(bossPos);
+       // this.boss.setPosition(bossPos);
     }
 
     @Override
