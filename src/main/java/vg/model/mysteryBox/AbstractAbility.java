@@ -5,8 +5,8 @@ import vg.utils.path.PathImageMysteryBox;
 
 
 public abstract class AbstractAbility {
-    private final double WIDTH = 60;
-    private final double HEIGHT = 60;
+    private static final double WIDTH = 60;
+    private static final double HEIGHT = 60;
 
     public final Dimension2D dimension;
     protected String pathImage;

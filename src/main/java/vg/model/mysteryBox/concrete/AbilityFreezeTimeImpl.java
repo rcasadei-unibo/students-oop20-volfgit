@@ -6,21 +6,15 @@ import vg.model.mysteryBox.ability.AbilityFreezeTime;
 
 public class AbilityFreezeTimeImpl extends AbstractAbilityDurable implements AbilityFreezeTime {
 
-    public AbilityFreezeTimeImpl(EAbility idAbility, int duration) {
+    public AbilityFreezeTimeImpl(EAbility idAbility, double duration) {
         super(idAbility, duration);
+
     }
 
     @Override
     public void startFreezeTime() {
-        super.onStart(this);
+       // super.onStart(this);
     }
-    @Override
-    public void functionCallOnStart() {
 
-    }
-    @Override
-    public void functionCallOnEnd() {
-
-    }
 
 }

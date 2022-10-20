@@ -1,4 +1,4 @@
-package vg.controller.mysteryBox;
+package vg.controller.mystery_box;
 
 import com.sun.javafx.geom.Vec2d;
 import javafx.scene.Node;
