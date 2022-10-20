@@ -6,37 +6,37 @@ import vg.model.StageImpl;
 import vg.model.entity.dynamicEntity.enemy.Mosquitoes;
 import vg.model.Stage;
 import vg.model.entity.dynamicEntity.player.Player;
-import vg.utils.Command;
-import vg.utils.Direction;
-import vg.utils.GameState;
-import vg.utils.MassTier;
-import vg.utils.Shape;
-import vg.utils.V2D;
+import vg.utils.*;
 import vg.view.AdaptableView;
 import vg.view.SceneController;
 import vg.view.View;
 import vg.view.ViewManager;
 import vg.view.ViewFactory;
+import vg.view.gameOver.GameOverViewController;
 import vg.view.menu.confirmMenu.ConfirmOption;
 import vg.view.menu.confirmMenu.ConfirmView;
 import vg.view.menu.confirmMenu.DialogConfirmController;
 import vg.view.menu.confirmMenu.DialogAnswerObserver;
+import vg.view.utils.CountdownView;
 import vg.view.utils.KeyAction;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
 import java.util.Set;
 
 /**
  * Game Engine class, manager game loop and refresh timing
- * during gameplay
+ * during gameplay.
  * */
-public class GameController extends Controller implements SceneController, DialogAnswerObserver {
+public class GameController extends Controller<AdaptableView<GameBoardController>> implements SceneController, DialogAnswerObserver {
+    /**
+     * Waiting time of timed screens.
+     */
+    private static final int WAITING_TIME = 5;
     /**
      * Command queue of new player's movement got from input to be applied.
      */
-    private List<Command<Player>> movementQueue;
+    private final List<Command<Player>> movementQueue;
     /**
      * Period of each frame.
      */
@@ -78,7 +78,6 @@ public class GameController extends Controller implements SceneController, Dialo
         new Thread(() -> {
             long prevCycleTime = System.currentTimeMillis();
             while (gameState == GameState.PLAYING) {
-                System.out.println("lloopp");
                 long curCycleTime = System.currentTimeMillis();
                 long elapsedTime = curCycleTime - prevCycleTime;
                 this.processInput();
@@ -129,6 +128,7 @@ public class GameController extends Controller implements SceneController, Dialo
      * Checks game over conditions then if player loose set {@link GameController#gameState} to {@link GameState#GAMEOVER}.
      */
     private void checkGameoverCondition() {
+        this.gameState = GameState.GAMEOVER;
         if (this.stageDomain.getPlayer().getLife() <= 0) {
             this.gameState = GameState.GAMEOVER;
             //TODO: save current score and level then show gameover scree
@@ -159,7 +159,6 @@ public class GameController extends Controller implements SceneController, Dialo
      * {@link DialogAnswerObserver} and resume or go home depending on response.
      */
     public void closeGame() {
-        System.out.println("close game???");
         this.gameState = GameState.QUITTING;
         ConfirmView confirmView = ConfirmView.newConfirmDialogView();
         DialogConfirmController dialogConfirmController =
@@ -196,8 +195,9 @@ public class GameController extends Controller implements SceneController, Dialo
     private void gameOver() {
         System.out.println("GAMEOVER");
         //TODO: add viewcontroller tipe in OPtional<View<T>>
-        View gameOverView = ViewFactory.gameOverView();
-        this.showView(gameOverView);
+        CountdownView<GameOverViewController> gameOverView = ViewFactory.gameOverView();
+        gameOverView.setIoLogicController(this);
+        showTimedView(gameOverView, WAITING_TIME);
     }
 
     /**
@@ -208,6 +208,21 @@ public class GameController extends Controller implements SceneController, Dialo
         //TODO: show screen for 5 sec then pass to new level
         //this.showView();
         this.stageDomain.createNextLevel();
+        //showTimedView(gameOverView, WAITING_TIME);
+    }
+
+    private void showTimedView(final CountdownView view, final int duration) {
+        this.showView(view);
+        new Thread(() -> {
+            int i = duration;
+            while (i > 0) {
+                i--;
+                final int r = i;
+                Platform.runLater(() -> view.setCountdown(r));
+                ThreadUtils.sleep(1000);
+            }
+            Platform.runLater(() -> getViewManager().popScene());
+        }).start();
     }
 
     /**
@@ -215,7 +230,7 @@ public class GameController extends Controller implements SceneController, Dialo
      * @return {@link GameBoardController}
      */
     private GameBoardController getGameViewController() {
-        return ((GameBoardController) this.getView().getViewController());
+        return this.getView().getViewController();
     }
 
     /**
