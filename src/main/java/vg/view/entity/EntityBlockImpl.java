@@ -1,19 +1,21 @@
 package vg.view.entity;
 
 import com.sun.javafx.geom.Vec2d;
+import javafx.geometry.Dimension2D;
 import javafx.scene.Node;
 import javafx.scene.shape.Rectangle;
 import javafx.scene.image.Image;
 import javafx.scene.paint.ImagePattern;
+import vg.utils.V2D;
 import vg.utils.path.PathImageMysteryBox;
 
 public class EntityBlockImpl extends Rectangle implements EntityBlock {
     private final Rectangle rectangleOverlay;
 
-    public EntityBlockImpl(double width, double height) {
-        super(width, height);
-        this.rectangleOverlay = new Rectangle(width, height);
-        this.setImage(PathImageMysteryBox.MYSTERY_BOX);
+    public EntityBlockImpl(V2D position, Dimension2D dimension)  {
+        super(dimension.getWidth(), dimension.getHeight());
+        this.rectangleOverlay = new Rectangle(dimension.getWidth(), dimension.getHeight());
+        this.setPosition(position);
     }
 
 
@@ -34,11 +36,11 @@ public class EntityBlockImpl extends Rectangle implements EntityBlock {
     }
 
     @Override
-    public void setPosition(Vec2d position) {
-        this.setX(position.x);
-        this.setY(position.y);
-        this.rectangleOverlay.setX(position.x);
-        this.rectangleOverlay.setY(position.y);
+    public void setPosition(V2D position) {
+        this.setX(position.getX());
+        this.setY(position.getY());
+        this.rectangleOverlay.setX(position.getX());
+        this.rectangleOverlay.setY(position.getY());
     }
 
     public void setImageOverlay(String pathImage){

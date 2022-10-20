@@ -3,6 +3,7 @@ package vg.controller.mystery_box;
 import com.sun.javafx.geom.Vec2d;
 import javafx.scene.Node;
 import vg.model.mysteryBox.AbilityInTheBox;
+import vg.utils.V2D;
 import vg.view.entity.EntityBlock;
 
 public class MysteryBoxControllerImpl<T extends AbilityInTheBox> implements MysteryBoxController<T> {
@@ -13,8 +14,6 @@ public class MysteryBoxControllerImpl<T extends AbilityInTheBox> implements Myst
     public MysteryBoxControllerImpl(AbilityInTheBox model, EntityBlock view) {
         this.model = model;
         this.view = view;
-        this.view.setImage(this.model.getPathImage());
-//        this.view.setDimension(this.model.getDimension());
     }
 
     public T getModel() {
@@ -33,7 +32,8 @@ public class MysteryBoxControllerImpl<T extends AbilityInTheBox> implements Myst
     }
 
     @Override
-    public void setPosition(Vec2d position) {
-        this.view.setPosition(position);
+    public void setPosition(V2D position) {
+        this.model.setPosition(position);
+        this.view.setPosition(this.model.getPosition());
     }
 }

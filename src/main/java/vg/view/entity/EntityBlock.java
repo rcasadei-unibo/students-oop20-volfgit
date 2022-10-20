@@ -2,6 +2,7 @@ package vg.view.entity;
 
 import com.sun.javafx.geom.Vec2d;
 import javafx.scene.Node;
+import vg.utils.V2D;
 
 public interface EntityBlock {
 
@@ -11,7 +12,7 @@ public interface EntityBlock {
 
     public Vec2d getPosition();
 
-    public void setPosition(Vec2d position);
+    public void setPosition(V2D position);
 
     public void setImageOverlay(String pathImage);
     public void showImageOverlay();

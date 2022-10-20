@@ -7,8 +7,8 @@ import javafx.stage.Screen;
  */
 public final class DimensionUtils {
 
-    public static int DEFAULT_WIDTH = 1400;
-    public static int DEFAULT_HEIGHT = 950;
+    public static final int DEFAULT_WIDTH = 1400;
+    public static final int DEFAULT_HEIGHT = 950;
 
     /**
      * width 4k.
@@ -88,7 +88,6 @@ public final class DimensionUtils {
         }
     }
 
-
     /**
      * Getters and setters.
      */
@@ -96,16 +95,8 @@ public final class DimensionUtils {
         return DEFAULT_WIDTH;
     }
 
-    public static void setDefaultWidth(int defaultWidth) {
-        DEFAULT_WIDTH = defaultWidth;
-    }
-
     public static int getDefaultHeight() {
         return DEFAULT_HEIGHT;
-    }
-
-    public static void setDefaultHeight(int defaultHeight) {
-        DEFAULT_HEIGHT = defaultHeight;
     }
 
     public static double getCurrentWidth() {
