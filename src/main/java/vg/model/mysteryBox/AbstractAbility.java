@@ -12,15 +12,21 @@ public abstract class AbstractAbility extends StaticEntity {
 
     public final Dimension2D dimension;
     protected String pathImage;
-    protected final EAbility idAbility;
+    private final EAbility idAbility;
+    private boolean isBlinking;
+
 
     public AbstractAbility(EAbility idAbility) {
         super(INIT_POSITION, (int) (DIMENSION_BOX.getWidth() * 2));
         this.pathImage = PathImageMysteryBox.MYSTERY_BOX;
         this.dimension = DIMENSION_BOX;
         this.idAbility = idAbility;
+        this.isBlinking = false;
     }
 
+    public EAbility getIdAbility() {
+        return this.idAbility;
+    }
     public Dimension2D getDimension() {
         return this.dimension;
     }
@@ -29,4 +35,11 @@ public abstract class AbstractAbility extends StaticEntity {
         return this.pathImage;
     }
 
+    public boolean isBlinking() {
+        return this.isBlinking;
+    }
+
+    public void setBlinking(boolean isBlinking) {
+        this.isBlinking = isBlinking;
+    }
 }
