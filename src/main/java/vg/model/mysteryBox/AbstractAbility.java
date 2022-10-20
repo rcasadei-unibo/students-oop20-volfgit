@@ -2,6 +2,8 @@ package vg.model.mysteryBox;
 
 import javafx.geometry.Dimension2D;
 import vg.model.entity.staticEntity.StaticEntity;
+import vg.model.mysteryBox.logicBlink.LogicBlink;
+import vg.model.mysteryBox.logicBlink.LogicBlinkImpl;
 import vg.utils.V2D;
 import vg.utils.path.PathImageMysteryBox;
 
@@ -13,7 +15,7 @@ public abstract class AbstractAbility extends StaticEntity {
     public final Dimension2D dimension;
     protected String pathImage;
     private final EAbility idAbility;
-    private boolean isBlinking;
+    private final LogicBlink logicBlink;
 
 
     public AbstractAbility(EAbility idAbility) {
@@ -21,7 +23,7 @@ public abstract class AbstractAbility extends StaticEntity {
         this.pathImage = PathImageMysteryBox.MYSTERY_BOX;
         this.dimension = DIMENSION_BOX;
         this.idAbility = idAbility;
-        this.isBlinking = false;
+        this.logicBlink = new LogicBlinkImpl();
     }
 
     public EAbility getIdAbility() {
@@ -36,10 +38,10 @@ public abstract class AbstractAbility extends StaticEntity {
     }
 
     public boolean isBlinking() {
-        return this.isBlinking;
+        return this.logicBlink.isBlinking();
     }
 
     public void setBlinking(boolean isBlinking) {
-        this.isBlinking = isBlinking;
+        this.logicBlink.setBlinking(isBlinking);
     }
 }
