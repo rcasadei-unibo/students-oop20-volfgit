@@ -9,8 +9,8 @@ public class AbilityWeaponImpl extends AbstractAbilityDurable implements Ability
 
     private final boolean canHitBoss;
 
-    public AbilityWeaponImpl(EAbility idAbility, int durationMillis, boolean canHitBoss) {
-        super(idAbility, durationMillis);
+    public AbilityWeaponImpl(EAbility idAbility, double duration, boolean canHitBoss) {
+        super(idAbility, duration);
         this.canHitBoss = canHitBoss;
 
         if(canHitBoss) {
@@ -20,18 +20,9 @@ public class AbilityWeaponImpl extends AbstractAbilityDurable implements Ability
 
     @Override
     public void startActivateWeapon() {
-        super.onStart(this);
+      //  super.onStart(this);
     }
 
-    @Override
-    public void functionCallOnStart() {
-
-    }
-
-    @Override
-    public void functionCallOnEnd() {
-
-    }
 
 
 }

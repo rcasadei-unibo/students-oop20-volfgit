@@ -1,57 +1,27 @@
 package vg.model.mysteryBox;
 
-import vg.utils.ThreadUtils;
 
-public abstract class AbstractAbilityDurable extends AbstractAbility implements Runnable {
-    private static final int INIT_DURATION = 0;
-    private  static final int STEP_TIME = 1;
+import vg.model.timedObject.TimedObject;
+import vg.model.timedObject.TimedObjectImpl;
 
-    private final Thread thread;
-    private final int durationMillis;
+public abstract class AbstractAbilityDurable extends AbstractAbility {
 
-    private AbilityDuration objectDuration;
-    private int currentDurationMillis;
-    private boolean isRunning;
+    private final TimedObject timedObject;
 
-
-    public AbstractAbilityDurable(EAbility idAbility, int durationMillis) {
+    public AbstractAbilityDurable(EAbility idAbility, double duration) {
         super(idAbility);
-        this.durationMillis = durationMillis;
-        this.currentDurationMillis = INIT_DURATION;
-        this.thread = new Thread(this);
-        this.thread.start();
+        this.timedObject = new TimedObjectImpl(duration);
     }
 
-
-    protected void onStart(AbilityDuration objectDuration) {
-        this.isRunning = true;
-        this.objectDuration = objectDuration;
-        this.objectDuration.functionCallOnStart();
+    public Boolean isTimeOver() {
+        return this.timedObject.isTimeOver();
     }
 
-    private void stop() {
-        this.isRunning = false;
-        this.objectDuration.functionCallOnEnd();
-        this.currentDurationMillis = INIT_DURATION;
-    }
-    private void onStop() {
-        if(this.currentDurationMillis >= this.durationMillis) {
-            this.stop();
-        }
-    }
-    private void increaseCurrentDuration() {
-        this.currentDurationMillis += STEP_TIME;
+    public void updateTimer(double elapsedTime) {
+          this.timedObject.updateTimer(elapsedTime);
     }
 
-    @Override
-    public void run() {
-        while (true) {
-            if(this.isRunning){
-                this.increaseCurrentDuration();
-                this.onStop();
-            }
-            ThreadUtils.sleep(1);
-        }
+    public double getRemainingTime() {
+        return this.timedObject.getRemainingTime();
     }
-
 }

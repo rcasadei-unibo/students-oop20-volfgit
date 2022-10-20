@@ -6,24 +6,14 @@ import vg.model.mysteryBox.ability.AbilitySpeed;
 
 public class AbilitySpeedImpl extends AbstractAbilityDurable implements AbilitySpeed {
 
-    public AbilitySpeedImpl(EAbility idAbility, int duration) {
+    public AbilitySpeedImpl(EAbility idAbility, double duration) {
         super(idAbility, duration);
     }
 
 
     @Override
     public void startSpeed() {
-        super.onStart(this);
-    }
-
-    @Override
-    public void functionCallOnStart() {
-
-    }
-
-    @Override
-    public void functionCallOnEnd() {
-
+       // super.onStart(this);
     }
 
 

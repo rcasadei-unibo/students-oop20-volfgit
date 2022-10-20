@@ -6,7 +6,7 @@ public class TimedObjectImpl implements TimedObject {
      */
     private double duration;
 
-    protected TimedObjectImpl(final double duration) {
+    public TimedObjectImpl(final double duration) {
         this.duration = duration;
     }
 

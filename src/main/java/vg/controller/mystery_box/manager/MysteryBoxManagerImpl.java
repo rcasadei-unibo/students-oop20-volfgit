@@ -1,9 +1,9 @@
-package vg.controller.mysteryBox.manager;
+package vg.controller.mystery_box.manager;
 
 import com.sun.javafx.geom.Vec2d;
 import vg.controller.gameBoard.GameBoardController;
-import vg.controller.mysteryBox.MysteryBoxController;
-import vg.controller.mysteryBox.StaticFactoryMysteryBox;
+import vg.controller.mystery_box.MysteryBoxController;
+import vg.controller.mystery_box.StaticFactoryMysteryBox;
 import vg.utils.Round.MysteryBoxPositionUtils;
 
 import java.util.ArrayList;

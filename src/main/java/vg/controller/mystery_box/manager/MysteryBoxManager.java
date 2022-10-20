@@ -1,6 +1,5 @@
-package vg.controller.mysteryBox.manager;
+package vg.controller.mystery_box.manager;
 
-import javafx.scene.layout.Pane;
 import vg.controller.gameBoard.GameBoardController;
 
 public interface MysteryBoxManager {
