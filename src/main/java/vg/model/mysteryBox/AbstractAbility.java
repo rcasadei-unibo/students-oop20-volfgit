@@ -41,7 +41,16 @@ public abstract class AbstractAbility extends StaticEntity {
         return this.logicBlink.isBlinking();
     }
 
+    public boolean isShow() {
+        return this.logicBlink.isShow();
+    }
+
     public void setBlinking(boolean isBlinking) {
         this.logicBlink.setBlinking(isBlinking);
     }
+
+    public void updateBlinking(long elapsedTime){
+        this.logicBlink.updateBlinking(elapsedTime);
+    }
+
 }

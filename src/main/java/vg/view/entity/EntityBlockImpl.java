@@ -50,12 +50,19 @@ public class EntityBlockImpl extends Rectangle implements EntityBlock {
 
     @Override
     public void showImageOverlay(){
-        this.rectangleOverlay.setOpacity(1);
+        this.rectangleOverlay.setVisible(true);
     }
 
     @Override
     public void hideImageOverlay(){
-        this.rectangleOverlay.setOpacity(0);
+        this.rectangleOverlay.setVisible(false);
+    }
+
+    @Override
+    public void setShow(boolean show) {
+        this.setVisible(show);
+        boolean isVisible = this.rectangleOverlay.isVisible() && show;
+        this.rectangleOverlay.setVisible(isVisible);
     }
 
 

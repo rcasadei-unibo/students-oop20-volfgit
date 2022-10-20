@@ -6,4 +6,7 @@ public interface LogicBlink {
 
     public void setBlinking(boolean blinking);
 
+    public boolean isShow();
+
+    public void updateBlinking(long elapsedTime);
 }
