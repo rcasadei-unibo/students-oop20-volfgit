@@ -3,8 +3,8 @@ package vg.controller.mystery_box.manager;
 import vg.controller.gameBoard.GameBoardController;
 import vg.controller.mystery_box.MysteryBoxController;
 import vg.controller.mystery_box.StaticFactoryMysteryBox;
+import vg.model.mysteryBox.dataRound.DataRound;
 import vg.utils.Round.MysteryBoxPositionUtils;
-import vg.utils.V2D;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -22,17 +22,17 @@ public class MysteryBoxManagerImpl implements MysteryBoxManager {
 
     @Override
     public void initializeRound(GameBoardController gameBoard) {
-        List<V2D> pos = MysteryBoxPositionUtils.POSITION_ROUND.get(this.round);
+        List<DataRound> dataRoundList = MysteryBoxPositionUtils.POSITION_ROUND.get(this.round);
 
         MysteryBoxController mysteryBoxBoss = StaticFactoryMysteryBox.createRandomMysteryBoxWithWeaponBoss();
-        mysteryBoxBoss.setPosition(pos.get(0));
+        mysteryBoxBoss.setPosition(dataRoundList.get(0).getPosition());
         this.mysteryBoxList.add(mysteryBoxBoss);
         mysteryBoxBoss.setInParentNode(gameBoard.getGameAreaNode());
 
 
-        pos.stream().skip(1).forEach(vec2d -> {
+        dataRoundList.stream().skip(1).forEach(dataRound -> {
             MysteryBoxController mysteryBox = StaticFactoryMysteryBox.createRandomMysteryBox();
-            mysteryBox.setPosition(vec2d);
+            mysteryBox.setPosition(dataRound.getPosition());
             this.mysteryBoxList.add(mysteryBox);
             mysteryBox.setInParentNode(gameBoard.getGameAreaNode());
         });
