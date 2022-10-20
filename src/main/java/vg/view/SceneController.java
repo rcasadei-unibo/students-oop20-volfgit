@@ -8,7 +8,7 @@ import vg.view.utils.KeyAction;
 public interface SceneController {
     /**
      * Based on a {@link KeyAction}, the controller
-     * will create an effect.
+     * will createMysteryBox an effect.
      * @param k {@link KeyAction}
      */
     void keyTapped(KeyAction k);

@@ -28,7 +28,7 @@ public class GameBoard extends Application {
 
         // 1) CREATE view
         AdaptableView<GameBoardController> gameView = ViewFactory.newGameBoardView();
-        // 2) CREATE create logic controller
+        // 2) CREATE createMysteryBox logic controller
         GameController gameController = new GameController(gameView, viewManager);
         // 3) set logic controller in view
         gameView.setIoLogicController(gameController);
@@ -46,7 +46,7 @@ public class GameBoard extends Application {
         stage.setResizable(false);
         stage.show();
 
-        mysteryBoxManager.initializeRound(gameView.getViewController());
+//        mysteryBoxManager.initializeRound(gameView.getViewController());
 
         stage.setOnCloseRequest(event -> {
             gameController.closeGame();
