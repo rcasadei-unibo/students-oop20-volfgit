@@ -18,4 +18,6 @@ public interface MysteryBoxController<T extends AbilityInTheBox> {
     public void setDataRound(DataRound dataRound);
 
     public void updateBlinking(long elapsedTime);
+
+    public void setImage(String mysteryBoss);
 }

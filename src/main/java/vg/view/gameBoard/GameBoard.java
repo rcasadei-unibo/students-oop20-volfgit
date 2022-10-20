@@ -3,8 +3,6 @@ package vg.view.gameBoard;
 import javafx.application.Application;
 import javafx.stage.Stage;
 import vg.controller.GameController;
-import vg.controller.entity.EntityManager;
-import vg.controller.entity.EntityManagerImpl;
 import vg.controller.gameBoard.GameBoardController;
 import vg.view.AdaptableView;
 import vg.view.ViewFactory;

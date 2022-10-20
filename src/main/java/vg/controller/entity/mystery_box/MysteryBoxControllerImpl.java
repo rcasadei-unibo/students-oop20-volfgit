@@ -54,5 +54,10 @@ public class MysteryBoxControllerImpl<T extends AbilityInTheBox> implements Myst
         this.view.setShow(this.model.isShow());
     }
 
+    @Override
+    public void setImage(String mysteryBoss) {
+        this.view.setImage(mysteryBoss);
+    }
+
 
 }
