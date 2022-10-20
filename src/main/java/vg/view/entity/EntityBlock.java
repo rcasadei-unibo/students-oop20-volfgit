@@ -1,19 +1,22 @@
 package vg.view.entity;
 
-import com.sun.javafx.geom.Vec2d;
+import javafx.collections.ObservableList;
+import javafx.geometry.Dimension2D;
 import javafx.scene.Node;
+import vg.utils.V2D;
 
 public interface EntityBlock {
 
+
+    public V2D getPosition();
+
+    public void setPosition(V2D position);
     public void setImage(String pathImage);
-
-    public Node getNode();
-
-    public Vec2d getPosition();
-
-    public void setPosition(Vec2d position);
-
+    public void setInParentNode(ObservableList<Node> gameAreaNode);
+    public void setDimensionImageOverlay(Dimension2D dimension);
     public void setImageOverlay(String pathImage);
+
     public void showImageOverlay();
     public void hideImageOverlay();
+
 }
