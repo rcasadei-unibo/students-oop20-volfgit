@@ -1,6 +1,8 @@
 package vg.utils;
 
+import javafx.geometry.Dimension2D;
 import javafx.stage.Screen;
+import vg.model.MapImpl;
 
 /**
  *  Static class with resolutions in pixels.
@@ -129,5 +131,15 @@ public final class DimensionUtils {
 
     public static void setFullscreen(Boolean fullscreen) {
         DimensionUtils.fullscreen = fullscreen;
+    }
+
+    //TODO sub to getCurrentWidth the difference from the total stage dimension and the game Pane
+    public static Dimension2D getImagePosition(final V2D modelPosition) {
+        return new Dimension2D(getCurrentWidth() * modelPosition.getX() / MapImpl.maxBorderX,
+                getCurrentHeight() * modelPosition.getY() / MapImpl.maxBorderY);
+    }
+    public static Dimension2D getImageSize(final int modelRadius) {
+        return new Dimension2D(getCurrentWidth() * modelRadius / MapImpl.maxBorderX,
+                getCurrentHeight() * modelRadius / MapImpl.maxBorderY);
     }
 }
