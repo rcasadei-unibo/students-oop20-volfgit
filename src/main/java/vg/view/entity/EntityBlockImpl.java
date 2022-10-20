@@ -42,11 +42,6 @@ public class EntityBlockImpl extends Rectangle implements EntityBlock {
         this.rectangleOverlay.setY(position.getY());
     }
 
-    public void setDimensionImageOverlay(Dimension2D dimension) {
-        this.rectangleOverlay.setWidth(dimension.getWidth());
-        this.rectangleOverlay.setHeight(dimension.getHeight());
-    }
-
     @Override
     public void setImageOverlay(String pathImage){
         this.rectangleOverlay.setFill(ImageFXUtils.createImagePatternFrom(pathImage));
