@@ -94,7 +94,6 @@ public class GameController extends Controller<AdaptableView<GameBoardController
                 render();
                 checkGameoverCondition();
                 //checkVictory(); ---> RALLENTA TUTTO
-                this.gameState = GameState.GAMEOVER;
                 waitForNextFrame(curCycleTime);
                 prevCycleTime = curCycleTime;
             }
