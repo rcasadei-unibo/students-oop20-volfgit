@@ -14,6 +14,7 @@ public class EntityBlockImpl extends Rectangle implements EntityBlock {
         super(dimension.getWidth(), dimension.getHeight());
         this.rectangleOverlay = new Rectangle(dimension.getWidth(), dimension.getHeight());
         this.setPosition(position);
+        this.hideImageOverlay();
     }
 
 
