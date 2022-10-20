@@ -138,7 +138,7 @@ public class GameController extends Controller<AdaptableView<GameBoardController
      * Checks game over conditions then if player loose set {@link GameController#gameState} to {@link GameState#GAMEOVER}.
      */
     private void checkGameoverCondition() {
-        this.gameState = GameState.GAMEOVER;
+//        this.gameState = GameState.GAMEOVER;   TODO: Condizione continua di GAMEOVER commento perchè blocca il gameLoop LUANA test
         if (this.stageDomain.getPlayer().getLife() <= 0) {
             this.gameState = GameState.GAMEOVER;
             //TODO: save current score and level then show gameover scree
