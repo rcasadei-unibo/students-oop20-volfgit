@@ -11,7 +11,7 @@ public class ViewFactory {
         return new AdaptableView<>(resName);
     }
 
-    public static View gameoverView(final GameState gameState) {
+    public static View gameOverView() {
         return makeAdaptableView("/layout/GameOver.fxml");
      }
 

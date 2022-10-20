@@ -196,7 +196,7 @@ public class GameController extends Controller implements SceneController, Dialo
     private void gameOver() {
         System.out.println("GAMEOVER");
         //TODO: add viewcontroller tipe in OPtional<View<T>>
-        View gameOverView = ViewFactory.gameoverView(GameState.GAMEOVER);
+        View gameOverView = ViewFactory.gameOverView();
         this.showView(gameOverView);
     }
 

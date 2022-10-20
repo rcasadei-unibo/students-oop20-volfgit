@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.geometry.Insets?>
 <?import javafx.scene.layout.BorderPane?>
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
@@ -14,12 +15,30 @@
                   <Font name="Copperplate" size="36.0" />
                </font>
             </Text>
-            <Text fill="WHITE" strokeType="OUTSIDE" strokeWidth="0.0" text="Press ENTER to back home" textAlignment="CENTER">
+            <Text fill="WHITE" strokeType="OUTSIDE" strokeWidth="0.0" text="Score" textAlignment="CENTER">
                <font>
-                  <Font name="Copperplate" size="18.0" />
+                  <Font name="Copperplate" size="23.0" />
+               </font>
+               <VBox.margin>
+                  <Insets top="30.0" />
+               </VBox.margin>
+            </Text>
+            <Text fx:id="score" fill="#ffc800" strokeType="OUTSIDE" strokeWidth="0.0" text="0" textAlignment="CENTER">
+               <font>
+                  <Font name="Copperplate" size="33.0" />
                </font>
             </Text>
          </children>
       </VBox>
    </center>
+   <bottom>
+      <Text fill="WHITE" strokeType="OUTSIDE" strokeWidth="0.0" text="Press ENTER to back home" textAlignment="CENTER" BorderPane.alignment="CENTER">
+         <font>
+            <Font name="Copperplate" size="18.0" />
+         </font>
+         <BorderPane.margin>
+            <Insets bottom="30.0" />
+         </BorderPane.margin>
+      </Text>
+   </bottom>
 </BorderPane>

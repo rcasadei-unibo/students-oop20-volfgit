@@ -16,15 +16,21 @@ public class NextLevelController extends Controller<NextLevelView> {
         //this.getViewManager().
         new Thread(() -> {
             while (waitingTime > 0) {
+                try {
+                    Thread.sleep(1000);
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
                 this.waitingTime--;
             }
         }).start();
     }
 
-
     @Override
     public void keyTapped(final KeyAction k) {
-
+        if (k == KeyAction.ENTER) {
+            this.waitingTime = 0;
+        }
     }
 
     @Override
