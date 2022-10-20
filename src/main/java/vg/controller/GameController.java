@@ -17,6 +17,7 @@ import vg.view.menu.confirmMenu.ConfirmOption;
 import vg.view.menu.confirmMenu.ConfirmView;
 import vg.view.menu.confirmMenu.DialogConfirmController;
 import vg.view.menu.confirmMenu.DialogAnswerObserver;
+import vg.view.transition.TransitionViewController;
 import vg.view.utils.CountdownView;
 import vg.view.utils.KeyAction;
 import java.io.IOException;
@@ -85,6 +86,7 @@ public class GameController extends Controller<AdaptableView<GameBoardController
                 render();
                 checkGameoverCondition();
                 //checkVictory(); ---> RALLENTA TUTTO
+                this.gameState = GameState.GAMEOVER;
                 waitForNextFrame(curCycleTime);
                 prevCycleTime = curCycleTime;
             }
@@ -128,7 +130,6 @@ public class GameController extends Controller<AdaptableView<GameBoardController
      * Checks game over conditions then if player loose set {@link GameController#gameState} to {@link GameState#GAMEOVER}.
      */
     private void checkGameoverCondition() {
-        this.gameState = GameState.GAMEOVER;
         if (this.stageDomain.getPlayer().getLife() <= 0) {
             this.gameState = GameState.GAMEOVER;
             //TODO: save current score and level then show gameover scree
@@ -159,14 +160,13 @@ public class GameController extends Controller<AdaptableView<GameBoardController
      * {@link DialogAnswerObserver} and resume or go home depending on response.
      */
     public void closeGame() {
-        this.gameState = GameState.QUITTING;
         ConfirmView confirmView = ConfirmView.newConfirmDialogView();
         DialogConfirmController dialogConfirmController =
                 new DialogConfirmController(confirmView, this.getViewManager(), this);
         confirmView.setIoLogicController(dialogConfirmController);
         //launch confirmation dialog
-        this.getViewManager().addScene(confirmView);
         //the response is communicated through method notifyDialogAnswer
+        this.getViewManager().addScene(confirmView);
     }
 
     /**
@@ -190,39 +190,51 @@ public class GameController extends Controller<AdaptableView<GameBoardController
     }
 
     /**
-     * Show game-over view.
+     * Show game-over view for {@link GameController#WAITING_TIME} then back to the previous screen.
      */
     private void gameOver() {
-        System.out.println("GAMEOVER");
-        //TODO: add viewcontroller tipe in OPtional<View<T>>
+        //System.out.println("GAMEOVER");
         CountdownView<GameOverViewController> gameOverView = ViewFactory.gameOverView();
         gameOverView.setIoLogicController(this);
+        gameOverView.getViewController().setScore(this.stageDomain.getCurrentScore());
         showTimedView(gameOverView, WAITING_TIME);
     }
 
     /**
-     *  Show victory view then load next level domain.
+     *  Show victory screen then load next level domain and when are elapsed 3 second is called
+     *  {@link GameController#resumeGame()}.
      */
     private void victory() {
-        System.out.println("Player WIN: go to next level");
-        //TODO: show screen for 5 sec then pass to new level
-        //this.showView();
+        System.out.println("VICTORY");
         this.stageDomain.createNextLevel();
-        //showTimedView(gameOverView, WAITING_TIME);
+        CountdownView<TransitionViewController> transView = ViewFactory.transitionView();
+        transView.setIoLogicController(this);
+        transView.getViewController().setLevel(this.stageDomain.getLv());
+        transView.getViewController().setScore(this.stageDomain.getCurrentScore());
+        showTimedView(transView, 3);
+        resumeGame();
     }
 
+    /**
+     * Show for an amount of time a view then remove it.
+     *
+     * @param view View to be temporary showed that implements {@link CountdownView}
+     * @param duration amount of time to show the view
+     */
     private void showTimedView(final CountdownView view, final int duration) {
         this.showView(view);
-        new Thread(() -> {
             int i = duration;
             while (i > 0) {
                 i--;
                 final int r = i;
                 Platform.runLater(() -> view.setCountdown(r));
-                ThreadUtils.sleep(1000);
+                try {
+                    Thread.sleep(1000);
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
             }
             Platform.runLater(() -> getViewManager().popScene());
-        }).start();
     }
 
     /**

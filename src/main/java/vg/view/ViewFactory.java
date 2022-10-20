@@ -3,6 +3,7 @@ package vg.view;
 import vg.controller.gameBoard.GameBoardController;
 import vg.view.gameOver.GameOverView;
 import vg.view.gameOver.GameOverViewController;
+import vg.view.transition.TransitionView;
 import vg.view.utils.CountdownView;
 
 public class ViewFactory {
@@ -25,5 +26,9 @@ public class ViewFactory {
 
     public static View<ViewController> pauseView() {
         return makeAdaptableView("/layout/PauseView.fxml");
+    }
+
+    public static TransitionView transitionView() {
+        return new TransitionView();
     }
 }
