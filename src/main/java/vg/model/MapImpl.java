@@ -2,8 +2,6 @@ package vg.model;
 
 import vg.model.entity.ShapedEntity;
 import vg.model.entity.dynamicEntity.player.Tail;
-import vg.model.score.Score;
-import vg.model.score.ScoreImpl;
 import vg.model.entity.Entity;
 import vg.model.entity.dynamicEntity.DynamicEntity;
 import vg.model.entity.dynamicEntity.bullet.Bolt;
@@ -57,12 +55,13 @@ public class MapImpl implements Map<V2D>, Serializable {
     /**
      * Default max X coordinate.
      */
-    public static final int maxBorderX = 200;
+    public static final int MAXBORDERX = 200;
     /**
      * Default max Y coordinate.
      */
-    public static final int maxBorderY = 150;
-    private final Score score;
+    public static final int MAXBORDERY = 150;
+
+    private double getOccupiedPercentage;
 
     /**
      * Constructor for MapImpl.
@@ -80,7 +79,7 @@ public class MapImpl implements Map<V2D>, Serializable {
         this.staticEntitySet = staticEntitySet;
         this.dynamicEntitySet = dynamicEntitySet;
         this.border = border;
-        this.score = new ScoreImpl();
+        this.getOccupiedPercentage = 0;
     }
 
     /**
@@ -88,8 +87,11 @@ public class MapImpl implements Map<V2D>, Serializable {
      */
     @Override
     public double getOccupiedPercentage() {
+        return this.getOccupiedPercentage;
+    }
+    private void updateOccupiedPercentage() {
         //approximate and slow, to upgrade
-        return ((double) IntStream.rangeClosed(0, maxBorderX).boxed().flatMap(e -> IntStream.rangeClosed(0, maxBorderY).boxed().flatMap(e2 -> Stream.of(new V2D(e, e2)))).filter(e -> !isInBorders(e)).count()) / (maxBorderX * maxBorderY);
+        this.getOccupiedPercentage = ((double) IntStream.rangeClosed(0, MAXBORDERX).boxed().flatMap(e -> IntStream.rangeClosed(0, MAXBORDERY).boxed().flatMap(e2 -> Stream.of(new V2D(e, e2)))).filter(e -> !isInBorders(e)).count()) / (MAXBORDERX * MAXBORDERY);
     }
     /**
      * {@inheritDoc}
@@ -224,7 +226,7 @@ public class MapImpl implements Map<V2D>, Serializable {
     /**
      * Creates the new border using the {@link vg.model.entity.dynamicEntity.player.Tail} of the
      * {@link Player} and the position ({@link V2D}) of the {@link Boss}. This method will not update
-     * the borders, it is called internally by {@link #updateBorders(Set)}. A side note: the {@link Set}
+     * the borders, it is called internally by {@link #updateBorders(List)}. A side note: the {@link Set}
      * can be extracted by {@link Tail#getCoordinates()}.
      * @param tail a set of {@link V2D}.
      * @param boss the {@link Boss} of the map.
@@ -334,7 +336,7 @@ public class MapImpl implements Map<V2D>, Serializable {
             return false;
         }
         List<Integer> segments = new ArrayList<>();
-        var t = IntStream.rangeClosed(1, this.maxBorderX)
+        var t = IntStream.rangeClosed(1, MAXBORDERX)
                 .filter(e -> getBorders().contains(new V2D(e, pos.getY())) != getBorders().contains(new V2D(e - 1, pos.getY())))
                 .peek(segments::add).filter(e -> pos.getX() < e).findFirst();
          Collections.reverse(segments);
@@ -347,7 +349,7 @@ public class MapImpl implements Map<V2D>, Serializable {
     }
     public double isInBorderAxis(final int yPos) {
         List<Integer> segments = new ArrayList<>();
-        IntStream.rangeClosed(1, this.maxBorderX)
+        IntStream.rangeClosed(1, MapImpl.MAXBORDERX)
                 .filter(e -> getBorders().contains(new V2D(e, yPos)) != getBorders().contains(new V2D(e - 1, yPos)))
                 .peek(segments::add);
 
@@ -361,7 +363,7 @@ public class MapImpl implements Map<V2D>, Serializable {
     private boolean isInBorders(final V2D pos, final Set<V2D> borders) {
 
         List<Integer> segments = new ArrayList<>();
-        var t = IntStream.rangeClosed(1, MapImpl.maxBorderX)
+        var t = IntStream.rangeClosed(1, MapImpl.MAXBORDERX)
                 .filter(e -> borders.contains(new V2D(e, pos.getY())) != borders.contains(new V2D(e - 1, pos.getY())))
                 .peek(segments::add).filter(e -> pos.getX() < e).findFirst();
         //Collections.reverse(segments);
