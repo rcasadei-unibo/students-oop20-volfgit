@@ -1,8 +1,8 @@
-package vg.controller.mystery_box.manager;
+package vg.controller.entity.mystery_box.manager;
 
 import vg.controller.gameBoard.GameBoardController;
-import vg.controller.mystery_box.MysteryBoxController;
-import vg.controller.mystery_box.StaticFactoryMysteryBox;
+import vg.controller.entity.mystery_box.MysteryBoxController;
+import vg.controller.entity.mystery_box.StaticFactoryMysteryBox;
 import vg.model.mysteryBox.dataRound.DataRound;
 import vg.utils.Round.MysteryBoxPositionUtils;
 
@@ -46,5 +46,10 @@ public class MysteryBoxManagerImpl implements MysteryBoxManager {
     @Override
     public void increaseRound() {
         this.round++;
+    }
+
+    @Override
+    public void updateBlinkingMysteryBox(long elapsedTime) {
+        System.out.println("updateBlinkingMysteryBox " + elapsedTime);
     }
 }

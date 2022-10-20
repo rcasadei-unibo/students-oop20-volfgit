@@ -96,7 +96,7 @@ public class GameBoardViewControllerImpl extends ViewController implements GameB
 
     @Override
     public void updateBossPosition(final V2D bossPos) {
-        this.boss.setPosition(bossPos);
+//        this.boss.setPosition(bossPos);
     }
 
     @Override
