@@ -1,28 +1,27 @@
 package vg.view.player;
 
-import com.sun.javafx.geom.Vec2d;
 import javafx.geometry.Dimension2D;
-import javafx.scene.Node;
+import vg.utils.V2D;
 import vg.utils.path.PathImagePlayer;
-import vg.view.entity.EntityBlock;
 import vg.view.entity.EntityBlockImpl;
-import vg.view.entity.StaticFactoryEntityBlock;
 
 
 public class PlayerViewControllerImpl extends EntityBlockImpl implements PlayerViewController {
-
+    private static final Dimension2D SIZE_PLAYER = new Dimension2D(40, 40);
+    private static final V2D INIT_POSITION_PLAYER = new V2D(0, 0);
     public PlayerViewControllerImpl() {
-        super(40, 40);
+        super(INIT_POSITION_PLAYER, SIZE_PLAYER);
         this.setImage(PathImagePlayer.PLAYER);
+        this.setImageOverlay(PathImagePlayer.SHIELD);
     }
 
     @Override
     public void showShield() {
-        //this.setImage();
+        this.showImageOverlay();
     }
 
     @Override
     public void hideShield() {
-        this.setImage(PathImagePlayer.PLAYER);
+        this.hideImageOverlay();
     }
 }
