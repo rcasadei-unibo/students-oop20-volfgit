@@ -1,13 +1,11 @@
 package vg.view.entity;
 
-import com.sun.javafx.geom.Vec2d;
 import javafx.geometry.Dimension2D;
 import javafx.scene.Node;
-import javafx.scene.shape.Rectangle;
 import javafx.scene.image.Image;
 import javafx.scene.paint.ImagePattern;
+import javafx.scene.shape.Rectangle;
 import vg.utils.V2D;
-import vg.utils.path.PathImageMysteryBox;
 
 public class EntityBlockImpl extends Rectangle implements EntityBlock {
     private final Rectangle rectangleOverlay;
@@ -31,8 +29,8 @@ public class EntityBlockImpl extends Rectangle implements EntityBlock {
     }
 
     @Override
-    public Vec2d getPosition() {
-        return new Vec2d(this.getX(), this.getY());
+    public V2D getPosition() {
+        return new V2D(this.getX(), this.getY());
     }
 
     @Override

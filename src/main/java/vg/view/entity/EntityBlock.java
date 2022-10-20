@@ -10,7 +10,7 @@ public interface EntityBlock {
 
     public Node getNode();
 
-    public Vec2d getPosition();
+    public V2D getPosition();
 
     public void setPosition(V2D position);
 
