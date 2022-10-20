@@ -47,4 +47,17 @@ public class MysteryBoxControllerImpl<T extends AbilityInTheBox> implements Myst
         this.setPosition(dataRound.getPosition());
         this.setBlinking(dataRound.isBlinking());
     }
+
+    @Override
+    public void updateBlinking(long elapsedTime) {
+        this.model.updateBlinking(elapsedTime);
+        this.view.setShow(this.model.isShow());
+    }
+
+    @Override
+    public void setImage(String mysteryBoss) {
+        this.view.setImage(mysteryBoss);
+    }
+
+
 }

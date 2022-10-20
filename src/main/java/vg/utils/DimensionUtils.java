@@ -1,6 +1,8 @@
 package vg.utils;
 
+import javafx.geometry.Dimension2D;
 import javafx.stage.Screen;
+import vg.model.MapImpl;
 
 /**
  *  Static class with resolutions in pixels.
@@ -87,10 +89,10 @@ public final class DimensionUtils {
             currentWidth = WIDTH_HD;
         }
     }
-
-    /**
+    /*
      * Getters and setters.
      */
+
     public static int getDefaultWidth() {
         return DEFAULT_WIDTH;
     }
@@ -103,7 +105,7 @@ public final class DimensionUtils {
         return currentWidth;
     }
 
-    public static void setCurrentWidth(double currentWidth) {
+    public static void setCurrentWidth(final double currentWidth) {
         DimensionUtils.currentWidth = currentWidth;
     }
 
@@ -111,7 +113,7 @@ public final class DimensionUtils {
         return currentHeight;
     }
 
-    public static void setCurrentHeight(double currentHeight) {
+    public static void setCurrentHeight(final double currentHeight) {
         DimensionUtils.currentHeight = currentHeight;
     }
 
@@ -119,7 +121,7 @@ public final class DimensionUtils {
         return currentScale;
     }
 
-    public static void setCurrentScale(double currentScale) {
+    public static void setCurrentScale(final double currentScale) {
         DimensionUtils.currentScale = currentScale;
     }
 
@@ -127,7 +129,17 @@ public final class DimensionUtils {
         return fullscreen;
     }
 
-    public static void setFullscreen(Boolean fullscreen) {
+    public static void setFullscreen(final Boolean fullscreen) {
         DimensionUtils.fullscreen = fullscreen;
+    }
+
+    //TODO sub to getCurrentWidth the difference from the total stage dimension and the game Pane
+    public static Dimension2D getImagePosition(final V2D modelPosition) {
+        return new Dimension2D(getCurrentWidth() * modelPosition.getX() / MapImpl.MAXBORDERX,
+                getCurrentHeight() * modelPosition.getY() / MapImpl.MAXBORDERY);
+    }
+    public static Dimension2D getImageSize(final int modelRadius) {
+        return new Dimension2D(getCurrentWidth() * modelRadius / MapImpl.MAXBORDERX,
+                getCurrentHeight() * modelRadius / MapImpl.MAXBORDERY);
     }
 }

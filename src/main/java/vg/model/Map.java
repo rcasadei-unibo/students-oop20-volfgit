@@ -7,6 +7,7 @@ import vg.model.entity.dynamicEntity.player.Player;
 import vg.model.entity.staticEntity.StaticEntity;
 import vg.utils.V2D;
 
+import java.util.List;
 import java.util.Set;
 
 /**
@@ -40,7 +41,7 @@ public interface Map<T> {
      * or something that checks if the player's tail is actually completed.
      * @param tail the player tail that will become part of the new border
      */
-    void updateBorders(Set<T> tail);
+    void updateBorders(List<T> tail);
 
     /**
      * Returns the player.

@@ -2,7 +2,11 @@ package vg.view.gameBoard;
 
 import javafx.application.Application;
 import javafx.stage.Stage;
+<<<<<<< HEAD
 import vg.controller.GameControllerImpl;
+=======
+import vg.controller.GameController;
+>>>>>>> d376d4e940b468ed93af3ee1bca6f2a51105dddc
 import vg.controller.gameBoard.GameBoardController;
 import vg.model.StageImpl;
 import vg.utils.V2D;

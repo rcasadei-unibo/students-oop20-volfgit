@@ -2,8 +2,6 @@ package vg.model;
 
 import vg.model.entity.ShapedEntity;
 import vg.model.entity.dynamicEntity.player.Tail;
-import vg.model.score.Score;
-import vg.model.score.ScoreImpl;
 import vg.model.entity.Entity;
 import vg.model.entity.dynamicEntity.DynamicEntity;
 import vg.model.entity.dynamicEntity.bullet.Bolt;
@@ -57,12 +55,13 @@ public class MapImpl implements Map<V2D>, Serializable {
     /**
      * Default max X coordinate.
      */
-    private static final int maxBorderX = 200;
+    public static final int MAXBORDERX = 200;
     /**
      * Default max Y coordinate.
      */
-    private static final int maxBorderY = 150;
-    private final Score score;
+    public static final int MAXBORDERY = 150;
+
+    private double getOccupiedPercentage;
 
     /**
      * Constructor for MapImpl.
@@ -80,7 +79,7 @@ public class MapImpl implements Map<V2D>, Serializable {
         this.staticEntitySet = staticEntitySet;
         this.dynamicEntitySet = dynamicEntitySet;
         this.border = border;
-        this.score = new ScoreImpl();
+        this.getOccupiedPercentage = 0;
     }
 
     /**
@@ -88,8 +87,11 @@ public class MapImpl implements Map<V2D>, Serializable {
      */
     @Override
     public double getOccupiedPercentage() {
+        return this.getOccupiedPercentage;
+    }
+    private void updateOccupiedPercentage() {
         //approximate and slow, to upgrade
-        return ((double) IntStream.rangeClosed(0, maxBorderX).boxed().flatMap(e -> IntStream.rangeClosed(0, maxBorderY).boxed().flatMap(e2 -> Stream.of(new V2D(e, e2)))).filter(e -> !isInBorders(e)).count()) / (maxBorderX * maxBorderY);
+        this.getOccupiedPercentage = ((double) IntStream.rangeClosed(0, MAXBORDERX).boxed().flatMap(e -> IntStream.rangeClosed(0, MAXBORDERY).boxed().flatMap(e2 -> Stream.of(new V2D(e, e2)))).filter(e -> !isInBorders(e)).count()) / (MAXBORDERX * MAXBORDERY);
     }
     /**
      * {@inheritDoc}
@@ -102,7 +104,7 @@ public class MapImpl implements Map<V2D>, Serializable {
      * {@inheritDoc}
      */
     @Override
-    public void updateBorders(final Set<V2D> tail) {
+    public void updateBorders(final List<V2D> tail) {
         //internal check if the tail is actually completed
         //and the borders can be updated from it
         if (!isTailCompleted()) {
@@ -233,12 +235,13 @@ public class MapImpl implements Map<V2D>, Serializable {
     /**
      * Creates the new border using the {@link vg.model.entity.dynamicEntity.player.Tail} of the
      * {@link Player} and the position ({@link V2D}) of the {@link Boss}. This method will not update
-     * the borders, it is called internally by {@link #updateBorders(Set)}. A side note: the {@link Set}
+     * the borders, it is called internally by {@link #updateBorders(List)}. A side note: the {@link Set}
      * can be extracted by {@link Tail#getCoordinates()}.
      * @param tail a set of {@link V2D}.
      * @param boss the {@link Boss} of the map.
      * @return {@link #getBorders()}
      */
+<<<<<<< HEAD
     private Set<V2D> createNewBorder(final Collection<V2D> tail, final V2D boss) {
         List<V2D> t = new LinkedList<>();
         //TODO: getLastCOordinate could Optional<V2D>
@@ -273,6 +276,65 @@ public class MapImpl implements Map<V2D>, Serializable {
             }
         /*}
         return Set.of();*/
+=======
+    private Set<V2D> createNewBorder(final List<V2D> tail, final V2D boss) {
+        List<V2D> t0 = new LinkedList<>(getPlayer().getTail().getCoordinates());
+        List<V2D> t1 = new LinkedList<>(getPlayer().getTail().getCoordinates());
+        var adjBorderPoint = this.getBorders().stream().filter(e -> e.isAdj(getPlayer().getTail().getCoordinates().get(0))).collect(Collectors.toList());
+
+        if (adjBorderPoint.size() != 2) {
+           throw new IllegalStateException("Tail initial point has not exactly 2 adj points" + adjBorderPoint);
+        }
+        if (!t0.get(t0.size() - 1).isAdj(adjBorderPoint.get(0))) {
+            Collections.reverse(t0);
+        }
+        if (!t1.get(t1.size() - 1).isAdj(adjBorderPoint.get(1))) {
+            Collections.reverse(t1);
+        }
+        try {
+            while (!t0.get(t0.size() - 1).equals(getPlayer().getTail().getLastCoordinate())) {
+                t0.add(this.getBorders().stream().filter(e -> !t0.contains(e) && e.isAdj(t0.get(t0.size() - 1))).findFirst().orElseThrow());
+            }
+        } catch (NoSuchElementException e0) {
+            if (!t0.get(0).isAdj(t0.get(t0.size() - 1))) {
+                throw new IllegalStateException(player.getTail().getCoordinates().get(0) + "-----" + adjBorderPoint + "The list of points is not closed; t0: " + t0);
+            }
+        }
+        try {
+            t1.add(adjBorderPoint.get(1));
+            while (!t1.get(t1.size() - 1).equals(getPlayer().getTail().getLastCoordinate())) {
+                t1.add(this.getBorders().stream().filter(e -> !t1.contains(e) && e.isAdj(t1.get(t1.size() - 1))).findFirst().orElseThrow());
+            }
+        } catch (NoSuchElementException e1) {
+            if (!t1.get(0).isAdj(t1.get(t1.size() - 1))) {
+                throw new IllegalStateException("The list of points is not closed; t1: " + t1);
+            }
+        }
+
+/*
+        var indInit = t.indexOf(player.getTail().getLastCoordinate());
+        var indHalf = t.indexOf(player.getTail().getCoordinates().get(0));
+        if (indInit > indHalf) {
+            var tmp = indHalf;
+            indHalf = indInit;
+            indInit = tmp;
+        }
+        var t1 = Stream.concat(t.subList(indInit, indHalf).stream(), tail.stream()).collect(Collectors.toSet());
+        var t2 = Stream.concat(t.subList(indHalf, t.size()).stream(), tail.stream()).collect(Collectors.toSet());*/
+        if (isInBorders(boss, Set.copyOf(t1))) {
+            if (isInBorders(boss, Set.copyOf(t0))) {
+                System.out.println("errore il boss è in entrambi i bordi");
+                //TODO uncomment this (just for testing the print above)!! throw new IllegalStateException("errore il boss è in entrambi i bordi");
+            }
+            return Set.copyOf(t1);
+        } else if (isInBorders(boss, Set.copyOf(t0))) {
+            return Set.copyOf(t0);
+        } else {
+            System.out.println("Failed to create a new border (Boss too big?)");
+            //TODO uncomment this, just for testing the print above!! throw new IllegalStateException("Failed to create a new border (Boss too big?)");
+            return null;
+        }
+>>>>>>> d376d4e940b468ed93af3ee1bca6f2a51105dddc
     }
     /**
      * Method to check if a point will be closed by the border
@@ -320,7 +382,7 @@ public class MapImpl implements Map<V2D>, Serializable {
             return false;
         }
         List<Integer> segments = new ArrayList<>();
-        var t = IntStream.rangeClosed(1, this.maxBorderX)
+        var t = IntStream.rangeClosed(1, MAXBORDERX)
                 .filter(e -> getBorders().contains(new V2D(e, pos.getY())) != getBorders().contains(new V2D(e - 1, pos.getY())))
                 .peek(segments::add).filter(e -> pos.getX() < e).findFirst();
          Collections.reverse(segments);
@@ -331,15 +393,35 @@ public class MapImpl implements Map<V2D>, Serializable {
             return false;
         }
     }
-    private boolean isInBorders(final V2D pos, final Set<V2D> borders) {
+    public double isInBorderAxis(final int yPos) {
         List<Integer> segments = new ArrayList<>();
-        var t = IntStream.rangeClosed(1, this.maxBorderX)
+        IntStream.rangeClosed(1, MapImpl.MAXBORDERX)
+                .filter(e -> getBorders().contains(new V2D(e, yPos)) != getBorders().contains(new V2D(e - 1, yPos)))
+                .peek(segments::add);
+
+
+        if (!segments.isEmpty()) {
+            return 1;
+        } else {
+            return 0;
+        }
+    }
+    private boolean isInBorders(final V2D pos, final Set<V2D> borders) {
+
+        List<Integer> segments = new ArrayList<>();
+        var t = IntStream.rangeClosed(1, MapImpl.MAXBORDERX)
                 .filter(e -> borders.contains(new V2D(e, pos.getY())) != borders.contains(new V2D(e - 1, pos.getY())))
                 .peek(segments::add).filter(e -> pos.getX() < e).findFirst();
-
-        Collections.reverse(segments);
+        //Collections.reverse(segments);
         if (t.isPresent()) {
-            return segments.indexOf(t.getAsInt()) % 2 == 0;
+            var s = new ArrayList<Integer>();
+            s.add(segments.get(0));
+            for (int i = 1; i < segments.size(); i++) {
+                if (segments.get(i) - 1 != s.get(s.size() - 1)) {
+                    s.add(segments.get(i));
+                }
+            }
+            return s.indexOf(t.getAsInt()) % 2 == 1;
         } else {
             return false;
         }

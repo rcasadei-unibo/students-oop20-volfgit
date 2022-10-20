@@ -18,4 +18,5 @@ public interface EntityBlock {
     public void showImageOverlay();
     public void hideImageOverlay();
 
+    public void setShow(boolean show);
 }

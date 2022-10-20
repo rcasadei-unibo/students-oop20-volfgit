@@ -24,7 +24,7 @@ import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
 
-public class GameBoardViewControllerImpl extends ViewController implements GameBoardController {
+public class GameBoardControllerImpl extends ViewController implements GameBoardController {
 
     @FXML
     private BorderPane borderPane;

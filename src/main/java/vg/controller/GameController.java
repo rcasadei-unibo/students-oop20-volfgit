@@ -5,6 +5,6 @@ public interface GameController {
     /**
      * Run game enginge.
      */
-    void launchGameSession();
 
+    void launchGameSession();
 }

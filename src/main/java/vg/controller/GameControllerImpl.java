@@ -85,7 +85,7 @@ public class GameControllerImpl extends Controller<AdaptableView<GameBoardContro
                 updateGameDomain(elapsedTime);
                 render();
                 checkGameoverCondition();
-                //checkVictory(); ---> RALLENTA TUTTO
+                //checkVictory(); //---> RALLENTA TUTTO
                 waitForNextFrame(curCycleTime);
                 prevCycleTime = curCycleTime;
             }
@@ -124,6 +124,9 @@ public class GameControllerImpl extends Controller<AdaptableView<GameBoardContro
         this.entityManager.updateBlinkingMysteryBox(elapsedTime);
         //this.stageDomain.doCycle();
         this.stageDomain.getPlayer().move();
+        if (!this.stageDomain.getMap().isPlayerOnBorders()) {
+            this.stageDomain.getPlayer().getTail().addPoint(this.stageDomain.getPlayer().getPosition());
+        }
     }
 
     /**

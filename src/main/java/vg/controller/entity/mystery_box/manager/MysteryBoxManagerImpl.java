@@ -50,6 +50,6 @@ public class MysteryBoxManagerImpl implements MysteryBoxManager {
 
     @Override
     public void updateBlinkingMysteryBox(long elapsedTime) {
-        System.out.println("updateBlinkingMysteryBox " + elapsedTime);
+        this.mysteryBoxList.forEach(mysteryBox -> mysteryBox.updateBlinking(elapsedTime));
     }
 }

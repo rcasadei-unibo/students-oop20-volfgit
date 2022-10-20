@@ -14,4 +14,7 @@ public interface AbilityInTheBox {
 
     public void setPosition(V2D position);
 
+    public void updateBlinking(long elapsedTime);
+
+    public boolean isShow();
 }

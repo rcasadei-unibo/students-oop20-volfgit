@@ -16,4 +16,8 @@ public interface MysteryBoxController<T extends AbilityInTheBox> {
     public void setInParentNode(ObservableList<Node> gameAreaNode);
 
     public void setDataRound(DataRound dataRound);
+
+    public void updateBlinking(long elapsedTime);
+
+    public void setImage(String mysteryBoss);
 }

@@ -10,6 +10,7 @@ import vg.model.mysteryBox.factory.StaticFactoryMosquitoesAbility;
 import vg.model.mysteryBox.factory.StaticFactoryScoreAbility;
 import vg.model.mysteryBox.factory.StaticFactorySpeedAbility;
 import vg.model.mysteryBox.factory.StaticFactoryWeaponAbility;
+import vg.utils.path.PathImageMysteryBox;
 import vg.view.entity.StaticFactoryEntityBlock;
 
 import java.util.Random;
@@ -35,21 +36,23 @@ public class StaticFactoryMysteryBox {
 
     public static MysteryBoxController createRandomMysteryBoxWithWeaponBoss() {
         int rnd = new Random().nextInt(6);
+        MysteryBoxController mysteryBoxController = null;
         switch (rnd) {
             case 0:
-                return createFreezeTime();
+                mysteryBoxController = createFreezeTime();
             case 1:
-                return createKillMosquitoes();
+                mysteryBoxController = createKillMosquitoes();
             case 2:
-                return createScore();
+                mysteryBoxController = createScore();
             case 3:
-                return createSpeed();
+                mysteryBoxController = createSpeed();
             case 4:
-                return createWeaponForMosquitoes();
+                mysteryBoxController = createWeaponForMosquitoes();
             case 5:
-                return createWeaponForBoss();
+                mysteryBoxController = createWeaponForBoss();
         }
-        return null;
+        mysteryBoxController.setImage(PathImageMysteryBox.MYSTERY_BOSS);
+        return mysteryBoxController;
     }
 
     public static MysteryBoxController<AbilityFreezeTime> createFreezeTime() {
