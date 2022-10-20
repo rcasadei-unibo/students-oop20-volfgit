@@ -241,42 +241,6 @@ public class MapImpl implements Map<V2D>, Serializable {
      * @param boss the {@link Boss} of the map.
      * @return {@link #getBorders()}
      */
-<<<<<<< HEAD
-    private Set<V2D> createNewBorder(final Collection<V2D> tail, final V2D boss) {
-        List<V2D> t = new LinkedList<>();
-        //TODO: getLastCOordinate could Optional<V2D>
-        //if (!player.getTail().getCoordinates().isEmpty()) {
-            t.add(player.getTail().getLastCoordinate()/*.get()*/);
-            try {
-                while (true) {
-                    t.add(this.getBorders().stream().filter(e -> !t.contains(e) && e.isAdj(t.get(t.size() - 1))).findFirst().orElseThrow());
-                }
-
-            } catch (NoSuchElementException e) {
-                if (!t.get(0).isAdj(t.get(t.size() - 1))) {
-                    throw new IllegalStateException("The list of points is not closed; first: " + t.get(0) + " last: " + t.get(t.size() - 1));
-                }
-            }
-
-            var indInit = t.indexOf(player.getTail().getLastCoordinate()/*.get()*/);
-            var indHalf = t.indexOf(player.getTail().getCoordinates().get(0));
-            if (indInit > indHalf) {
-                var tmp = indHalf;
-                indHalf = indInit;
-                indInit = tmp;
-            }
-            var t1 = Stream.concat(t.subList(indInit, indHalf).stream(), tail.stream()).collect(Collectors.toSet());
-            var t2 = Stream.concat(t.subList(indHalf, t.size()).stream(), tail.stream()).collect(Collectors.toSet());
-            if (isInBorders(boss, t1)) {
-                return t1;
-            } else if (isInBorders(boss, t2)) {
-                return t2;
-            } else {
-                throw new IllegalStateException("Failed to create a new border (Boss too big?)");
-            }
-        /*}
-        return Set.of();*/
-=======
     private Set<V2D> createNewBorder(final List<V2D> tail, final V2D boss) {
         List<V2D> t0 = new LinkedList<>(getPlayer().getTail().getCoordinates());
         List<V2D> t1 = new LinkedList<>(getPlayer().getTail().getCoordinates());
@@ -334,7 +298,6 @@ public class MapImpl implements Map<V2D>, Serializable {
             //TODO uncomment this, just for testing the print above!! throw new IllegalStateException("Failed to create a new border (Boss too big?)");
             return null;
         }
->>>>>>> d376d4e940b468ed93af3ee1bca6f2a51105dddc
     }
     /**
      * Method to check if a point will be closed by the border
