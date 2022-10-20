@@ -1,5 +1,6 @@
 package vg.controller.gameBoard;
 
+import javafx.application.Platform;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.geometry.Dimension2D;
@@ -8,15 +9,20 @@ import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.Pane;
+import javafx.scene.shape.Circle;
 import vg.model.entity.dynamicEntity.DynamicEntity;
 import vg.utils.V2D;
 import vg.view.ViewController;
 import vg.view.entity.EntityBlock;
+import vg.view.entity.StaticFactoryEntityBlock;
 import vg.view.player.PlayerViewController;
 import vg.view.player.PlayerViewControllerImpl;
 
+import java.util.ArrayList;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
+import java.util.stream.Collectors;
 
 public class GameBoardViewControllerImpl extends ViewController implements GameBoardController {
 
@@ -43,6 +49,7 @@ public class GameBoardViewControllerImpl extends ViewController implements GameB
     public Button life6;
 
     private PlayerViewController player;
+    private List<Node> tail;
     private EntityBlock boss;
     private Set<Node> mosquitoesNode;
 
@@ -70,7 +77,7 @@ public class GameBoardViewControllerImpl extends ViewController implements GameB
     }
 
     @Override
-    public void initMapView(final V2D initPlayerPos, final V2D initBossPos, final Set<DynamicEntity> mosquitoes) {
+    public void initMapView() {
         //Set player in view map
         this.player = new PlayerViewControllerImpl();
         this.player.setInParentNode(this.getGameAreaNode());
@@ -79,8 +86,7 @@ public class GameBoardViewControllerImpl extends ViewController implements GameB
 //        this.addInGameArea(this.boss.getNode());
 
         this.mosquitoesNode = new HashSet<>();
-        updateMosquitoesPosition(mosquitoes);
-
+        this.tail = new ArrayList<>();
     }
 
     @Override
@@ -100,7 +106,23 @@ public class GameBoardViewControllerImpl extends ViewController implements GameB
     }
 
     @Override
-    public void updatePlayerPosition(final V2D position) {
+    public void updatePlayer(V2D position, boolean shieldActive, final List<V2D> tail) {
+        if (shieldActive) {
+            this.player.showShield();
+        } else {
+            this.player.hideShield();
+        }
+
+        new Circle();
         this.player.setPosition(position);
+        System.out.println(tail);
+        Platform.runLater(() -> {
+            tail.stream()
+                    .map(t -> new Circle( t.getX(), t.getY(),4))
+                    .forEach(e -> {
+                        this.gameArea.getChildren().add(e);
+                    });
+        });
+
     }
 }

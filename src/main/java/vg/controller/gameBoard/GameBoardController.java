@@ -7,6 +7,7 @@ import javafx.scene.layout.Pane;
 import vg.model.entity.dynamicEntity.DynamicEntity;
 import vg.utils.V2D;
 
+import java.util.List;
 import java.util.Set;
 
 public interface GameBoardController {
@@ -19,9 +20,9 @@ public interface GameBoardController {
 
     ObservableList<Node> getGameAreaNode();
 
-    void updatePlayerPosition(V2D position);
+    void updatePlayer(V2D position, boolean shieldActive, List<V2D> tail);
 
-    void initMapView(V2D initPlayerPos, V2D initBossPos, Set<DynamicEntity> mosquitoes);
+    void initMapView();
 
     void updateMosquitoesPosition(Set<DynamicEntity> mosquitoes);
 
