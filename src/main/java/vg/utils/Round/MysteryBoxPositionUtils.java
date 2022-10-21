@@ -15,11 +15,11 @@ public class MysteryBoxPositionUtils {
     //Round 1
     private static final List<DataRound> ROUND1 = List.of(
             new DataRoundImpl(new V2D(0.5f, 0.5f), false),
-            new DataRoundImpl(new V2D(0.025f, 0.9f), false),
-            new DataRoundImpl(new V2D(0.325f, 0.9f), true),
-            new DataRoundImpl(new V2D(0.525f, 0.9f), false),
-            new DataRoundImpl(new V2D(0.725f, 0.9f), true),
-            new DataRoundImpl(new V2D(0.925f, 0.9f), false)
+            new DataRoundImpl(new V2D(0.025f, 0.961f), false),
+            new DataRoundImpl(new V2D(0.25f, 0.961f), true),
+            new DataRoundImpl(new V2D(0.5f, 0.961f), false),
+            new DataRoundImpl(new V2D(0.75f, 0.961f), true),
+            new DataRoundImpl(new V2D(0.975f, 0.961f), false)
     );
 
     //Round 2

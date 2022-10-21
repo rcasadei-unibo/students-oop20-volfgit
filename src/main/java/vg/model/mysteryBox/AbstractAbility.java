@@ -20,7 +20,7 @@ public abstract class AbstractAbility extends StaticEntity {
 
 
     public AbstractAbility(EAbility idAbility) {
-        super(INIT_POSITION, (int) (DIMENSION_BOX.getWidth()));
+        super(INIT_POSITION, (int) (DIMENSION_BOX.getWidth() / 2));
         this.pathImage = PathImageMysteryBox.MYSTERY_BOX;
         this.dimension = DIMENSION_BOX;
         this.idAbility = idAbility;
