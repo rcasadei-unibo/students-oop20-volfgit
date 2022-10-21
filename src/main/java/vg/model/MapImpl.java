@@ -445,5 +445,11 @@ public class MapImpl implements Map<V2D>, Serializable {
             return de.getSpeed().mul(x, y);
         }
     }
-
+    public void addTailPointsByPlayerSpeed() {
+        var t = getPlayer().getSpeed().scalarMul(-1);
+        while (!t.equals(new V2D(0, 0))) {
+            getPlayer().getTail().addPoint(getPlayer().getPosition().sum(t));
+            t = t.sum(getPlayer().getDirection().getVector().scalarMul(-1));
+        }
+    }
 }
