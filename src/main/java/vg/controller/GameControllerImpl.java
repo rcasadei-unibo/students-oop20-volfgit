@@ -15,7 +15,7 @@ import vg.view.ViewManager;
 import vg.view.ViewFactory;
 import vg.view.gameOver.GameOverViewController;
 import vg.utils.PromptOption;
-import vg.view.menu.confirmMenu.PromptView;
+import vg.view.menu.prompt.PromptView;
 import vg.controller.prompt.PromptObserver;
 import vg.view.transition.TransitionViewController;
 import vg.view.utils.CountdownView;
@@ -167,6 +167,7 @@ public class GameControllerImpl extends Controller<AdaptableView<GameBoardContro
      * {@link PromptObserver} and resume or go home depending on response.
      */
     public void closeGame() {
+        this.gameState = GameState.QUITTING;
         PromptView promptView = PromptView.newConfirmDialogView();
         PromptController promptController =
                 new PromptController(promptView, this.getViewManager(), this);

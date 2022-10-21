@@ -1,4 +1,4 @@
-package vg.view.menu.confirmMenu;
+package vg.view.menu.prompt;
 
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
