@@ -1,7 +1,7 @@
-package vg.view.leaderBoard;
+package vg.controller;
 
-import vg.controller.Controller;
 import vg.view.ViewManager;
+import vg.view.leaderBoard.LeaderBoardView;
 import vg.view.utils.KeyAction;
 
 public class LeaderBoardController extends Controller<LeaderBoardView> {

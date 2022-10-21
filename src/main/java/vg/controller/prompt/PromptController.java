@@ -2,7 +2,6 @@ package vg.controller.prompt;
 
 import vg.controller.Controller;
 import vg.view.ViewManager;
-import vg.utils.PromptOption;
 import vg.view.menu.prompt.PromptView;
 import vg.view.utils.KeyAction;
 

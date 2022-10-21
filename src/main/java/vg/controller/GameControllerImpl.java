@@ -14,7 +14,7 @@ import vg.view.View;
 import vg.view.ViewManager;
 import vg.view.ViewFactory;
 import vg.view.gameOver.GameOverViewController;
-import vg.utils.PromptOption;
+import vg.controller.prompt.PromptOption;
 import vg.view.menu.prompt.PromptView;
 import vg.controller.prompt.PromptObserver;
 import vg.view.transition.TransitionViewController;

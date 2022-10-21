@@ -1,4 +1,4 @@
-package vg.utils;
+package vg.controller.prompt;
 
 public enum PromptOption {
     /**

@@ -1,7 +1,5 @@
 package vg.controller.prompt;
 
-import vg.utils.PromptOption;
-
 /**
  * Interface to notify controller that implements that interface which was the selection of confirmation dialog launched by controller.
  */
