@@ -300,7 +300,21 @@ public class StageImpl<T> implements Stage<V2D> {
             ((MapImpl) getMap()).addTailPointsByPlayerSpeed();
         }
         if (getMap().isTailCompleted()) {
+            getMap().updateBorders(getPlayer().getTail().getCoordinates());
             getPlayer().getTail().resetTail();
+            //now to capture all the entities
+            getDynamicEntitySet().forEach(e -> {
+                if (((MapImpl) getMap()).isInBorders(e.getPosition())) {
+                    getToDestroySet().add(e);
+                } else {
+                    getBorders().forEach(e2 -> {
+                        if (e.isInShape(e2)) {
+                            map.getAfterCollisionDirection(e);
+                        }
+                    });
+                }
+            });
+            //TODO check for static entities
         }
         moveAll();
         checkAllOutOfBounds();
