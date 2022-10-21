@@ -4,6 +4,7 @@ import javafx.application.Platform;
 import vg.controller.entity.EntityManager;
 import vg.controller.entity.EntityManagerImpl;
 import vg.controller.gameBoard.GameBoardController;
+import vg.controller.prompt.PromptController;
 import vg.model.Stage;
 import vg.model.entity.dynamicEntity.player.Player;
 import vg.utils.*;
@@ -13,10 +14,9 @@ import vg.view.View;
 import vg.view.ViewManager;
 import vg.view.ViewFactory;
 import vg.view.gameOver.GameOverViewController;
-import vg.view.menu.confirmMenu.ConfirmOption;
-import vg.view.menu.confirmMenu.ConfirmView;
-import vg.view.menu.confirmMenu.DialogConfirmController;
-import vg.view.menu.confirmMenu.DialogAnswerObserver;
+import vg.utils.PromptOption;
+import vg.view.menu.prompt.PromptView;
+import vg.controller.prompt.PromptObserver;
 import vg.view.transition.TransitionViewController;
 import vg.view.utils.CountdownView;
 import vg.view.utils.KeyAction;
@@ -27,7 +27,7 @@ import java.util.List;
  * Game Engine class, manager game loop and refresh timing
  * during gameplay.
  * */
-public class GameControllerImpl extends Controller<AdaptableView<GameBoardController>> implements SceneController, DialogAnswerObserver, GameController {
+public class GameControllerImpl extends Controller<AdaptableView<GameBoardController>> implements SceneController, PromptObserver, GameController {
     /**
      * Waiting time of timed screens.
      */
@@ -163,17 +163,18 @@ public class GameControllerImpl extends Controller<AdaptableView<GameBoardContro
 
     /**
      * Put game in pause then show a dialog to ask if user wants stop playing and go back to main menu.
-     * The response is received by the method {{@link #notifyDialogAnswer(ConfirmOption)}} of interface
-     * {@link DialogAnswerObserver} and resume or go home depending on response.
+     * The response is received by the method {{@link #notifyDialogAnswer(PromptOption)}} of interface
+     * {@link PromptObserver} and resume or go home depending on response.
      */
     public void closeGame() {
-        ConfirmView confirmView = ConfirmView.newConfirmDialogView();
-        DialogConfirmController dialogConfirmController =
-                new DialogConfirmController(confirmView, this.getViewManager(), this);
-        confirmView.setIoLogicController(dialogConfirmController);
+        this.gameState = GameState.QUITTING;
+        PromptView promptView = PromptView.newConfirmDialogView();
+        PromptController promptController =
+                new PromptController(promptView, this.getViewManager(), this);
+        promptView.setIoLogicController(promptController);
         //launch confirmation dialog
         //the response is communicated through method notifyDialogAnswer
-        this.getViewManager().addScene(confirmView);
+        this.getViewManager().addScene(promptView);
     }
 
     /**
@@ -286,10 +287,10 @@ public class GameControllerImpl extends Controller<AdaptableView<GameBoardContro
     }
 
     @Override
-    public void notifyDialogAnswer(final ConfirmOption answer) {
-        if (answer == ConfirmOption.CONFIRM) {
+    public void notifyDialogAnswer(final PromptOption answer) {
+        if (answer == PromptOption.CONFIRM) {
             this.getViewManager().backHome();
-        } else if (answer == ConfirmOption.DENY) {
+        } else if (answer == PromptOption.DENY) {
             this.getViewManager().popScene();
             resumeGame();
         }

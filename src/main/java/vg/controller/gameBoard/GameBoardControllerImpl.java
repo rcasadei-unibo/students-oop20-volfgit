@@ -78,6 +78,8 @@ public class GameBoardControllerImpl extends ViewController implements GameBoard
 
     @Override
     public void initMapView() {
+        //TODO: rimappare cooridnate entità dominio in coordinate mappate sulle dimensioni del gameArea
+        //o metodo statico qui oppure metodo setposition di entityblock che rimappa oppure soluzione di ale
         //Set player in view map
         this.player = new PlayerViewControllerImpl();
         this.player.setInParentNode(this.getGameAreaNode());
@@ -114,7 +116,9 @@ public class GameBoardControllerImpl extends ViewController implements GameBoard
         }
 
         new Circle();
+
         this.player.setPosition(position);
+
         System.out.println(tail);
         Platform.runLater(() -> {
             tail.stream()

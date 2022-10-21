@@ -1,4 +1,4 @@
-package vg.view.menu.confirmMenu;
+package vg.view.menu.prompt;
 
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
@@ -6,7 +6,7 @@ import javafx.scene.paint.Paint;
 import javafx.scene.text.Text;
 import vg.view.ViewController;
 
-public class ConfirmViewController extends ViewController {
+public class PromptViewController extends ViewController {
     /**
      * Accent color of selected button.
      */
@@ -18,31 +18,31 @@ public class ConfirmViewController extends ViewController {
     static final Paint UNSELECTED_COLOR = Paint.valueOf("#515151");
 
     /**
-     *
+     * Text Title that ask user what to do.
      */
     @FXML
     private Text titleText;
 
     /**
-     *
+     * Text description of what key has to been used.
      */
     @FXML
     private Text hintText;
 
     /**
-     *
+     * Confirmation button.
      */
     @FXML
     private Label confirmBtn;
 
     /**
-     *
+     * Deny button.
      */
     @FXML
     private Label denyBtn;
 
     /**
-     * Apply selection style. Set CONFIRM button with {@link ConfirmViewController#SELECTED_COLOR}
+     * Apply selection style. Set CONFIRM button with {@link PromptViewController#SELECTED_COLOR}
      */
     public void highlightConfirm() {
         this.confirmBtn.setTextFill(SELECTED_COLOR);
@@ -50,7 +50,7 @@ public class ConfirmViewController extends ViewController {
     }
 
     /**
-     * Apply selection style. Set DENY button with {@link ConfirmViewController#SELECTED_COLOR}
+     * Apply selection style. Set DENY button with {@link PromptViewController#SELECTED_COLOR}
      */
     public void highlightDeny() {
         this.confirmBtn.setTextFill(UNSELECTED_COLOR);
