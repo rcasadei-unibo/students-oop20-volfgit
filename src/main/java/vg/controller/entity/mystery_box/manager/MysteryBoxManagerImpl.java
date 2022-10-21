@@ -3,6 +3,7 @@ package vg.controller.entity.mystery_box.manager;
 import vg.controller.gameBoard.GameBoardController;
 import vg.controller.entity.mystery_box.MysteryBoxController;
 import vg.controller.entity.mystery_box.StaticFactoryMysteryBox;
+import vg.model.entity.dynamicEntity.player.Player;
 import vg.model.mysteryBox.dataRound.DataRound;
 import vg.utils.Round.MysteryBoxPositionUtils;
 
@@ -51,5 +52,10 @@ public class MysteryBoxManagerImpl implements MysteryBoxManager {
     @Override
     public void updateBlinkingMysteryBox(long elapsedTime) {
         this.mysteryBoxList.forEach(mysteryBox -> mysteryBox.updateBlinking(elapsedTime));
+    }
+
+    @Override
+    public void checkCollision(Player player) {
+        this.mysteryBoxList.forEach(mysteryBox -> mysteryBox.checkCollision(player));
     }
 }

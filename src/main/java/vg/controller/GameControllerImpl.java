@@ -122,6 +122,7 @@ public class GameControllerImpl extends Controller<AdaptableView<GameBoardContro
     private void updateGameDomain(final long elapsedTime) {
         this.stageDomain.getMap().updateBonusTimer(elapsedTime);
         this.entityManager.updateBlinkingMysteryBox(elapsedTime);
+        this.entityManager.checkCollision(this.stageDomain.getPlayer());
         //this.stageDomain.doCycle();
         this.stageDomain.getPlayer().move();
         if (!this.stageDomain.getMap().isPlayerOnBorders()) {

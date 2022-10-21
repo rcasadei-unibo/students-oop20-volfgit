@@ -119,7 +119,7 @@ public class GameBoardControllerImpl extends ViewController implements GameBoard
 
         this.player.setPosition(position);
 
-        System.out.println(tail);
+//        System.out.println(tail);
         Platform.runLater(() -> {
             tail.stream()
                     .map(t -> new Circle( t.getX(), t.getY(),4))
