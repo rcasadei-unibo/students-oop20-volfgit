@@ -18,25 +18,25 @@ public class ConfirmViewController extends ViewController {
     static final Paint UNSELECTED_COLOR = Paint.valueOf("#515151");
 
     /**
-     *
+     * Text Title that ask user what to do.
      */
     @FXML
     private Text titleText;
 
     /**
-     *
+     * Text description of what key has to been used.
      */
     @FXML
     private Text hintText;
 
     /**
-     *
+     * Confirmation button.
      */
     @FXML
     private Label confirmBtn;
 
     /**
-     *
+     * Deny button.
      */
     @FXML
     private Label denyBtn;
