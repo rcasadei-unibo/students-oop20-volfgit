@@ -5,6 +5,7 @@ import vg.model.score.Score;
 import javax.sound.midi.SysexMessage;
 import java.io.*;
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -13,6 +14,11 @@ public class ScoreManagerImpl implements Serializable, ScoreManager {
      * Name of file where is saved list of scores.
      */
     private static final String LEADERBOARD_FILE = "leaderboard";
+
+    /**
+     * If
+     */
+    static final int NO_LIMIT = 0;
 
     /**
      * List of all score saved.
@@ -75,7 +81,6 @@ public class ScoreManagerImpl implements Serializable, ScoreManager {
     @Override
     public void saveScore(final Score score) {
         this.leaderboard.add(score);
-        System.out.println(this.leaderboard.toString());
     }
 
     /**
@@ -91,8 +96,10 @@ public class ScoreManagerImpl implements Serializable, ScoreManager {
      */
     @Override
     public List<Score> getTopScore(final int limit) {
-        //TODO: implement comaprison of scores in sorted()
-        return this.leaderboard.stream().limit(limit).collect(Collectors.toList());
+        return this.leaderboard.stream()
+                .sorted((s1, s2) -> s2.getScore() - s1.getScore())
+                .limit(limit == NO_LIMIT ? this.leaderboard.size() : limit)
+                .collect(Collectors.toList());
     }
 
     @Override

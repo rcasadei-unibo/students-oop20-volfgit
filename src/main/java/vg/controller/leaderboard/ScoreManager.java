@@ -22,9 +22,9 @@ public interface ScoreManager {
     List<Score> getTop10Score();
 
     /**
-     * Get top score ordered.
-     * @param limit max amount of scores.
-     * @return List with "limit" amount of scores.
+     * Get top score ordered. If you want all score with no limit pass as paameter {@link ScoreManagerImpl#NO_LIMIT}.
+     * @param limit max amount of scores
+     * @return List with "limit" amount of scores
      */
     List<Score> getTopScore(int limit);
 

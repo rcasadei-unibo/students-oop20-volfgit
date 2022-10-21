@@ -26,4 +26,5 @@ public class ScoreImpl implements Score {
     public String getName() {
         return this.name;
     }
+
 }
