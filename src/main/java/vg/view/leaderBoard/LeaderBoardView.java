@@ -13,7 +13,7 @@ public class LeaderBoardView extends AdaptableView<LeaderBoardViewController> {
         super("/layout/LeaderBoard/LeaderBoard.fxml");
     }
 
-    public static Optional<Node> listItem(final int pos, final int score, final int round) {
+    public static Optional<Node> listItem(final int pos, final String name, final int score, final int round) {
         Node item = null;
         FXMLLoader loader = new FXMLLoader(GameBoard.class.getResource("/layout/LeaderBoard/SingleItemList.fxml"));
         try {
@@ -22,7 +22,7 @@ public class LeaderBoardView extends AdaptableView<LeaderBoardViewController> {
             e.printStackTrace();
         }
         SingleItemListController itemListController = loader.getController();
-        itemListController.setValue(pos, score, round);
+        itemListController.setValue(pos, name, score, round);
         return Optional.ofNullable(item);
     }
 }

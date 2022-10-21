@@ -7,22 +7,8 @@ import vg.view.utils.KeyAction;
 
 public class LeaderBoardController extends Controller<LeaderBoardView> {
 
-
-
-    public LeaderBoardController(final LeaderBoardView view, final ViewManager viewManager) {
+    public LeaderBoardController(LeaderBoardView view, ViewManager viewManager) {
         super(view, viewManager);
-        loadData();
-    }
-
-    //TODO: here load from file list of player and theri scores, after load update view
-
-    private void loadData() {
-/*  //TODO: read file then when has finished call gui to show list
-        new Thread(() ->
-        {
-        });
-*/
-        this.getView().getViewController().showList();
     }
 
     @Override
@@ -34,7 +20,6 @@ public class LeaderBoardController extends Controller<LeaderBoardView> {
         if (k == KeyAction.ENTER) {
             this.getView().getViewController().closeBtnPressing();
         }
-
     }
 
     @Override

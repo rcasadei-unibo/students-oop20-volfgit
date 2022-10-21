@@ -40,6 +40,12 @@
                      </font>
                   </Label>
                   <Separator fx:id="sep1" focusTraversable="false" orientation="VERTICAL" prefWidth="60.0" visible="false" />
+                  <Label alignment="CENTER" prefWidth="150.0" text="name" textAlignment="CENTER" textFill="#d02121">
+                     <font>
+                        <Font name="Copperplate" size="27.0" />
+                     </font>
+                  </Label>
+                  <Separator fx:id="sep21" focusTraversable="false" orientation="VERTICAL" prefWidth="50.0" visible="false" />
                   <Label alignment="CENTER" prefWidth="150.0" text="SCORE" textAlignment="CENTER" textFill="#d02121">
                      <font>
                         <Font name="Copperplate" size="27.0" />

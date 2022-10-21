@@ -27,4 +27,9 @@ public interface ScoreManager {
      * @return List with "limit" amount of scores.
      */
     List<Score> getTopScore(int limit);
+
+    /**
+     * Save current list of scores on file.
+     */
+    void saveOnFile();
 }

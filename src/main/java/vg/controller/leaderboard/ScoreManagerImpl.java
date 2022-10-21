@@ -1,6 +1,8 @@
 package vg.controller.leaderboard;
 
 import vg.model.score.Score;
+
+import javax.sound.midi.SysexMessage;
 import java.io.*;
 import java.util.ArrayList;
 import java.util.List;
@@ -25,7 +27,7 @@ public class ScoreManagerImpl implements Serializable, ScoreManager {
      * Static initializer.
      * @return ScoreManager
      */
-    static ScoreManager newScoreManager() {
+    public static ScoreManager newScoreManager() {
         return new ScoreManagerImpl();
     }
 
@@ -73,6 +75,7 @@ public class ScoreManagerImpl implements Serializable, ScoreManager {
     @Override
     public void saveScore(final Score score) {
         this.leaderboard.add(score);
+        System.out.println(this.leaderboard.toString());
     }
 
     /**
@@ -89,6 +92,16 @@ public class ScoreManagerImpl implements Serializable, ScoreManager {
     @Override
     public List<Score> getTopScore(final int limit) {
         //TODO: implement comaprison of scores in sorted()
-        return this.leaderboard.stream().sorted().limit(limit).collect(Collectors.toList());
+        return this.leaderboard.stream().limit(limit).collect(Collectors.toList());
+    }
+
+    @Override
+    public void saveOnFile() {
+        System.out.println("Save on file");
+        try {
+            this.saveCurrentLeaderboard();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 }

@@ -13,10 +13,18 @@ public class SingleItemListController {
     @FXML
     private Label scoreText;
 
-    void setValue(final int pos, final int score, final int round) {
+    @FXML
+    private Label nameText;
+
+    void setValue(final int pos, final String name, final int score, final int round) {
         setPosText(pos);
         setScoreText(score);
         setRoundText(round);
+        setNameText(name);
+    }
+
+    void setNameText(final String name) {
+        this.nameText.setText(name);
     }
 
     void setPosText(final int pos) {

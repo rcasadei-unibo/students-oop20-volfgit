@@ -6,8 +6,10 @@ import javafx.scene.control.Label;
 import javafx.scene.control.Separator;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Paint;
+import vg.model.score.Score;
 import vg.view.ViewController;
 
+import java.util.List;
 import java.util.Optional;
 
 public class LeaderBoardViewController extends ViewController {
@@ -28,11 +30,10 @@ public class LeaderBoardViewController extends ViewController {
         closeBtn.setTextFill(Paint.valueOf("#fff600"));
     }
 
-    public void showList() {
-        //TODO: showList(Data data) refresh list with updated data
-
-        for (int i = 0; i < 20; i++) {
-            Optional<Node> itemRow = LeaderBoardView.listItem(i, i*2, 0);
+    public void showList(final List<Score> scoreList) {
+        for(int i = 1; i < scoreList.size(); i++) {
+            Score score = scoreList.get(i);
+            Optional<Node> itemRow = LeaderBoardView.listItem(i, score.getName(), score.getScore(), score.getRound());
             itemRow.ifPresent(node -> list.getChildren().add(node));
         }
     }
