@@ -9,6 +9,7 @@ import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.Pane;
+import javafx.scene.paint.Paint;
 import javafx.scene.shape.Circle;
 import vg.model.entity.dynamicEntity.DynamicEntity;
 import vg.utils.V2D;
@@ -119,14 +120,12 @@ public class GameBoardControllerImpl extends ViewController implements GameBoard
 
         this.player.setPosition(position);
 
-//        System.out.println(tail);
-        Platform.runLater(() -> {
-            tail.stream()
-                    .map(t -> new Circle( t.getX(), t.getY(),4))
-                    .forEach(e -> {
-                        this.gameArea.getChildren().add(e);
-                    });
-        });
+        tail.stream()
+                .map(t -> new Circle(t.getX(), t.getY(),4))
+                .forEach(e -> {
+                    e.setFill(Paint.valueOf("RED"));
+                    this.gameArea.getChildren().add(e);
+                });
 
     }
 }

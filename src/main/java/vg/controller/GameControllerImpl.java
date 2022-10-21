@@ -14,7 +14,7 @@ import vg.view.View;
 import vg.view.ViewManager;
 import vg.view.ViewFactory;
 import vg.view.gameOver.GameOverViewController;
-import vg.utils.PromptOption;
+import vg.controller.prompt.PromptOption;
 import vg.view.menu.prompt.PromptView;
 import vg.controller.prompt.PromptObserver;
 import vg.view.transition.TransitionViewController;
@@ -51,7 +51,6 @@ public class GameControllerImpl extends Controller<AdaptableView<GameBoardContro
 
     private final EntityManager entityManager;
 
-    //TODO: pass satgeDomain as parameter
     public GameControllerImpl(final AdaptableView<GameBoardController> view, final Stage<V2D> stageDomain, final ViewManager viewManager) {
         super(view, viewManager);
         this.entityManager = new EntityManagerImpl();
@@ -150,16 +149,18 @@ public class GameControllerImpl extends Controller<AdaptableView<GameBoardContro
     }
 
     /**
-     * Update view of game.
+     * Update view of game on JavaFX thread in order to no block contrller thread.
      */
     private void render() {
-        getGameViewController()
-                .updatePlayer(this.stageDomain.getPlayer().getPosition(),
-                        this.stageDomain.getMap().isPlayerOnBorders(),
-                        this.stageDomain.getPlayer().getTail().getCoordinates());
+        Platform.runLater(() -> {
+            getGameViewController()
+                    .updatePlayer(this.stageDomain.getPlayer().getPosition(),
+                            this.stageDomain.getMap().isPlayerOnBorders(),
+                            this.stageDomain.getPlayer().getTail().getCoordinates());
 
-        getGameViewController().updateBossPosition(this.stageDomain.getBoss().getPosition());
-        //TODO: fare anche con i mosquitoes
+            getGameViewController().updateBossPosition(this.stageDomain.getBoss().getPosition());
+            //TODO: fare anche con i mosquitoes
+        });
     }
 
     /**
