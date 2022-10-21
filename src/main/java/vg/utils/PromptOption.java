@@ -1,6 +1,6 @@
-package vg.view.menu.confirmMenu;
+package vg.utils;
 
-public enum ConfirmOption {
+public enum PromptOption {
     /**
      * Confirm action showed by dialog screen.
      */

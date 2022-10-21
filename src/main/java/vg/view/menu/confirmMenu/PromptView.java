@@ -6,9 +6,9 @@ import vg.view.AdaptableView;
  * A specific adaptable view to show a dialog with two selection: confirm and deny.
  * {@inheritDoc}
  */
-public class ConfirmView extends AdaptableView<ConfirmViewController> {
+public class PromptView extends AdaptableView<PromptViewController> {
 
-    private ConfirmView(final String resName) {
+    private PromptView(final String resName) {
         super(resName);
     }
 
@@ -16,8 +16,8 @@ public class ConfirmView extends AdaptableView<ConfirmViewController> {
      * Load confirmation view and its view controller from file.
      * @return new confirmation dialog screen.
      */
-    public static ConfirmView newConfirmDialogView() {
-        return new ConfirmView("/layout/ConfirmationView.fxml");
+    public static PromptView newConfirmDialogView() {
+        return new PromptView("/layout/ConfirmationView.fxml");
     }
 
     /**
@@ -38,7 +38,7 @@ public class ConfirmView extends AdaptableView<ConfirmViewController> {
 
     /**
      * Highlight confirm button as selected.
-     * This method delegates to {@link ConfirmViewController#highlightConfirm()}
+     * This method delegates to {@link PromptViewController#highlightConfirm()}
      */
     public void selectConfirm() {
         this.getViewController().highlightConfirm();
@@ -46,7 +46,7 @@ public class ConfirmView extends AdaptableView<ConfirmViewController> {
 
     /**
      * Highlight deny button as selected.
-     *  * This method delegates to {@link ConfirmViewController#highlightDeny()}}
+     *  * This method delegates to {@link PromptViewController#highlightDeny()}}
      */
     public void selectDeny() {
         this.getViewController().highlightDeny();

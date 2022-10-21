@@ -1,28 +1,30 @@
-package vg.view.menu.confirmMenu;
+package vg.controller.prompt;
 
 import vg.controller.Controller;
 import vg.view.ViewManager;
+import vg.utils.PromptOption;
+import vg.view.menu.confirmMenu.PromptView;
 import vg.view.utils.KeyAction;
 
 /**
- * Controller of {@link ConfirmView} that manage buttons selection and communicate it to parent controller that launched the ConfirmView.
+ * Controller of {@link PromptView} that manage buttons selection and communicate it to parent controller that launched the PromptView.
  */
-public class DialogConfirmController extends Controller<ConfirmView> {
+public class PromptController extends Controller<PromptView> {
     /**
-     * Prompt selection. By default is {@link ConfirmOption#DENY}
+     * Prompt selection. By default is {@link PromptOption#DENY}
      */
-    private ConfirmOption selection = ConfirmOption.DENY;
+    private PromptOption selection = PromptOption.DENY;
 
     /**
      * CLass that need and wants to know the selection when is confirmed.
      */
-    private final DialogAnswerObserver dialogAnswerObserver;
+    private final PromptObserver promptObserver;
 
-    public DialogConfirmController(final ConfirmView view,
-                                   final ViewManager viewManager,
-                                   final DialogAnswerObserver dialogAnswerObserver) {
+    public PromptController(final PromptView view,
+                            final ViewManager viewManager,
+                            final PromptObserver promptObserver) {
         super(view, viewManager);
-        this.dialogAnswerObserver = dialogAnswerObserver;
+        this.promptObserver = promptObserver;
         this.selectDeny();
     }
 
@@ -30,7 +32,7 @@ public class DialogConfirmController extends Controller<ConfirmView> {
      * Communicate selection o to observer.
      */
     private void applySelection() {
-        this.dialogAnswerObserver.notifyDialogAnswer(this.selection);
+        this.promptObserver.notifyDialogAnswer(this.selection);
     }
 
     /**
@@ -38,7 +40,7 @@ public class DialogConfirmController extends Controller<ConfirmView> {
      */
     private void selectConfirm() {
         this.getView().selectConfirm();
-        this.selection = ConfirmOption.CONFIRM;
+        this.selection = PromptOption.CONFIRM;
     }
 
     /**
@@ -46,7 +48,7 @@ public class DialogConfirmController extends Controller<ConfirmView> {
      */
     private void selectDeny() {
         this.getView().selectDeny();
-        this.selection = ConfirmOption.DENY;
+        this.selection = PromptOption.DENY;
     }
 
     /**
@@ -65,7 +67,7 @@ public class DialogConfirmController extends Controller<ConfirmView> {
     }
 
     /**
-     * Redirect action to {@link DialogConfirmController#keyTapped(KeyAction)}.
+     * Redirect action to {@link PromptController#keyTapped(KeyAction)}.
      * @param k {@link KeyAction}
      */
     @Override

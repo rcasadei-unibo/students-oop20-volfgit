@@ -5,7 +5,7 @@ import javafx.scene.Scene;
 import vg.controller.Controller;
 import vg.utils.DimensionUtils;
 import vg.utils.NoSuchControllerException;
-import vg.view.menu.confirmMenu.ConfirmView;
+import vg.view.gameBoard.GameBoard;
 import java.io.IOException;
 import java.util.Optional;
 
@@ -23,7 +23,7 @@ public class AdaptableView<T> implements View<T> {
     private final T viewController;
 
     protected AdaptableView(final String resName) {
-        FXMLLoader loader = new FXMLLoader(ConfirmView.class.getResource(resName));
+        FXMLLoader loader = new FXMLLoader(GameBoard.class.getResource(resName));
         try {
             this.scene = new Scene(loader.load(),
                     DimensionUtils.DEFAULT_WIDTH,

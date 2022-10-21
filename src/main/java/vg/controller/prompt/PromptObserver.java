@@ -1,12 +1,14 @@
-package vg.view.menu.confirmMenu;
+package vg.controller.prompt;
+
+import vg.utils.PromptOption;
 
 /**
  * Interface to notify controller that implements that interface which was the selection of confirmation dialog launched by controller.
  */
-public interface DialogAnswerObserver {
+public interface PromptObserver {
     /**
      * In base of prompt's answer reflects on logic or domain.
-     * @param answer {@link ConfirmOption} value of selected button.
+     * @param answer {@link PromptOption} value of selected button.
      */
-    void notifyDialogAnswer(ConfirmOption answer);
+    void notifyDialogAnswer(PromptOption answer);
 }
