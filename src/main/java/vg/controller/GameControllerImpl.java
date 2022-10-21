@@ -55,7 +55,6 @@ public class GameControllerImpl extends Controller<AdaptableView<GameBoardContro
     public GameControllerImpl(final AdaptableView<GameBoardController> view, final Stage<V2D> stageDomain, final ViewManager viewManager) {
         super(view, viewManager);
         this.entityManager = new EntityManagerImpl();
-        this.entityManager.initializeRound(view.getViewController());
         this.movementQueue = new ArrayList<>();
         this.stageDomain = stageDomain;
         this.getGameViewController().initMapView();
@@ -68,6 +67,7 @@ public class GameControllerImpl extends Controller<AdaptableView<GameBoardContro
     @Override
     public void launchGameSession() {
         this.gameState = GameState.PLAYING;
+        this.entityManager.initializeRound(super.getView().getViewController());
         this.gameLoop();
     }
 
@@ -122,6 +122,7 @@ public class GameControllerImpl extends Controller<AdaptableView<GameBoardContro
     private void updateGameDomain(final long elapsedTime) {
         this.stageDomain.getMap().updateBonusTimer(elapsedTime);
         this.entityManager.updateBlinkingMysteryBox(elapsedTime);
+        this.entityManager.checkCollision(this.stageDomain.getMap().getPlayer());
         //this.stageDomain.doCycle();
         this.stageDomain.getPlayer().move();
         if (!this.stageDomain.getMap().isPlayerOnBorders()) {

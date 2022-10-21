@@ -2,6 +2,8 @@ package vg.controller.entity.mystery_box;
 
 import javafx.collections.ObservableList;
 import javafx.scene.Node;
+import vg.model.entity.ShapedEntity;
+import vg.model.entity.dynamicEntity.player.Player;
 import vg.model.mysteryBox.AbilityInTheBox;
 import vg.model.mysteryBox.dataRound.DataRound;
 import vg.utils.V2D;
@@ -57,6 +59,15 @@ public class MysteryBoxControllerImpl<T extends AbilityInTheBox> implements Myst
     @Override
     public void setImage(String mysteryBoss) {
         this.view.setImage(mysteryBoss);
+    }
+
+    @Override
+    public void checkCollision(Player player) {
+        if(!this.model.isShow()) return;
+        boolean collision = player.isInShape((ShapedEntity) this.model);
+
+        if(collision) System.out.println("Collision: ");
+
     }
 
 

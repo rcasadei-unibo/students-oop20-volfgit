@@ -1,9 +1,10 @@
 package vg.model.mysteryBox;
 
 import javafx.geometry.Dimension2D;
+import vg.model.entity.Entity;
 import vg.utils.V2D;
 
-public interface AbilityInTheBox {
+public interface AbilityInTheBox extends Entity {
     public EAbility getIdAbility();
     public V2D getPosition();
     public Dimension2D getDimension();
@@ -14,7 +15,9 @@ public interface AbilityInTheBox {
 
     public void setPosition(V2D position);
 
+
     public void updateBlinking(long elapsedTime);
 
     public boolean isShow();
+
 }

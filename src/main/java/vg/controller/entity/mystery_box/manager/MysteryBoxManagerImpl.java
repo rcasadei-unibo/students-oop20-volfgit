@@ -3,6 +3,7 @@ package vg.controller.entity.mystery_box.manager;
 import vg.controller.gameBoard.GameBoardController;
 import vg.controller.entity.mystery_box.MysteryBoxController;
 import vg.controller.entity.mystery_box.StaticFactoryMysteryBox;
+import vg.model.entity.dynamicEntity.player.Player;
 import vg.model.mysteryBox.dataRound.DataRound;
 import vg.utils.Round.MysteryBoxPositionUtils;
 
@@ -22,7 +23,7 @@ public class MysteryBoxManagerImpl implements MysteryBoxManager {
 
     @Override
     public void initializeRound(GameBoardController gameBoard) {
-        List<DataRound> dataRoundList = MysteryBoxPositionUtils.POSITION_ROUND.get(this.round);
+        List<DataRound> dataRoundList = MysteryBoxPositionUtils.getDataRoundList(this.round, gameBoard.getGameAreaDimension());
 
         MysteryBoxController mysteryBoxBoss = StaticFactoryMysteryBox.createRandomMysteryBoxWithWeaponBoss();
         mysteryBoxBoss.setDataRound(dataRoundList.get(0));
@@ -51,5 +52,10 @@ public class MysteryBoxManagerImpl implements MysteryBoxManager {
     @Override
     public void updateBlinkingMysteryBox(long elapsedTime) {
         this.mysteryBoxList.forEach(mysteryBox -> mysteryBox.updateBlinking(elapsedTime));
+    }
+
+    @Override
+    public void checkCollision(Player player) {
+        this.mysteryBoxList.forEach(mysteryBox -> mysteryBox.checkCollision(player));
     }
 }
