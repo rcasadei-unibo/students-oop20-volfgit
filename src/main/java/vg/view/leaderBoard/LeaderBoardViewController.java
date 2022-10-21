@@ -3,7 +3,6 @@ package vg.view.leaderBoard;
 import javafx.fxml.FXML;
 import javafx.scene.Node;
 import javafx.scene.control.Label;
-import javafx.scene.control.Separator;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Paint;
 import vg.model.score.Score;
@@ -19,12 +18,6 @@ public class LeaderBoardViewController extends ViewController {
 
     @FXML
     private VBox list;
-
-    @FXML
-    private Separator sep1;
-
-    @FXML
-    private Separator sep2;
 
     public void closeBtnPressing() {
         closeBtn.setTextFill(Paint.valueOf("#fff600"));
