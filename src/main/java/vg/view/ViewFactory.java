@@ -1,9 +1,12 @@
 package vg.view;
 
+import vg.controller.GameOverController;
 import vg.controller.gameBoard.GameBoardController;
+import vg.controller.leaderboard.LeaderBoardController;
 import vg.view.gameOver.GameOverView;
-import vg.view.gameOver.GameOverViewController;
+import vg.view.leaderBoard.LeaderBoardView;
 import vg.view.transition.TransitionView;
+import vg.view.transition.TransitionViewController;
 import vg.view.utils.CountdownView;
 
 public class ViewFactory {
@@ -12,8 +15,12 @@ public class ViewFactory {
         return new AdaptableView<T>(resName);
     }
 
-    public static CountdownView<GameOverViewController> gameOverView() {
-        return new GameOverView();
+    public static GameOverView gameOverView(final int score, final int round, final ViewManager viewManager) {
+        GameOverView gameOverView = new GameOverView();
+        GameOverController gameOverController = new GameOverController(gameOverView, viewManager);
+        gameOverView.setIoLogicController(gameOverController);
+        gameOverController.set(score, round);
+        return gameOverView;
      }
 
     /**
@@ -28,7 +35,17 @@ public class ViewFactory {
         return makeAdaptableView("/layout/PauseView.fxml");
     }
 
-    public static TransitionView transitionView() {
-        return new TransitionView();
+    public static CountdownView<TransitionViewController> transitionView(final int score, final int round, final ViewManager viewManager) {
+        CountdownView<TransitionViewController> transitionView =  new TransitionView();
+        transitionView.getViewController().setLevel(round);
+        transitionView.getViewController().setScore(score);
+        return transitionView;
+    }
+
+    public static LeaderBoardView leaderBoardView(final ViewManager viewManager) {
+        LeaderBoardView leaderBoardView = new LeaderBoardView();
+        LeaderBoardController leaderBoardController = new LeaderBoardController(leaderBoardView, viewManager);
+        leaderBoardView.setIoLogicController(leaderBoardController);
+        return leaderBoardView;
     }
 }

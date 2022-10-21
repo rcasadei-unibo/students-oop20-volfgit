@@ -13,6 +13,7 @@ import vg.view.SceneController;
 import vg.view.View;
 import vg.view.ViewManager;
 import vg.view.ViewFactory;
+import vg.view.gameOver.GameOverView;
 import vg.view.gameOver.GameOverViewController;
 import vg.controller.prompt.PromptOption;
 import vg.view.menu.prompt.PromptView;
@@ -199,14 +200,15 @@ public class GameControllerImpl extends Controller<AdaptableView<GameBoardContro
     }
 
     /**
-     * Show game-over view for {@link GameControllerImpl#WAITING_TIME} then back to the previous screen.
+     * Show game-over view then back to home.
      */
     private void gameOver() {
-        //System.out.println("GAMEOVER");
-        CountdownView<GameOverViewController> gameOverView = ViewFactory.gameOverView();
-        gameOverView.setIoLogicController(this);
-        gameOverView.getViewController().setScore(this.stageDomain.getCurrentScore());
-        showTimedView(gameOverView, WAITING_TIME);
+        System.out.println("GAMEOVER");
+        GameOverView gameOverView = ViewFactory.gameOverView(
+                stageDomain.getCurrentScore(),
+                stageDomain.getLv(),
+                this.getViewManager());
+        this.showView(gameOverView);
     }
 
     /**
@@ -216,11 +218,12 @@ public class GameControllerImpl extends Controller<AdaptableView<GameBoardContro
     private void victory() {
         System.out.println("VICTORY");
         this.stageDomain.createNextLevel();
-        CountdownView<TransitionViewController> transView = ViewFactory.transitionView();
+        CountdownView<TransitionViewController> transView = ViewFactory.transitionView(
+                stageDomain.getCurrentScore(),
+                stageDomain.getLv(),
+                this.getViewManager());
         transView.setIoLogicController(this);
-        transView.getViewController().setLevel(this.stageDomain.getLv());
-        transView.getViewController().setScore(this.stageDomain.getCurrentScore());
-        showTimedView(transView, 3);
+        showTimedView(transView, 4);
         resumeGame();
     }
 
