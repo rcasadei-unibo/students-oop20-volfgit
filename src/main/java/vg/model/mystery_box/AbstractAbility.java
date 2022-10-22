@@ -1,10 +1,9 @@
-package vg.model.mysteryBox;
+package vg.model.mystery_box;
 
 import javafx.geometry.Dimension2D;
-import javafx.scene.shape.Line;
 import vg.model.entity.staticEntity.StaticEntity;
-import vg.model.mysteryBox.logicBlink.LogicBlink;
-import vg.model.mysteryBox.logicBlink.LogicBlinkImpl;
+import vg.model.mystery_box.logicBlink.LogicBlink;
+import vg.model.mystery_box.logicBlink.LogicBlinkImpl;
 import vg.utils.V2D;
 import vg.utils.path.PathImageMysteryBox;
 

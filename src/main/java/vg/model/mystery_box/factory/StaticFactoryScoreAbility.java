@@ -1,9 +1,8 @@
-package vg.model.mysteryBox.factory;
+package vg.model.mystery_box.factory;
 
-import vg.model.mysteryBox.EAbility;
-import vg.model.mysteryBox.concrete.AbilityScoreImpl;
-import vg.model.mysteryBox.ability.AbilityScore;
-import vg.utils.path.PathImageMysteryBox;
+import vg.model.mystery_box.EAbility;
+import vg.model.mystery_box.concrete.AbilityScoreImpl;
+import vg.model.mystery_box.ability.AbilityScore;
 
 public class StaticFactoryScoreAbility {
 

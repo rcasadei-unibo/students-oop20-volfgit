@@ -1,9 +1,8 @@
-package vg.model.mysteryBox.factory;
+package vg.model.mystery_box.factory;
 
-import vg.model.mysteryBox.EAbility;
-import vg.model.mysteryBox.concrete.AbilitySpeedImpl;
-import vg.model.mysteryBox.ability.AbilitySpeed;
-import vg.utils.path.PathImageMysteryBox;
+import vg.model.mystery_box.EAbility;
+import vg.model.mystery_box.concrete.AbilitySpeedImpl;
+import vg.model.mystery_box.ability.AbilitySpeed;
 
 public class StaticFactorySpeedAbility {
 

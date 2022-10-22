@@ -1,4 +1,4 @@
-package vg.model.mysteryBox;
+package vg.model.mystery_box;
 
 
 import vg.model.timedObject.TimedObject;

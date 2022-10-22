@@ -1,9 +1,8 @@
-package vg.model.mysteryBox.ability;
+package vg.model.mystery_box.ability;
 
-import vg.model.mysteryBox.AbilityInTheBox;
+import vg.model.mystery_box.AbilityInTheBox;
 import vg.model.timedObject.TimedObject;
 
 public interface AbilitySpeed extends AbilityInTheBox, TimedObject {
-    public void startSpeed();
-
+    void startSpeed();
 }

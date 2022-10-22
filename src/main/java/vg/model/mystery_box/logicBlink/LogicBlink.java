@@ -1,4 +1,4 @@
-package vg.model.mysteryBox.logicBlink;
+package vg.model.mystery_box.logicBlink;
 
 public interface LogicBlink {
 

@@ -1,9 +1,8 @@
-package vg.model.mysteryBox.factory;
+package vg.model.mystery_box.factory;
 
-import vg.model.mysteryBox.EAbility;
-import vg.model.mysteryBox.concrete.AbilityFreezeTimeImpl;
-import vg.model.mysteryBox.ability.AbilityFreezeTime;
-import vg.utils.path.PathImageMysteryBox;
+import vg.model.mystery_box.EAbility;
+import vg.model.mystery_box.concrete.AbilityFreezeTimeImpl;
+import vg.model.mystery_box.ability.AbilityFreezeTime;
 
 public class StaticFactoryFreezeTimeAbility {
 

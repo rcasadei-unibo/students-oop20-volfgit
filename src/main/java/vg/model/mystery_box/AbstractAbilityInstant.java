@@ -1,4 +1,4 @@
-package vg.model.mysteryBox;
+package vg.model.mystery_box;
 
 public abstract class AbstractAbilityInstant extends AbstractAbility {
 
