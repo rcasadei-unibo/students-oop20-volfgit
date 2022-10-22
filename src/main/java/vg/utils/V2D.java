@@ -74,6 +74,26 @@ public class V2D implements Serializable {
         return absVector.mul(xSign, ySign);
     }
 
+    /**
+     * Return a new vector where if coordinates are sign of vector coordinate. So they can assume only values 1, -1 and 0.
+     * @return Vector which coordinate can only assume values 1, -1, 0
+     */
+    public final V2D getSingVector() {
+        int x = getValueSign(this.getX());
+        int y = getValueSign(this.getY());
+        return new V2D(x, y);
+    }
+
+    private int getValueSign(final double value) {
+        if (value > 0) {
+            return 1;
+        } else if (value < 0) {
+            return -1;
+        } else {
+            return  0;
+        }
+    }
+
     public final double getX() {
         return x;
     }
