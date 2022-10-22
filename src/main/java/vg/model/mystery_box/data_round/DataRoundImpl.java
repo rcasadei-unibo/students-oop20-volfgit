@@ -1,4 +1,4 @@
-package vg.model.mystery_box.dataRound;
+package vg.model.mystery_box.data_round;
 
 import vg.utils.V2D;
 

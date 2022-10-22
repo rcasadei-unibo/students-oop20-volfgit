@@ -19,6 +19,10 @@ public class LogicBlinkImpl implements LogicBlink {
         this.currentTime = 0;
     }
 
+    /**
+     * This method is used to verify the blinking.
+     * @return defines if the ability is blinking.
+     */
     @Override
     public boolean isBlinking() {
         return this.isBlinking;
