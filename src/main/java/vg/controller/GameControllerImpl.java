@@ -4,7 +4,6 @@ import javafx.application.Platform;
 import vg.controller.entity.EntityManager;
 import vg.controller.entity.EntityManagerImpl;
 import vg.controller.gameBoard.GameBoardController;
-import vg.controller.prompt.PromptController;
 import vg.model.Stage;
 import vg.model.entity.dynamicEntity.player.Player;
 import vg.utils.*;
@@ -14,7 +13,6 @@ import vg.view.View;
 import vg.view.ViewManager;
 import vg.view.ViewFactory;
 import vg.view.gameOver.GameOverView;
-import vg.view.gameOver.GameOverViewController;
 import vg.controller.prompt.PromptOption;
 import vg.view.menu.prompt.PromptView;
 import vg.controller.prompt.PromptObserver;
@@ -32,7 +30,7 @@ public class GameControllerImpl extends Controller<AdaptableView<GameBoardContro
     /**
      * Waiting time of timed screens.
      */
-    private static final int WAITING_TIME = 5;
+    private static final int SCREEN_DURATION_TIME = 4;
     /**
      * Command queue of new player's movement got from input to be applied.
      */
@@ -152,7 +150,6 @@ public class GameControllerImpl extends Controller<AdaptableView<GameBoardContro
                     .updatePlayer(this.stageDomain.getPlayer().getPosition(),
                             this.stageDomain.getMap().isPlayerOnBorders(),
                             this.stageDomain.getPlayer().getTail().getVertex());
-
             getGameViewController().updateBossPosition(this.stageDomain.getBoss().getPosition());
             //TODO: fare anche con i mosquitoes
         });
@@ -214,7 +211,7 @@ public class GameControllerImpl extends Controller<AdaptableView<GameBoardContro
                 stageDomain.getCurrentScore(),
                 stageDomain.getLv());
         transView.setIoLogicController(this);
-        showTimedView(transView, 4);
+        showTimedView(transView, SCREEN_DURATION_TIME);
         resumeGame();
     }
 

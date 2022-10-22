@@ -11,6 +11,7 @@ import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.Pane;
 import javafx.scene.paint.Paint;
 import javafx.scene.shape.Circle;
+import javafx.scene.shape.Polyline;
 import vg.model.entity.dynamicEntity.DynamicEntity;
 import vg.utils.V2D;
 import vg.view.ViewController;
@@ -19,11 +20,9 @@ import vg.view.entity.StaticFactoryEntityBlock;
 import vg.view.player.PlayerViewController;
 import vg.view.player.PlayerViewControllerImpl;
 
-import java.util.ArrayList;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
+import java.util.*;
 import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 public class GameBoardControllerImpl extends ViewController implements GameBoardController {
 
@@ -50,7 +49,7 @@ public class GameBoardControllerImpl extends ViewController implements GameBoard
     public Button life6;
 
     private PlayerViewController player;
-    private List<Node> tail;
+    private Polyline tailPolyline;
     private EntityBlock boss;
     private Set<Node> mosquitoesNode;
 
@@ -89,7 +88,7 @@ public class GameBoardControllerImpl extends ViewController implements GameBoard
 //        this.addInGameArea(this.boss.getNode());
 
         this.mosquitoesNode = new HashSet<>();
-        this.tail = new ArrayList<>();
+        this.tailPolyline = new Polyline();
     }
 
     @Override
@@ -109,20 +108,34 @@ public class GameBoardControllerImpl extends ViewController implements GameBoard
     }
 
     @Override
-    public void updatePlayer(V2D position, boolean shieldActive, final List<V2D> tail) {
+    public void updatePlayer(V2D position, boolean shieldActive, final List<V2D> tailVec) {
         if (shieldActive) {
             this.player.showShield();
         } else {
             this.player.hideShield();
         }
         this.player.setPosition(position);
-/*
-        tail.stream()
-                .map(t -> new Circle(t.getX(), t.getY(),4))
-                .forEach(e -> {
-                    e.setFill(Paint.valueOf("RED"));
-                    this.gameArea.getChildren().add(e);
-                });
-*/
+
+        this.gameArea.getChildren().remove(this.tailPolyline);
+
+        tailVec.add(position);
+        this.tailPolyline = new Polyline();
+        this.tailPolyline.getPoints().setAll(convertTolistofDouble(tailVec));
+        this.tailPolyline.setStrokeWidth(5);
+        this.tailPolyline.setStroke(Paint.valueOf("#945200"));
+        this.addInGameArea(this.tailPolyline);
+    }
+
+    /**
+     * COnvert List of vectors V2D to a list with alternate x and y.
+     * @param vectors List of vertex vector of player tail
+     * @return List of double
+     */
+    private List<Double> convertTolistofDouble(final List<V2D> vectors) {
+        List<Double> list = vectors.stream()
+                .map(vec -> List.of(vec.getX(), vec.getY()))
+                .flatMap(Collection::stream)
+                .collect(Collectors.toList());
+        return list;
     }
 }
