@@ -14,6 +14,7 @@ import vg.utils.MassTier;
 import vg.utils.V2D;
 
 import java.io.IOException;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
@@ -101,6 +102,7 @@ public class StageImpl<T> implements Stage<V2D> {
         this.lv = 1;
         this.ss = map.getAllStaticEntities();
         this.ds = map.getAllDynamicEntities();
+        this.toDestroy = new HashSet<>();
     }
     /**
      *
@@ -259,14 +261,15 @@ public class StageImpl<T> implements Stage<V2D> {
         if (!((MapImpl) getMap()).isInBorders(getPlayer().getPosition()) && !getBorders().contains(getPlayer().getPosition())) {
 
             var l = getPlayer().getTail().getCoordinates().stream().filter(e -> getBorders().contains(e)).collect(Collectors.toList());
-            if (l.isEmpty()) {
+            if (l.size()<2) {
                 ((DynamicEntity) getPlayer()).setSpeed(getPlayer().getSpeed().scalarMul(-1));
                 getPlayer().move();
                 getPlayer().changeDirection(Direction.NONE);
                 ((DynamicEntity) getPlayer()).setSpeed(getPlayer().getSpeed().scalarMul(-1));
+                getPlayer().getTail().resetTail();
                 return;
-            } else if (l.size() != 2) {
-               throw new RuntimeException("l:" + l + "Error in tail generation : tail is not closed" + getPlayer().getTail().getCoordinates());
+            } else if (l.size() > 2) {
+               throw new RuntimeException("l:" + l + "Error in tail generation : more then 2 intersactions with borders" + getPlayer().getTail().getCoordinates());
             }
             var tail = getPlayer().getTail().getCoordinates();
             var l0 = l.get(0);
@@ -305,7 +308,7 @@ public class StageImpl<T> implements Stage<V2D> {
     @Override
     public void doCycle() {
         getPlayer().move();
-        if (!getMap().isPlayerOnBorders()) {
+        if (!getMap().isPlayerOnBorders() || !getPlayer().getTail().getCoordinates().isEmpty()) {
             ((MapImpl) getMap()).addTailPointsByPlayerSpeed();
         }
         checkAllOutOfBounds();
