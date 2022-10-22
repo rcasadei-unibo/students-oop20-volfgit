@@ -41,7 +41,9 @@ public final class TailImpl implements Tail {
 
     @Override
     public void addPoint(final V2D point) {
-        this.coordinates.add(point);
+        if (!this.coordinates.contains(point)) {
+            this.coordinates.add(point);
+        }
     }
 
     @Override
@@ -68,13 +70,14 @@ public final class TailImpl implements Tail {
     }
 
     private Direction getDirection(final V2D vector) {
-        if (vector.equals(Direction.DOWN.getVector())) {
+        V2D vec = vector.getSingVector();
+        if (vec.equals(Direction.DOWN.getVector())) {
             return Direction.DOWN;
-        } else if (vector.equals(Direction.UP.getVector())) {
+        } else if (vec.equals(Direction.UP.getVector())) {
             return Direction.UP;
-        } else if (vector.equals(Direction.LEFT.getVector())) {
+        } else if (vec.equals(Direction.LEFT.getVector())) {
             return Direction.LEFT;
-        } else if (vector.equals(Direction.RIGHT.getVector())) {
+        } else if (vec.equals(Direction.RIGHT.getVector())) {
             return Direction.RIGHT;
         } else {
             return Direction.NONE;
