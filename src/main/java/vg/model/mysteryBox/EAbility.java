@@ -3,6 +3,7 @@ package vg.model.mysteryBox;
 import vg.utils.path.PathImageMysteryBox;
 
 public enum EAbility {
+
     Score(PathImageMysteryBox.COIN_SCORE),
     FreezeTime(PathImageMysteryBox.COIN_TIME),
     SpeedUp(PathImageMysteryBox.COIN_SPEED),

@@ -2,9 +2,7 @@ package vg.model.mysteryBox;
 
 public abstract class AbstractAbilityInstant extends AbstractAbility {
 
-    public AbstractAbilityInstant(EAbility idAbility) {
+    public AbstractAbilityInstant(final EAbility idAbility) {
         super(idAbility);
     }
-
-
 }

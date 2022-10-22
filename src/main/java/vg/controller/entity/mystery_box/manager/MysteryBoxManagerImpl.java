@@ -22,7 +22,7 @@ public class MysteryBoxManagerImpl implements MysteryBoxManager {
 
 
     @Override
-    public void initializeRound(GameBoardController gameBoard) {
+    public void initializeRound(final GameBoardController gameBoard) {
         List<DataRound> dataRoundList = MysteryBoxPositionUtils.getDataRoundList(this.round, gameBoard.getGameAreaDimension());
 
         MysteryBoxController mysteryBoxBoss = StaticFactoryMysteryBox.createRandomMysteryBoxWithWeaponBoss();
@@ -50,12 +50,12 @@ public class MysteryBoxManagerImpl implements MysteryBoxManager {
     }
 
     @Override
-    public void updateBlinkingMysteryBox(long elapsedTime) {
+    public void updateBlinkingMysteryBox(final long elapsedTime) {
         this.mysteryBoxList.forEach(mysteryBox -> mysteryBox.updateBlinking(elapsedTime));
     }
 
     @Override
-    public void checkCollision(Player player) {
+    public void checkCollision(final Player player) {
         this.mysteryBoxList.forEach(mysteryBox -> mysteryBox.checkCollision(player));
     }
 }

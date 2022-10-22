@@ -10,17 +10,15 @@ import vg.utils.V2D;
 public interface MysteryBoxController<T extends AbilityInTheBox> {
 
     V2D getPosition();
-
     void setPosition(V2D position);
     void setBlinking(boolean blinking);
+    void setInParentNode(ObservableList<Node> gameAreaNode);
 
-    public void setInParentNode(ObservableList<Node> gameAreaNode);
+    void setDataRound(DataRound dataRound);
 
-    public void setDataRound(DataRound dataRound);
+    void updateBlinking(long elapsedTime);
 
-    public void updateBlinking(long elapsedTime);
+    void setImage(String mysteryBoss);
 
-    public void setImage(String mysteryBoss);
-
-    public void checkCollision(Player player);
+    void checkCollision(Player player);
 }
