@@ -2,9 +2,10 @@ package vg.model.mystery_box.logicBlink;
 
 public class LogicBlinkImpl implements LogicBlink {
 
+    private static final int TIME_HIDE = 3000;
+    private static final int TIME_SHOW = 4000;
     private boolean isBlinking;
     private boolean isShow;
-
     private final double timeHide;
     private final double timeShow;
     private double currentTime;
@@ -13,8 +14,8 @@ public class LogicBlinkImpl implements LogicBlink {
     public LogicBlinkImpl() {
         this.isBlinking = false;
         this.isShow = true;
-        this.timeHide = 3000;
-        this.timeShow = 4000;
+        this.timeHide = TIME_HIDE;
+        this.timeShow = TIME_SHOW;
         this.currentTime = 0;
     }
 
@@ -24,7 +25,7 @@ public class LogicBlinkImpl implements LogicBlink {
     }
 
     @Override
-    public void setBlinking(boolean blinking) {
+    public void setBlinking(final boolean blinking) {
         this.isBlinking = blinking;
     }
     @Override
@@ -36,7 +37,7 @@ public class LogicBlinkImpl implements LogicBlink {
         this.currentTime = 0;
     }
     @Override
-    public void updateBlinking(long elapsedTime) {
+    public void updateBlinking(final long elapsedTime) {
         if(!this.isBlinking) {
             return;
         }

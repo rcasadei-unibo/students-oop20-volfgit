@@ -2,11 +2,11 @@ package vg.model.mystery_box.logicBlink;
 
 public interface LogicBlink {
 
-    public boolean isBlinking();
+    boolean isBlinking();
 
-    public void setBlinking(boolean blinking);
+    void setBlinking(boolean blinking);
 
-    public boolean isShow();
+    boolean isShow();
 
-    public void updateBlinking(long elapsedTime);
+    void updateBlinking(long elapsedTime);
 }

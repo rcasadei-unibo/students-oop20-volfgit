@@ -13,7 +13,7 @@ public enum EAbility {
 
     private final String pathReveled;
 
-    private EAbility(String pathReveled) {
+    EAbility(final String pathReveled) {
         this.pathReveled = pathReveled;
     }
 
