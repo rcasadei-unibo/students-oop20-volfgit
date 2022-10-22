@@ -344,17 +344,7 @@ public class MapImpl implements Map<V2D>, Serializable {
         if (getBorders().contains(pos) || pos.getX() < 0) {
             return false;
         }
-        List<Integer> segments = new ArrayList<>();
-        var t = IntStream.rangeClosed(1, MAXBORDERX)
-                .filter(e -> getBorders().contains(new V2D(e, pos.getY())) != getBorders().contains(new V2D(e - 1, pos.getY())))
-                .peek(segments::add).filter(e -> pos.getX() < e).findFirst();
-         Collections.reverse(segments);
-
-        if (t.isPresent()) {
-            return segments.indexOf(t.getAsInt()) % 2 == 0;
-        } else {
-            return false;
-        }
+        return isInBorders(pos,getBorders());
     }
     public double isInBorderAxis(final int yPos) {
         List<Integer> segments = new ArrayList<>();
@@ -445,5 +435,11 @@ public class MapImpl implements Map<V2D>, Serializable {
             return de.getSpeed().mul(x, y);
         }
     }
-
+    public void addTailPointsByPlayerSpeed() {
+        var t = getPlayer().getSpeed().scalarMul(-1);
+        while (!t.equals(new V2D(0, 0))) {
+            getPlayer().getTail().addPoint(getPlayer().getPosition().sum(t));
+            t = t.sum(getPlayer().getDirection().getVector().scalarMul(-1));
+        }
+    }
 }

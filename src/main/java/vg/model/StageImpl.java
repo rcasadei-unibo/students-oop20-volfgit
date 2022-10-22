@@ -13,6 +13,7 @@ import vg.utils.MassTier;
 import vg.utils.V2D;
 
 import java.io.IOException;
+import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
@@ -247,12 +248,30 @@ public class StageImpl<T> implements Stage<V2D> {
      */
     @Override
     public void checkAllOutOfBounds() {
-        //TODO controllare che player non vada fuori
         getDynamicEntitySet().forEach(e -> {
-            if (getBorders().stream().anyMatch(e::isInShape)) {
-               e.afterCollisionAction(MassTier.HIGH);
+            if (!((MapImpl) getMap()).isInBorders(e.getPosition())) {
+                e.setSpeed(e.getSpeed().scalarMul(-1));
+                e.move();
             }
         });
+        if (!((MapImpl) getMap()).isInBorders(getPlayer().getPosition())) {
+           var l = getPlayer().getTail().getCoordinates().stream().filter(e -> getBorders().contains(e)).collect(Collectors.toList());
+           if (l.size() != 2) {
+               throw new RuntimeException("Error in tail generation : tail is not closed");
+           }
+           var tail = getPlayer().getTail().getCoordinates();
+           var l0 = l.get(0);
+           var l1 = l.get(1);
+           if (tail.get(0).equals(l1)) {
+               l1 = l0;
+               l0 = tail.get(0);
+           }
+           // the second subTail is need if the tail start and end are the same, to get the index of the end V2D
+           l = tail.subList(tail.indexOf(l0), tail.subList(1, tail.size() - 1).indexOf(l1));
+           ((DynamicEntity) getPlayer()).setPosition(l1);
+           getPlayer().getTail().resetTail();
+           l.forEach(getPlayer().getTail()::addPoint);
+        }
     }
     /**
      *
@@ -277,11 +296,25 @@ public class StageImpl<T> implements Stage<V2D> {
     @Override
     public void doCycle() {
         getPlayer().move();
-        if (!getMap().isPlayerOnBorders() && !getMap().isTailCompleted()) {
-            getPlayer().getTail().addPoint(getPlayer().getPosition());
+        if (!getMap().isPlayerOnBorders()) {
+            ((MapImpl) getMap()).addTailPointsByPlayerSpeed();
         }
         if (getMap().isTailCompleted()) {
+            getMap().updateBorders(getPlayer().getTail().getCoordinates());
             getPlayer().getTail().resetTail();
+            //now to capture all the entities
+            getDynamicEntitySet().forEach(e -> {
+                if (((MapImpl) getMap()).isInBorders(e.getPosition())) {
+                    getToDestroySet().add(e);
+                } else {
+                    getBorders().forEach(e2 -> {
+                        if (e.isInShape(e2)) {
+                            map.getAfterCollisionDirection(e);
+                        }
+                    });
+                }
+            });
+            //TODO check for static entities
         }
         moveAll();
         checkAllOutOfBounds();
