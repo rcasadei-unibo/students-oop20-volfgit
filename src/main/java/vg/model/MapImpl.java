@@ -114,6 +114,7 @@ public class MapImpl implements Map<V2D>, Serializable {
         var tr = createNewBorder(tail, getBoss().getPosition());
         this.getBorders().addAll(tr);
         this.getBorders().retainAll(tr);
+        updateOccupiedPercentage();
     }
     /**
      * {@inheritDoc}
