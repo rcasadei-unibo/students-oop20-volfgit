@@ -9,6 +9,7 @@ import vg.model.entity.dynamicEntity.player.BasePlayer;
 import vg.model.entity.dynamicEntity.player.Player;
 
 import vg.model.entity.staticEntity.StaticEntity;
+import vg.utils.Direction;
 import vg.utils.MassTier;
 import vg.utils.Shape;
 import vg.utils.V2D;
@@ -144,7 +145,22 @@ class MapImplTest {
     }
 
     @Test
-    void getActiveBonus() {
+    void addTailPointsByPlayerSpeed() {
+        assertTrue(player.getPosition().equals(new V2D(20,20)));
+        assertFalse(map.isPlayerOnBorders());
+        assertTrue(((MapImpl) map).isInBorders(player.getPosition()));
+        assertTrue(player.getTail().getCoordinates().isEmpty());
+        player.changeDirection(Direction.RIGHT);
+        ((DynamicEntity) player).setSpeed(new V2D(5,0));
+        assertTrue(player.getSpeed().equals(new V2D(5,0)));
+        if (!map.isPlayerOnBorders()) {
+            ((MapImpl) map).addTailPointsByPlayerSpeed();
+        }
+
+        assertTrue(player.getTail().getCoordinates().contains(new V2D(16,20)));
+        assertTrue(player.getTail().getCoordinates().contains(new V2D(20,20)));
+        assertFalse(player.getTail().getCoordinates().contains(new V2D(15,20)));
+        assertFalse(player.getTail().getCoordinates().contains(new V2D(21,20)));
     }
 
     @Test

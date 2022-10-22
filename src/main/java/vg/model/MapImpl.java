@@ -9,6 +9,7 @@ import vg.model.entity.dynamicEntity.bullet.EnemyBolt;
 import vg.model.entity.dynamicEntity.enemy.Boss;
 import vg.model.entity.dynamicEntity.player.Player;
 import vg.model.entity.staticEntity.StaticEntity;
+import vg.utils.Direction;
 import vg.utils.MassTier;
 import vg.utils.V2D;
 import java.io.Serializable;
@@ -114,6 +115,7 @@ public class MapImpl implements Map<V2D>, Serializable {
         var tr = createNewBorder(tail, getBoss().getPosition());
         this.getBorders().addAll(tr);
         this.getBorders().retainAll(tr);
+        updateOccupiedPercentage();
     }
     /**
      * {@inheritDoc}
@@ -436,10 +438,15 @@ public class MapImpl implements Map<V2D>, Serializable {
         }
     }
     public void addTailPointsByPlayerSpeed() {
-        var t = getPlayer().getSpeed().scalarMul(-1);
-        while (!t.equals(new V2D(0, 0))) {
-            getPlayer().getTail().addPoint(getPlayer().getPosition().sum(t));
-            t = t.sum(getPlayer().getDirection().getVector().scalarMul(-1));
+        if (getPlayer().getDirection().equals(Direction.NONE)) {
+            return;
         }
+        var t = getPlayer().getSpeed().scalarMul(-1).sum(getPlayer().getDirection().getVector());
+        while (!t.equals(new V2D(0, 0))) {
+
+            getPlayer().getTail().addPoint(getPlayer().getPosition().sum(t));
+            t = t.sum(getPlayer().getDirection().getVector());
+        }
+        getPlayer().getTail().addPoint(getPlayer().getPosition());
     }
 }
