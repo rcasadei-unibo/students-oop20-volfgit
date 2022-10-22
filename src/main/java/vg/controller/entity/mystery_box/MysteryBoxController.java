@@ -20,5 +20,5 @@ public interface MysteryBoxController<T extends AbilityInTheBox> {
 
     void setImage(String mysteryBoss);
 
-    public void checkCollision(Player player);
+    void checkCollision(Player player);
 }

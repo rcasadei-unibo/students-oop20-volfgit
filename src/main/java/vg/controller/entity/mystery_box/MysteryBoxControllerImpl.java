@@ -14,13 +14,13 @@ public class MysteryBoxControllerImpl<T extends AbilityInTheBox> implements Myst
     private final AbilityInTheBox model;
     private final EntityBlock view;
 
-    public MysteryBoxControllerImpl(AbilityInTheBox model, EntityBlock view) {
+    public MysteryBoxControllerImpl(final AbilityInTheBox model, final EntityBlock view) {
         this.model = model;
         this.view = view;
     }
 
     public T getModel() {
-        return (T)this.model;
+        return (T) this.model;
     }
 
     @Override
@@ -29,44 +29,53 @@ public class MysteryBoxControllerImpl<T extends AbilityInTheBox> implements Myst
     }
 
     @Override
-    public void setPosition(V2D position) {
+    public void setPosition(final V2D position) {
         this.model.setPosition(position);
         this.view.setPosition(this.model.getPosition());
     }
 
     @Override
-    public void setBlinking(boolean blinking) {
+    public void setBlinking(final boolean blinking) {
         this.model.setBlinking(blinking);
     }
 
     @Override
-    public void setInParentNode(ObservableList<Node> gameAreaNode) {
+    public void setInParentNode(final ObservableList<Node> gameAreaNode) {
         this.view.setInParentNode(gameAreaNode);
     }
 
     @Override
-    public void setDataRound(DataRound dataRound) {
+    public void setDataRound(final DataRound dataRound) {
         this.setPosition(dataRound.getPosition());
         this.setBlinking(dataRound.isBlinking());
     }
 
     @Override
-    public void updateBlinking(long elapsedTime) {
+    public void updateBlinking(final long elapsedTime) {
         this.model.updateBlinking(elapsedTime);
         this.view.setShow(this.model.isShow());
     }
 
     @Override
-    public void setImage(String mysteryBoss) {
+    public void setImage(final String mysteryBoss) {
         this.view.setImage(mysteryBoss);
     }
 
     @Override
-    public void checkCollision(Player player) {
-        if(!this.model.isShow()) return;
-        boolean collision = player.isInShape((ShapedEntity) this.model);
+    public void checkCollision(final Player player) {
+//        if (this.model.isBlinking() && ShapedEntity.isCollision(this.model, player)) {
+//            this.model.setBlinking(false);
+//            this.model.setShow(false);
+//            this.model.applyEffect(player);
+//        }
 
-        if(collision) System.out.println("Collision: ");
+        if(!this.model.isShow()) {
+            return;
+        }
+        boolean collision = player.isInShape((ShapedEntity) this.model);
+        if(collision) {
+            System.out.println("Collision: ");
+        }
 
     }
 
