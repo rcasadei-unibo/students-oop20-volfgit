@@ -1,5 +1,6 @@
 package vg.model;
 
+import vg.controller.entity.EntityManager;
 import vg.model.entity.ShapedEntity;
 import vg.model.entity.Entity;
 import vg.model.entity.dynamicEntity.DynamicEntity;
@@ -59,6 +60,7 @@ public class StageImpl<T> implements Stage<V2D> {
      * @see Map
      */
     private Map<V2D> map;
+    private EntityManager emController;
 
     /**
      * Constructor with map and currentScore as parameters, useful if the
@@ -254,23 +256,30 @@ public class StageImpl<T> implements Stage<V2D> {
                 e.move();
             }
         });
-        if (!((MapImpl) getMap()).isInBorders(getPlayer().getPosition())) {
-           var l = getPlayer().getTail().getCoordinates().stream().filter(e -> getBorders().contains(e)).collect(Collectors.toList());
-           if (l.size() != 2) {
-               throw new RuntimeException("Error in tail generation : tail is not closed");
-           }
-           var tail = getPlayer().getTail().getCoordinates();
-           var l0 = l.get(0);
-           var l1 = l.get(1);
-           if (tail.get(0).equals(l1)) {
+        if (!((MapImpl) getMap()).isInBorders(getPlayer().getPosition()) && !getBorders().contains(getPlayer().getPosition())) {
+
+            var l = getPlayer().getTail().getCoordinates().stream().filter(e -> getBorders().contains(e)).collect(Collectors.toList());
+            if (l.isEmpty()) {
+                ((DynamicEntity) getPlayer()).setSpeed(getPlayer().getSpeed().scalarMul(-1));
+                getPlayer().move();
+                getPlayer().changeDirection(Direction.NONE);
+                ((DynamicEntity) getPlayer()).setSpeed(getPlayer().getSpeed().scalarMul(-1));
+                return;
+            } else if (l.size() != 2) {
+               throw new RuntimeException("l:" + l + "Error in tail generation : tail is not closed" + getPlayer().getTail().getCoordinates());
+            }
+            var tail = getPlayer().getTail().getCoordinates();
+            var l0 = l.get(0);
+            var l1 = l.get(1);
+            if (tail.get(0).equals(l1)) {
                l1 = l0;
                l0 = tail.get(0);
-           }
-           // the second subTail is need if the tail start and end are the same, to get the index of the end V2D
-           l = tail.subList(tail.indexOf(l0), tail.subList(1, tail.size() - 1).indexOf(l1));
-           ((DynamicEntity) getPlayer()).setPosition(l1);
-           getPlayer().getTail().resetTail();
-           l.forEach(getPlayer().getTail()::addPoint);
+            }
+            // the second subTail is need if the tail start and end are the same, to get the index of the end V2D
+            l = tail.subList(tail.indexOf(l0), tail.subList(1, tail.size() - 1).indexOf(l1));
+            ((DynamicEntity) getPlayer()).setPosition(l1);
+            getPlayer().getTail().resetTail();
+            l.forEach(getPlayer().getTail()::addPoint);
         }
     }
     /**
@@ -299,7 +308,8 @@ public class StageImpl<T> implements Stage<V2D> {
         if (!getMap().isPlayerOnBorders()) {
             ((MapImpl) getMap()).addTailPointsByPlayerSpeed();
         }
-        if (getMap().isTailCompleted()) {
+        checkAllOutOfBounds();
+         if (getMap().isTailCompleted()) {
             getMap().updateBorders(getPlayer().getTail().getCoordinates());
             getPlayer().getTail().resetTail();
             //now to capture all the entities
@@ -317,9 +327,14 @@ public class StageImpl<T> implements Stage<V2D> {
             //TODO check for static entities
         }
         moveAll();
-        checkAllOutOfBounds();
-        checkCollisions();
-        destroyAll();
+
+        //checkCollisions();
+        //destroyAll();
+    }
+
+    @Override
+    public void setEntityManagerController(EntityManager e) {
+        this.emController = e;
     }
 
     /**
@@ -335,7 +350,12 @@ public class StageImpl<T> implements Stage<V2D> {
             throw new RuntimeException(e);
         }
     }
-
+    /*
+    private void updateStaticEntitiesListFromController() {
+        try {
+            emController.
+        }
+    }*/
     /**
      * Uses {@link MapFactoryImpl#fromSerialized(int)} to createMysteryBox the map for the next level,
      * set up the {@link #currentScore} and the {@link #lv}.
