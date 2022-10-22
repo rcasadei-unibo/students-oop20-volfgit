@@ -115,17 +115,14 @@ public class GameBoardControllerImpl extends ViewController implements GameBoard
         } else {
             this.player.hideShield();
         }
-
-        new Circle();
-
         this.player.setPosition(position);
-
+/*
         tail.stream()
                 .map(t -> new Circle(t.getX(), t.getY(),4))
                 .forEach(e -> {
                     e.setFill(Paint.valueOf("RED"));
                     this.gameArea.getChildren().add(e);
                 });
-
+*/
     }
 }

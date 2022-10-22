@@ -171,10 +171,7 @@ public class GameControllerImpl extends Controller<AdaptableView<GameBoardContro
      */
     public void closeGame() {
         this.gameState = GameState.QUITTING;
-        PromptView promptView = PromptView.newConfirmDialogView();
-        PromptController promptController =
-                new PromptController(promptView, this.getViewManager(), this);
-        promptView.setIoLogicController(promptController);
+        PromptView promptView = ViewFactory.promptView(this.getViewManager(), this);
         //launch confirmation dialog
         //the response is communicated through method notifyDialogAnswer
         this.getViewManager().addScene(promptView);
@@ -221,8 +218,7 @@ public class GameControllerImpl extends Controller<AdaptableView<GameBoardContro
         this.stageDomain.createNextLevel();
         CountdownView<TransitionViewController> transView = ViewFactory.transitionView(
                 stageDomain.getCurrentScore(),
-                stageDomain.getLv(),
-                this.getViewManager());
+                stageDomain.getLv());
         transView.setIoLogicController(this);
         showTimedView(transView, 4);
         resumeGame();
@@ -296,7 +292,6 @@ public class GameControllerImpl extends Controller<AdaptableView<GameBoardContro
         if (answer == PromptOption.CONFIRM) {
             this.getViewManager().backHome();
         } else if (answer == PromptOption.DENY) {
-            this.getViewManager().popScene();
             resumeGame();
         }
     }
