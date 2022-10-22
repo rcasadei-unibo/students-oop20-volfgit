@@ -442,8 +442,6 @@ public class MapImpl implements Map<V2D>, Serializable {
             return;
         }
         var t = getPlayer().getSpeed().scalarMul(-1).sum(getPlayer().getDirection().getVector());
-        System.out.println(t);
-        System.out.println(t.sum(getPlayer().getDirection().getVector()));
         while (!t.equals(new V2D(0, 0))) {
 
             getPlayer().getTail().addPoint(getPlayer().getPosition().sum(t));
