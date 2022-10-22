@@ -4,6 +4,10 @@ import vg.view.AdaptableView;
 import vg.view.SceneController;
 import vg.view.ViewManager;
 
+/**
+ * Logic Controller that is a conjunction between model and view. Pattern MVC.
+ * @param <T> subtype of {@link AdaptableView}
+ */
 public abstract class Controller<T extends AdaptableView<?>> implements SceneController {
     /**
      * View to be controlled.

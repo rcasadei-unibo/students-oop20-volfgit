@@ -1,9 +1,12 @@
 package vg.view;
 
-
 import javafx.scene.Scene;
 import vg.controller.Controller;
 
+/**
+ * View interface.
+ * @param <T> Controller associated to the FXML file.
+ */
 public interface View<T> {
     /**
      * Return logic controller (that interact with domain) of this view.
