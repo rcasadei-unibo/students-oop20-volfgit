@@ -2,21 +2,11 @@ package vg.view.menu.prompt;
 
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
-import javafx.scene.paint.Paint;
 import javafx.scene.text.Text;
 import vg.view.ViewController;
+import static vg.view.utils.Colors.*;
 
 public class PromptViewController extends ViewController {
-    /**
-     * Accent color of selected button.
-     */
-    static final Paint SELECTED_COLOR = Paint.valueOf("#fff600");
-
-    /**
-     * Color of button not selected.
-     */
-    static final Paint UNSELECTED_COLOR = Paint.valueOf("#515151");
-
     /**
      * Text Title that ask user what to do.
      */
@@ -42,7 +32,7 @@ public class PromptViewController extends ViewController {
     private Label denyBtn;
 
     /**
-     * Apply selection style. Set CONFIRM button with {@link PromptViewController#SELECTED_COLOR}
+     * Apply selection style. Set CONFIRM button with {@link vg.view.utils.Colors#SELECTED_COLOR}
      */
     public void highlightConfirm() {
         this.confirmBtn.setTextFill(SELECTED_COLOR);
@@ -50,7 +40,7 @@ public class PromptViewController extends ViewController {
     }
 
     /**
-     * Apply selection style. Set DENY button with {@link PromptViewController#SELECTED_COLOR}
+     * Apply selection style. Set DENY button with {@link vg.view.utils.Colors#SELECTED_COLOR}
      */
     public void highlightDeny() {
         this.confirmBtn.setTextFill(UNSELECTED_COLOR);
