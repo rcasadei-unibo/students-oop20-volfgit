@@ -76,8 +76,8 @@ public class MapImpl implements Map<V2D>, Serializable {
     public MapImpl(final Player player, final Boss boss, final Set<StaticEntity> staticEntitySet, final Set<DynamicEntity> dynamicEntitySet, final Set<V2D> border) {
         this.player = player;
         this.boss = boss;
-        //this.setBonuses = setBonuses;
-        this.staticEntitySet = staticEntitySet;
+        //this.staticEntitySet = staticEntitySet; //TODO get the mystery boxes..>.<
+        this.staticEntitySet = new HashSet<>();
         this.dynamicEntitySet = dynamicEntitySet;
         this.border = border;
         this.getOccupiedPercentage = 0;
@@ -262,7 +262,7 @@ public class MapImpl implements Map<V2D>, Serializable {
             Collections.reverse(t1);
         }
         try {
-            while (!t0.get(t0.size() - 1).equals(getPlayer().getTail().getLastCoordinate())) {
+            while (!t0.get(t0.size() - 1).equals(getPlayer().getTail().getLastCoordinate().get())) {
                 t0.add(this.getBorders().stream().filter(e -> !t0.contains(e) && e.isAdj(t0.get(t0.size() - 1))).findFirst().orElseThrow());
             }
         } catch (NoSuchElementException e0) {
@@ -272,7 +272,7 @@ public class MapImpl implements Map<V2D>, Serializable {
         }
         try {
             t1.add(adjBorderPoint.get(1));
-            while (!t1.get(t1.size() - 1).equals(getPlayer().getTail().getLastCoordinate())) {
+            while (!t1.get(t1.size() - 1).equals(getPlayer().getTail().getLastCoordinate().get())) {
                 t1.add(this.getBorders().stream().filter(e -> !t1.contains(e) && e.isAdj(t1.get(t1.size() - 1))).findFirst().orElseThrow());
             }
         } catch (NoSuchElementException e1) {
@@ -281,28 +281,15 @@ public class MapImpl implements Map<V2D>, Serializable {
             }
         }
 
-/*
-        var indInit = t.indexOf(player.getTail().getLastCoordinate());
-        var indHalf = t.indexOf(player.getTail().getCoordinates().get(0));
-        if (indInit > indHalf) {
-            var tmp = indHalf;
-            indHalf = indInit;
-            indInit = tmp;
-        }
-        var t1 = Stream.concat(t.subList(indInit, indHalf).stream(), tail.stream()).collect(Collectors.toSet());
-        var t2 = Stream.concat(t.subList(indHalf, t.size()).stream(), tail.stream()).collect(Collectors.toSet());*/
         if (isInBorders(boss, Set.copyOf(t1))) {
             if (isInBorders(boss, Set.copyOf(t0))) {
-                System.out.println("errore il boss è in entrambi i bordi");
-                //TODO uncomment this (just for testing the print above)!! throw new IllegalStateException("errore il boss è in entrambi i bordi");
+                throw new IllegalStateException("Error in algorithm: the boss in both generated borders");
             }
             return Set.copyOf(t1);
         } else if (isInBorders(boss, Set.copyOf(t0))) {
             return Set.copyOf(t0);
         } else {
-            System.out.println("Failed to create a new border (Boss too big?)");
-            //TODO uncomment this, just for testing the print above!! throw new IllegalStateException("Failed to create a new border (Boss too big?)");
-            return null;
+            throw new IllegalStateException("Failed to create a new border (Boss too big?)");
         }
     }
     /**
@@ -371,7 +358,6 @@ public class MapImpl implements Map<V2D>, Serializable {
         var t = IntStream.rangeClosed(1, MapImpl.MAXBORDERX)
                 .filter(e -> borders.contains(new V2D(e, pos.getY())) != borders.contains(new V2D(e - 1, pos.getY())))
                 .peek(segments::add).filter(e -> pos.getX() < e).findFirst();
-        //Collections.reverse(segments);
         if (t.isPresent()) {
             var s = new ArrayList<Integer>();
             s.add(segments.get(0));
@@ -412,8 +398,14 @@ public class MapImpl implements Map<V2D>, Serializable {
      * @return true if the position is valid and can be occupied, false otherwise
      */
     public boolean isPositionValid(final V2D pos, final ShapedEntity toRemove) {
-        if (getAllStaticEntities().stream().anyMatch(e -> e.isInShape(pos) && !e.equals(toRemove))) {
-            return false;
+        try {
+            if (getAllStaticEntities().stream().anyMatch(e -> e.isInShape(pos) && !e.equals(toRemove))) {
+                return false;
+            }
+        } catch (Exception e) {
+            System.out.println(toRemove);
+            System.out.println(toRemove.getPosition());
+            e.printStackTrace();
         }
         if (getAllDynamicEntities().stream()
                 .filter(e -> e.getMassTier() != MassTier.NOCOLLISION && !e.equals(toRemove))
@@ -441,11 +433,18 @@ public class MapImpl implements Map<V2D>, Serializable {
             return de.getSpeed().mul(x, y);
         }
     }
+
+    /**
+     * This method add all the crossed points by the player movement to the tail.
+     * @see Player
+     * @see Tail
+     * @see V2D
+     */
     public void addTailPointsByPlayerSpeed() {
         if (getPlayer().getDirection().equals(Direction.NONE)) {
             return;
         }
-        var t = getPlayer().getSpeed().mul(getPlayer().getDirection().getVector()).scalarMul(-1).sum(getPlayer().getDirection().getVector());
+        var t = getPlayer().getSpeed().mul(getPlayer().getDirection().getVector()).scalarMul(-1);
         while (!t.equals(new V2D(0, 0))) {
 
             getPlayer().getTail().addPoint(getPlayer().getPosition().sum(t));
