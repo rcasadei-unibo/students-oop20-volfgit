@@ -7,7 +7,9 @@ import vg.view.utils.KeyAction;
 
 public class LeaderBoardController extends Controller<LeaderBoardView> {
 
-    public LeaderBoardController(LeaderBoardView view, ViewManager viewManager) {
+    private boolean escWasPressed = false;
+
+    public LeaderBoardController(final LeaderBoardView view, final ViewManager viewManager) {
         super(view, viewManager);
     }
 
@@ -17,14 +19,16 @@ public class LeaderBoardController extends Controller<LeaderBoardView> {
 
     @Override
     public void keyPressed(final KeyAction k) {
-        if (k == KeyAction.ENTER) {
+        if (k == KeyAction.ENTER && this.escWasPressed) {
             this.getView().getViewController().closeBtnPressing();
+        } else if (k == KeyAction.ESCAPE) {
+            this.escWasPressed = true;
         }
     }
 
     @Override
     public void keyReleased(final KeyAction k) {
-        if (k == KeyAction.ENTER) {
+        if (k == KeyAction.ENTER && this.escWasPressed) {
             this.getViewManager().popScene();
         }
     }
