@@ -37,6 +37,10 @@ public class V2D implements Serializable {
         return new V2D(this.x + pos.x, this.y + pos.y);
     }
 
+    public final V2D diff(final V2D pos) {
+        return new V2D(this.x - pos.x, this.y - pos.y);
+    };
+
     public final V2D mul(final V2D pos) {
         return new V2D(this.x * pos.getX(), this.y * pos.getY());
     }
