@@ -4,7 +4,7 @@ import vg.controller.gameBoard.GameBoardController;
 import vg.controller.entity.mystery_box.MysteryBoxController;
 import vg.controller.entity.mystery_box.StaticFactoryMysteryBox;
 import vg.model.entity.dynamicEntity.player.Player;
-import vg.model.mysteryBox.dataRound.DataRound;
+import vg.model.mystery_box.dataRound.DataRound;
 import vg.utils.Round.MysteryBoxPositionUtils;
 
 import java.util.ArrayList;

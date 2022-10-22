@@ -1,15 +1,15 @@
 package vg.controller.entity.mystery_box;
 
-import vg.model.mysteryBox.ability.AbilityFreezeTime;
-import vg.model.mysteryBox.ability.AbilityKillMosquitoes;
-import vg.model.mysteryBox.ability.AbilityScore;
-import vg.model.mysteryBox.ability.AbilitySpeed;
-import vg.model.mysteryBox.ability.AbilityWeapon;
-import vg.model.mysteryBox.factory.StaticFactoryFreezeTimeAbility;
-import vg.model.mysteryBox.factory.StaticFactoryMosquitoesAbility;
-import vg.model.mysteryBox.factory.StaticFactoryScoreAbility;
-import vg.model.mysteryBox.factory.StaticFactorySpeedAbility;
-import vg.model.mysteryBox.factory.StaticFactoryWeaponAbility;
+import vg.model.mystery_box.ability.AbilityFreezeTime;
+import vg.model.mystery_box.ability.AbilityKillMosquitoes;
+import vg.model.mystery_box.ability.AbilityScore;
+import vg.model.mystery_box.ability.AbilitySpeed;
+import vg.model.mystery_box.ability.AbilityWeapon;
+import vg.model.mystery_box.factory.StaticFactoryFreezeTimeAbility;
+import vg.model.mystery_box.factory.StaticFactoryMosquitoesAbility;
+import vg.model.mystery_box.factory.StaticFactoryScoreAbility;
+import vg.model.mystery_box.factory.StaticFactorySpeedAbility;
+import vg.model.mystery_box.factory.StaticFactoryWeaponAbility;
 import vg.utils.path.PathImageMysteryBox;
 import vg.view.entity.StaticFactoryEntityBlock;
 
