@@ -145,7 +145,11 @@ public class MapImpl implements Map<V2D>, Serializable {
      */
     @Override
     public boolean isTailCompleted() {
-        return getBorders().contains(getPlayer().getTail().getLastCoordinate());
+        if (getPlayer().getTail().getLastCoordinate().isPresent()) {
+            return getBorders().contains(getPlayer().getTail().getLastCoordinate().get());
+        } else {
+            return false;
+        }
     }
     /**
      * {@inheritDoc}
