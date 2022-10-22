@@ -122,12 +122,7 @@ public class GameControllerImpl extends Controller<AdaptableView<GameBoardContro
     private void updateGameDomain(final long elapsedTime) {
         this.stageDomain.getMap().updateBonusTimer(elapsedTime);
         this.entityManager.updateBlinkingMysteryBox(elapsedTime);
-        this.entityManager.checkCollision(this.stageDomain.getMap().getPlayer());
-        //this.stageDomain.doCycle();
-        this.stageDomain.getPlayer().move();
-        if (!this.stageDomain.getMap().isPlayerOnBorders()) {
-            this.stageDomain.getPlayer().getTail().addPoint(this.stageDomain.getPlayer().getPosition());
-        }
+        this.stageDomain.doCycle();
     }
 
     /**
@@ -136,7 +131,6 @@ public class GameControllerImpl extends Controller<AdaptableView<GameBoardContro
     private void checkGameoverCondition() {
         if (this.stageDomain.getPlayer().getLife() <= 0) {
             this.gameState = GameState.GAMEOVER;
-            //TODO: save current score and level then show gameover scree
         }
     }
 
@@ -157,7 +151,7 @@ public class GameControllerImpl extends Controller<AdaptableView<GameBoardContro
             getGameViewController()
                     .updatePlayer(this.stageDomain.getPlayer().getPosition(),
                             this.stageDomain.getMap().isPlayerOnBorders(),
-                            this.stageDomain.getPlayer().getTail().getCoordinates());
+                            this.stageDomain.getPlayer().getTail().getVertex());
 
             getGameViewController().updateBossPosition(this.stageDomain.getBoss().getPosition());
             //TODO: fare anche con i mosquitoes

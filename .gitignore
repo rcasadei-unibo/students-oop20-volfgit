@@ -8,3 +8,5 @@ bin/
 .DS_Store
 .idea
 /1
+/out
+leaderboard
