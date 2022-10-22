@@ -1,4 +1,4 @@
-package vg.model.mystery_box.logicBlink;
+package vg.model.mystery_box.logic_blink;
 
 public class LogicBlinkImpl implements LogicBlink {
 
