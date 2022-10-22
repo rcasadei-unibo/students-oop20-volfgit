@@ -2,23 +2,34 @@ package vg.view.menu;
 
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
+import javafx.scene.control.Label;
 import javafx.scene.layout.Pane;
-import vg.view.AdaptableView;
+import vg.view.ViewController;
+import java.util.List;
+import static vg.view.utils.Colors.*;
 
-public class MainMenu extends AdaptableView {
+public class MenuViewController extends ViewController {
 
     @FXML
     private Pane panel;
+
     @FXML
-    private Button play;
+    private Label playBtn;
+
     @FXML
-    private Button leaderboards;
+    private Label leaderboardsBtn;
+
     @FXML
-    private Button settings;
+    private Label settingsBtn;
+
     @FXML
-    private Button controls;
-    @FXML
-    private Button quit;
-    @FXML
+    private Label quitBtn;
+
+
+    public void highlightSelectedButton(final int idx) {
+        List<Label> buttons = List.of(playBtn, leaderboardsBtn, settingsBtn, quitBtn);
+        buttons.forEach(button -> button.setTextFill(UNSELECTED_COLOR));
+        buttons.get(idx).setTextFill(SELECTED_COLOR);
+    }
 
 }

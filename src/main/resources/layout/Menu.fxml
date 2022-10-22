@@ -1,26 +1,52 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.scene.canvas.*?>
-<?import javafx.scene.control.*?>
-<?import java.lang.*?>
-<?import javafx.scene.layout.*?>
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.Separator?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
+<?import javafx.scene.text.Text?>
 
-
-<BorderPane fx:id="panel" fx:controller="vg.view.menu.MenuViewController" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1">
+<BorderPane fx:id="panel" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" style="-fx-background-color: black;" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="vg.view.menu.MenuViewController">
    <center>
-      <VBox alignment="CENTER" prefHeight="320.0" prefWidth="488.0" BorderPane.alignment="CENTER">
+      <VBox alignment="CENTER" BorderPane.alignment="CENTER">
          <children>
-            <Button fx:id="play" onMouseClicked="#playButtonClicked" mnemonicParsing="false" prefHeight="25.0" prefWidth="148.0" text="Play" />
-            <Button fx:id="leaderboards" onMouseClicked="#leaderboardsButtonClicked" mnemonicParsing="false" prefHeight="25.0" prefWidth="147.0" text="Leaderboards" />
-            <Button fx:id="settings" onMouseClicked="#settingsButtonClicked" mnemonicParsing="false" prefHeight="25.0" prefWidth="147.0" text="Settings" />
-            <Button fx:id="controls" onMouseClicked="#settingsButtonClicked" mnemonicParsing="false" prefHeight="25.0" prefWidth="147.0" text="Controls" />
-            <Button fx:id="quit" onMouseClicked="#quitButtonClicked" mnemonicParsing="false" prefHeight="25.0" prefWidth="147.0" text="Quit" />
+            <Label fx:id="playBtn" alignment="CENTER" focusTraversable="false" minHeight="50.0" minWidth="200.0" style="-fx-background-color: #949494;" text="Play" textAlignment="CENTER">
+               <font>
+                  <Font name="Copperplate" size="18.0" />
+               </font>
+            </Label>
+            <Separator focusTraversable="false" prefHeight="10.0" visible="false" />
+            <Label fx:id="leaderboardsBtn" alignment="CENTER" focusTraversable="false" minHeight="50.0" minWidth="200.0" style="-fx-background-color: #949494;" text="Leaderboards" textAlignment="CENTER">
+               <font>
+                  <Font name="Copperplate" size="18.0" />
+               </font>
+            </Label>
+            <Separator focusTraversable="false" prefHeight="10.0" visible="false" />
+            <Label fx:id="settingsBtn" alignment="CENTER" focusTraversable="false" minHeight="50.0" minWidth="200.0" style="-fx-background-color: #949494;" text="Settings" textAlignment="CENTER">
+               <font>
+                  <Font name="Copperplate" size="18.0" />
+               </font>
+            </Label>
+            <Separator focusTraversable="false" prefHeight="10.0" visible="false" />
+            <Label fx:id="quitBtn" alignment="CENTER" focusTraversable="false" minHeight="50.0" minWidth="200.0" style="-fx-background-color: #949494;" text="Quit" textAlignment="CENTER">
+               <font>
+                  <Font name="Copperplate" size="18.0" />
+               </font>
+            </Label>
 
          </children>
       </VBox>
    </center>
    <top>
-      <!-- This is the space we can use to put "Volfgit" -->
-      <Canvas height="88.0" width="390.0" BorderPane.alignment="CENTER" />
+      <Text fill="#fcff32" strokeType="OUTSIDE" strokeWidth="0.0" text="VOLFIGT" BorderPane.alignment="CENTER">
+         <font>
+            <Font name="Copperplate" size="76.0" />
+         </font>
+         <BorderPane.margin>
+            <Insets top="20.0" />
+         </BorderPane.margin>
+      </Text>
    </top>
 </BorderPane>
