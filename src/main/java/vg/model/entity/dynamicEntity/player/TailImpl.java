@@ -59,8 +59,8 @@ public final class TailImpl implements Tail {
                 //if prev direction and current are different, it means that
                 // direction changed so "next" V2D is a vector
                 Direction diffDir = getDirection(next.diff(prev));
-                if (prevDir != diffDir && diffDir != Direction.NONE) {
-                    vertex.add(next);
+                if (prevDir != diffDir) {
+                    vertex.add(next.diff(next.diff(prev)));
                     prevDir = diffDir;
                 }
                 prev = next;

@@ -47,7 +47,15 @@ public final class BasePlayer extends DynamicEntity implements Player {
      */
     private Optional<V2D> speedImproved;
 
+    /**
+     * Current moving direction.
+     */
     private Direction direction;
+
+    /**
+     * Previous moving direction excluded when NONE.
+     */
+    private Direction lastMovingDir;
 
     /**
      * Tail created by player while moves in map.
@@ -125,11 +133,27 @@ public final class BasePlayer extends DynamicEntity implements Player {
     }
 
     /**
-     * Update speed direction of basic speed and bonus speed if active.
+     * Update speed direction of basic speed and bonus speed if active. Player cannot turn back on its route,
+     * in other word it can move to the opposite direction of current (If it was moving up it can go down,
+     * if it move on left in can move right).
      * @param dir Direction vector that define sign of speed's coordinates
      */
     public void changeDirection(final Direction dir) {
-        this.direction = dir;
+        if (lastMovingDir == null) {
+            lastMovingDir = dir;
+        }
+        if ((lastMovingDir == Direction.DOWN && dir == Direction.UP)
+                || (lastMovingDir == Direction.UP && dir == Direction.DOWN)
+                || (lastMovingDir == Direction.LEFT && dir == Direction.RIGHT)
+                || (lastMovingDir == Direction.RIGHT && dir == Direction.LEFT)
+        ) {
+            this.direction = Direction.NONE;
+        } else {
+            this.direction = dir;
+            if (dir != Direction.NONE) {
+                lastMovingDir = dir;
+            }
+        }
     }
 
     @Override
