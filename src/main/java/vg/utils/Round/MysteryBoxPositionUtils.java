@@ -2,8 +2,8 @@ package vg.utils.Round;
 
 
 import javafx.geometry.Dimension2D;
-import vg.model.mystery_box.dataRound.DataRound;
-import vg.model.mystery_box.dataRound.DataRoundImpl;
+import vg.model.mystery_box.data_round.DataRound;
+import vg.model.mystery_box.data_round.DataRoundImpl;
 import vg.utils.V2D;
 
 import java.util.List;

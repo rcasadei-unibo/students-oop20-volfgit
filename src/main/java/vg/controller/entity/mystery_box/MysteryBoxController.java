@@ -4,7 +4,7 @@ import javafx.collections.ObservableList;
 import javafx.scene.Node;
 import vg.model.entity.dynamicEntity.player.Player;
 import vg.model.mystery_box.AbilityInTheBox;
-import vg.model.mystery_box.dataRound.DataRound;
+import vg.model.mystery_box.data_round.DataRound;
 import vg.utils.V2D;
 
 public interface MysteryBoxController<T extends AbilityInTheBox> {

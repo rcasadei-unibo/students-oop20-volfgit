@@ -35,7 +35,9 @@ public class StaticFactoryMysteryBox {
     }
 
     public static MysteryBoxController createRandomMysteryBoxWithWeaponBoss() {
-        int rnd = new Random().nextInt(6);
+        final int types = 6;
+        int rnd = new Random().nextInt(types);
+
         MysteryBoxController mysteryBoxController = null;
         switch (rnd) {
             case 0:

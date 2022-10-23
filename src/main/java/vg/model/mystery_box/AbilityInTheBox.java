@@ -17,6 +17,7 @@ public interface AbilityInTheBox extends Entity {
      * This method is used to get the position of the box.
      * @return the position of the box.
      */
+    @Override
     V2D getPosition();
     /**
      * This method is used to get the dimension of the box.
