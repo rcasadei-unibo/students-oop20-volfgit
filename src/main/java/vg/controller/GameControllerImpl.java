@@ -4,8 +4,11 @@ import javafx.application.Platform;
 import vg.controller.entity.EntityManager;
 import vg.controller.entity.EntityManagerImpl;
 import vg.controller.gameBoard.GameBoardController;
+import vg.controller.leaderboard.ScoreManager;
+import vg.controller.leaderboard.ScoreManagerImpl;
 import vg.model.Stage;
 import vg.model.entity.dynamicEntity.player.Player;
+import vg.model.score.Score;
 import vg.utils.*;
 import vg.view.AdaptableView;
 import vg.view.SceneController;
@@ -21,6 +24,7 @@ import vg.view.utils.CountdownView;
 import vg.view.utils.KeyAction;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 /**
  * Game Engine class, manager game loop and refresh timing
@@ -73,6 +77,7 @@ public class GameControllerImpl extends Controller<AdaptableView<GameBoardContro
      * Loop to make game running. At every cycle it processes input, update domain then update gui.
      */
     private void gameLoop() {
+        oneTimeRender();
         //Launch on new thread game loop in order to not block gui.
         new Thread(() -> {
             long prevCycleTime = System.currentTimeMillis();
@@ -83,7 +88,7 @@ public class GameControllerImpl extends Controller<AdaptableView<GameBoardContro
                 updateGameDomain(elapsedTime);
                 render();
                 checkGameoverCondition();
-                //checkVictory(); //---> RALLENTA TUTTO
+                checkVictory();
                 waitForNextFrame(curCycleTime);
                 prevCycleTime = curCycleTime;
             }
@@ -118,6 +123,7 @@ public class GameControllerImpl extends Controller<AdaptableView<GameBoardContro
      * @param elapsedTime time elapsed between current and previous gameLoop cycle
      */
     private void updateGameDomain(final long elapsedTime) {
+        this.stageDomain.getPlayer().getShield().updateTimer(elapsedTime);
         this.stageDomain.getMap().updateBonusTimer(elapsedTime);
         this.entityManager.updateBlinkingMysteryBox(elapsedTime);
         this.stageDomain.doCycle();
@@ -142,16 +148,42 @@ public class GameControllerImpl extends Controller<AdaptableView<GameBoardContro
     }
 
     /**
-     * Update view of game on JavaFX thread in order to no block contrller thread.
+     * Render static elements that during game-loop doesn't change.
+     */
+    private void oneTimeRender() {
+        Platform.runLater(() -> {
+            //Round
+            getGameViewController().setRound(this.stageDomain.getLv());
+            //HighScore
+            Optional<Score> highScore = ScoreManagerImpl.newScoreManager().getTopScore(1).stream().findFirst();
+            highScore.ifPresent(score -> getGameViewController().setHighScoreText(score.getScore()));
+        });
+    }
+
+    /**
+     * Update view of game on JavaFX thread in order to no block controller thread.
      */
     private void render() {
         Platform.runLater(() -> {
+            //Game Counters
+            getGameViewController().updateLifeCounter(this.stageDomain.getPlayer().getLife());
+            getGameViewController().updateShieldTime(this.stageDomain.getPlayer().getShield().getRemainingTime());
+            getGameViewController().updateScoreText(this.stageDomain.getCurrentScore());
+            getGameViewController().updatePercentage(this.stageDomain.getMap().getOccupiedPercentage());
+
+            //Player
+            Player player = this.stageDomain.getPlayer();
             getGameViewController()
-                    .updatePlayer(this.stageDomain.getPlayer().getPosition(),
-                            this.stageDomain.getMap().isPlayerOnBorders(),
-                            this.stageDomain.getPlayer().getTail().getVertex());
+                    .updatePlayer(player.getPosition(),
+                            this.stageDomain.getMap().isPlayerOnBorders() && player.getShield().isActive(),
+                            player.getTail().getVertex());
+            //Boss
             getGameViewController().updateBossPosition(this.stageDomain.getBoss().getPosition());
-            //TODO: fare anche con i mosquitoes
+            //Borders
+            getGameViewController().updateBorders(V2DUtility.getVertex(List.copyOf(this.stageDomain.getBorders())));
+
+            //Mosquitoes
+            getGameViewController().updateMosquitoesPosition(this.stageDomain.getDynamicEntitySet());
         });
     }
 
@@ -163,6 +195,7 @@ public class GameControllerImpl extends Controller<AdaptableView<GameBoardContro
     public void closeGame() {
         this.gameState = GameState.QUITTING;
         PromptView promptView = ViewFactory.promptView(this.getViewManager(), this);
+        promptView.setTitle("Stop playing and back home?");
         //launch confirmation dialog
         //the response is communicated through method notifyDialogAnswer
         this.getViewManager().addScene(promptView);
