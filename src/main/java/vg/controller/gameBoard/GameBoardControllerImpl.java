@@ -86,8 +86,6 @@ public class GameBoardControllerImpl extends ViewController implements GameBoard
 
     @Override
     public void initMapView() {
-        //TODO: rimappare cooridnate entità dominio in coordinate mappate sulle dimensioni del gameArea
-        //o metodo statico qui oppure metodo setposition di entityblock che rimappa oppure soluzione di ale
         //Set player in view map
         this.player = new PlayerViewControllerImpl();
         this.player.setInParentNode(this.getGameAreaNode());
@@ -136,11 +134,34 @@ public class GameBoardControllerImpl extends ViewController implements GameBoard
     public void updateBorders(List<V2D> vertexBorder) {
 /*
         this.borders = new Polyline();
-        this.borders.getPoints().setAll(convertToListOfDouble(vertexBorder.stream().sorted((v1,v2)-> (int)(v1.getX()- v2.getX())).collect(Collectors.toList())));
+        this.borders.getPoints()
+                .setAll(convertToListOfDouble(vertexBorder.stream()
+                                                        .map(this::mapCoordinateToViewSize)
+                                                        .collect(Collectors.toList())));
         this.borders.setStrokeWidth(5);
         this.borders.setStroke(Paint.valueOf("#945200"));
         this.addInGameArea(this.borders);
 */
+    }
+
+    @Override
+    public void updatePlayer(V2D position, boolean shieldActive, final List<V2D> tailVec) {
+        if (shieldActive) {
+            this.player.showShield();
+        } else {
+            this.player.hideShield();
+        }
+
+        this.player.setPosition(mapCoordinateToViewSize(position));
+        this.gameArea.getChildren().remove(this.tailPolyline);
+
+        tailVec.add(position);
+        this.tailPolyline = new Polyline();
+        List<V2D> mappedTail = tailVec.stream().map(this::mapCoordinateToViewSize).collect(Collectors.toList());
+        this.tailPolyline.getPoints().setAll(convertToListOfDouble(mappedTail));
+        this.tailPolyline.setStrokeWidth(4);
+        this.tailPolyline.setStroke(Paint.valueOf("#945200"));
+        this.addInGameArea(this.tailPolyline);
     }
 
     @Override
@@ -175,25 +196,6 @@ public class GameBoardControllerImpl extends ViewController implements GameBoard
         this.shield.setText(String.valueOf((int)time/100));
     }
 
-    @Override
-    public void updatePlayer(V2D position, boolean shieldActive, final List<V2D> tailVec) {
-        if (shieldActive) {
-            this.player.showShield();
-        } else {
-            this.player.hideShield();
-        }
-        this.player.setPosition(position);
-
-        this.gameArea.getChildren().remove(this.tailPolyline);
-
-        tailVec.add(position);
-        this.tailPolyline = new Polyline();
-        this.tailPolyline.getPoints().setAll(convertToListOfDouble(tailVec));
-        this.tailPolyline.setStrokeWidth(4);
-        this.tailPolyline.setStroke(Paint.valueOf("#945200"));
-        this.addInGameArea(this.tailPolyline);
-    }
-
     /**
      * COnvert List of vectors V2D to a list with alternate x and y.
      * @param vectors List of vertex vector of player tail
@@ -215,6 +217,17 @@ public class GameBoardControllerImpl extends ViewController implements GameBoard
         return new Dimension2D(v2d.getX() * getGameArea().getWidth()/ MapImpl.MAXBORDERX,
                 v2d.getY() * getGameArea().getHeight()/ MapImpl.MAXBORDERY);
     }
+
+    /**
+     * Scale passed position to the mapped position on screen.
+     * @param modelV2D the model position
+     * @return {@link V2D} mapped position
+     */
+    private V2D mapCoordinateToViewSize(V2D modelV2D) {
+        Dimension2D mapped = V2DtoDimension2D(modelV2D);
+        return new V2D(mapped.getWidth(), mapped.getHeight());
+    }
+
     /**
      * Converts from model radius into JavaFX {@link Dimension2D}.
      * @param radius the model {@link ShapedEntity#getRadius()}
@@ -224,6 +237,7 @@ public class GameBoardControllerImpl extends ViewController implements GameBoard
         return new Dimension2D(radius * getGameArea().getWidth()/ MapImpl.MAXBORDERX,
                 radius * getGameArea().getWidth()/ MapImpl.MAXBORDERX);
     }
+
     /**
      * Converts from model {@link ShapedEntity#getRadius()} into JavaFX {@link Dimension2D}.
      * @param entity the model {@link ShapedEntity#getRadius()}
