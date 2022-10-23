@@ -2,7 +2,7 @@ package vg.model.timedObject;
 
 public class Shield extends TimedObjectImpl {
 
-    public static final double DEFAULT_DURATION = 500;
+    public static final int DEFAULT_DURATION = 50000;
     /**
      * Shield activation status.
      * */
