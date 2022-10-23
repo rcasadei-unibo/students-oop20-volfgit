@@ -176,7 +176,8 @@ public class GameControllerImpl extends Controller<AdaptableView<GameBoardContro
             getGameViewController()
                     .updatePlayer(player.getPosition(),
                             this.stageDomain.getMap().isPlayerOnBorders() && player.getShield().isActive(),
-                            player.getTail().getVertex());
+                            player.getTail().getVertex(),
+                            this.stageDomain.getMap().isTailCompleted());
             //Boss
             getGameViewController().updateBossPosition(this.stageDomain.getBoss().getPosition());
             //Borders

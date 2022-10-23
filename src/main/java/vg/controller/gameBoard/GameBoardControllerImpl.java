@@ -145,7 +145,7 @@ public class GameBoardControllerImpl extends ViewController implements GameBoard
     }
 
     @Override
-    public void updatePlayer(V2D position, boolean shieldActive, final List<V2D> tailVec) {
+    public void updatePlayer(V2D position, boolean shieldActive, final List<V2D> tailVec, final boolean isTailConfirmed) {
         if (shieldActive) {
             this.player.showShield();
         } else {
@@ -153,8 +153,13 @@ public class GameBoardControllerImpl extends ViewController implements GameBoard
         }
 
         this.player.setPosition(mapCoordinateToViewSize(position));
-        this.gameArea.getChildren().remove(this.tailPolyline);
+        if (isTailConfirmed) {
+            this.tailPolyline.setFill(Paint.valueOf("RED"));
+            this.borders = this.tailPolyline;
+            addInGameArea(this.borders);
+        }
 
+        this.gameArea.getChildren().remove(this.tailPolyline);
         tailVec.add(position);
         this.tailPolyline = new Polyline();
         List<V2D> mappedTail = tailVec.stream().map(this::mapCoordinateToViewSize).collect(Collectors.toList());
