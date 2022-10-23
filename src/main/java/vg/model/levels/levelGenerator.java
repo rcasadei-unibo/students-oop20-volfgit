@@ -55,8 +55,16 @@ public class levelGenerator {
             dsLv1,
             defaultBorders);
     //TODO actually create different levels
-    private Map<V2D> lv2 = lv1;
-    private Map<V2D> lv3 = lv1;
+    private Map<V2D> lv2 = new MapImpl(BasePlayer.newPlayer(new V2D(0, 0)),
+            bossLv1,
+            null, //TODO: !!!!!
+            dsLv1,
+            defaultBorders);;
+    private Map<V2D> lv3 = new MapImpl(BasePlayer.newPlayer(new V2D(0, 0)),
+            bossLv1,
+            null, //TODO: !!!!!
+            dsLv1,
+            defaultBorders);;
     private Map<V2D> lv4 = lv1;
 
     /**
@@ -93,15 +101,15 @@ public class levelGenerator {
         //do this for every level (also to find a better way)
         FileOutputStream fileOutLv2 = new FileOutputStream("2");
         ObjectOutputStream lv2 = new ObjectOutputStream(fileOutLv1);
-        lv1.writeObject(this.lv2);
-        lv1.flush();
-        lv1.close();
+        lv2.writeObject(this.lv2);
+        lv2.flush();
+        lv2.close();
 
         FileOutputStream fileOutLv3 = new FileOutputStream("3");
         ObjectOutputStream lv3 = new ObjectOutputStream(fileOutLv1);
-        lv1.writeObject(this.lv3);
-        lv1.flush();
-        lv1.close();
+        lv3.writeObject(this.lv3);
+        lv3.flush();
+        lv3.close();
     }
 
     public void serializeState(final Map<V2D> map) throws IOException {
@@ -113,6 +121,7 @@ public class levelGenerator {
     }
 
     public Map<V2D> deserializeLevel(final String lv) throws IOException, ClassNotFoundException {
+        System.out.println(lv);
         FileInputStream in = new FileInputStream(lv);
         ObjectInputStream oIn = new ObjectInputStream(in);
         var map = (Map<V2D>)oIn.readObject();
