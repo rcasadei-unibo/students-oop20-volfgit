@@ -150,7 +150,8 @@ class MapImplTest {
         assertFalse(map.isPlayerOnBorders());
         assertTrue(((MapImpl) map).isInBorders(player.getPosition()));
         assertTrue(player.getTail().getCoordinates().isEmpty());
-        player.changeDirection(Direction.RIGHT);
+        //In this test doesn't matter if player is on border or not
+        player.changeDirection(Direction.RIGHT, false);
         ((DynamicEntity) player).setSpeed(new V2D(5,0));
         assertTrue(player.getSpeed().equals(new V2D(5,0)));
         if (!map.isPlayerOnBorders()) {

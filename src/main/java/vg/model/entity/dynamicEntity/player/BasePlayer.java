@@ -139,14 +139,14 @@ public final class BasePlayer extends DynamicEntity implements Player {
      * @param dir Direction vector that define sign of speed's coordinates
      */
     @Override
-    public void changeDirection(final Direction dir) {
+    public void changeDirection(final Direction dir, final boolean isOnBorder) {
         if (lastMovingDir == null) {
             lastMovingDir = dir;
         }
-        if ((lastMovingDir == Direction.DOWN && dir == Direction.UP)
+        if (!isOnBorder && ((lastMovingDir == Direction.DOWN && dir == Direction.UP)
                 || (lastMovingDir == Direction.UP && dir == Direction.DOWN)
                 || (lastMovingDir == Direction.LEFT && dir == Direction.RIGHT)
-                || (lastMovingDir == Direction.RIGHT && dir == Direction.LEFT)
+                || (lastMovingDir == Direction.RIGHT && dir == Direction.LEFT))
         ) {
             this.direction = Direction.NONE;
         } else {

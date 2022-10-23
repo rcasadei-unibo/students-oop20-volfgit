@@ -266,7 +266,7 @@ public class StageImpl<T> implements Stage<V2D> {
             if (l.size()<2) {
                 ((DynamicEntity) getPlayer()).setSpeed(getPlayer().getSpeed().scalarMul(-1));
                 getPlayer().move();
-                getPlayer().changeDirection(Direction.NONE);
+                getPlayer().changeDirection(Direction.NONE,true);
                 ((DynamicEntity) getPlayer()).setSpeed(getPlayer().getSpeed().scalarMul(-1));
                 getPlayer().getTail().resetTail();
                 return;

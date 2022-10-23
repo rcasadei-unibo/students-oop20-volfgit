@@ -148,7 +148,6 @@ public class GameControllerImpl extends Controller<AdaptableView<GameBoardContro
     }
 
     /**
-<<<<<<< HEAD
      * Render static elements that during game-loop doesn't change.
      */
     private void oneTimeRender() {
@@ -162,8 +161,6 @@ public class GameControllerImpl extends Controller<AdaptableView<GameBoardContro
     }
 
     /**
-=======
->>>>>>> 9843c10fda01151e40e2cf227a5d3ab49b4ca1e9
      * Update view of game on JavaFX thread in order to no block controller thread.
      */
     private void render() {
@@ -310,7 +307,8 @@ public class GameControllerImpl extends Controller<AdaptableView<GameBoardContro
      * @param dir new direction of player to be set
      */
     private void appendPlayerCommand(final Direction dir) {
-        this.movementQueue.add(pl -> pl.changeDirection(dir));
+        Boolean isOnBorder = this.stageDomain.getMap().isPlayerOnBorders();
+        this.movementQueue.add(pl -> pl.changeDirection(dir, isOnBorder));
     }
 
     @Override

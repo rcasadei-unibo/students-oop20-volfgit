@@ -27,13 +27,13 @@ public class PlayerTest {
         assertEquals(position, pl.getPosition());
         pl.move();
         assertEquals(new V2D(5, 5), pl.getPosition());
-        pl.changeDirection(Direction.DOWN);
+        pl.changeDirection(Direction.DOWN, true);
         pl.move();
         pl.move();
         pl.move();
         assertEquals(new V2D(5, 8), pl.getPosition());
 
-        pl.changeDirection(Direction.LEFT);
+        pl.changeDirection(Direction.LEFT, true);
         pl.move();
         pl.move();
         pl.move();
@@ -46,7 +46,7 @@ public class PlayerTest {
         //Default player speed is (1,1)
         Player pl1 = BasePlayer.newPlayer(new V2D(0, 0));
         V2D bonusSpeed = new V2D(3, 3);
-        pl1.changeDirection(Direction.DOWN);
+        pl1.changeDirection(Direction.DOWN, true);
 
         pl1.move();
         assertEquals(new V2D(0, 1), pl1.getPosition());
