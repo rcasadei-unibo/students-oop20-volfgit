@@ -1,4 +1,4 @@
-package vg.model.Boss;
+package vg.model.entity.Boss;
 
 import javafx.geometry.Dimension2D;
 import vg.model.entity.dynamicEntity.enemy.Boss;

@@ -1,4 +1,4 @@
-package vg.model.Boss.weapon;
+package vg.model.entity.Boss.weapon;
 
 import vg.model.entity.dynamicEntity.bullet.Bolt;
 import vg.utils.Direction;
