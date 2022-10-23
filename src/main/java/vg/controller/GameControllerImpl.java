@@ -65,7 +65,7 @@ public class GameControllerImpl extends Controller<AdaptableView<GameBoardContro
         this.movementQueue = new ArrayList<>();
         this.stageDomain = stageDomain;
         this.getGameViewController().initMapView();
-        this.render();
+        this.render(true);
         this.stageDomain.setEntityManagerController(this.entityManager);
     }
 
@@ -84,6 +84,8 @@ public class GameControllerImpl extends Controller<AdaptableView<GameBoardContro
      */
     private void gameLoop() {
         oneTimeRender();
+        render(true);
+       // this.gameState = GameState.GAMEOVER;
         //Launch on new thread game loop in order to not block gui.
         new Thread(() -> {
             long prevCycleTime = System.currentTimeMillis();
@@ -92,7 +94,7 @@ public class GameControllerImpl extends Controller<AdaptableView<GameBoardContro
                 long elapsedTime = curCycleTime - prevCycleTime;
                 this.processInput();
                 updateGameDomain(elapsedTime);
-                render();
+                render(false);
                 checkGameoverCondition();
                 checkVictory();
                 waitForNextFrame(curCycleTime);
@@ -101,7 +103,6 @@ public class GameControllerImpl extends Controller<AdaptableView<GameBoardContro
             if (this.gameState == GameState.GAMEOVER) {
                 this.gameOver();
             } else if (this.gameState == GameState.VICTORY) {
-                System.out.println("Percentage: "+  this.stageDomain.getMap().getOccupiedPercentage());
                 this.victory();
             } else if (gameState == GameState.PAUSED) {
                 this.showPause();
@@ -171,12 +172,12 @@ public class GameControllerImpl extends Controller<AdaptableView<GameBoardContro
     /**
      * Update view of game on JavaFX thread in order to no block controller thread.
      */
-    private void render() {
+    private void render(final boolean forceBorder) {
         List<V2D> borderList = new ArrayList<>();
         Set<V2D> border = this.stageDomain.getBorders();
         boolean areBorderUpdated = this.stageDomain.isBorderUpdated();
         this.stageDomain.consumeBorderUpdatedState();
-        if (areBorderUpdated) {
+        if (areBorderUpdated || forceBorder) {
             borderList.add(border.stream().findFirst().get());
             while (borderList.size() < border.size()) {
                 Optional<V2D> vect = border.stream()
@@ -187,7 +188,7 @@ public class GameControllerImpl extends Controller<AdaptableView<GameBoardContro
         }
         //Execute view update on JavaFX thread
         Platform.runLater(() -> {
-            if (areBorderUpdated) {
+            if (areBorderUpdated || forceBorder) {
                 //Borders
                 getGameViewController().updateBorders(V2DUtility.getVertex(borderList));
             }
