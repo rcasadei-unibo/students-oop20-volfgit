@@ -54,7 +54,10 @@ public class levelGenerator {
             null, //TODO: !!!!!
             dsLv1,
             defaultBorders);
-
+    //TODO actually create different levels
+    private Map<V2D> lv2 = lv1;
+    private Map<V2D> lv3 = lv1;
+    private Map<V2D> lv4 = lv1;
 
     /**
      * Generates n {@link Mosquitoes} that are in borders and not colliding
@@ -84,11 +87,21 @@ public class levelGenerator {
     public void serializeDefaults() throws IOException {
         FileOutputStream fileOutLv1 = new FileOutputStream("1");
         ObjectOutputStream lv1 = new ObjectOutputStream(fileOutLv1);
-        //TODO: FIX
         lv1.writeObject(this.lv1);
         lv1.flush();
         lv1.close();
-        //do this for every level
+        //do this for every level (also to find a better way)
+        FileOutputStream fileOutLv2 = new FileOutputStream("2");
+        ObjectOutputStream lv2 = new ObjectOutputStream(fileOutLv1);
+        lv1.writeObject(this.lv2);
+        lv1.flush();
+        lv1.close();
+
+        FileOutputStream fileOutLv3 = new FileOutputStream("3");
+        ObjectOutputStream lv3 = new ObjectOutputStream(fileOutLv1);
+        lv1.writeObject(this.lv3);
+        lv1.flush();
+        lv1.close();
     }
 
     public void serializeState(final Map<V2D> map) throws IOException {
