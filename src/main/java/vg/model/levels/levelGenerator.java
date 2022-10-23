@@ -5,6 +5,7 @@ import vg.model.Map;
 import vg.model.MapImpl;
 import vg.model.entity.dynamicEntity.DynamicEntity;
 import vg.model.entity.dynamicEntity.enemy.Boss;
+import vg.model.entity.dynamicEntity.enemy.EmptyBoss;
 import vg.model.entity.dynamicEntity.enemy.Mosquitoes;
 import vg.model.entity.dynamicEntity.player.BasePlayer;
 import vg.model.entity.staticEntity.StaticEntity;
@@ -38,7 +39,7 @@ public class levelGenerator {
     /**
      * Lv1.
      */
-    private Boss bossLv1 = new BossImpl(new V2D(1, 1));
+    private Boss bossLv1 = new EmptyBoss(new V2D(100, 100), new V2D(1, 1), 3,  Shape.CIRCLE, MassTier.HIGH);
 /*
     private Set<StaticEntity> ssLv1 = new HashSet<>(Stream.of(5, 100, 195)
             .flatMap(e -> Stream.of(new V2D(e,148)))

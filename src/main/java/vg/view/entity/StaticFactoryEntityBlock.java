@@ -18,7 +18,11 @@ public class StaticFactoryEntityBlock {
  //       block.setImage(PathImageMysteryBox.MYSTERY_BOX);
         return new EntityBlockImpl(position, dimension);
     }
-
+    public static EntityBlock createMosquitoes(Dimension2D position, Dimension2D dimension) {
+        EntityBlock block = new EntityBlockImpl(position, dimension);
+        //       block.setImage(PathImageMysteryBox.MYSTERY_BOX);
+        return new EntityBlockImpl(position, dimension);
+    }
     public static EntityBlock createBoss(V2D position, Dimension2D dimension) {
         EntityBlock block = new EntityBlockImpl(position, dimension);
         block.setImage(PathImageEnemy.BOSS);
