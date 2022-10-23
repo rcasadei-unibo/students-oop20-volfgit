@@ -10,6 +10,7 @@ import vg.model.entity.staticEntity.StaticEntity;
 import vg.model.levels.LEVEL;
 import vg.utils.Direction;
 
+import java.util.List;
 import java.util.Set;
 
 /**
@@ -101,7 +102,7 @@ public interface Stage<T> {
      * entities con collide with.
      * @return The Set of T, a data structure containing the borders of the map.
      */
-    Set<T> getBorders();
+    List<T> getBorders();
 
     /**
      * Return all entities on the map.

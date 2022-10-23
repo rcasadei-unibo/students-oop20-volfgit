@@ -14,6 +14,7 @@ import vg.utils.V2D;
 
 import java.io.*;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Random;
 import java.util.Set;
 import java.util.stream.Collectors;
@@ -25,9 +26,15 @@ public class levelGenerator {
     /**
      * The borders are the same for every level at the beginning.
      */
-    private final Set<V2D> defaultBorders = IntStream.rangeClosed(0, MapImpl.MAXBORDERX).boxed().
-            flatMap(e -> Stream.of(new V2D(e,0),new V2D(0,e), new V2D(MapImpl.MAXBORDERX,e), new V2D(e,MapImpl.MAXBORDERY))).filter(e->e.getY()<=MapImpl.MAXBORDERY).
-            collect(Collectors.toSet());
+    private final List<V2D> defaultBorders = Stream.concat(
+            Stream.concat(
+            IntStream.rangeClosed(0, MapImpl.MAXBORDERX).boxed().flatMap(e -> Stream.of(new V2D(e,0))),
+            IntStream.rangeClosed(0, MapImpl.MAXBORDERY).boxed().flatMap(e -> Stream.of(new V2D(MapImpl.MAXBORDERX,e)))),
+            Stream.concat(
+            IntStream.rangeClosed(0, MapImpl.MAXBORDERX).boxed().flatMap(e -> Stream.of(new V2D(MapImpl.MAXBORDERX-e,MapImpl.MAXBORDERY))),
+            IntStream.rangeClosed(0, MapImpl.MAXBORDERY).boxed().flatMap(e -> Stream.of(new V2D(0,MapImpl.MAXBORDERY-e))))
+    ).distinct().collect(Collectors.toList());
+
     /**
      * Lv1.
      */

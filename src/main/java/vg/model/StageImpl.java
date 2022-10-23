@@ -187,7 +187,7 @@ public class StageImpl<T> implements Stage<V2D> {
      * {@inheritDoc}
      */
     @Override
-    public Set<V2D> getBorders() {
+    public List<V2D> getBorders() {
         return getMap().getBorders();
     }
     /**
@@ -319,6 +319,7 @@ public class StageImpl<T> implements Stage<V2D> {
      */
     @Override
     public void doCycle() {
+        System.out.println(getBorders());
         getPlayer().move();
         if (!getMap().isPlayerOnBorders() || !getPlayer().getTail().getCoordinates().isEmpty()) {
             ((MapImpl) getMap()).addTailPointsByPlayerSpeed();
