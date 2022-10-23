@@ -89,7 +89,7 @@ public class MysteryBoxControllerImpl implements MysteryBoxController {
         final V2D position = new V2D(posX, posY);
         final boolean isOnBorder = map.isInBorders(position);
 
-        if (true) {
+        if (false) {
             this.model.activate(stage);
             this.model.hide();
             this.view.setImage(this.model.getPathReveled());

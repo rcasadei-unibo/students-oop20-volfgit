@@ -138,7 +138,6 @@ public class GameControllerImpl extends Controller<AdaptableView<GameBoardContro
         this.stageDomain.doCycle();
         this.entityManager.moveEntityBoss(elapsedTime);
         this.entityManager.countingTimeMysteryBox(elapsedTime, this.stageDomain);
-        this.stageDomain.doCycle();
         this.entityManager.checkMysteryBoxOnBorder(this.stageDomain, this.getGameViewController());
     }
 

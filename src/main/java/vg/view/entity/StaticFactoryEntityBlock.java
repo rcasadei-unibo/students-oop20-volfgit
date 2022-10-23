@@ -7,26 +7,19 @@ import vg.utils.path.PathImageMysteryBox;
 
 public class StaticFactoryEntityBlock {
 
-    public static EntityBlock createMysteryBox(V2D position, Dimension2D dimension) {
+    public static EntityBlock createMysteryBox(final V2D position, final Dimension2D dimension) {
         EntityBlock block = new EntityBlockImpl(position, dimension);
         block.setImage(PathImageMysteryBox.MYSTERY_BOX);
         return block;
     }
-
-    public static EntityBlock createMosquitoes(V2D position, Dimension2D dimension) {
+    public static EntityBlock createMosquitoes(final V2D position, final Dimension2D dimension) {
         EntityBlock block = new EntityBlockImpl(position, dimension);
- //       block.setImage(PathImageMysteryBox.MYSTERY_BOX);
-        return new EntityBlockImpl(position, dimension);
+        block.setImage(PathImageEnemy.MOSQUITOES);
+        return block;
     }
-    public static EntityBlock createMosquitoes(Dimension2D position, Dimension2D dimension) {
-        EntityBlock block = new EntityBlockImpl(position, dimension);
-        //       block.setImage(PathImageMysteryBox.MYSTERY_BOX);
-        return new EntityBlockImpl(position, dimension);
-    }
-    public static EntityBlock createBoss(V2D position, Dimension2D dimension) {
+    public static EntityBlock createBoss(final V2D position, final Dimension2D dimension) {
         EntityBlock block = new EntityBlockImpl(position, dimension);
         block.setImage(PathImageEnemy.BOSS);
-        block.hideImageOverlay();
-        return new EntityBlockImpl(position, dimension);
+        return block;
     }
 }

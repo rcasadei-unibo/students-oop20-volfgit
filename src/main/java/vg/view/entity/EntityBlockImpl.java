@@ -14,23 +14,9 @@ public class EntityBlockImpl extends Rectangle implements EntityBlock {
     public EntityBlockImpl(V2D position, Dimension2D dimension)  {
         super(dimension.getWidth(), dimension.getHeight());
         this.rectangleOverlay = new Rectangle(dimension.getWidth(), dimension.getHeight());
-
         V2D centerPos = new V2D(position.getX() - dimension.getWidth() / 2, position.getY() - dimension.getHeight() / 2);
         this.setPosition(centerPos);
         this.hideImageOverlay();
-//        this.showCollider();
-    }
-    public EntityBlockImpl(Dimension2D position, Dimension2D dimension)  {
-        super(dimension.getWidth(), dimension.getHeight());
-        this.rectangleOverlay = new Rectangle(dimension.getWidth(), dimension.getHeight());
-
-        this.setX(position.getWidth() - dimension.getWidth() / 2);
-        this.rectangleOverlay.setX(position.getWidth() - dimension.getWidth() / 2);
-        this.setY(position.getHeight() - dimension.getHeight() / 2);
-        this.rectangleOverlay.setY(position.getHeight() - dimension.getHeight() / 2);
-
-        this.hideImageOverlay();
-//        this.showCollider();
     }
     @Override
     public V2D getPosition() {
