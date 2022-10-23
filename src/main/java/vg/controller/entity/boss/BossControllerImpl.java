@@ -1,7 +1,7 @@
 package vg.controller.entity.boss;
 
 import vg.controller.gameBoard.GameBoardController;
-import vg.model.Boss.BossModel;
+import vg.model.entity.Boss.BossModel;
 import vg.view.entity.EntityBlock;
 
 public class BossControllerImpl implements BossController {
@@ -17,5 +17,11 @@ public class BossControllerImpl implements BossController {
     @Override
     public void setInParentNode(GameBoardController gameController) {
         this.view.setInParentNode(gameController.getGameAreaNode());
+    }
+
+    @Override
+    public void move() {
+        this.model.move();
+        this.view.setPosition(this.model.getPosition());
     }
 }

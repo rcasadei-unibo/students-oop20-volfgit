@@ -59,6 +59,8 @@ public class GameControllerImpl extends Controller<AdaptableView<GameBoardContro
      */
     private final EntityManager entityManager;
 
+    private Set<V2D> prevBorders;
+
     public GameControllerImpl(final AdaptableView<GameBoardController> view, final Stage<V2D> stageDomain, final ViewManager viewManager) {
         super(view, viewManager);
         this.entityManager = new EntityManagerImpl();
@@ -133,6 +135,8 @@ public class GameControllerImpl extends Controller<AdaptableView<GameBoardContro
     private void updateGameDomain(final long elapsedTime) {
         this.stageDomain.getPlayer().getShield().updateTimer(elapsedTime);
         this.stageDomain.getMap().updateBonusTimer(elapsedTime);
+        this.stageDomain.doCycle();
+        this.entityManager.moveEntityBoss(elapsedTime);
         this.entityManager.countingTimeMysteryBox(elapsedTime, this.stageDomain);
         this.stageDomain.doCycle();
         this.entityManager.checkMysteryBoxOnBorder(this.stageDomain, this.getGameViewController());

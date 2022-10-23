@@ -1,6 +1,6 @@
 package vg.model.levels;
 
-import vg.model.Boss.BossImpl;
+import vg.model.entity.Boss.BossImpl;
 import vg.model.entity.dynamicEntity.DynamicEntity;
 import vg.model.entity.dynamicEntity.enemy.Boss;
 import vg.model.entity.dynamicEntity.enemy.Mosquitoes;

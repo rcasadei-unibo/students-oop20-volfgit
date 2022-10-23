@@ -15,4 +15,6 @@ public interface EntityManager {
     void countingTimeMysteryBox(long elapsedTime, Stage<V2D> stage);
 
     void checkMysteryBoxOnBorder(Stage<V2D> stage, GameBoardController gameController);
+
+    void moveEntityBoss(long elapsedTime);
 }

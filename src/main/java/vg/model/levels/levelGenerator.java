@@ -1,6 +1,6 @@
 package vg.model.levels;
 
-import vg.model.Boss.BossImpl;
+import vg.model.entity.Boss.BossImpl;
 import vg.model.Map;
 import vg.model.MapImpl;
 import vg.model.entity.dynamicEntity.DynamicEntity;
@@ -15,7 +15,6 @@ import vg.utils.V2D;
 
 import java.io.*;
 import java.util.HashSet;
-import java.util.List;
 import java.util.Random;
 import java.util.Set;
 import java.util.stream.Collectors;

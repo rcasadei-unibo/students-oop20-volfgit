@@ -41,4 +41,9 @@ public class EntityManagerImpl implements EntityManager {
     public void checkMysteryBoxOnBorder(final Stage<V2D> stage, final GameBoardController gameController) {
         this.mysteryBoxManager.checkMysteryBoxOnBorder(stage, gameController);
     }
+
+    @Override
+    public void moveEntityBoss(final long elapsedTime) {
+        this.boss.move();
+    }
 }
