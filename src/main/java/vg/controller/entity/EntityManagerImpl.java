@@ -17,7 +17,7 @@ public class EntityManagerImpl implements EntityManager {
     }
 
     @Override
-    public void initializeRound(GameBoardController gameController) {
+    public void initializeRound(final GameBoardController gameController) {
         this.mysteryBoxManager.initializeRound(gameController);
 
     }

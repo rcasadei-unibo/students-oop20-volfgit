@@ -74,7 +74,7 @@ public class MysteryBoxManagerImpl implements MysteryBoxManager {
         List<MysteryBoxController> mysteryBoxActivateList = this.getMysteryBoxActiveAndDuraleList();
 
         mysteryBoxActivateList.forEach(mysteryBox -> {
-            AbilityDurable abilityDurable = (AbilityDurable) mysteryBox;
+            AbilityDurable abilityDurable = mysteryBox.getDurability();
             abilityDurable.updateTimer(elapsedTime);
             if (abilityDurable.isTimeOver()) {
                 abilityDurable.deActivate(stage);

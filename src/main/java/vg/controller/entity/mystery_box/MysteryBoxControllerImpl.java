@@ -6,6 +6,7 @@ import vg.controller.gameBoard.GameBoardController;
 import vg.model.Map;
 import vg.model.MapImpl;
 import vg.model.Stage;
+import vg.model.mystery_box.AbilityDurable;
 import vg.model.mystery_box.AbilityInTheBox;
 import vg.model.mystery_box.ETypeAbility;
 import vg.model.mystery_box.data_round.DataRound;
@@ -22,6 +23,11 @@ public class MysteryBoxControllerImpl implements MysteryBoxController {
         this.view = view;
     }
 
+
+    @Override
+    public AbilityDurable getDurability() {
+        return (AbilityDurable) this.model;
+    }
 
     @Override
     public V2D getPosition() {
@@ -73,7 +79,7 @@ public class MysteryBoxControllerImpl implements MysteryBoxController {
 
     @Override
     public void checkOnBorder(final Stage<V2D> stage, final GameBoardController gameController) {
-        if(!this.model.isShow()) {
+        if(!this.model.isShow() || this.model.isActivated()) {
             return;
         }
         Map<V2D> map = stage.getMap();
@@ -84,7 +90,7 @@ public class MysteryBoxControllerImpl implements MysteryBoxController {
 
         if (isOnBorder) {
             this.model.activate(stage);
-//            this.hide();
+            this.hide();
         }
     }
 

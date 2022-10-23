@@ -87,7 +87,7 @@ public class EntityBlockImpl extends Rectangle implements EntityBlock {
     }
 
     @Override
-    public void setShow(boolean show) {
+    public void setShow(final boolean show) {
         this.setVisible(show);
 
         boolean isVisible = this.rectangleOverlay.isVisible() && show;
@@ -100,6 +100,6 @@ public class EntityBlockImpl extends Rectangle implements EntityBlock {
     }
 
     public Dimension2D getDimension2D(){
-        return new Dimension2D(this.getX(),this.getY());
+        return new Dimension2D(this.getX(), this.getY());
     }
 }
