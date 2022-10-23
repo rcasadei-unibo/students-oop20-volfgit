@@ -38,7 +38,7 @@ public class levelGenerator {
     /**
      * Lv1.
      */
-    private Boss bossLv1 = new BossImpl(new V2D(110, 40), new V2D(1, 1), 5, Shape.SQUARE, MassTier.HIGH);
+    private Boss bossLv1 = new BossImpl(new V2D(1, 1));
 /*
     private Set<StaticEntity> ssLv1 = new HashSet<>(Stream.of(5, 100, 195)
             .flatMap(e -> Stream.of(new V2D(e,148)))
