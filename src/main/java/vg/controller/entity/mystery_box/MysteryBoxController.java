@@ -32,5 +32,4 @@ public interface MysteryBoxController {
 
     boolean isActivated();
 
-    void hide();
 }

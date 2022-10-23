@@ -101,10 +101,5 @@ public class MysteryBoxControllerImpl implements MysteryBoxController {
         return this.model.isActivated();
     }
 
-    @Override
-    public void hide() {
-        this.model.hide();
-        this.view.setShow(this.model.isShow());
-    }
 
 }
