@@ -3,17 +3,16 @@ package vg.model.mystery_box.concrete;
 import vg.model.Stage;
 import vg.model.entity.dynamicEntity.DynamicEntity;
 import vg.model.mystery_box.AbilityDurable;
-import vg.model.mystery_box.AbilityInTheBox;
 import vg.model.mystery_box.AbstractAbilityDurable;
 import vg.model.mystery_box.EAbility;
-import vg.model.timedObject.TimedObject;
 import vg.utils.V2D;
 
 
 public class AbilityFreezeTimeImpl extends AbstractAbilityDurable implements AbilityDurable {
+    private static final double DURATION = 5000;
 
-    public AbilityFreezeTimeImpl(final EAbility idAbility, final double duration) {
-        super(idAbility, duration);
+    public AbilityFreezeTimeImpl(final EAbility idAbility) {
+        super(idAbility, DURATION);
     }
 
     @Override

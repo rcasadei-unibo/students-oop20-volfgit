@@ -82,15 +82,17 @@ public class MysteryBoxControllerImpl implements MysteryBoxController {
         if(!this.model.isShow() || this.model.isActivated()) {
             return;
         }
+
         Map<V2D> map = stage.getMap();
         double posX = this.getPosition().getX() * MapImpl.MAXBORDERX / gameController.getGameAreaDimension().getWidth();
         double posY = this.getPosition().getY() * MapImpl.MAXBORDERY / gameController.getGameAreaDimension().getHeight();
         V2D position = new V2D(posX, posY);
         boolean isOnBorder = map.isInBorders(position);
 
-        if (isOnBorder) {
-            this.model.activate(stage);
-            this.hide();
+        if (true) {
+//            this.model.activate(stage);
+//            this.model.hide();
+            this.view.setImage(this.model.getPathReveled());
         }
     }
 
@@ -98,18 +100,5 @@ public class MysteryBoxControllerImpl implements MysteryBoxController {
     public boolean isActivated() {
         return this.model.isActivated();
     }
-
-    @Override
-    public void show() {
-        this.model.show();
-        this.view.setShow(this.model.isShow());
-    }
-
-    @Override
-    public void hide() {
-        this.model.hide();
-        this.view.setShow(this.model.isShow());
-    }
-
 
 }

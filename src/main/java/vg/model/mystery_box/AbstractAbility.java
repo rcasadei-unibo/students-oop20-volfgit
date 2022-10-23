@@ -39,6 +39,9 @@ public abstract class AbstractAbility extends StaticEntity {
     public EAbility getIdAbility() {
         return this.idAbility;
     }
+    public String getPathReveled() {
+        return this.idAbility.getPathReveled();
+    }
 
     public ETypeAbility getTypeAbility() {
         return this.typeAbility;

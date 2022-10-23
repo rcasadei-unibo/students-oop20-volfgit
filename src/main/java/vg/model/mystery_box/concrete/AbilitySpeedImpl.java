@@ -3,19 +3,19 @@ package vg.model.mystery_box.concrete;
 import vg.model.Stage;
 import vg.model.entity.dynamicEntity.player.Player;
 import vg.model.mystery_box.AbilityDurable;
-import vg.model.mystery_box.AbilityInTheBox;
 import vg.model.mystery_box.AbstractAbilityDurable;
 import vg.model.mystery_box.EAbility;
-import vg.model.timedObject.TimedObject;
 import vg.utils.V2D;
 
 public class AbilitySpeedImpl extends AbstractAbilityDurable implements AbilityDurable {
     private static final double INCREASE_SPEED = 1;
+    private static final double DURATION = 5000;
+
     private final double speedIncrease;
 
 
-    public AbilitySpeedImpl(final EAbility idAbility, final double duration) {
-        super(idAbility, duration);
+    public AbilitySpeedImpl(final EAbility idAbility) {
+        super(idAbility, DURATION);
         this.speedIncrease = INCREASE_SPEED;
     }
 
