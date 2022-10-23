@@ -24,6 +24,8 @@ import vg.view.utils.CountdownView;
 import vg.view.utils.KeyAction;
 import java.util.*;
 
+import static vg.model.StageImpl.MAP_PERC_WIN_CONDITION;
+
 /**
  * Game Engine class, manager game loop and refresh timing
  * during gameplay.
@@ -33,6 +35,7 @@ public class GameControllerImpl extends Controller<AdaptableView<GameBoardContro
      * Waiting time of timed screens.
      */
     private static final int SCREEN_DURATION_TIME = 4;
+
     /**
      * Command queue of new player's movement got from input to be applied.
      */
@@ -48,7 +51,7 @@ public class GameControllerImpl extends Controller<AdaptableView<GameBoardContro
     /**
      * Game domain.
      */
-    private Stage<V2D> stageDomain;
+    private final Stage<V2D> stageDomain;
 
     /**
      * Entity manager for managing mistery-boxes and bonuses.
@@ -98,6 +101,7 @@ public class GameControllerImpl extends Controller<AdaptableView<GameBoardContro
             if (this.gameState == GameState.GAMEOVER) {
                 this.gameOver();
             } else if (this.gameState == GameState.VICTORY) {
+                System.out.println("Percentage: "+  this.stageDomain.getMap().getOccupiedPercentage());
                 this.victory();
             } else if (gameState == GameState.PAUSED) {
                 this.showPause();
@@ -128,8 +132,8 @@ public class GameControllerImpl extends Controller<AdaptableView<GameBoardContro
     private void updateGameDomain(final long elapsedTime) {
         this.stageDomain.getPlayer().getShield().updateTimer(elapsedTime);
         this.stageDomain.getMap().updateBonusTimer(elapsedTime);
-        this.stageDomain.doCycle();
         this.entityManager.countingTimeMysteryBox(elapsedTime, this.stageDomain);
+        this.stageDomain.doCycle();
         this.entityManager.checkMysteryBoxOnBorder(this.stageDomain, this.getGameViewController());
     }
 
@@ -146,7 +150,7 @@ public class GameControllerImpl extends Controller<AdaptableView<GameBoardContro
      * Check condition of victory then set {@link GameControllerImpl#gameState} if player complete current level.
      */
     private void checkVictory() {
-        if (this.stageDomain.getMap().getOccupiedPercentage() > 80) {
+        if (this.stageDomain.getMap().getOccupiedPercentage()*100 > MAP_PERC_WIN_CONDITION) {
             this.gameState = GameState.VICTORY;
         }
     }
@@ -172,10 +176,8 @@ public class GameControllerImpl extends Controller<AdaptableView<GameBoardContro
         Set<V2D> border = this.stageDomain.getBorders();
         boolean areBorderUpdated = this.stageDomain.isBorderUpdated();
         this.stageDomain.consumeBorderUpdatedState();
-
         if (areBorderUpdated) {
             borderList.add(border.stream().findFirst().get());
-
             while (borderList.size() < border.size()) {
                 Optional<V2D> vect = border.stream()
                         .filter(e -> !borderList.contains(e) && e.isAdj(borderList.get(borderList.size()-1)))
@@ -183,13 +185,12 @@ public class GameControllerImpl extends Controller<AdaptableView<GameBoardContro
                 vect.ifPresent(borderList::add);
             }
         }
-
+        //Execute view update on JavaFX thread
         Platform.runLater(() -> {
             if (areBorderUpdated) {
                 //Borders
                 getGameViewController().updateBorders(V2DUtility.getVertex(borderList));
             }
-
             //Game Counters
             getGameViewController().updateLifeCounter(this.stageDomain.getPlayer().getLife());
             getGameViewController().updateShieldTime(this.stageDomain.getPlayer().getShield().getRemainingTime());
@@ -266,11 +267,11 @@ public class GameControllerImpl extends Controller<AdaptableView<GameBoardContro
                 stageDomain.getLv());
         transView.setIoLogicController(this);
         showTimedView(transView, SCREEN_DURATION_TIME);
-        resumeGame();
+        Platform.runLater(this::resumeGame);
     }
 
     /**
-     * Show for an amount of time a view then remove it.
+     * Show for an amount of time then return;
      *
      * @param view View to be temporarily showed that implements {@link CountdownView}
      * @param duration amount of time to show the view
@@ -288,7 +289,6 @@ public class GameControllerImpl extends Controller<AdaptableView<GameBoardContro
                     e.printStackTrace();
                 }
             }
-            Platform.runLater(() -> getViewManager().popScene());
     }
 
     /**

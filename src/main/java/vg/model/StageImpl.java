@@ -23,7 +23,7 @@ import java.util.stream.Stream;
  * @see V2D
  */
 public class StageImpl<T> implements Stage<V2D> {
-
+    public static final double MAP_PERC_WIN_CONDITION = 20.0;
     /**
      * The current level.
      */
@@ -410,7 +410,7 @@ public class StageImpl<T> implements Stage<V2D> {
      * @throws ClassNotFoundException may be launched if Map class is changed and the saved one is not updated.
      */
     private void nextLevelFromSerialized() throws IOException, ClassNotFoundException {
-        if (getMap().getOccupiedPercentage() > 80) {
+        if (getMap().getOccupiedPercentage() > MAP_PERC_WIN_CONDITION) {
             this.setCurrentScore(getCurrentScore() + (int) (getMap().getOccupiedPercentage() * 1000));
             var mf = new MapFactoryImpl();
             this.setLv(getLv() + 1);
