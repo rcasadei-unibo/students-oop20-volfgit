@@ -10,10 +10,12 @@ public abstract class DynamicEntity extends ShapedEntity {
      * Entity movement speed.
      * */
     private V2D speed;
+    private V2D speedSaved;
 
     public DynamicEntity(final V2D position, final V2D speed, final int radius, final Shape shape, final MassTier massTier) {
         super(position, radius, shape, massTier);
         this.speed = speed;
+        this.speedSaved = speed;
     }
 
     /**
@@ -57,5 +59,13 @@ public abstract class DynamicEntity extends ShapedEntity {
 
     private void bounces() {
         //TODO invertire speed
+    }
+
+    public void saveMySpeed() {
+        this.speedSaved = speed;
+    }
+
+    public void restoreMySpeed() {
+        this.speed = speedSaved;
     }
 }

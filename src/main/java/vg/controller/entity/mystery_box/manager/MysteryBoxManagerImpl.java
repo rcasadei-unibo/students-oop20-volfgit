@@ -1,16 +1,18 @@
 package vg.controller.entity.mystery_box.manager;
 
-import vg.controller.gameBoard.GameBoardController;
 import vg.controller.entity.mystery_box.MysteryBoxController;
 import vg.controller.entity.mystery_box.StaticFactoryMysteryBox;
+import vg.controller.gameBoard.GameBoardController;
 import vg.model.Stage;
-import vg.model.entity.dynamicEntity.player.Player;
+import vg.model.mystery_box.AbilityDurable;
+import vg.model.mystery_box.ETypeAbility;
 import vg.model.mystery_box.data_round.DataRound;
 import vg.utils.Round.MysteryBoxPositionUtils;
 import vg.utils.V2D;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 public class MysteryBoxManagerImpl implements MysteryBoxManager {
 
@@ -52,17 +54,40 @@ public class MysteryBoxManagerImpl implements MysteryBoxManager {
     }
 
     @Override
+    public List<MysteryBoxController> getMysteryBoxActiveAndDuraleList() {
+        return this.mysteryBoxList.stream()
+                .filter(mysteryBox -> mysteryBox.isType(ETypeAbility.DURABLE) && mysteryBox.isActivated())
+                .collect(Collectors.toList());
+    }
+
+    @Override
     public void increaseRound() {
         this.round++;
     }
 
     @Override
-    public void updateBlinkingMysteryBox(final long elapsedTime) {
+    public void updateTimeBlinking(final long elapsedTime) {
         this.mysteryBoxList.forEach(mysteryBox -> mysteryBox.updateBlinking(elapsedTime));
+    }
+    @Override
+    public void updateTimeIfAbilityActive(final long elapsedTime, final Stage<V2D> stage) {
+        List<MysteryBoxController> mysteryBoxActivateList = this.getMysteryBoxActiveAndDuraleList();
+
+        mysteryBoxActivateList.forEach(mysteryBox -> {
+            AbilityDurable abilityDurable = (AbilityDurable) mysteryBox;
+            abilityDurable.updateTimer(elapsedTime);
+            if (abilityDurable.isTimeOver()) {
+                abilityDurable.deActivate(stage);
+            }
+        });
+
     }
 
     @Override
     public void checkMysteryBoxOnBorder(final Stage<V2D> stage, final GameBoardController gameController) {
         this.mysteryBoxList.forEach(mysteryBox -> mysteryBox.checkOnBorder(stage, gameController));
     }
+
+
+
 }

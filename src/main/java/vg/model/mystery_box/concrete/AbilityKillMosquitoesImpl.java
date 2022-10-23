@@ -15,6 +15,7 @@ public class AbilityKillMosquitoesImpl extends AbstractAbilityInstant implements
 
     @Override
     public void activate(final Stage<V2D> stage) {
+        this.activated();
         stage.getToDestroySet().addAll(stage.getDynamicEntitySet());
     }
 }

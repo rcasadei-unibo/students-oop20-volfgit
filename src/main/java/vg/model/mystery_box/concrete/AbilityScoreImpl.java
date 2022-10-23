@@ -17,6 +17,7 @@ public class AbilityScoreImpl extends AbstractAbilityInstant implements AbilityI
 
     @Override
     public void activate(final Stage<V2D> stage) {
+        this.activated();
         int currentScore = stage.getCurrentScore();
         stage.setCurrentScore(currentScore + scoreIncrease);
     }

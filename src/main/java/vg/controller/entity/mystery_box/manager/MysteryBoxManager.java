@@ -13,11 +13,13 @@ public interface MysteryBoxManager {
     int getRound();
 
     List<MysteryBoxController> getMysteryBoxList();
-
+    List<MysteryBoxController> getMysteryBoxActiveAndDuraleList();
 
     void increaseRound();
 
-    void updateBlinkingMysteryBox(long elapsedTime);
+    void updateTimeBlinking(long elapsedTime);
+    void updateTimeIfAbilityActive(long elapsedTime, Stage<V2D> stage);
+
 
     void checkMysteryBoxOnBorder(Stage<V2D> player, GameBoardController gameController);
 

@@ -66,4 +66,8 @@ public interface AbilityInTheBox extends Entity {
     boolean isShow();
 
     void activate(Stage<V2D> stage);
+    boolean isActivated();
+
+    void show();
+    void hide();
 }

@@ -28,8 +28,9 @@ public class EntityManagerImpl implements EntityManager {
     }
 
     @Override
-    public void updateBlinkingMysteryBox(long elapsedTime) {
-        this.mysteryBoxManager.updateBlinkingMysteryBox(elapsedTime);
+    public void countingTimeMysteryBox(final long elapsedTime, final Stage<V2D> stage) {
+        this.mysteryBoxManager.updateTimeBlinking(elapsedTime);
+        this.mysteryBoxManager.updateTimeIfAbilityActive(elapsedTime, stage);
     }
 
     @Override

@@ -22,7 +22,7 @@ public interface Map<T> {
     /**
      * Will compute and return the percentage of the map that is captured
      * by the player. This is used to check if the level is completed.
-     * @return a percentage that indicates how much of the map is captured
+     * @return a percentage that indicates show much of the map is captured
      */
     double getOccupiedPercentage();
     //TODO capire come gestire i bordi dai vettori
