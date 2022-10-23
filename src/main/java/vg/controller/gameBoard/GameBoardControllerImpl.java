@@ -94,7 +94,7 @@ public class GameBoardControllerImpl extends ViewController implements GameBoard
         this.player.setInParentNode(this.getGameAreaNode());
 
         //TODO create an appropriate controller for boss?
-        this.boss = StaticFactoryEntityBlock.createBoss(new Dimension2D(0,0), modelRadiusToDimension2D(5));
+        this.boss = StaticFactoryEntityBlock.createBoss(new V2D(0, 0), modelRadiusToDimension2D(5));
         this.boss.setInParentNode(this.getGameAreaNode());
         this.mosqs = new HashSet<>();
 //        this.addInGameArea(this.boss.getNode());
@@ -116,7 +116,7 @@ public class GameBoardControllerImpl extends ViewController implements GameBoard
         ((EntityBlockImpl) this.boss).setDisable(true);
         b.setInParentNode(this.getGameAreaNode());*/
         mosquitoes.forEach(m -> {
-            EntityBlock entityBlock = StaticFactoryEntityBlock.createMosquitoes(V2DtoDimension2D(m.getPosition()), modelRadiusToDimension2D(m.getRadius()));
+            EntityBlock entityBlock = StaticFactoryEntityBlock.createMosquitoes(m.getPosition(), modelRadiusToDimension2D(m.getRadius()));
             entityBlock.setInParentNode(this.getGameAreaNode());
             this.mosqs.add(entityBlock);
             //this.mosquitoesNode.add(entityBlock.getNode());
@@ -128,7 +128,7 @@ public class GameBoardControllerImpl extends ViewController implements GameBoard
     public void updateBossPosition(final V2D bossPos) {
         ((EntityBlockImpl)this.boss).setDisable(true);
         this.getGameArea().getChildren().removeIf(Node::isDisable);
-        this.boss = StaticFactoryEntityBlock.createBoss(V2DtoDimension2D(bossPos), modelRadiusToDimension2D(5));
+        this.boss = StaticFactoryEntityBlock.createBoss(bossPos, modelRadiusToDimension2D(5));
         //((EntityBlockImpl)this.boss).setDisable(false);
         this.boss.setInParentNode(this.getGameAreaNode());
 

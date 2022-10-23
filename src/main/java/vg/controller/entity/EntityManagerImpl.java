@@ -1,5 +1,7 @@
 package vg.controller.entity;
 
+import vg.controller.entity.boss.BossController;
+import vg.controller.entity.boss.StaticFactoryBossController;
 import vg.controller.entity.mystery_box.MysteryBoxController;
 import vg.controller.entity.mystery_box.manager.MysteryBoxManager;
 import vg.controller.entity.mystery_box.manager.MysteryBoxManagerImpl;
@@ -11,15 +13,17 @@ import java.util.List;
 
 public class EntityManagerImpl implements EntityManager {
     private final MysteryBoxManager mysteryBoxManager;
+    private final BossController boss;
 
     public EntityManagerImpl() {
         this.mysteryBoxManager = new MysteryBoxManagerImpl();
+        this.boss = StaticFactoryBossController.createRound1();
     }
 
     @Override
     public void initializeRound(final GameBoardController gameController) {
         this.mysteryBoxManager.initializeRound(gameController);
-
+        this.boss.setInParentNode(gameController);
     }
 
     @Override

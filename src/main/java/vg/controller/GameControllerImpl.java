@@ -180,7 +180,7 @@ public class GameControllerImpl extends Controller<AdaptableView<GameBoardContro
                             this.stageDomain.getMap().isPlayerOnBorders() && player.getShield().isActive(),
                             player.getTail().getVertex(),
                             this.stageDomain.getMap().isTailCompleted());
-            //Boss
+            //BossModel
             getGameViewController().updateBossPosition(this.stageDomain.getBoss().getPosition());
             //Borders
             getGameViewController().updateBorders(V2DUtility.getVertex(List.copyOf(this.stageDomain.getBorders())));

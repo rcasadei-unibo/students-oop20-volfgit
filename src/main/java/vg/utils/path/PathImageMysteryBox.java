@@ -13,7 +13,7 @@ public class PathImageMysteryBox {
     public static final String COIN_SCORE = PATH_COIN + "coin-P.png";
     public static final String COIN_WEAPON_BOSS = PATH_COIN + "coin-Boom.png";
     public static final String COIN_WEAPON_MOQUETOES = PATH_COIN + "coin-L.png";
-    public static final String COIN_KILL_ALL_MOQUETOES = PATH_COIN + "coin-W.png";
+    public static final String COIN_KILL_ALL_MOQUETOES = PATH_COIN + "coin-C.png";
 
 
 }

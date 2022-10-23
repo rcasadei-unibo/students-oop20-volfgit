@@ -13,7 +13,7 @@ class PathImageMysteryBoxTest {
         assertEquals("img/mysteryBox/coins/coin-P.png", PathImageMysteryBox.COIN_SCORE);
         assertEquals("img/mysteryBox/coins/coin-Boom.png", PathImageMysteryBox.COIN_WEAPON_BOSS);
         assertEquals("img/mysteryBox/coins/coin-L.png", PathImageMysteryBox.COIN_WEAPON_MOQUETOES);
-        assertEquals("img/mysteryBox/coins/coin-W.png", PathImageMysteryBox.COIN_KILL_ALL_MOQUETOES);
+        assertEquals("img/mysteryBox/coins/coin-C.png", PathImageMysteryBox.COIN_KILL_ALL_MOQUETOES);
     }
 
 }

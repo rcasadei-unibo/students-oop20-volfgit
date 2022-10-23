@@ -22,4 +22,5 @@ public interface EntityBlock {
     void hideCollider();
 
     void setShow(boolean show);
+
 }
