@@ -240,11 +240,21 @@ public class StageImpl<T> implements Stage<V2D> {
      */
     @Override
     public void checkCollisions() {
-        //TODO add boss
+        //TODO add boss, ok now check them better, this is just to not let the game crash
+        getBorders().forEach(e -> {
+            if (getBoss().isInShape(e)){
+               getBoss().setSpeed(getMap().getAfterCollisionDirection(getBoss()));
+            }
+        });
         getDynamicEntitySet().forEach(e -> getAllEntities().forEach(t -> {
 
             if (e.isInShape((ShapedEntity) t) && !e.equals(t)) {
-                e.afterCollisionAction(t.getMassTier());
+                e.setSpeed(getMap().getAfterCollisionDirection(e));
+            }
+        }));
+        getDynamicEntitySet().forEach(e -> getBorders().forEach(t -> {
+            if(e.isInShape(t)){
+                e.setSpeed(getMap().getAfterCollisionDirection(e));
             }
         }));
     }
@@ -254,12 +264,12 @@ public class StageImpl<T> implements Stage<V2D> {
      */
     @Override
     public void checkAllOutOfBounds() {
-        getDynamicEntitySet().forEach(e -> {
+        /*getDynamicEntitySet().forEach(e -> {
             if (!((MapImpl) getMap()).isInBorders(e.getPosition())) {
                 e.setSpeed(e.getSpeed().scalarMul(-1));
                 e.move();
             }
-        });
+        });*/
         if (!((MapImpl) getMap()).isInBorders(getPlayer().getPosition()) && !getBorders().contains(getPlayer().getPosition())) {
 
             var l = getPlayer().getTail().getCoordinates().stream().filter(e -> getBorders().contains(e)).collect(Collectors.toList());
