@@ -148,6 +148,7 @@ public class GameControllerImpl extends Controller<AdaptableView<GameBoardContro
     }
 
     /**
+<<<<<<< HEAD
      * Render static elements that during game-loop doesn't change.
      */
     private void oneTimeRender() {
@@ -161,6 +162,8 @@ public class GameControllerImpl extends Controller<AdaptableView<GameBoardContro
     }
 
     /**
+=======
+>>>>>>> 9843c10fda01151e40e2cf227a5d3ab49b4ca1e9
      * Update view of game on JavaFX thread in order to no block controller thread.
      */
     private void render() {
@@ -181,7 +184,6 @@ public class GameControllerImpl extends Controller<AdaptableView<GameBoardContro
             getGameViewController().updateBossPosition(this.stageDomain.getBoss().getPosition());
             //Borders
             getGameViewController().updateBorders(V2DUtility.getVertex(List.copyOf(this.stageDomain.getBorders())));
-
             //Mosquitoes
             getGameViewController().updateMosquitoesPosition(this.stageDomain.getDynamicEntitySet());
         });
@@ -251,7 +253,7 @@ public class GameControllerImpl extends Controller<AdaptableView<GameBoardContro
     /**
      * Show for an amount of time a view then remove it.
      *
-     * @param view View to be temporary showed that implements {@link CountdownView}
+     * @param view View to be temporarily showed that implements {@link CountdownView}
      * @param duration amount of time to show the view
      */
     private void showTimedView(final CountdownView view, final int duration) {

@@ -222,6 +222,7 @@ public class StageImpl<T> implements Stage<V2D> {
      */
     @Override
     public void moveAll() {
+        getBoss().move();
         getDynamicEntitySet().forEach(DynamicEntity::move);
     }
 
@@ -239,6 +240,7 @@ public class StageImpl<T> implements Stage<V2D> {
      */
     @Override
     public void checkCollisions() {
+        //TODO add boss
         getDynamicEntitySet().forEach(e -> getAllEntities().forEach(t -> {
 
             if (e.isInShape((ShapedEntity) t) && !e.equals(t)) {

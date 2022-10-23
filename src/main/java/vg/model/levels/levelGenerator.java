@@ -25,13 +25,13 @@ public class levelGenerator {
     /**
      * The borders are the same for every level at the beginning.
      */
-    private Set<V2D> defaultBorders = IntStream.rangeClosed(0, 200).boxed().
-            flatMap(e -> Stream.of(new V2D(e,0),new V2D(0,e), new V2D(200,e), new V2D(e,150))).filter(e->e.getY()<=150).
+    private final Set<V2D> defaultBorders = IntStream.rangeClosed(0, MapImpl.MAXBORDERX).boxed().
+            flatMap(e -> Stream.of(new V2D(e,0),new V2D(0,e), new V2D(MapImpl.MAXBORDERX,e), new V2D(e,MapImpl.MAXBORDERY))).filter(e->e.getY()<=MapImpl.MAXBORDERY).
             collect(Collectors.toSet());
     /**
      * Lv1.
      */
-    private Boss bossLv1 = new BossImpl(new V2D(110, 40), new V2D(3, 3), 5, Shape.SQUARE, MassTier.HIGH);
+    private Boss bossLv1 = new BossImpl(new V2D(110, 40), new V2D(1, 1), 5, Shape.SQUARE, MassTier.HIGH);
 /*
     private Set<StaticEntity> ssLv1 = new HashSet<>(Stream.of(5, 100, 195)
             .flatMap(e -> Stream.of(new V2D(e,148)))
@@ -60,9 +60,14 @@ public class levelGenerator {
         var r = new Random();
         Set<DynamicEntity> rt = new HashSet<>();
         while (rt.size() < nEnemies) {
-            var t = new Mosquitoes(new V2D(r.nextInt(200), r.nextInt(150)), new V2D(r.nextInt(7), r.nextInt(7)), 3, Shape.CIRCLE, MassTier.LOW);
-            if (rt.stream().noneMatch(e -> e.isInShape(t)) && !boss.isInShape(t) && defaultBorders.stream().noneMatch(t::isInShape) && !t.isInShape(BasePlayer.newPlayer(new V2D(0, 0)))) {
-                rt.add(t);
+            var t = new Mosquitoes(new V2D(r.nextInt(MapImpl.MAXBORDERX), r.nextInt(MapImpl.MAXBORDERY)), new V2D(r.nextInt(3), r.nextInt(3)), 3, Shape.SQUARE, MassTier.LOW);
+            if (rt.stream().noneMatch(e -> e.isInShape(t)) &&
+                    !boss.isInShape(t) &&
+                    defaultBorders.stream().noneMatch(t::isInShape) &&
+                    !t.isInShape(BasePlayer.newPlayer(new V2D(0, 0)))) {
+                if(!t.getSpeed().equals(new V2D(0,0))) {
+                    rt.add(t);
+                }
             }
         }
         return rt;
