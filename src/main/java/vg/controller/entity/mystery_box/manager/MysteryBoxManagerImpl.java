@@ -27,16 +27,16 @@ public class MysteryBoxManagerImpl implements MysteryBoxManager {
 
     @Override
     public void initializeRound(final GameBoardController gameBoard) {
-        List<DataRound> dataRoundList = MysteryBoxPositionUtils.getDataRoundList(this.round, gameBoard.getGameAreaDimension());
+        final List<DataRound> dataRoundList = MysteryBoxPositionUtils.getDataRoundList(this.round, gameBoard.getGameAreaDimension());
 
-        MysteryBoxController mysteryBoxBoss = StaticFactoryMysteryBox.createRandomMysteryBoxWithWeaponBoss();
+        final MysteryBoxController mysteryBoxBoss = StaticFactoryMysteryBox.createRandomMysteryBoxWithWeaponBoss();
         mysteryBoxBoss.setDataRound(dataRoundList.get(0));
         this.mysteryBoxList.add(mysteryBoxBoss);
         mysteryBoxBoss.setInParentNode(gameBoard.getGameAreaNode());
 
 
         dataRoundList.stream().skip(1).forEach(dataRound -> {
-            MysteryBoxController mysteryBox = StaticFactoryMysteryBox.createRandomMysteryBoxDefault();
+            final MysteryBoxController mysteryBox = StaticFactoryMysteryBox.createRandomMysteryBoxDefault();
             mysteryBox.setDataRound(dataRound);
             this.mysteryBoxList.add(mysteryBox);
             mysteryBox.setInParentNode(gameBoard.getGameAreaNode());
@@ -71,10 +71,10 @@ public class MysteryBoxManagerImpl implements MysteryBoxManager {
     }
     @Override
     public void updateTimeIfAbilityActive(final long elapsedTime, final Stage<V2D> stage) {
-        List<MysteryBoxController> mysteryBoxActivateList = this.getMysteryBoxActiveAndDurableList();
+        final List<MysteryBoxController> mysteryBoxActivateList = this.getMysteryBoxActiveAndDurableList();
 
         mysteryBoxActivateList.forEach(mysteryBox -> {
-            AbilityDurable abilityDurable = mysteryBox.getDurability();
+            final AbilityDurable abilityDurable = mysteryBox.getDurability();
             abilityDurable.updateTimer(elapsedTime);
             if (abilityDurable.isTimeOver()) {
                 abilityDurable.deActivate(stage);

@@ -8,8 +8,8 @@ import vg.view.entity.StaticFactoryEntityBlock;
 public class StaticFactoryBossController {
 
     public static BossController createRound1() {
-        BossModel model = StaticFactoryBoss.createRound1();
-        EntityBlock view = StaticFactoryEntityBlock.createBoss(model.getPosition(), model.getDimension());
+        final BossModel model = StaticFactoryBoss.createRound1();
+        final EntityBlock view = StaticFactoryEntityBlock.createBoss(model.getPosition(), model.getDimension());
         return new BossControllerImpl(model, view);
     }
 

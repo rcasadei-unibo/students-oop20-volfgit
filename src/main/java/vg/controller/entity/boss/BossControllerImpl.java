@@ -15,7 +15,7 @@ public class BossControllerImpl implements BossController {
 
 
     @Override
-    public void setInParentNode(GameBoardController gameController) {
+    public void setInParentNode(final GameBoardController gameController) {
         this.view.setInParentNode(gameController.getGameAreaNode());
     }
 
