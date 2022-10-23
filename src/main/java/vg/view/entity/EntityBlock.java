@@ -5,8 +5,6 @@ import javafx.scene.Node;
 import vg.utils.V2D;
 
 public interface EntityBlock {
-
-
     V2D getPosition();
 
     void setPosition(V2D position);

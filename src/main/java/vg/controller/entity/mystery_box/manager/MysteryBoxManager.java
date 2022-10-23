@@ -9,18 +9,11 @@ import java.util.List;
 
 public interface MysteryBoxManager {
     void initializeRound(GameBoardController gameBoard);
-
     int getRound();
-
     List<MysteryBoxController> getMysteryBoxList();
-    List<MysteryBoxController> getMysteryBoxActiveAndDuraleList();
-
+    List<MysteryBoxController> getMysteryBoxActiveAndDurableList();
     void increaseRound();
-
     void updateTimeBlinking(long elapsedTime);
     void updateTimeIfAbilityActive(long elapsedTime, Stage<V2D> stage);
-
-
     void checkMysteryBoxOnBorder(Stage<V2D> player, GameBoardController gameController);
-
 }

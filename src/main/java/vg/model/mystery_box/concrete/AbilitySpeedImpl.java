@@ -23,15 +23,15 @@ public class AbilitySpeedImpl extends AbstractAbilityDurable implements AbilityD
     @Override
     public void activate(final Stage<V2D> stage) {
         this.activated();
-        Player player = stage.getPlayer();
-        V2D baseSpeed = player.getSpeed();
-        V2D speedIncrease = new V2D(baseSpeed.getX() + this.speedIncrease, baseSpeed.getY() + this.speedIncrease);
+        final Player player = stage.getPlayer();
+        final V2D baseSpeed = player.getSpeed();
+        final V2D speedIncrease = new V2D(baseSpeed.getX() + this.speedIncrease, baseSpeed.getY() + this.speedIncrease);
         player.enableSpeedUp(speedIncrease);
     }
 
     @Override
     public void deActivate(final Stage<V2D> stage) {
-        Player player = stage.getPlayer();
+        final Player player = stage.getPlayer();
         player.disableSpeedUp();
     }
 }

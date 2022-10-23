@@ -21,7 +21,7 @@ public class AbilityWeaponImpl extends AbstractAbilityDurable implements Ability
 
 
     @Override
-    public void activate(Stage<V2D> stage) {
+    public void activate(final Stage<V2D> stage) {
 
     }
 }

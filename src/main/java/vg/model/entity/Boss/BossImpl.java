@@ -14,7 +14,7 @@ public class BossImpl extends Boss implements BossModel {
     private boolean isDead;
 
 
-    public BossImpl(V2D speed) {
+    public BossImpl(final V2D speed) {
         super(INIT_POSITION, speed, (int) (DIMENSION_BOX.getWidth() / 2), Shape.SQUARE, MassTier.HIGH);
         this.dimension = DIMENSION_BOX;
     }

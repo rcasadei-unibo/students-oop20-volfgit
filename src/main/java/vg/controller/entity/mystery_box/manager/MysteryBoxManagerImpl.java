@@ -54,7 +54,7 @@ public class MysteryBoxManagerImpl implements MysteryBoxManager {
     }
 
     @Override
-    public List<MysteryBoxController> getMysteryBoxActiveAndDuraleList() {
+    public List<MysteryBoxController> getMysteryBoxActiveAndDurableList() {
         return this.mysteryBoxList.stream()
                 .filter(mysteryBox -> mysteryBox.isType(ETypeAbility.DURABLE) && mysteryBox.isActivated())
                 .collect(Collectors.toList());
@@ -71,7 +71,7 @@ public class MysteryBoxManagerImpl implements MysteryBoxManager {
     }
     @Override
     public void updateTimeIfAbilityActive(final long elapsedTime, final Stage<V2D> stage) {
-        List<MysteryBoxController> mysteryBoxActivateList = this.getMysteryBoxActiveAndDuraleList();
+        List<MysteryBoxController> mysteryBoxActivateList = this.getMysteryBoxActiveAndDurableList();
 
         mysteryBoxActivateList.forEach(mysteryBox -> {
             AbilityDurable abilityDurable = mysteryBox.getDurability();

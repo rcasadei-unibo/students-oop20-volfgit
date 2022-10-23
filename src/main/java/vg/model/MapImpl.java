@@ -1,6 +1,5 @@
 package vg.model;
 
-import vg.model.Boss.BossImpl;
 import vg.model.entity.ShapedEntity;
 import vg.model.entity.dynamicEntity.player.Tail;
 import vg.model.entity.Entity;

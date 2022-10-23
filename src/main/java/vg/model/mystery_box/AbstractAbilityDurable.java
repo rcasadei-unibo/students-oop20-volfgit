@@ -8,7 +8,7 @@ public abstract class AbstractAbilityDurable extends AbstractAbility {
 
     private final TimedObject timedObject;
 
-    public AbstractAbilityDurable(EAbility idAbility, double duration) {
+    public AbstractAbilityDurable(final EAbility idAbility, final double duration) {
         super(idAbility, ETypeAbility.DURABLE);
         this.timedObject = new TimedObjectImpl(duration);
     }
@@ -17,7 +17,7 @@ public abstract class AbstractAbilityDurable extends AbstractAbility {
         return this.timedObject.isTimeOver();
     }
 
-    public void updateTimer(double elapsedTime) {
+    public void updateTimer(final double elapsedTime) {
           this.timedObject.updateTimer(elapsedTime);
     }
 

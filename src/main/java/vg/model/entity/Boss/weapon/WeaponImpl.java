@@ -7,12 +7,12 @@ import vg.utils.V2D;
 import java.util.List;
 
 public class WeaponImpl {
-    private V2D position;
-    private Direction direction;
+    private final V2D position;
+    private final Direction direction;
 
     private List<Bolt> bolts;
 
-    public WeaponImpl(V2D position, Direction direction) {
+    public WeaponImpl(final V2D position, final Direction direction) {
         this.position = position;
         this.direction = direction;
     }
