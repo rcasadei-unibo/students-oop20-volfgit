@@ -9,7 +9,7 @@ public abstract class AbstractAbilityDurable extends AbstractAbility {
     private final TimedObject timedObject;
 
     public AbstractAbilityDurable(EAbility idAbility, double duration) {
-        super(idAbility);
+        super(idAbility, ETypeAbility.DURABLE);
         this.timedObject = new TimedObjectImpl(duration);
     }
 

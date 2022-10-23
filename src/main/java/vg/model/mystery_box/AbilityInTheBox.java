@@ -14,6 +14,7 @@ public interface AbilityInTheBox extends Entity {
      *   @return the id of the ability.
      */
     EAbility getIdAbility();
+    ETypeAbility getTypeAbility();
     /**
      * This method is used to get the position of the box.
      * @return the position of the box.

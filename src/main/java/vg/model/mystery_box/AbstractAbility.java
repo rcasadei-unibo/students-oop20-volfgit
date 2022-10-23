@@ -16,14 +16,16 @@ public abstract class AbstractAbility extends StaticEntity {
     private final Dimension2D dimension;
     protected String pathImage;
     private final EAbility idAbility;
+    private final ETypeAbility typeAbility;
     private final LogicBlink logicBlink;
 
 
-    public AbstractAbility(final EAbility idAbility) {
+    public AbstractAbility(final EAbility idAbility, final ETypeAbility typeAbility) {
         super(INIT_POSITION, (int) (DIMENSION_BOX.getWidth() / 2));
         this.pathImage = PathImageMysteryBox.MYSTERY_BOX;
         this.dimension = DIMENSION_BOX;
         this.idAbility = idAbility;
+        this.typeAbility = typeAbility;
         this.logicBlink = new LogicBlinkImpl();
     }
 
@@ -33,6 +35,10 @@ public abstract class AbstractAbility extends StaticEntity {
      */
     public EAbility getIdAbility() {
         return this.idAbility;
+    }
+
+    public ETypeAbility getTypeAbility() {
+        return this.typeAbility;
     }
     /**
      * This method is used to get the dimension of the box.

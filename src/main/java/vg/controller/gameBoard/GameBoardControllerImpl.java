@@ -13,7 +13,6 @@ import javafx.scene.shape.Polyline;
 import vg.model.MapImpl;
 import vg.model.entity.ShapedEntity;
 import vg.model.entity.dynamicEntity.DynamicEntity;
-import vg.model.entity.dynamicEntity.enemy.Boss;
 import vg.utils.V2D;
 import vg.view.ViewController;
 import vg.view.entity.EntityBlock;
@@ -22,7 +21,10 @@ import vg.view.entity.StaticFactoryEntityBlock;
 import vg.view.player.PlayerViewController;
 import vg.view.player.PlayerViewControllerImpl;
 
-import java.util.*;
+import java.util.Collection;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 

@@ -2,6 +2,7 @@ package vg.controller.entity.mystery_box;
 
 import javafx.collections.ObservableList;
 import javafx.scene.Node;
+import vg.controller.gameBoard.GameBoardController;
 import vg.model.Stage;
 import vg.model.mystery_box.data_round.DataRound;
 import vg.utils.V2D;
@@ -20,5 +21,5 @@ public interface MysteryBoxController {
 
     void setImage(String mysteryBoss);
 
-    void checkOnBorder(Stage<V2D> stage);
+    void checkOnBorder(Stage<V2D> stage, GameBoardController gameController);
 }

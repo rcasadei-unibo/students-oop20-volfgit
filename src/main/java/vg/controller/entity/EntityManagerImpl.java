@@ -33,7 +33,7 @@ public class EntityManagerImpl implements EntityManager {
     }
 
     @Override
-    public void checkMysteryBoxOnBorder(Stage<V2D> stage) {
-        this.mysteryBoxManager.checkMysteryBoxOnBorder(stage);
+    public void checkMysteryBoxOnBorder(final Stage<V2D> stage, final GameBoardController gameController) {
+        this.mysteryBoxManager.checkMysteryBoxOnBorder(stage, gameController);
     }
 }

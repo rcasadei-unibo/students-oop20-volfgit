@@ -2,9 +2,10 @@ package vg.controller.entity.mystery_box;
 
 import javafx.collections.ObservableList;
 import javafx.scene.Node;
+import vg.controller.gameBoard.GameBoardController;
 import vg.model.Map;
+import vg.model.MapImpl;
 import vg.model.Stage;
-import vg.model.entity.ShapedEntity;
 import vg.model.mystery_box.AbilityInTheBox;
 import vg.model.mystery_box.data_round.DataRound;
 import vg.utils.V2D;
@@ -65,20 +66,24 @@ public class MysteryBoxControllerImpl implements MysteryBoxController {
     }
 
     @Override
-    public void checkOnBorder(final Stage<V2D> stage) {
+    public void checkOnBorder(final Stage<V2D> stage, final GameBoardController gameController) {
         if(!this.model.isShow()) {
             return;
         }
 
         Map<V2D> map = stage.getMap();
 
-        boolean isOn = map.isInBorders(this.getPosition());
+        double posX = this.getPosition().getX() * MapImpl.MAXBORDERX / gameController.getGameAreaDimension().getWidth();
+        double posY = this.getPosition().getY() * MapImpl.MAXBORDERY / gameController.getGameAreaDimension().getHeight();
+        V2D position = new V2D(posX, posY);
+
+        boolean isOn = map.isInBorders(position);
 
         if (isOn) {
             System.out.println("is onnnn" + isOn);
         }
 
-        this.model.activate(stage);
+//        this.model.activate(stage);
 
 
 //        stage.getMap().isInBorders()

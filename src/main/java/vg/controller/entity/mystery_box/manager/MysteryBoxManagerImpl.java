@@ -62,7 +62,7 @@ public class MysteryBoxManagerImpl implements MysteryBoxManager {
     }
 
     @Override
-    public void checkMysteryBoxOnBorder(final Stage<V2D> stage) {
-        this.mysteryBoxList.forEach(mysteryBox -> mysteryBox.checkOnBorder(stage));
+    public void checkMysteryBoxOnBorder(final Stage<V2D> stage, final GameBoardController gameController) {
+        this.mysteryBoxList.forEach(mysteryBox -> mysteryBox.checkOnBorder(stage, gameController));
     }
 }

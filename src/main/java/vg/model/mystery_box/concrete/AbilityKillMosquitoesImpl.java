@@ -4,7 +4,6 @@ import vg.model.Stage;
 import vg.model.mystery_box.AbilityInTheBox;
 import vg.model.mystery_box.AbstractAbilityInstant;
 import vg.model.mystery_box.EAbility;
-import vg.model.mystery_box.ability.AbilityKillMosquitoes;
 import vg.utils.V2D;
 
 public class AbilityKillMosquitoesImpl extends AbstractAbilityInstant implements AbilityInTheBox {
@@ -15,7 +14,7 @@ public class AbilityKillMosquitoesImpl extends AbstractAbilityInstant implements
     }
 
     @Override
-    public void activate(Stage<V2D> stage) {
-
+    public void activate(final Stage<V2D> stage) {
+        stage.getToDestroySet().addAll(stage.getDynamicEntitySet());
     }
 }
