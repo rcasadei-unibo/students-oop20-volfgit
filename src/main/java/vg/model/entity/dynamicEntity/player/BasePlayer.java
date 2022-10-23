@@ -20,7 +20,7 @@ public final class BasePlayer extends DynamicEntity implements Player {
     /**
      * Default player speed.
      */
-    public static final V2D DEFAULT_PLAYER_SPEED = new V2D(5, 5);
+    public static final V2D DEFAULT_PLAYER_SPEED = new V2D(1, 1);
 
     /**
      * Default player radius shape.
@@ -91,7 +91,7 @@ public final class BasePlayer extends DynamicEntity implements Player {
     };
 
     private BasePlayer(final V2D position, final int life, final V2D speed, final Shield shield) {
-        super(position, speed, DEFAULT_PLAYER_RADIUS, Shape.CIRCLE, MassTier.LOW);
+        super(position, speed, DEFAULT_PLAYER_RADIUS, Shape.CIRCLE, MassTier.NOCOLLISION);
         this.life = life;
         this.tail = TailImpl.emptyTail();
         this.shield = shield;
@@ -164,9 +164,11 @@ public final class BasePlayer extends DynamicEntity implements Player {
 
     @Override
     public void move() {
-       setPosition(
-                this.getPosition().sum(this.getSpeed().mul(this.direction.getVector()))
-        );
+        V2D newPos = this.getPosition().sum(this.getSpeed().mul(this.direction.getVector()));
+        if (!this.tail.getCoordinates().contains(newPos)) {
+            setPosition(newPos);
+        }
+
     }
 
     @Override
@@ -210,4 +212,13 @@ public final class BasePlayer extends DynamicEntity implements Player {
         }
     }
 
+    @Override
+    public void afterCollisionAction(MassTier other) {
+        super.afterCollisionAction(other);
+        if (this.getMassTier().compareTo(other) > MassTier.NOCOLLISION.ordinal()) {
+            decLife();
+            System.out.println("Decrement life");
+        }
+
+    }
 }

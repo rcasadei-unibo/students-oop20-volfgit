@@ -8,7 +8,7 @@ import vg.model.mystery_box.concrete.AbilityScoreImpl;
 public class StaticFactoryAbilityInstant {
 
     public static AbilityInTheBox createScore() {
-        return new AbilityScoreImpl(EAbility.SCORE, 100);
+        return new AbilityScoreImpl(EAbility.SCORE);
     }
 
     public static AbilityInTheBox createKillMosquitoes() {

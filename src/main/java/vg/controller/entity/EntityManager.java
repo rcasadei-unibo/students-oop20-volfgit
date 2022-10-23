@@ -14,5 +14,5 @@ public interface EntityManager {
 
     void updateBlinkingMysteryBox(long elapsedTime);
 
-    void checkCollision(Stage<V2D> stage);
+    void checkMysteryBoxOnBorder(Stage<V2D> stage);
 }

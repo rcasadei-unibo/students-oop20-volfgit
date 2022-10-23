@@ -280,7 +280,6 @@ public class MapImpl implements Map<V2D>, Serializable {
                 throw new IllegalStateException("The list of points is not closed; t1: " + t1);
             }
         }
-
         if (isInBorders(boss, t1)) {
             if (isInBorders(boss, t0)) {
                 throw new IllegalStateException("Error in algorithm: the boss in both generated borders");

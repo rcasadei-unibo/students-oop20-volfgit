@@ -20,5 +20,5 @@ public interface MysteryBoxController {
 
     void setImage(String mysteryBoss);
 
-    void checkCollision(Stage<V2D> stage);
+    void checkOnBorder(Stage<V2D> stage);
 }
