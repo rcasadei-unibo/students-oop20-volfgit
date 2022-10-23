@@ -20,7 +20,7 @@ public interface GameBoardController {
 
     ObservableList<Node> getGameAreaNode();
 
-    void updatePlayer(V2D position, boolean shieldActive, List<V2D> tail, final boolean isTailConfirmed);
+    void updatePlayer(V2D position, boolean shieldActive, List<V2D> tail);
 
     void initMapView();
 

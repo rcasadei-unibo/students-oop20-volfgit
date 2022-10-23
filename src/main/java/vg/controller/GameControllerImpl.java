@@ -21,9 +21,7 @@ import vg.controller.prompt.PromptObserver;
 import vg.view.transition.TransitionViewController;
 import vg.view.utils.CountdownView;
 import vg.view.utils.KeyAction;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Optional;
+import java.util.*;
 
 /**
  * Game Engine class, manager game loop and refresh timing
@@ -53,13 +51,15 @@ public class GameControllerImpl extends Controller<AdaptableView<GameBoardContro
 
     private final EntityManager entityManager;
 
+    private Set<V2D> prevBorders;
+
     public GameControllerImpl(final AdaptableView<GameBoardController> view, final Stage<V2D> stageDomain, final ViewManager viewManager) {
         super(view, viewManager);
         this.entityManager = new EntityManagerImpl();
         this.movementQueue = new ArrayList<>();
         this.stageDomain = stageDomain;
         this.getGameViewController().initMapView();
-        this.render();
+        this.prevBorders = this.stageDomain.getBorders();
     }
 
     /**
@@ -164,7 +164,28 @@ public class GameControllerImpl extends Controller<AdaptableView<GameBoardContro
      * Update view of game on JavaFX thread in order to no block controller thread.
      */
     private void render() {
+        List<V2D> borderList = new ArrayList<>();
+        Set<V2D> border = this.stageDomain.getBorders();
+        boolean areBorderUpdated = border.stream().anyMatch(e -> prevBorders.contains(e));
+
+        if (areBorderUpdated) {
+            this.prevBorders = border;
+            borderList.add(border.stream().findFirst().get());
+
+            while (borderList.size() < border.size()) {
+                Optional<V2D> vect = border.stream()
+                        .filter(e -> !borderList.contains(e) && e.isAdj(borderList.get(borderList.size()-1)))
+                        .findFirst();
+                vect.ifPresent(borderList::add);
+            }
+        }
+
         Platform.runLater(() -> {
+            if (areBorderUpdated) {
+                //Borders
+                getGameViewController().updateBorders(V2DUtility.getVertex(borderList));
+            }
+
             //Game Counters
             getGameViewController().updateLifeCounter(this.stageDomain.getPlayer().getLife());
             getGameViewController().updateShieldTime(this.stageDomain.getPlayer().getShield().getRemainingTime());
@@ -176,12 +197,9 @@ public class GameControllerImpl extends Controller<AdaptableView<GameBoardContro
             getGameViewController()
                     .updatePlayer(player.getPosition(),
                             this.stageDomain.getMap().isPlayerOnBorders() && player.getShield().isActive(),
-                            player.getTail().getVertex(),
-                            this.stageDomain.getMap().isTailCompleted());
+                            player.getTail().getVertex());
             //Boss
             getGameViewController().updateBossPosition(this.stageDomain.getBoss().getPosition());
-            //Borders
-            getGameViewController().updateBorders(V2DUtility.getVertex(List.copyOf(this.stageDomain.getBorders())));
             //Mosquitoes
             getGameViewController().updateMosquitoesPosition(this.stageDomain.getDynamicEntitySet());
         });

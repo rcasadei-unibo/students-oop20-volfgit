@@ -22,10 +22,7 @@ import vg.view.player.PlayerViewController;
 import vg.view.player.PlayerViewControllerImpl;
 import vg.view.utils.Colors;
 
-import java.util.Collection;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
+import java.util.*;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
@@ -148,7 +145,7 @@ public class GameBoardControllerImpl extends ViewController implements GameBoard
     }
 
     @Override
-    public void updatePlayer(V2D position, boolean shieldActive, final List<V2D> tailVec, final boolean isTailConfirmed) {
+    public void updatePlayer(V2D position, boolean shieldActive, final List<V2D> tailVec) {
         if (shieldActive) {
             this.player.showShield();
         } else {
