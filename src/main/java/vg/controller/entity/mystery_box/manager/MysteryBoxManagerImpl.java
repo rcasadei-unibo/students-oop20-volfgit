@@ -32,7 +32,7 @@ public class MysteryBoxManagerImpl implements MysteryBoxManager {
 
 
         dataRoundList.stream().skip(1).forEach(dataRound -> {
-            MysteryBoxController mysteryBox = StaticFactoryMysteryBox.createRandomMysteryBox();
+            MysteryBoxController mysteryBox = StaticFactoryMysteryBox.createRandomMysteryBoxDefault();
             mysteryBox.setDataRound(dataRound);
             this.mysteryBoxList.add(mysteryBox);
             mysteryBox.setInParentNode(gameBoard.getGameAreaNode());

@@ -4,12 +4,12 @@ import vg.utils.path.PathImageMysteryBox;
 
 public enum EAbility {
 
-    Score(PathImageMysteryBox.COIN_SCORE),
-    FreezeTime(PathImageMysteryBox.COIN_TIME),
-    SpeedUp(PathImageMysteryBox.COIN_SPEED),
-    KillAllMosquitoes(PathImageMysteryBox.COIN_KILL_ALL_MOQUETOES),
-    WeaponMosquitoes(PathImageMysteryBox.COIN_WEAPON_MOQUETOES),
-    WeaponBoss(PathImageMysteryBox.COIN_WEAPON_BOSS);
+    SCORE(PathImageMysteryBox.COIN_SCORE),
+    FREEZE_TIME(PathImageMysteryBox.COIN_TIME),
+    SPEED_UP(PathImageMysteryBox.COIN_SPEED),
+    KILL_ALL_MOSQUITOES(PathImageMysteryBox.COIN_KILL_ALL_MOQUETOES),
+    WEAPON_MOSQUITOES(PathImageMysteryBox.COIN_WEAPON_MOQUETOES),
+    WEAPON_BOSS(PathImageMysteryBox.COIN_WEAPON_BOSS);
 
     private final String pathReveled;
 
@@ -19,6 +19,15 @@ public enum EAbility {
 
     public String getPathReveled() {
         return pathReveled;
+    }
+
+
+    public static EAbility randomAll()  {
+        return values()[(int) (Math.random() * values().length)];
+    }
+
+    public static EAbility randomAllButBoss()  {
+        return values()[(int) (Math.random() * (values().length - 1))];
     }
 
 }

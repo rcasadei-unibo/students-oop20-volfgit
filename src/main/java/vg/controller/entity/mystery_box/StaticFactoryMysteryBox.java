@@ -1,102 +1,82 @@
 package vg.controller.entity.mystery_box;
 
-import vg.model.mystery_box.ability.AbilityFreezeTime;
-import vg.model.mystery_box.ability.AbilityKillMosquitoes;
-import vg.model.mystery_box.ability.AbilityScore;
-import vg.model.mystery_box.ability.AbilitySpeed;
-import vg.model.mystery_box.ability.AbilityWeapon;
-import vg.model.mystery_box.factory.StaticFactoryFreezeTimeAbility;
-import vg.model.mystery_box.factory.StaticFactoryMosquitoesAbility;
-import vg.model.mystery_box.factory.StaticFactoryScoreAbility;
-import vg.model.mystery_box.factory.StaticFactorySpeedAbility;
-import vg.model.mystery_box.factory.StaticFactoryWeaponAbility;
+import vg.model.mystery_box.EAbility;
+import vg.model.mystery_box.factory.StaticFactoryAbilityDurable;
+import vg.model.mystery_box.factory.StaticFactoryAbilityInstant;
 import vg.utils.path.PathImageMysteryBox;
 import vg.view.entity.StaticFactoryEntityBlock;
 
-import java.util.Random;
-
 public class StaticFactoryMysteryBox {
 
-    public static MysteryBoxController createRandomMysteryBox() {
-        int rnd = new Random().nextInt(5);
-        switch (rnd) {
-            case 0:
+    private static MysteryBoxController createRandom(final EAbility eAbility) {
+        switch (eAbility) {
+            case FREEZE_TIME:
                 return createFreezeTime();
-            case 1:
+            case KILL_ALL_MOSQUITOES:
                 return createKillMosquitoes();
-            case 2:
+            case SCORE:
                 return createScore();
-            case 3:
+            case SPEED_UP:
                 return createSpeed();
-            case 4:
+            case WEAPON_MOSQUITOES:
                 return createWeaponForMosquitoes();
+            case WEAPON_BOSS:
+                return createWeaponForBoss();
+            default:
+                throw new IllegalArgumentException("Unknown ability: " + eAbility);
         }
-        return null;
+    }
+
+    public static MysteryBoxController createRandomMysteryBoxDefault() {
+        return createRandom(EAbility.randomAllButBoss());
     }
 
     public static MysteryBoxController createRandomMysteryBoxWithWeaponBoss() {
-        final int types = 6;
-        int rnd = new Random().nextInt(types);
-
-        MysteryBoxController mysteryBoxController = null;
-        switch (rnd) {
-            case 0:
-                mysteryBoxController = createFreezeTime();
-            case 1:
-                mysteryBoxController = createKillMosquitoes();
-            case 2:
-                mysteryBoxController = createScore();
-            case 3:
-                mysteryBoxController = createSpeed();
-            case 4:
-                mysteryBoxController = createWeaponForMosquitoes();
-            case 5:
-                mysteryBoxController = createWeaponForBoss();
-        }
+        MysteryBoxController mysteryBoxController = createRandom(EAbility.randomAll());
         mysteryBoxController.setImage(PathImageMysteryBox.MYSTERY_BOSS);
         return mysteryBoxController;
     }
 
-    public static MysteryBoxController<AbilityFreezeTime> createFreezeTime() {
-        var model = StaticFactoryFreezeTimeAbility.createSmallTime();
+    public static MysteryBoxController createFreezeTime() {
+        var model = StaticFactoryAbilityDurable.createFreezeTime();
         var view = StaticFactoryEntityBlock.createMysteryBox(model.getPosition(), model.getDimension());
 
-        return new MysteryBoxControllerImpl<>(model, view);
+        return new MysteryBoxControllerImpl(model, view);
     }
 
-    public static MysteryBoxController<AbilityKillMosquitoes> createKillMosquitoes() {
-        var model = StaticFactoryMosquitoesAbility.createKillMosquitoes();
+    public static MysteryBoxController createKillMosquitoes() {
+        var model = StaticFactoryAbilityInstant.createKillMosquitoes();
         var view = StaticFactoryEntityBlock.createMysteryBox(model.getPosition(), model.getDimension());
 
-        return new MysteryBoxControllerImpl<>(model, view);
+        return new MysteryBoxControllerImpl(model, view);
     }
 
-    public static MysteryBoxController<AbilityScore> createScore() {
-        var model = StaticFactoryScoreAbility.createScoreMedium();
+    public static MysteryBoxController createScore() {
+        var model = StaticFactoryAbilityInstant.createScore();
         var view = StaticFactoryEntityBlock.createMysteryBox(model.getPosition(), model.getDimension());
 
-        return new MysteryBoxControllerImpl<>(model, view);
+        return new MysteryBoxControllerImpl(model, view);
     }
 
-    public static MysteryBoxController<AbilitySpeed> createSpeed() {
-        var model = StaticFactorySpeedAbility.createMediumSpeed();
+    public static MysteryBoxController createSpeed() {
+        var model = StaticFactoryAbilityDurable.createSpeedUp();
         var view = StaticFactoryEntityBlock.createMysteryBox(model.getPosition(), model.getDimension());
 
-        return new MysteryBoxControllerImpl<>(model, view);
+        return new MysteryBoxControllerImpl(model, view);
     }
 
-    public static MysteryBoxController<AbilityWeapon> createWeaponForMosquitoes() {
-        var model = StaticFactoryWeaponAbility.createWeaponForMosquitoes();
+    public static MysteryBoxController createWeaponForMosquitoes() {
+        var model = StaticFactoryAbilityDurable.createWeaponForMosquitoes();
         var view = StaticFactoryEntityBlock.createMysteryBox(model.getPosition(), model.getDimension());
 
-        return new MysteryBoxControllerImpl<>(model, view);
+        return new MysteryBoxControllerImpl(model, view);
     }
 
-    public static MysteryBoxController<AbilityWeapon> createWeaponForBoss() {
-        var model = StaticFactoryWeaponAbility.createWeaponForBoss();
+    public static MysteryBoxController createWeaponForBoss() {
+        var model = StaticFactoryAbilityDurable.createWeaponForBoss();
         var view = StaticFactoryEntityBlock.createMysteryBox(model.getPosition(), model.getDimension());
 
-        return new MysteryBoxControllerImpl<>(model, view);
+        return new MysteryBoxControllerImpl(model, view);
     }
 
 

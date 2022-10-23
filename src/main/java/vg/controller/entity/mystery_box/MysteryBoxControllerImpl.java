@@ -9,7 +9,7 @@ import vg.model.mystery_box.data_round.DataRound;
 import vg.utils.V2D;
 import vg.view.entity.EntityBlock;
 
-public class MysteryBoxControllerImpl<T extends AbilityInTheBox> implements MysteryBoxController<T> {
+public class MysteryBoxControllerImpl implements MysteryBoxController {
 
     private final AbilityInTheBox model;
     private final EntityBlock view;
@@ -19,9 +19,6 @@ public class MysteryBoxControllerImpl<T extends AbilityInTheBox> implements Myst
         this.view = view;
     }
 
-    public T getModel() {
-        return (T) this.model;
-    }
 
     @Override
     public V2D getPosition() {

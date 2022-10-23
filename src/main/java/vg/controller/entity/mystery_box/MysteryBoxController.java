@@ -7,7 +7,7 @@ import vg.model.mystery_box.AbilityInTheBox;
 import vg.model.mystery_box.data_round.DataRound;
 import vg.utils.V2D;
 
-public interface MysteryBoxController<T extends AbilityInTheBox> {
+public interface MysteryBoxController {
 
     V2D getPosition();
     void setPosition(V2D position);
