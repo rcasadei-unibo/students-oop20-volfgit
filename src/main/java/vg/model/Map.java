@@ -146,4 +146,7 @@ public interface Map<T> {
      * @return the correct new speed of the entity after a collision
      */
     T getAfterCollisionDirection(DynamicEntity toCheckD);
+
+
+    boolean isInBorders(V2D pos);
 }

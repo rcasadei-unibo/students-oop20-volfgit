@@ -2,8 +2,8 @@ package vg.controller.entity.mystery_box;
 
 import javafx.collections.ObservableList;
 import javafx.scene.Node;
+import vg.model.Stage;
 import vg.model.entity.ShapedEntity;
-import vg.model.entity.dynamicEntity.player.Player;
 import vg.model.mystery_box.AbilityInTheBox;
 import vg.model.mystery_box.data_round.DataRound;
 import vg.utils.V2D;
@@ -22,7 +22,12 @@ public class MysteryBoxControllerImpl implements MysteryBoxController {
 
     @Override
     public V2D getPosition() {
-        return this.view.getPosition();
+        return this.model.getPosition();
+    }
+
+    @Override
+    public int getRadius() {
+        return this.model.getRadius();
     }
 
     @Override
@@ -59,17 +64,22 @@ public class MysteryBoxControllerImpl implements MysteryBoxController {
     }
 
     @Override
-    public void checkCollision(final Player player) {
+    public void checkCollision(final Stage<V2D> stage) {
+//        stage.getMap().isInBorders()
+
+
+        if(!this.model.isShow()) {
+            return;
+        }
+
 //        if (this.model.isBlinking() && ShapedEntity.isCollision(this.model, player)) {
 //            this.model.setBlinking(false);
 //            this.model.setShow(false);
 //            this.model.applyEffect(player);
 //        }
 
-        if(!this.model.isShow()) {
-            return;
-        }
-        boolean collision = player.isInShape((ShapedEntity) this.model);
+
+        boolean collision = stage.getPlayer().isInShape((ShapedEntity) this.model);
         if(collision) {
             System.out.println("Collision: ");
         }
