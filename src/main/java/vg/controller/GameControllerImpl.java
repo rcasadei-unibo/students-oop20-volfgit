@@ -142,7 +142,7 @@ public class GameControllerImpl extends Controller<AdaptableView<GameBoardContro
     }
 
     /**
-     * Update view of game on JavaFX thread in order to no block contrller thread.
+     * Update view of game on JavaFX thread in order to no block controller thread.
      */
     private void render() {
         Platform.runLater(() -> {
@@ -151,7 +151,7 @@ public class GameControllerImpl extends Controller<AdaptableView<GameBoardContro
                             this.stageDomain.getMap().isPlayerOnBorders(),
                             this.stageDomain.getPlayer().getTail().getVertex());
             getGameViewController().updateBossPosition(this.stageDomain.getBoss().getPosition());
-            //TODO: fare anche con i mosquitoes
+            getGameViewController().updateMosquitoesPosition(stageDomain.getDynamicEntitySet());
         });
     }
 
@@ -218,7 +218,7 @@ public class GameControllerImpl extends Controller<AdaptableView<GameBoardContro
     /**
      * Show for an amount of time a view then remove it.
      *
-     * @param view View to be temporary showed that implements {@link CountdownView}
+     * @param view View to be temporarily showed that implements {@link CountdownView}
      * @param duration amount of time to show the view
      */
     private void showTimedView(final CountdownView view, final int duration) {
