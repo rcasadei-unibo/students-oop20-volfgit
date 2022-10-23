@@ -1,6 +1,7 @@
 package vg.model.mystery_box;
 
 import javafx.geometry.Dimension2D;
+import vg.model.Stage;
 import vg.model.entity.Entity;
 import vg.utils.V2D;
 
@@ -62,4 +63,6 @@ public interface AbilityInTheBox extends Entity {
      * @return true if the box is shown, false otherwise.
      */
     boolean isShow();
+
+    void activate(Stage<V2D> stage);
 }

@@ -19,6 +19,6 @@ public interface MysteryBoxManager {
 
     void updateBlinkingMysteryBox(long elapsedTime);
 
-    void checkCollision(Stage<V2D> player);
+    void checkMysteryBoxOnBorder(Stage<V2D> player);
 
 }

@@ -62,7 +62,7 @@ public class MysteryBoxManagerImpl implements MysteryBoxManager {
     }
 
     @Override
-    public void checkCollision(final Stage<V2D> stage) {
-        this.mysteryBoxList.forEach(mysteryBox -> mysteryBox.checkCollision(stage));
+    public void checkMysteryBoxOnBorder(final Stage<V2D> stage) {
+        this.mysteryBoxList.forEach(mysteryBox -> mysteryBox.checkOnBorder(stage));
     }
 }

@@ -4,7 +4,6 @@ import javafx.application.Platform;
 import vg.controller.entity.EntityManager;
 import vg.controller.entity.EntityManagerImpl;
 import vg.controller.gameBoard.GameBoardController;
-import vg.controller.leaderboard.ScoreManager;
 import vg.controller.leaderboard.ScoreManagerImpl;
 import vg.model.Stage;
 import vg.model.entity.dynamicEntity.player.Player;
@@ -127,13 +126,7 @@ public class GameControllerImpl extends Controller<AdaptableView<GameBoardContro
         this.stageDomain.getMap().updateBonusTimer(elapsedTime);
         this.entityManager.updateBlinkingMysteryBox(elapsedTime);
         this.stageDomain.doCycle();
-        this.entityManager.checkCollision(this.stageDomain);
-
-        this.entityManager.getMysteryBoxList().forEach(mysteryBox -> {
-            mysteryBox.getPosition();
-            mysteryBox.getRadius();
-        });
-
+        this.entityManager.checkMysteryBoxOnBorder(this.stageDomain);
     }
 
     /**
