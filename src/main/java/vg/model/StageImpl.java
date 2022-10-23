@@ -256,10 +256,19 @@ public class StageImpl<T> implements Stage<V2D> {
             }
         }));
         getDynamicEntitySet().forEach(e -> getBorders().forEach(t -> {
-            if(e.isInShape(t)){
+            if (e.isInShape(t)) {
                 e.setSpeed(getMap().getAfterCollisionDirection(e));
             }
         }));
+        getDynamicEntitySet().forEach(e -> {
+            if (e.isInShape((DynamicEntity)getPlayer()) &&
+                    (!getBorders().contains(getPlayer().getPosition()) || getPlayer().getShield().isActive())) {
+                getPlayer().decLife();
+                //if the player is not on borders the tail cannot be empty
+                ((DynamicEntity) getPlayer()).setPosition(getPlayer().getTail().getCoordinates().get(0));
+                getPlayer().getTail().resetTail();
+            }
+        });
     }
     /**
      *
