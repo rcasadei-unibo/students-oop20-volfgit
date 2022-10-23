@@ -187,7 +187,7 @@ public class StageImpl<T> implements Stage<V2D> {
      * {@inheritDoc}
      */
     @Override
-    public Set<V2D> getBorders() {
+    public List<V2D> getBorders() {
         return getMap().getBorders();
     }
     /**
