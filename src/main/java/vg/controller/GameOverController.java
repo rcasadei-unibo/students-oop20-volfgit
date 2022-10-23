@@ -6,7 +6,6 @@ import vg.model.score.ScoreImpl;
 import vg.view.ViewManager;
 import vg.view.gameOver.GameOverView;
 import vg.view.utils.KeyAction;
-
 import java.util.Optional;
 
 public class GameOverController extends Controller<GameOverView> {
@@ -37,12 +36,11 @@ public class GameOverController extends Controller<GameOverView> {
     @Override
     public void keyPressed(final KeyAction k) {
         if (k == KeyAction.ENTER) {
-            System.out.println("tapped"+ k.name());
-            Optional<String>  name = this.getView().getViewController().getTypedName();
+            Optional<String> name = this.getView().getViewController().getTypedName();
             name.ifPresent(s -> {
                 this.scoreManager.saveScore(new ScoreImpl(s, this.score, this.round));
                 this.scoreManager.saveOnFile();
-                this.getViewManager().popScene();
+                this.getViewManager().backHome();
             });
         }
     }

@@ -6,6 +6,7 @@ import javafx.scene.control.Label;
 import javafx.scene.layout.Background;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Paint;
+import vg.controller.leaderboard.LeaderBoardController;
 import vg.model.score.Score;
 import vg.view.ViewController;
 import vg.view.utils.Colors;

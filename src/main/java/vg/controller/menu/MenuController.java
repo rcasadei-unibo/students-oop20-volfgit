@@ -4,13 +4,17 @@ import javafx.application.Platform;
 import vg.controller.Controller;
 import vg.controller.GameControllerImpl;
 import vg.controller.gameBoard.GameBoardController;
+import vg.controller.leaderboard.ScoreManager;
+import vg.controller.leaderboard.ScoreManagerImpl;
 import vg.controller.prompt.PromptObserver;
 import vg.controller.prompt.PromptOption;
 import vg.model.StageImpl;
 import vg.utils.V2D;
 import vg.view.AdaptableView;
+import vg.view.View;
 import vg.view.ViewFactory;
 import vg.view.ViewManager;
+import vg.view.leaderBoard.LeaderBoardView;
 import vg.view.menu.MenuView;
 import vg.view.menu.prompt.PromptView;
 import vg.view.utils.KeyAction;
@@ -33,13 +37,21 @@ public class MenuController extends Controller<MenuView> implements PromptObserv
         if (idxSelection == MenuOption.PLAY.ordinal()) {
             playGame();
         } else if (idxSelection == MenuOption.LEADERBOARDS.ordinal()) {
-            this.getViewManager().addScene(ViewFactory.leaderBoardView(getViewManager()));
+           this.leaderBoards();
         } else if (idxSelection == MenuOption.SETTINGS.ordinal()) {
             System.out.println("settings");
         } else if (idxSelection == MenuOption.QUIT.ordinal()) {
             PromptView promptView = ViewFactory.promptView(this.getViewManager(), this);
             this.getViewManager().addScene(promptView);
         }
+    }
+
+    public void leaderBoards() {
+        ScoreManager scoreManager = ScoreManagerImpl.newScoreManager();
+        LeaderBoardView leaderBoardView = ViewFactory.leaderBoardView(getViewManager());
+        this.getViewManager().addScene(leaderBoardView);
+        leaderBoardView.getViewController().showList(scoreManager.getTopScore(20));
+        System.out.println(scoreManager.getTopScore(20));
     }
 
     /**

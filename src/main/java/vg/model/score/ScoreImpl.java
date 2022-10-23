@@ -27,4 +27,12 @@ public class ScoreImpl implements Score {
         return this.name;
     }
 
+    @Override
+    public String toString() {
+        return "ScoreImpl{" +
+                "score=" + score +
+                ", round=" + round +
+                ", name='" + name + '\'' +
+                '}';
+    }
 }
