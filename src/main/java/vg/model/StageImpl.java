@@ -330,9 +330,8 @@ public class StageImpl<T> implements Stage<V2D> {
             //TODO check for static entities
         }
         moveAll();
-
-        //checkCollisions();
-        //destroyAll();
+        checkCollisions();
+        destroyAll();
     }
 
     @Override
