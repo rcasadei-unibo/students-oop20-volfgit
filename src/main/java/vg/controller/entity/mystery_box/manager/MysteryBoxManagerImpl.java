@@ -3,9 +3,11 @@ package vg.controller.entity.mystery_box.manager;
 import vg.controller.gameBoard.GameBoardController;
 import vg.controller.entity.mystery_box.MysteryBoxController;
 import vg.controller.entity.mystery_box.StaticFactoryMysteryBox;
+import vg.model.Stage;
 import vg.model.entity.dynamicEntity.player.Player;
 import vg.model.mystery_box.data_round.DataRound;
 import vg.utils.Round.MysteryBoxPositionUtils;
+import vg.utils.V2D;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -32,7 +34,7 @@ public class MysteryBoxManagerImpl implements MysteryBoxManager {
 
 
         dataRoundList.stream().skip(1).forEach(dataRound -> {
-            MysteryBoxController mysteryBox = StaticFactoryMysteryBox.createRandomMysteryBox();
+            MysteryBoxController mysteryBox = StaticFactoryMysteryBox.createRandomMysteryBoxDefault();
             mysteryBox.setDataRound(dataRound);
             this.mysteryBoxList.add(mysteryBox);
             mysteryBox.setInParentNode(gameBoard.getGameAreaNode());
@@ -42,6 +44,11 @@ public class MysteryBoxManagerImpl implements MysteryBoxManager {
     @Override
     public int getRound() {
         return this.round;
+    }
+
+    @Override
+    public List<MysteryBoxController> getMysteryBoxList() {
+        return this.mysteryBoxList;
     }
 
     @Override
@@ -55,7 +62,7 @@ public class MysteryBoxManagerImpl implements MysteryBoxManager {
     }
 
     @Override
-    public void checkCollision(final Player player) {
-        this.mysteryBoxList.forEach(mysteryBox -> mysteryBox.checkCollision(player));
+    public void checkMysteryBoxOnBorder(final Stage<V2D> stage) {
+        this.mysteryBoxList.forEach(mysteryBox -> mysteryBox.checkOnBorder(stage));
     }
 }

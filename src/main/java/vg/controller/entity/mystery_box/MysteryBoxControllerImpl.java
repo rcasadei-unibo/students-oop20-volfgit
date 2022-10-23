@@ -2,14 +2,15 @@ package vg.controller.entity.mystery_box;
 
 import javafx.collections.ObservableList;
 import javafx.scene.Node;
+import vg.model.Map;
+import vg.model.Stage;
 import vg.model.entity.ShapedEntity;
-import vg.model.entity.dynamicEntity.player.Player;
 import vg.model.mystery_box.AbilityInTheBox;
 import vg.model.mystery_box.data_round.DataRound;
 import vg.utils.V2D;
 import vg.view.entity.EntityBlock;
 
-public class MysteryBoxControllerImpl<T extends AbilityInTheBox> implements MysteryBoxController<T> {
+public class MysteryBoxControllerImpl implements MysteryBoxController {
 
     private final AbilityInTheBox model;
     private final EntityBlock view;
@@ -19,13 +20,15 @@ public class MysteryBoxControllerImpl<T extends AbilityInTheBox> implements Myst
         this.view = view;
     }
 
-    public T getModel() {
-        return (T) this.model;
-    }
 
     @Override
     public V2D getPosition() {
-        return this.view.getPosition();
+        return this.model.getPosition();
+    }
+
+    @Override
+    public int getRadius() {
+        return this.model.getRadius();
     }
 
     @Override
@@ -62,20 +65,38 @@ public class MysteryBoxControllerImpl<T extends AbilityInTheBox> implements Myst
     }
 
     @Override
-    public void checkCollision(final Player player) {
-//        if (this.model.isBlinking() && ShapedEntity.isCollision(this.model, player)) {
-//            this.model.setBlinking(false);
-//            this.model.setShow(false);
-//            this.model.applyEffect(player);
-//        }
-
+    public void checkOnBorder(final Stage<V2D> stage) {
         if(!this.model.isShow()) {
             return;
         }
-        boolean collision = player.isInShape((ShapedEntity) this.model);
-        if(collision) {
-            System.out.println("Collision: ");
+
+        Map<V2D> map = stage.getMap();
+
+        boolean isOn = map.isInBorders(this.getPosition());
+
+        if (isOn) {
+            System.out.println("is onnnn" + isOn);
         }
+
+        this.model.activate(stage);
+
+
+//        stage.getMap().isInBorders()
+
+
+
+//
+////        if (this.model.isBlinking() && ShapedEntity.isCollision(this.model, player)) {
+////            this.model.setBlinking(false);
+////            this.model.setShow(false);
+////            this.model.applyEffect(player);
+////        }
+//
+//
+//        boolean collision = stage.getPlayer().isInShape((ShapedEntity) this.model);
+//        if(collision) {
+//            System.out.println("Collision: ");
+//        }
 
     }
 

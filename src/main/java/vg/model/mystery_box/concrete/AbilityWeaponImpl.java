@@ -1,11 +1,14 @@
 package vg.model.mystery_box.concrete;
 
+import vg.model.Stage;
+import vg.model.mystery_box.AbilityInTheBox;
 import vg.model.mystery_box.AbstractAbilityDurable;
 import vg.model.mystery_box.EAbility;
 import vg.model.mystery_box.ability.AbilityWeapon;
+import vg.utils.V2D;
 import vg.utils.path.PathImageMysteryBox;
 
-public class AbilityWeaponImpl extends AbstractAbilityDurable implements AbilityWeapon {
+public class AbilityWeaponImpl extends AbstractAbilityDurable implements AbilityInTheBox {
 
     private final boolean canHitBoss;
 
@@ -18,11 +21,9 @@ public class AbilityWeaponImpl extends AbstractAbilityDurable implements Ability
         }
     }
 
+
     @Override
-    public void startActivateWeapon() {
-      //  super.onStart(this);
+    public void activate(Stage<V2D> stage) {
+
     }
-
-
-
 }

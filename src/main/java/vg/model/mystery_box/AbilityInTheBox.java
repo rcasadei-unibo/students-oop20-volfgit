@@ -1,6 +1,7 @@
 package vg.model.mystery_box;
 
 import javafx.geometry.Dimension2D;
+import vg.model.Stage;
 import vg.model.entity.Entity;
 import vg.utils.V2D;
 
@@ -24,6 +25,9 @@ public interface AbilityInTheBox extends Entity {
      * @return the dimension of the box.
      */
     Dimension2D getDimension();
+
+
+    int getRadius();
     /**
      * This method is used to get the path of the image of the ability.
      * @return the path of the image of the ability.
@@ -59,4 +63,6 @@ public interface AbilityInTheBox extends Entity {
      * @return true if the box is shown, false otherwise.
      */
     boolean isShow();
+
+    void activate(Stage<V2D> stage);
 }

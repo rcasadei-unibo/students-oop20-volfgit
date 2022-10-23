@@ -1,12 +1,18 @@
 package vg.controller.entity;
 
+import vg.controller.entity.mystery_box.MysteryBoxController;
 import vg.controller.gameBoard.GameBoardController;
-import vg.model.entity.dynamicEntity.player.Player;
+import vg.model.Stage;
+import vg.utils.V2D;
+
+import java.util.List;
 
 public interface EntityManager {
-    public void initializeRound(GameBoardController gameController);
+    void initializeRound(GameBoardController gameController);
 
-    public void updateBlinkingMysteryBox(long elapsedTime);
+    List<MysteryBoxController> getMysteryBoxList();
 
-    public  void checkCollision(Player player);
+    void updateBlinkingMysteryBox(long elapsedTime);
+
+    void checkMysteryBoxOnBorder(Stage<V2D> stage);
 }

@@ -281,16 +281,17 @@ public class MapImpl implements Map<V2D>, Serializable {
             }
         }
 
-        if (isInBorders(boss, Set.copyOf(t1))) {
-            if (isInBorders(boss, Set.copyOf(t0))) {
-                throw new IllegalStateException("Error in algorithm: the boss in both generated borders");
-            }
-            return Set.copyOf(t1);
-        } else if (isInBorders(boss, Set.copyOf(t0))) {
-            return Set.copyOf(t0);
-        } else {
-            throw new IllegalStateException("Failed to create a new border (Boss too big?)");
-        }
+//        if (isInBorders(boss, Set.copyOf(t1))) {
+//            if (isInBorders(boss, Set.copyOf(t0))) {
+//                throw new IllegalStateException("Error in algorithm: the boss in both generated borders");
+//            }
+//            return Set.copyOf(t1);
+//        } else if (isInBorders(boss, Set.copyOf(t0))) {
+//            return Set.copyOf(t0);
+//        } else {
+//            throw new IllegalStateException("Failed to create a new border (Boss too big?)");
+//        }
+        return Set.copyOf(t0);
     }
     /**
      * Method to check if a point will be closed by the border
