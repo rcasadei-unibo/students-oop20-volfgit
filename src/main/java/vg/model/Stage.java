@@ -164,4 +164,17 @@ public interface Stage<T> {
      * {@link MapFactoryImpl}.
      */
     void createNextLevel();
+
+    /**
+     * Method that will tell if the border or the {@link Map}
+     * were updated from the last time this method was called.
+     * @return true if the {@link #getBorders()} changed, false otherwise
+     */
+    boolean isBorderUpdated();
+
+    /**
+     * Method that will "consume" the state of {@link #isBorderUpdated()}, so
+     * if it was true, then it will become false.
+     */
+    void consumeBorderUpdatedState();
 }
