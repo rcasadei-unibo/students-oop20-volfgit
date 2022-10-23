@@ -12,13 +12,13 @@ public class StaticFactoryEntityBlock {
         return block;
     }
 
-    public static EntityBlock createMosquitoes(V2D position, Dimension2D dimension) {
+    public static EntityBlock createMosquitoes(Dimension2D position, Dimension2D dimension) {
         EntityBlock block = new EntityBlockImpl(position, dimension);
-//        block.setImage(PathImageMysteryBox.MOSQUITOES);
+ //       block.setImage(PathImageMysteryBox.MYSTERY_BOX);
         return new EntityBlockImpl(position, dimension);
     }
 
-    public static EntityBlock createBoss(V2D position, Dimension2D dimension) {
+    public static EntityBlock createBoss(Dimension2D position, Dimension2D dimension) {
         EntityBlock block = new EntityBlockImpl(position, dimension);
 //        block.setImage(PathImageMysteryBox.BOSS);
         return new EntityBlockImpl(position, dimension);
