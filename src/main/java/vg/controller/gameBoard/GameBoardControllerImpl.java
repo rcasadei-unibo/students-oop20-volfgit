@@ -94,8 +94,8 @@ public class GameBoardControllerImpl extends ViewController implements GameBoard
         this.player.setInParentNode(this.getGameAreaNode());
 
         //TODO create an appropriate controller for boss?
-        this.boss = StaticFactoryEntityBlock.createBoss(new V2D(0, 0), modelRadiusToDimension2D(5));
-        this.boss.setInParentNode(this.getGameAreaNode());
+       // this.boss = StaticFactoryEntityBlock.createBoss(new V2D(0, 0), modelRadiusToDimension2D(5));
+      //  this.boss.setInParentNode(this.getGameAreaNode());
         this.mosqs = new HashSet<>();
 //        this.addInGameArea(this.boss.getNode());
 
@@ -126,12 +126,12 @@ public class GameBoardControllerImpl extends ViewController implements GameBoard
 
     @Override
     public void updateBossPosition(final V2D bossPos) {
-        ((EntityBlockImpl)this.boss).setDisable(true);
+        /*((EntityBlockImpl)this.boss).setDisable(true);
         this.getGameArea().getChildren().removeIf(Node::isDisable);
         this.boss = StaticFactoryEntityBlock.createBoss(bossPos, modelRadiusToDimension2D(5));
         //((EntityBlockImpl)this.boss).setDisable(false);
         this.boss.setInParentNode(this.getGameAreaNode());
-
+    */
     }
 
     @Override
