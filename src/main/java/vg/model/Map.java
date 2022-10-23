@@ -34,7 +34,7 @@ public interface Map<T> {
      * to (0,yMax) and then will be replaced by the ones created by player's tail.
      * @return a set of positions (usually {@link V2D})
      */
-    List<T> getBorders();
+    Set<T> getBorders();
 
     /**
      * Update the borders of the map. Must call internally {@link #isTailCompleted()}

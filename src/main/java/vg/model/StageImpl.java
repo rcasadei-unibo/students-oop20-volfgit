@@ -187,7 +187,7 @@ public class StageImpl<T> implements Stage<V2D> {
      * {@inheritDoc}
      */
     @Override
-    public List<V2D> getBorders() {
+    public Set<V2D> getBorders() {
         return getMap().getBorders();
     }
     /**
@@ -271,16 +271,20 @@ public class StageImpl<T> implements Stage<V2D> {
             }
         });*/
         if (!((MapImpl) getMap()).isInBorders(getPlayer().getPosition()) && !getBorders().contains(getPlayer().getPosition())) {
-
             var l = getPlayer().getTail().getCoordinates().stream().filter(e -> getBorders().contains(e)).collect(Collectors.toList());
-            if (l.size()<2) {
+            if (l.size()==0) {
+                getPlayer().getTail().resetTail();
                 ((DynamicEntity) getPlayer()).setSpeed(getPlayer().getSpeed().scalarMul(-1));
                 getPlayer().move();
                 getPlayer().changeDirection(Direction.NONE,true);
                 ((DynamicEntity) getPlayer()).setSpeed(getPlayer().getSpeed().scalarMul(-1));
-                getPlayer().getTail().resetTail();
                 return;
-            } else if (l.size() > 2) {
+            } else if (l.size() == 1){
+                getPlayer().changeDirection(Direction.NONE,true);
+                getPlayer().getTail().resetTail();
+                ((DynamicEntity)getPlayer()).setPosition(l.get(0));
+                return;
+            }else if (l.size() > 2) {
                throw new RuntimeException("l:" + l + "Error in tail generation : more then 2 intersactions with borders" + getPlayer().getTail().getCoordinates());
             }
             var tail = getPlayer().getTail().getCoordinates();

@@ -102,7 +102,7 @@ public interface Stage<T> {
      * entities con collide with.
      * @return The Set of T, a data structure containing the borders of the map.
      */
-    List<T> getBorders();
+    Set<T> getBorders();
 
     /**
      * Return all entities on the map.

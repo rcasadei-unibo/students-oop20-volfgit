@@ -52,7 +52,7 @@ public class MapImpl implements Map<V2D>, Serializable {
      * the current border of the map.
      * @see Map#getBorders()
      */
-    private final List<V2D> border;
+    private final Set<V2D> border;
     /**
      * Default max X coordinate.
      */
@@ -73,7 +73,7 @@ public class MapImpl implements Map<V2D>, Serializable {
      * @param dynamicEntitySet the set of all dynamic entities
      * @param border           the border of the map
      */
-    public MapImpl(final Player player, final Boss boss, final Set<StaticEntity> staticEntitySet, final Set<DynamicEntity> dynamicEntitySet, final List<V2D> border) {
+    public MapImpl(final Player player, final Boss boss, final Set<StaticEntity> staticEntitySet, final Set<DynamicEntity> dynamicEntitySet, final Set<V2D> border) {
         this.player = player;
         this.boss = boss;
         //this.staticEntitySet = staticEntitySet; //TODO get the mystery boxes..>.<
@@ -98,7 +98,7 @@ public class MapImpl implements Map<V2D>, Serializable {
      * {@inheritDoc}
      */
     @Override
-    public List<V2D> getBorders() {
+    public Set<V2D> getBorders() {
         return this.border;
     }
     /**
@@ -248,8 +248,8 @@ public class MapImpl implements Map<V2D>, Serializable {
      * @return {@link #getBorders()}
      */
     private List<V2D> createNewBorder(final List<V2D> tail, final V2D boss) {
-        List<V2D> t0 = new LinkedList<>(getPlayer().getTail().getCoordinates());
-        List<V2D> t1 = new LinkedList<>(getPlayer().getTail().getCoordinates());
+        List<V2D> t0 = new ArrayList<>(getPlayer().getTail().getCoordinates());
+        List<V2D> t1 = new ArrayList<>(getPlayer().getTail().getCoordinates());
         var adjBorderPoint = this.getBorders().stream().filter(e -> e.isAdj(getPlayer().getTail().getCoordinates().get(0))).collect(Collectors.toList());
 
         if (adjBorderPoint.size() != 2) {
@@ -280,12 +280,12 @@ public class MapImpl implements Map<V2D>, Serializable {
                 throw new IllegalStateException("The list of points is not closed; t1: " + t1);
             }
         }
-        if (isInBorders(boss, t1)) {
-            if (isInBorders(boss, t0)) {
+        if (isInBorders(boss, Set.copyOf(t1))) {
+            if (isInBorders(boss, Set.copyOf(t0))) {
                 throw new IllegalStateException("Error in algorithm: the boss in both generated borders");
             }
-            return List.copyOf(t1);
-        } else if (isInBorders(boss, t0)) {
+            return t1;
+        } else if (isInBorders(boss, Set.copyOf(t0))) {
             return t0;
         } else {
             throw new IllegalStateException("Failed to create a new border (Boss too big?)");
@@ -351,7 +351,7 @@ public class MapImpl implements Map<V2D>, Serializable {
             return 0;
         }
     }
-    private boolean isInBorders(final V2D pos, final List<V2D> borders) {
+    private boolean isInBorders(final V2D pos, final Set<V2D> borders) {
 
         List<Integer> segments = new ArrayList<>();
         var t = IntStream.rangeClosed(1, MapImpl.MAXBORDERX)

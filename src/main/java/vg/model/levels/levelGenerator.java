@@ -26,14 +26,14 @@ public class levelGenerator {
     /**
      * The borders are the same for every level at the beginning.
      */
-    private final List<V2D> defaultBorders = Stream.concat(
+    private final Set<V2D> defaultBorders = Stream.concat(
             Stream.concat(
             IntStream.rangeClosed(0, MapImpl.MAXBORDERX).boxed().flatMap(e -> Stream.of(new V2D(e,0))),
             IntStream.rangeClosed(0, MapImpl.MAXBORDERY).boxed().flatMap(e -> Stream.of(new V2D(MapImpl.MAXBORDERX,e)))),
             Stream.concat(
             IntStream.rangeClosed(0, MapImpl.MAXBORDERX).boxed().flatMap(e -> Stream.of(new V2D(MapImpl.MAXBORDERX-e,MapImpl.MAXBORDERY))),
             IntStream.rangeClosed(0, MapImpl.MAXBORDERY).boxed().flatMap(e -> Stream.of(new V2D(0,MapImpl.MAXBORDERY-e))))
-    ).distinct().collect(Collectors.toList());
+    ).distinct().collect(Collectors.toSet());
 
     /**
      * Lv1.
