@@ -1,7 +1,7 @@
 package vg.controller.entity.boss;
 
-import vg.model.entity.Boss.BossModel;
-import vg.model.entity.Boss.StaticFactoryBoss;
+import vg.model.entity.boss.BossModel;
+import vg.model.entity.boss.StaticFactoryBoss;
 import vg.view.entity.EntityBlock;
 import vg.view.entity.StaticFactoryEntityBlock;
 

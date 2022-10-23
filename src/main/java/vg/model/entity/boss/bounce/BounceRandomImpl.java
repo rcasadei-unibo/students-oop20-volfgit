@@ -1,4 +1,4 @@
-package vg.model.entity.Boss.bounce;
+package vg.model.entity.boss.bounce;
 
 public class BounceRandomImpl implements Bounce {
 

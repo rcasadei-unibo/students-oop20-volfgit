@@ -1,7 +1,7 @@
 package vg.controller.entity.boss;
 
 import vg.controller.gameBoard.GameBoardController;
-import vg.model.entity.Boss.BossModel;
+import vg.model.entity.boss.BossModel;
 import vg.view.entity.EntityBlock;
 
 public class BossControllerImpl implements BossController {

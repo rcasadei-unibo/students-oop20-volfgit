@@ -1,4 +1,4 @@
-package vg.model.entity.Boss;
+package vg.model.entity.boss;
 
 import vg.utils.V2D;
 
