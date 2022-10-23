@@ -6,6 +6,7 @@ import vg.controller.entity.EntityManagerImpl;
 import vg.controller.gameBoard.GameBoardController;
 import vg.controller.leaderboard.ScoreManagerImpl;
 import vg.model.Stage;
+import vg.model.StageImpl;
 import vg.model.entity.dynamicEntity.player.Player;
 import vg.model.score.Score;
 import vg.utils.*;
@@ -60,6 +61,7 @@ public class GameControllerImpl extends Controller<AdaptableView<GameBoardContro
         this.stageDomain = stageDomain;
         this.getGameViewController().initMapView();
         this.render();
+        ((StageImpl<?>)this.stageDomain).setEntityManagerController(this.entityManager);
     }
 
     /**
