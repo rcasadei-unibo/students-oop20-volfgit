@@ -9,17 +9,16 @@ import vg.model.mystery_box.concrete.AbilityWeaponImpl;
 public class StaticFactoryAbilityDurable {
 
     public static AbilityInTheBox createFreezeTime() {
-        return new AbilityFreezeTimeImpl(EAbility.FREEZE_TIME, 500);
+        return new AbilityFreezeTimeImpl(EAbility.FREEZE_TIME);
     }
 
     public static AbilityInTheBox createSpeedUp() {
-        return new AbilitySpeedImpl(EAbility.SPEED_UP, 200);
+        return new AbilitySpeedImpl(EAbility.SPEED_UP);
     }
 
     public static AbilityInTheBox createWeaponForMosquitoes() {
         return new AbilityWeaponImpl(EAbility.WEAPON_MOSQUITOES, 200, false);
     }
-
     public static AbilityInTheBox createWeaponForBoss() {
         return new AbilityWeaponImpl(EAbility.WEAPON_BOSS, 500, true);
     }

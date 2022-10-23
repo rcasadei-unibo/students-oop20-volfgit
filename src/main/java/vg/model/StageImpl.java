@@ -1,22 +1,19 @@
 package vg.model;
 
 import vg.controller.entity.EntityManager;
+import vg.controller.entity.mystery_box.MysteryBoxController;
 import vg.model.entity.ShapedEntity;
 import vg.model.entity.Entity;
 import vg.model.entity.dynamicEntity.DynamicEntity;
 import vg.model.entity.dynamicEntity.enemy.Boss;
-import vg.model.entity.dynamicEntity.player.BasePlayer;
 import vg.model.entity.dynamicEntity.player.Player;
+import vg.model.entity.staticEntity.FixedSquare;
 import vg.model.entity.staticEntity.StaticEntity;
-import vg.model.levels.LEVEL;
 import vg.utils.Direction;
-import vg.utils.MassTier;
 import vg.utils.V2D;
 
 import java.io.IOException;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
+import java.util.*;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
@@ -62,7 +59,7 @@ public class StageImpl<T> implements Stage<V2D> {
      */
     private Map<V2D> map;
     private EntityManager emController;
-
+    private HashMap boxControllerToStaticEntityMap;
     /**
      * Constructor with map and currentScore as parameters, useful if the
      * Stage is created from a saved file.
@@ -333,12 +330,12 @@ public class StageImpl<T> implements Stage<V2D> {
             getPlayer().getTail().resetTail();
             //now to capture all the entities
             getDynamicEntitySet().forEach(e -> {
-                if (((MapImpl) getMap()).isInBorders(e.getPosition())) {
+                if (!((MapImpl) getMap()).isInBorders(e.getPosition())) {
                     getToDestroySet().add(e);
                 } else {
                     getBorders().forEach(e2 -> {
                         if (e.isInShape(e2)) {
-                            map.getAfterCollisionDirection(e);
+                            e.setSpeed(map.getAfterCollisionDirection(e));
                         }
                     });
                 }
@@ -353,6 +350,9 @@ public class StageImpl<T> implements Stage<V2D> {
     @Override
     public void setEntityManagerController(EntityManager e) {
         this.emController = e;
+        this.boxControllerToStaticEntityMap = new HashMap<MysteryBoxController,FixedSquare>();
+        e.getMysteryBoxList().forEach( t -> boxControllerToStaticEntityMap.put(t, new FixedSquare(t.getPosition(),t.getRadius())));
+        getStaticEntitySet().addAll(boxControllerToStaticEntityMap.values());
     }
 
     /**

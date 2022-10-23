@@ -26,7 +26,7 @@ public interface AbilityInTheBox extends Entity {
      * @return the dimension of the box.
      */
     Dimension2D getDimension();
-
+    String getPathReveled();
 
     int getRadius();
     /**
@@ -70,4 +70,5 @@ public interface AbilityInTheBox extends Entity {
 
     void show();
     void hide();
+
 }

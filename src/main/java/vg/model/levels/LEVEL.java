@@ -49,9 +49,9 @@ public enum LEVEL {
                 return rt;
         }
     }
-    private static BossImpl lv1boss = new BossImpl(new V2D(100, 100), new V2D(3, 3),  5, Shape.SQUARE, MassTier.HIGH);
-    private static BossImpl lv2boss = new BossImpl(new V2D(100, 100), new V2D(4, 4),  5, Shape.SQUARE, MassTier.HIGH);
-    private static BossImpl lv3boss = new BossImpl(new V2D(100, 100), new V2D(5, -3),  5, Shape.SQUARE, MassTier.HIGH);
+    private static BossImpl lv1boss = new BossImpl(new V2D(2,2));
+    private static BossImpl lv2boss = new BossImpl(new V2D(2,2));
+    private static BossImpl lv3boss = new BossImpl(new V2D(2,2));
 
 
 
