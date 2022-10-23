@@ -100,13 +100,13 @@ public class levelGenerator {
         lv1.close();
         //do this for every level (also to find a better way)
         FileOutputStream fileOutLv2 = new FileOutputStream("2");
-        ObjectOutputStream lv2 = new ObjectOutputStream(fileOutLv1);
+        ObjectOutputStream lv2 = new ObjectOutputStream(fileOutLv2);
         lv2.writeObject(this.lv2);
         lv2.flush();
         lv2.close();
 
         FileOutputStream fileOutLv3 = new FileOutputStream("3");
-        ObjectOutputStream lv3 = new ObjectOutputStream(fileOutLv1);
+        ObjectOutputStream lv3 = new ObjectOutputStream(fileOutLv3);
         lv3.writeObject(this.lv3);
         lv3.flush();
         lv3.close();
