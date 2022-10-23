@@ -78,6 +78,7 @@ public class MysteryBoxManagerImpl implements MysteryBoxManager {
             abilityDurable.updateTimer(elapsedTime);
             if (abilityDurable.isTimeOver()) {
                 abilityDurable.deActivate(stage);
+                mysteryBox.hide();
             }
         });
 

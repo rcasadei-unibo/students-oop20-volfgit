@@ -90,8 +90,8 @@ public class MysteryBoxControllerImpl implements MysteryBoxController {
         boolean isOnBorder = map.isInBorders(position);
 
         if (true) {
-//            this.model.activate(stage);
-//            this.model.hide();
+            this.model.activate(stage);
+            this.model.hide();
             this.view.setImage(this.model.getPathReveled());
         }
     }
@@ -99,6 +99,12 @@ public class MysteryBoxControllerImpl implements MysteryBoxController {
     @Override
     public boolean isActivated() {
         return this.model.isActivated();
+    }
+
+    @Override
+    public void hide() {
+        this.model.hide();
+        this.view.setShow(this.model.isShow());
     }
 
 }
