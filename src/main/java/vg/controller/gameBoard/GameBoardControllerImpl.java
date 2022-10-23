@@ -21,6 +21,7 @@ import vg.view.entity.EntityBlockImpl;
 import vg.view.entity.StaticFactoryEntityBlock;
 import vg.view.player.PlayerViewController;
 import vg.view.player.PlayerViewControllerImpl;
+import vg.view.utils.Colors;
 
 import java.util.*;
 import java.util.stream.Collectors;
@@ -98,6 +99,7 @@ public class GameBoardControllerImpl extends ViewController implements GameBoard
 
         this.mosquitoesNode = new HashSet<>();
         this.tailPolyline = new Polyline();
+
     }
 
     @Override
@@ -132,16 +134,15 @@ public class GameBoardControllerImpl extends ViewController implements GameBoard
 
     @Override
     public void updateBorders(List<V2D> vertexBorder) {
-/*
+        this.gameArea.getChildren().remove(this.borders);
         this.borders = new Polyline();
         this.borders.getPoints()
                 .setAll(convertToListOfDouble(vertexBorder.stream()
                                                         .map(this::mapCoordinateToViewSize)
                                                         .collect(Collectors.toList())));
-        this.borders.setStrokeWidth(5);
-        this.borders.setStroke(Paint.valueOf("#945200"));
+        this.borders.setStrokeWidth(2.5);
+        this.borders.setStroke(Colors.BORDER);
         this.addInGameArea(this.borders);
-*/
     }
 
     @Override
@@ -151,21 +152,15 @@ public class GameBoardControllerImpl extends ViewController implements GameBoard
         } else {
             this.player.hideShield();
         }
-
         this.player.setPosition(mapCoordinateToViewSize(position));
-        if (isTailConfirmed) {
-            this.tailPolyline.setFill(Paint.valueOf("RED"));
-            this.borders = this.tailPolyline;
-            addInGameArea(this.borders);
-        }
 
         this.gameArea.getChildren().remove(this.tailPolyline);
         tailVec.add(position);
         this.tailPolyline = new Polyline();
         List<V2D> mappedTail = tailVec.stream().map(this::mapCoordinateToViewSize).collect(Collectors.toList());
         this.tailPolyline.getPoints().setAll(convertToListOfDouble(mappedTail));
-        this.tailPolyline.setStrokeWidth(4);
-        this.tailPolyline.setStroke(Paint.valueOf("#945200"));
+        this.tailPolyline.setStrokeWidth(2.5);
+        this.tailPolyline.setStroke(Colors.TAIL);
         this.addInGameArea(this.tailPolyline);
     }
 
