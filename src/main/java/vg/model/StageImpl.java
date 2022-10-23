@@ -61,6 +61,12 @@ public class StageImpl<T> implements Stage<V2D> {
     private EntityManager emController;
     private HashMap boxControllerToStaticEntityMap;
     /**
+     * Only {@link #doCycle()} can set this to true after
+     * calling {@link Map#updateBorders(List)}.
+     */
+    private boolean borderUpdateBoolean = false;
+
+    /**
      * Constructor with map and currentScore as parameters, useful if the
      * Stage is created from a saved file.
      * @param currentScore The player score
@@ -328,6 +334,7 @@ public class StageImpl<T> implements Stage<V2D> {
          if (getMap().isTailCompleted()) {
             getMap().updateBorders(getPlayer().getTail().getCoordinates());
             getPlayer().getTail().resetTail();
+            this.borderUpdateBoolean = true;
             //now to capture all the entities
             getDynamicEntitySet().forEach(e -> {
                 if (!((MapImpl) getMap()).isInBorders(e.getPosition())) {
@@ -368,12 +375,25 @@ public class StageImpl<T> implements Stage<V2D> {
             throw new RuntimeException(e);
         }
     }
-    /*
-    private void updateStaticEntitiesListFromController() {
-        try {
-            emController.
-        }
-    }*/
+
+    /**
+     *
+     * {@inheritDoc}
+     */
+    @Override
+    public boolean isBorderUpdated() {
+        return this.borderUpdateBoolean;
+    }
+
+    /**
+     *
+     * {@inheritDoc}
+     */
+    @Override
+    public void consumeBorderUpdatedState() {
+        this.borderUpdateBoolean = false;
+
+    }
     /**
      * Uses {@link MapFactoryImpl#fromSerialized(int)} to createMysteryBox the map for the next level,
      * set up the {@link #currentScore} and the {@link #lv}.
