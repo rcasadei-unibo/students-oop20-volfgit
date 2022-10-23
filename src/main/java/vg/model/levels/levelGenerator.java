@@ -38,7 +38,7 @@ public class levelGenerator {
             .flatMap(e -> Stream.of(new FixedMysteryBox(e,2, BonusImpl.createBonus(BonusType.EXTRA_SCORE,10))))
             .collect(Collectors.toSet()));
 */
-    private Set<DynamicEntity> dsLv1 = generatesEnemies(null, bossLv1, 5 );
+    private Set<DynamicEntity> dsLv1 = generatesEnemies(null, bossLv1, 4 );
 
 
     private Map<V2D> lv1 = new MapImpl(BasePlayer.newPlayer(new V2D(0, 0)),
@@ -60,7 +60,7 @@ public class levelGenerator {
         var r = new Random();
         Set<DynamicEntity> rt = new HashSet<>();
         while (rt.size() < nEnemies) {
-            var t = new Mosquitoes(new V2D(r.nextInt(MapImpl.MAXBORDERX), r.nextInt(MapImpl.MAXBORDERY)), new V2D(r.nextInt(3), r.nextInt(3)), 3, Shape.SQUARE, MassTier.LOW);
+            var t = new Mosquitoes(new V2D(r.nextInt(MapImpl.MAXBORDERX), r.nextInt(MapImpl.MAXBORDERY)), new V2D(r.nextInt(2), r.nextInt(2)), 3, Shape.SQUARE, MassTier.LOW);
             if (rt.stream().noneMatch(e -> e.isInShape(t)) &&
                     !boss.isInShape(t) &&
                     defaultBorders.stream().noneMatch(t::isInShape) &&
