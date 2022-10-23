@@ -24,7 +24,7 @@ public class MapImpl implements Map<V2D>, Serializable {
      * The player.
      * @see Player
      */
-    private final Player player;
+    private Player player;
     /**
      * The boss.
      * @see Boss
@@ -451,5 +451,8 @@ public class MapImpl implements Map<V2D>, Serializable {
             t = t.sum(getPlayer().getDirection().getVector());
         }
         getPlayer().getTail().addPoint(getPlayer().getPosition());
+    }
+    protected void setPlayer(Player p){
+        this.player = p;
     }
 }

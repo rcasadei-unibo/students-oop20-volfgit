@@ -416,6 +416,7 @@ public class StageImpl<T> implements Stage<V2D> {
             var mf = new MapFactoryImpl();
             this.setLv(getLv() + 1);
             this.setMap(mf.fromSerialized(getLv()));
+            ((MapImpl)this.map).setPlayer(getPlayer());
         }
         //TODO add bosses and mystery boxes from controllers when called
     }
