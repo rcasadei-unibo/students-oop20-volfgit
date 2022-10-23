@@ -50,9 +50,11 @@ public class GameControllerImpl extends Controller<AdaptableView<GameBoardContro
      */
     private Stage<V2D> stageDomain;
 
+    /**
+     * Entity manager for managing mistery-boxes and bonuses.
+     * {@link EntityManager}
+     */
     private final EntityManager entityManager;
-
-    private Set<V2D> prevBorders;
 
     public GameControllerImpl(final AdaptableView<GameBoardController> view, final Stage<V2D> stageDomain, final ViewManager viewManager) {
         super(view, viewManager);
@@ -60,9 +62,8 @@ public class GameControllerImpl extends Controller<AdaptableView<GameBoardContro
         this.movementQueue = new ArrayList<>();
         this.stageDomain = stageDomain;
         this.getGameViewController().initMapView();
-        this.prevBorders = this.stageDomain.getBorders();
         this.render();
-        ((StageImpl<?>)this.stageDomain).setEntityManagerController(this.entityManager);
+        this.stageDomain.setEntityManagerController(this.entityManager);
     }
 
     /**
@@ -169,10 +170,10 @@ public class GameControllerImpl extends Controller<AdaptableView<GameBoardContro
     private void render() {
         List<V2D> borderList = new ArrayList<>();
         Set<V2D> border = this.stageDomain.getBorders();
-        boolean areBorderUpdated = border.stream().anyMatch(e -> prevBorders.contains(e));
+        boolean areBorderUpdated = this.stageDomain.isBorderUpdated();
+        this.stageDomain.consumeBorderUpdatedState();
 
         if (areBorderUpdated) {
-            this.prevBorders = border;
             borderList.add(border.stream().findFirst().get());
 
             while (borderList.size() < border.size()) {
@@ -194,7 +195,6 @@ public class GameControllerImpl extends Controller<AdaptableView<GameBoardContro
             getGameViewController().updateShieldTime(this.stageDomain.getPlayer().getShield().getRemainingTime());
             getGameViewController().updateScoreText(this.stageDomain.getCurrentScore());
             getGameViewController().updatePercentage(this.stageDomain.getMap().getOccupiedPercentage());
-
             //Player
             Player player = this.stageDomain.getPlayer();
             getGameViewController()

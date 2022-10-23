@@ -172,6 +172,7 @@ public class GameBoardControllerImpl extends ViewController implements GameBoard
 
     @Override
     public void updatePercentage(double percentage) {
+        System.out.println(percentage);
         this.percentage.setText(String.valueOf((int)percentage*100));
     }
 
