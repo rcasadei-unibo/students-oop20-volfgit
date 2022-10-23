@@ -14,17 +14,22 @@ public abstract class AbstractAbility extends StaticEntity {
     private static final Dimension2D DIMENSION_BOX = new Dimension2D(60, 60);
     private static final V2D INIT_POSITION = new V2D(0, 0);
     private final Dimension2D dimension;
-    protected String pathImage;
     private final EAbility idAbility;
+    private final ETypeAbility typeAbility;
     private final LogicBlink logicBlink;
 
+    private String pathImage;
+    private boolean isActivated;
 
-    public AbstractAbility(final EAbility idAbility) {
+
+    public AbstractAbility(final EAbility idAbility, final ETypeAbility typeAbility) {
         super(INIT_POSITION, (int) (DIMENSION_BOX.getWidth() / 2));
         this.pathImage = PathImageMysteryBox.MYSTERY_BOX;
         this.dimension = DIMENSION_BOX;
         this.idAbility = idAbility;
+        this.typeAbility = typeAbility;
         this.logicBlink = new LogicBlinkImpl();
+        this.isActivated = false;
     }
 
     /**
@@ -33,6 +38,10 @@ public abstract class AbstractAbility extends StaticEntity {
      */
     public EAbility getIdAbility() {
         return this.idAbility;
+    }
+
+    public ETypeAbility getTypeAbility() {
+        return this.typeAbility;
     }
     /**
      * This method is used to get the dimension of the box.
@@ -76,5 +85,23 @@ public abstract class AbstractAbility extends StaticEntity {
     public void updateBlinking(final long elapsedTime) {
         this.logicBlink.updateBlinking(elapsedTime);
     }
+    public boolean isActivated() {
+        return this.isActivated;
+    }
+    public void show() {
+        this.logicBlink.show();
+    }
+    public void hide() {
+        this.logicBlink.hide();
+    }
 
+    protected void setPathImage(final String mysteryBoss) {
+        this.pathImage = mysteryBoss;
+    }
+    protected void activated() {
+        this.isActivated = true;
+    }
+    protected void deactivated() {
+        this.isActivated = false;
+    }
 }

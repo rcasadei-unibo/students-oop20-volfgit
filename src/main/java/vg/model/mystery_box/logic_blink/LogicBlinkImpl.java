@@ -60,6 +60,15 @@ public class LogicBlinkImpl implements LogicBlink {
         }
     }
 
+    @Override
+    public void show() {
+        this.isShow = true;
+    }
+
+    @Override
+    public void hide() {
+        this.isShow = false;
+    }
 
 
 }

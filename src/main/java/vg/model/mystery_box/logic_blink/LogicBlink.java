@@ -12,4 +12,8 @@ public interface LogicBlink {
     boolean isShow();
 
     void updateBlinking(long elapsedTime);
+
+    void show();
+
+    void hide();
 }

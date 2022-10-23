@@ -17,7 +17,7 @@ public class EntityManagerImpl implements EntityManager {
     }
 
     @Override
-    public void initializeRound(GameBoardController gameController) {
+    public void initializeRound(final GameBoardController gameController) {
         this.mysteryBoxManager.initializeRound(gameController);
 
     }
@@ -28,12 +28,13 @@ public class EntityManagerImpl implements EntityManager {
     }
 
     @Override
-    public void updateBlinkingMysteryBox(long elapsedTime) {
-        this.mysteryBoxManager.updateBlinkingMysteryBox(elapsedTime);
+    public void countingTimeMysteryBox(final long elapsedTime, final Stage<V2D> stage) {
+        this.mysteryBoxManager.updateTimeBlinking(elapsedTime);
+        this.mysteryBoxManager.updateTimeIfAbilityActive(elapsedTime, stage);
     }
 
     @Override
-    public void checkMysteryBoxOnBorder(Stage<V2D> stage) {
-        this.mysteryBoxManager.checkMysteryBoxOnBorder(stage);
+    public void checkMysteryBoxOnBorder(final Stage<V2D> stage, final GameBoardController gameController) {
+        this.mysteryBoxManager.checkMysteryBoxOnBorder(stage, gameController);
     }
 }

@@ -390,7 +390,7 @@ public class MapImpl implements Map<V2D>, Serializable {
     /**
      * Overloading for checking if a position is valid but removing one
      * entity from checks. This is used in {@link MapImpl#getAfterCollisionDirection(DynamicEntity)}
-     * where it checks for every entity how to "bounce" but it excludes itself from computations
+     * where it checks for every entity show to "bounce" but it excludes itself from computations
      * (and the entities that has a mass tier lower).
      * @param pos the position to check
      * @param toRemove the entity to remove

@@ -12,7 +12,7 @@ public interface EntityManager {
 
     List<MysteryBoxController> getMysteryBoxList();
 
-    void updateBlinkingMysteryBox(long elapsedTime);
+    void countingTimeMysteryBox(long elapsedTime, Stage<V2D> stage);
 
-    void checkMysteryBoxOnBorder(Stage<V2D> stage);
+    void checkMysteryBoxOnBorder(Stage<V2D> stage, GameBoardController gameController);
 }

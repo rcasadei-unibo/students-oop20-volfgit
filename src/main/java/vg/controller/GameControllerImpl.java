@@ -124,9 +124,9 @@ public class GameControllerImpl extends Controller<AdaptableView<GameBoardContro
     private void updateGameDomain(final long elapsedTime) {
         this.stageDomain.getPlayer().getShield().updateTimer(elapsedTime);
         this.stageDomain.getMap().updateBonusTimer(elapsedTime);
-        this.entityManager.updateBlinkingMysteryBox(elapsedTime);
         this.stageDomain.doCycle();
-        this.entityManager.checkMysteryBoxOnBorder(this.stageDomain);
+        this.entityManager.countingTimeMysteryBox(elapsedTime, this.stageDomain);
+        this.entityManager.checkMysteryBoxOnBorder(this.stageDomain, this.getGameViewController());
     }
 
     /**

@@ -2,7 +2,6 @@ package vg.model.mystery_box.factory;
 
 import vg.model.mystery_box.AbilityInTheBox;
 import vg.model.mystery_box.EAbility;
-import vg.model.mystery_box.ability.AbilityWeapon;
 import vg.model.mystery_box.concrete.AbilityFreezeTimeImpl;
 import vg.model.mystery_box.concrete.AbilitySpeedImpl;
 import vg.model.mystery_box.concrete.AbilityWeaponImpl;

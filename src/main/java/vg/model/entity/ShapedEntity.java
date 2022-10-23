@@ -9,7 +9,7 @@ import java.io.Serializable;
 /**
  * ShapedEntity implements {@link Entity} and add the {@link Shape}
  * to it (Circle or Square). It has {@link #radius} that defines
- * how large the entity is.
+ * show large the entity is.
  * @see Entity
  * @see Shape
  * @see MassTier

@@ -1,4 +1,4 @@
-package vg.model.mystery_box.ability;
+package vg.model.mystery_box;
 
 import vg.model.mystery_box.AbilityInTheBox;
 import vg.model.timedObject.TimedObject;
