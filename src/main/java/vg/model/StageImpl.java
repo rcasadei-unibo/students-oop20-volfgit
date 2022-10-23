@@ -410,7 +410,7 @@ public class StageImpl<T> implements Stage<V2D> {
      * @throws ClassNotFoundException may be launched if Map class is changed and the saved one is not updated.
      */
     private void nextLevelFromSerialized() throws IOException, ClassNotFoundException {
-        if (getMap().getOccupiedPercentage() > MAP_PERC_WIN_CONDITION) {
+        if (getMap().getOccupiedPercentage()*100 > MAP_PERC_WIN_CONDITION) {
             this.setCurrentScore(getCurrentScore() + (int) (getMap().getOccupiedPercentage() * 1000));
             var mf = new MapFactoryImpl();
             this.setLv(getLv() + 1);

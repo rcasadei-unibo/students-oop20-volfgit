@@ -239,7 +239,7 @@ public class GameControllerImpl extends Controller<AdaptableView<GameBoardContro
     private void resumeGame() {
         System.out.println("RESUME");
         this.gameState = GameState.PLAYING;
-        this.getViewManager().popScene();
+        Platform.runLater(()-> this.getViewManager().popScene());
         this.gameLoop();
     }
 
@@ -267,11 +267,12 @@ public class GameControllerImpl extends Controller<AdaptableView<GameBoardContro
                 stageDomain.getLv());
         transView.setIoLogicController(this);
         showTimedView(transView, SCREEN_DURATION_TIME);
-        Platform.runLater(this::resumeGame);
+        this.resumeGame();
     }
 
     /**
      * Show for an amount of time then return;
+     * It's a blocking method so be sure if you not want blocking behaviour to run this method in a different thread.
      *
      * @param view View to be temporarily showed that implements {@link CountdownView}
      * @param duration amount of time to show the view
