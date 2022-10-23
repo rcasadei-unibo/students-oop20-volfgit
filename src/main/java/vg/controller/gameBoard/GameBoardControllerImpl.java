@@ -1,6 +1,5 @@
 package vg.controller.gameBoard;
 
-import javafx.application.Platform;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.geometry.Dimension2D;
@@ -10,7 +9,6 @@ import javafx.scene.control.Label;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.Pane;
 import javafx.scene.paint.Paint;
-import javafx.scene.shape.Circle;
 import javafx.scene.shape.Polyline;
 import vg.model.entity.dynamicEntity.DynamicEntity;
 import vg.utils.V2D;
@@ -35,21 +33,26 @@ public class GameBoardControllerImpl extends ViewController implements GameBoard
     public Label scoreText;
     @FXML
     public Label highScoreText;
-
     @FXML
     public Label shield;
     @FXML
     public Label percentage;
-
+    @FXML
     public Button life1;
+    @FXML
     public Button life2;
+    @FXML
     public Button life3;
+    @FXML
     public Button life4;
+    @FXML
     public Button life5;
+    @FXML
     public Button life6;
 
     private PlayerViewController player;
     private Polyline tailPolyline;
+    private Polyline borders;
     private EntityBlock boss;
     private Set<Node> mosquitoesNode;
 
@@ -84,8 +87,8 @@ public class GameBoardControllerImpl extends ViewController implements GameBoard
         this.player = new PlayerViewControllerImpl();
         this.player.setInParentNode(this.getGameAreaNode());
 
-//        this.boss = StaticFactoryEntityBlock.createBoss(initBossPos);
-//        this.addInGameArea(this.boss.getNode());
+        //this.boss = StaticFactoryEntityBlock.createBoss();
+
 
         this.mosquitoesNode = new HashSet<>();
         this.tailPolyline = new Polyline();
@@ -95,16 +98,58 @@ public class GameBoardControllerImpl extends ViewController implements GameBoard
     public void updateMosquitoesPosition(final Set<DynamicEntity> mosquitoes) {
         this.gameArea.getChildren().removeAll(mosquitoesNode);
 
-//        mosquitoes.forEach(mosq -> {
-//            EntityBlock entityBlock =  StaticFactoryEntityBlock.createMosquito(mosq.getPosition());
-//            this.mosquitoesNode.add(entityBlock.getNode());
-//            this.addInGameArea(entityBlock.getNode());
-//        });
+        mosquitoes.forEach(mosq -> {
+            EntityBlock entityBlock =  StaticFactoryEntityBlock.createMosquitoes(mosq.getPosition(), new Dimension2D( 30, 30));
+            entityBlock.setInParentNode(this.gameArea.getChildren());
+        });
     }
 
     @Override
     public void updateBossPosition(final V2D bossPos) {
        // this.boss.setPosition(bossPos);
+    }
+
+    @Override
+    public void updateBorders(List<V2D> vertexBorder) {
+/*
+        this.borders = new Polyline();
+        this.borders.getPoints().setAll(convertToListOfDouble(vertexBorder.stream().sorted((v1,v2)-> (int)(v1.getX()- v2.getX())).collect(Collectors.toList())));
+        this.borders.setStrokeWidth(5);
+        this.borders.setStroke(Paint.valueOf("#945200"));
+        this.addInGameArea(this.borders);
+*/
+    }
+
+    @Override
+    public void updateLifeCounter(int life) {
+        Stream.of(life6, life5, life4, life3, life2, life1)
+                .limit(Math.min(life, 6))
+                .forEach(btn -> btn.setDisable(false));
+    }
+
+    @Override
+    public void updatePercentage(double percentage) {
+        this.percentage.setText(String.valueOf((int)percentage*100));
+    }
+
+    @Override
+    public void setRound(int round) {
+        this.numberRound.setText(String.valueOf(round));
+    }
+
+    @Override
+    public void updateScoreText(int score) {
+        this.scoreText.setText(String.valueOf(score));
+    }
+
+    @Override
+    public void setHighScoreText(int highScore) {
+        this.highScoreText.setText(String.valueOf(highScore));
+    }
+
+    @Override
+    public void updateShieldTime(double time) {
+        this.shield.setText(String.valueOf((int)time/100));
     }
 
     @Override
@@ -120,8 +165,8 @@ public class GameBoardControllerImpl extends ViewController implements GameBoard
 
         tailVec.add(position);
         this.tailPolyline = new Polyline();
-        this.tailPolyline.getPoints().setAll(convertTolistofDouble(tailVec));
-        this.tailPolyline.setStrokeWidth(5);
+        this.tailPolyline.getPoints().setAll(convertToListOfDouble(tailVec));
+        this.tailPolyline.setStrokeWidth(4);
         this.tailPolyline.setStroke(Paint.valueOf("#945200"));
         this.addInGameArea(this.tailPolyline);
     }
@@ -131,11 +176,10 @@ public class GameBoardControllerImpl extends ViewController implements GameBoard
      * @param vectors List of vertex vector of player tail
      * @return List of double
      */
-    private List<Double> convertTolistofDouble(final List<V2D> vectors) {
-        List<Double> list = vectors.stream()
+    private List<Double> convertToListOfDouble(final List<V2D> vectors) {
+        return vectors.stream()
                 .map(vec -> List.of(vec.getX(), vec.getY()))
                 .flatMap(Collection::stream)
                 .collect(Collectors.toList());
-        return list;
     }
 }

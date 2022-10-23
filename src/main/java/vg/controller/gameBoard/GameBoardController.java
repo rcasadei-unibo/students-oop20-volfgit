@@ -27,4 +27,18 @@ public interface GameBoardController {
     void updateMosquitoesPosition(Set<DynamicEntity> mosquitoes);
 
     void updateBossPosition(V2D bossPos);
+
+    void updateBorders(List<V2D> vertexBorder);
+
+    void updateLifeCounter(int life);
+
+    void updatePercentage(double percentage);
+
+    void setRound(int round);
+
+    void updateScoreText(int score);
+
+    void setHighScoreText(int highScore);
+
+    void updateShieldTime(double time);
 }
