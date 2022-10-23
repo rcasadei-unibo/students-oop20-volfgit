@@ -16,7 +16,7 @@ public final class BasePlayer extends DynamicEntity implements Player {
     /**
      * Maximum player life.
      * */
-    public static final int PLAYER_MAX_LIFE = 5;
+    public static final int PLAYER_MAX_LIFE = 6;
     /**
      * Default player speed.
      */
@@ -138,6 +138,7 @@ public final class BasePlayer extends DynamicEntity implements Player {
      * if it move on left in can move right).
      * @param dir Direction vector that define sign of speed's coordinates
      */
+    @Override
     public void changeDirection(final Direction dir) {
         if (lastMovingDir == null) {
             lastMovingDir = dir;
