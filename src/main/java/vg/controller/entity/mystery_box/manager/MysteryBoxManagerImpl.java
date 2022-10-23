@@ -3,9 +3,11 @@ package vg.controller.entity.mystery_box.manager;
 import vg.controller.gameBoard.GameBoardController;
 import vg.controller.entity.mystery_box.MysteryBoxController;
 import vg.controller.entity.mystery_box.StaticFactoryMysteryBox;
+import vg.model.Stage;
 import vg.model.entity.dynamicEntity.player.Player;
 import vg.model.mystery_box.data_round.DataRound;
 import vg.utils.Round.MysteryBoxPositionUtils;
+import vg.utils.V2D;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -45,6 +47,11 @@ public class MysteryBoxManagerImpl implements MysteryBoxManager {
     }
 
     @Override
+    public List<MysteryBoxController> getMysteryBoxList() {
+        return this.mysteryBoxList;
+    }
+
+    @Override
     public void increaseRound() {
         this.round++;
     }
@@ -55,7 +62,7 @@ public class MysteryBoxManagerImpl implements MysteryBoxManager {
     }
 
     @Override
-    public void checkCollision(final Player player) {
-        this.mysteryBoxList.forEach(mysteryBox -> mysteryBox.checkCollision(player));
+    public void checkCollision(final Stage<V2D> stage) {
+        this.mysteryBoxList.forEach(mysteryBox -> mysteryBox.checkCollision(stage));
     }
 }

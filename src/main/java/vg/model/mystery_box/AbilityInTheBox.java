@@ -24,6 +24,9 @@ public interface AbilityInTheBox extends Entity {
      * @return the dimension of the box.
      */
     Dimension2D getDimension();
+
+
+    int getRadius();
     /**
      * This method is used to get the path of the image of the ability.
      * @return the path of the image of the ability.

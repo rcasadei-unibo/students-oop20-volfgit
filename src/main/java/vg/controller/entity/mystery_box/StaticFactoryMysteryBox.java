@@ -19,9 +19,9 @@ public class StaticFactoryMysteryBox {
             case SPEED_UP:
                 return createSpeed();
             case WEAPON_MOSQUITOES:
-                return createWeaponForMosquitoes();
+                return createScore();//createWeaponForMosquitoes();
             case WEAPON_BOSS:
-                return createWeaponForBoss();
+                return createSpeed();//createWeaponForBoss();
             default:
                 throw new IllegalArgumentException("Unknown ability: " + eAbility);
         }

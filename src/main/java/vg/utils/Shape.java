@@ -61,14 +61,7 @@ public enum Shape {
             dx = Math.max(dx - r2, 0);
             dy = Math.max(dy - r2, 0);
 
-            var condition = dx * dx + dy * dy <= r1 * r1;
-
-            if(condition)
-                System.out.println("P1 " + p1 + " P2 " + p2 + "\n " +
-                    "R1 " + r1 + " R2 " + r2 + "\n" +
-                    " P2Type " + p2Type);
-
-            return condition;
+            return dx * dx + dy * dy <= r1 * r1;
         }
         if (this == Shape.SQUARE && p2Type == Shape.CIRCLE) {
             return Shape.CIRCLE.isInShape(p2, p1, r2, r1, Shape.SQUARE);
