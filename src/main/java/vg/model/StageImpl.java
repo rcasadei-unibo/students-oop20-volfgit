@@ -10,6 +10,7 @@ import vg.model.entity.Entity;
 import vg.model.entity.dynamicEntity.DynamicEntity;
 import vg.model.entity.dynamicEntity.enemy.Boss;
 import vg.model.entity.dynamicEntity.enemy.EmptyBoss;
+import vg.model.entity.dynamicEntity.player.BasePlayer;
 import vg.model.entity.dynamicEntity.player.Player;
 import vg.model.entity.staticEntity.FixedSquare;
 import vg.model.entity.staticEntity.StaticEntity;
@@ -480,7 +481,8 @@ public class StageImpl<T> implements Stage<V2D> {
             var mf = new MapFactoryImpl();
             this.setLv(getLv() + 1);
             this.setMap(mf.fromSerialized(getLv()));
-            ((MapImpl)this.map).setPlayer(getPlayer());
+            this.player = BasePlayer.newPlayer(new V2D(0, 0),getPlayer().getLife());
+            ((MapImpl)this.map).setPlayer(this.player);
         }
         //TODO add bosses and mystery boxes from controllers when called
     }
