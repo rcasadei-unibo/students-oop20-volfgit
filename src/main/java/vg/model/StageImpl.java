@@ -23,7 +23,7 @@ import java.util.stream.Stream;
  * @see V2D
  */
 public class StageImpl<T> implements Stage<V2D> {
-    public static final double MAP_PERC_WIN_CONDITION = 20.0;
+    public static final double MAP_PERC_WIN_CONDITION = 80.0;
     /**
      * The current level.
      */
@@ -265,7 +265,9 @@ public class StageImpl<T> implements Stage<V2D> {
                     (!getBorders().contains(getPlayer().getPosition()) || getPlayer().getShield().isActive())) {
                 getPlayer().decLife();
                 //if the player is not on borders the tail cannot be empty
-                ((DynamicEntity) getPlayer()).setPosition(getPlayer().getTail().getCoordinates().get(0));
+                if (!getPlayer().getTail().getCoordinates().isEmpty()) {
+                    ((DynamicEntity) getPlayer()).setPosition(getPlayer().getTail().getCoordinates().get(0));
+                }
                 getPlayer().getTail().resetTail();
             }
         });
@@ -340,22 +342,22 @@ public class StageImpl<T> implements Stage<V2D> {
             ((MapImpl) getMap()).addTailPointsByPlayerSpeed();
         }
         checkAllOutOfBounds();
-         if (getMap().isTailCompleted()) {
-            getMap().updateBorders(getPlayer().getTail().getCoordinates());
-            getPlayer().getTail().resetTail();
-            this.borderUpdateBoolean = true;
-            //now to capture all the entities
-            getDynamicEntitySet().forEach(e -> {
-                if (!((MapImpl) getMap()).isInBorders(e.getPosition())) {
-                    getToDestroySet().add(e);
-                } else {
-                    getBorders().forEach(e2 -> {
-                        if (e.isInShape(e2)) {
-                            e.setSpeed(map.getAfterCollisionDirection(e));
-                        }
-                    });
-                }
-            });
+        if (getMap().isTailCompleted()) {
+        getMap().updateBorders(getPlayer().getTail().getCoordinates());
+        getPlayer().getTail().resetTail();
+        this.borderUpdateBoolean = true;
+        //now to capture all the entities
+        getDynamicEntitySet().forEach(e -> {
+            if (!((MapImpl) getMap()).isInBorders(e.getPosition())) {
+                getToDestroySet().add(e);
+            } else {
+                getBorders().forEach(e2 -> {
+                    if (e.isInShape(e2)) {
+                        e.setSpeed(map.getAfterCollisionDirection(e));
+                    }
+                });
+            }
+        });
             //TODO check for static entities
         }
         moveAll();
