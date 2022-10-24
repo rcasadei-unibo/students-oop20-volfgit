@@ -1,9 +1,6 @@
 package vg.model.mystery_box.logic_blink;
 
 public class LogicBlinkImpl implements LogicBlink {
-
-    private static final int TIME_HIDE = 3000;
-    private static final int TIME_SHOW = 4000;
     private boolean isBlinking;
     private boolean isShow;
     private final double timeHide;
@@ -11,11 +8,11 @@ public class LogicBlinkImpl implements LogicBlink {
     private double currentTime;
 
 
-    public LogicBlinkImpl() {
+    public LogicBlinkImpl(final int timeShow, final int timeHide) {
         this.isBlinking = false;
         this.isShow = true;
-        this.timeHide = TIME_HIDE;
-        this.timeShow = TIME_SHOW;
+        this.timeShow = timeShow;
+        this.timeHide = timeHide;
         this.currentTime = 0;
     }
 
@@ -27,7 +24,6 @@ public class LogicBlinkImpl implements LogicBlink {
     public boolean isBlinking() {
         return this.isBlinking;
     }
-
     @Override
     public void setBlinking(final boolean blinking) {
         this.isBlinking = blinking;
@@ -36,39 +32,37 @@ public class LogicBlinkImpl implements LogicBlink {
     public boolean isShow() {
         return this.isShow;
     }
+    @Override
+    public void updateBlinking(final long elapsedTime) {
+        if (!this.isBlinking) {
+            return;
+        }
+        this.updateCurrentTime(elapsedTime);
+
+        if (this.isShow) {
+            this.updateIfIsShown();
+        } else {
+            this.updateIfIsHidden();
+        }
+    }
 
     private void resetCurrentTime() {
         this.currentTime = 0;
     }
-    @Override
-    public void updateBlinking(final long elapsedTime) {
-        if(!this.isBlinking) {
-            return;
-        }
+    private void updateCurrentTime(final double elapsedTime) {
         this.currentTime += elapsedTime;
-
-        if (this.isShow) {
-            if (this.currentTime >= this.timeShow) {
-                this.isShow = false;
-                this.resetCurrentTime();
-            }
-        } else {
-            if (this.currentTime >= this.timeHide) {
-                this.isShow = true;
-                this.resetCurrentTime();
-            }
+    }
+    private void updateIfIsShown() {
+        if (this.currentTime >= this.timeShow) {
+            this.isShow = false;
+            this.resetCurrentTime();
         }
     }
-
-    @Override
-    public void show() {
-        this.isShow = true;
+    private void updateIfIsHidden() {
+        if (this.currentTime >= this.timeHide) {
+            this.isShow = true;
+            this.resetCurrentTime();
+        }
     }
-
-    @Override
-    public void hide() {
-        this.isShow = false;
-    }
-
 
 }

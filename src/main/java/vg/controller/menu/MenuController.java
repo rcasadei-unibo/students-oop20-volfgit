@@ -18,6 +18,7 @@ import vg.view.ViewManager;
 import vg.view.leaderBoard.LeaderBoardView;
 import vg.view.menu.MenuView;
 import vg.view.menu.prompt.PromptView;
+import vg.view.settings.SettingView;
 import vg.view.utils.KeyAction;
 
 public class MenuController extends Controller<MenuView> implements PromptObserver {
@@ -42,7 +43,8 @@ public class MenuController extends Controller<MenuView> implements PromptObserv
         } else if (idxSelection == MenuOption.LEADERBOARDS.ordinal()) {
            this.leaderBoards();
         } else if (idxSelection == MenuOption.SETTINGS.ordinal()) {
-            System.out.println("settings");
+            SettingView settingsView = ViewFactory.settingView(this.getViewManager(), this.soundManager);
+            this.getViewManager().addScene(settingsView);
         } else if (idxSelection == MenuOption.QUIT.ordinal()) {
             PromptView promptView = ViewFactory.promptView(this.getViewManager(), this);
             this.getViewManager().addScene(promptView);

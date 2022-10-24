@@ -10,6 +10,7 @@ public interface Player extends Entity {
 
     /**
      * Decrement player's life of one unit.
+     * If shield has expired, create new shield with half of previous one.
      */
     void decLife();
     /**

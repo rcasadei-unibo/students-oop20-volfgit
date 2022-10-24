@@ -11,17 +11,17 @@ public class StaticFactoryMysteryBox {
     private static MysteryBoxController createRandom(final EAbility eAbility) {
         switch (eAbility) {
             case FREEZE_TIME:
-                return createFreezeTime();
+                return createScore();//createFreezeTime();
             case KILL_ALL_MOSQUITOES:
                 return createKillMosquitoes();
             case SCORE:
                 return createScore();
             case SPEED_UP:
-                return createSpeed();
+                return createScore(); //createSpeed();
             case WEAPON_MOSQUITOES:
                 return createScore();//createWeaponForMosquitoes();
             case WEAPON_BOSS:
-                return createSpeed();//createWeaponForBoss();
+                return createScore(); //createSpeed();//createWeaponForBoss();
             default:
                 throw new IllegalArgumentException("Unknown ability: " + eAbility);
         }

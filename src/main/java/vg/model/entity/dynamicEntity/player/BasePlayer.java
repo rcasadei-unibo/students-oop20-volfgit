@@ -100,16 +100,27 @@ public final class BasePlayer extends DynamicEntity implements Player {
         this.direction = DEFAULT_DIRECTION;
     }
 
+    /**
+     * {@inheritDoc}
+     */
+    @Override
     public void decLife() {
         this.life = this.life > 0 ? this.life - 1 : 0;
+        if (!this.shield.isActive()) {
+            this.shield = Shield.create((double) Shield.DEFAULT_DURATION/2, true);
+        }
     }
     /**
      * {@inheritDoc}
      */
+    @Override
     public void incLife() {
         this.life = this.life + 1;
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public int getLife() {
         return this.life;
@@ -118,6 +129,7 @@ public final class BasePlayer extends DynamicEntity implements Player {
     /**
      * {@inheritDoc}
      */
+    @Override
     public Tail getTail() {
         return this.tail;
     }

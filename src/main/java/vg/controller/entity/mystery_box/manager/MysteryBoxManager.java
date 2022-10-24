@@ -14,6 +14,8 @@ public interface MysteryBoxManager {
     List<MysteryBoxController> getMysteryBoxActiveAndDurableList();
     void increaseRound();
     void updateTimeBlinking(long elapsedTime);
+    void showPickUpMysteryBox(long elapsedTime);
     void updateTimeIfAbilityActive(long elapsedTime, Stage<V2D> stage);
     void checkMysteryBoxOnBorder(Stage<V2D> player, GameBoardController gameController);
+
 }

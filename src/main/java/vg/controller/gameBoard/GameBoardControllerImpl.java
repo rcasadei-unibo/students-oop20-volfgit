@@ -8,7 +8,6 @@ import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.Pane;
-import javafx.scene.paint.Paint;
 import javafx.scene.shape.Polyline;
 import vg.model.MapImpl;
 import vg.model.entity.ShapedEntity;
@@ -16,20 +15,18 @@ import vg.model.entity.dynamicEntity.DynamicEntity;
 import vg.utils.V2D;
 import vg.view.ViewController;
 import vg.view.entity.EntityBlock;
-import vg.view.entity.EntityBlockImpl;
 import vg.view.entity.StaticFactoryEntityBlock;
 import vg.view.player.PlayerViewController;
 import vg.view.player.PlayerViewControllerImpl;
 import vg.view.utils.Colors;
-
 import java.util.*;
 import java.util.stream.Collectors;
-import java.util.stream.Stream;
 
+/**
+ * View Controller of JavaFx Scene. This class update player, mosquitoes, borders and tails view.
+ * Game Logic controller ({@link vg.controller.GameControllerImpl}) calls methods of this class in order to update view.
+ */
 public class GameBoardControllerImpl extends ViewController implements GameBoardController {
-
-    @FXML
-    private BorderPane borderPane;
 
     @FXML
     public Label numberRound;
@@ -54,14 +51,40 @@ public class GameBoardControllerImpl extends ViewController implements GameBoard
     @FXML
     public Button life6;
 
+    /**
+     * View Controller of player to manager its view.
+     */
     private PlayerViewController player;
+
+    /**
+     * Polyline used to draw player's tail.
+     */
     private Polyline tailPolyline;
+
+    /**
+     * Polyline used to draw border.
+     */
     private Polyline borders;
     private EntityBlock boss;
+
+    /**
+     * Set of all nodes that are mosquitoes.
+     */
     private Set<Node> mosquitoesNode;
+
+    /**
+     *
+     */
     private Set<EntityBlock> mosqs;
+
+    /**
+     * Previous player's life value, used to not update life indicator if it is not changed.
+     */
     private int prevLife;
 
+    /**
+     * Game Area that contains all nodes to be showed.
+     */
     @FXML
     private Pane gameArea;
 
@@ -87,45 +110,32 @@ public class GameBoardControllerImpl extends ViewController implements GameBoard
 
     @Override
     public void initMapView() {
-        //Set player in view map
         this.player = new PlayerViewControllerImpl();
         this.player.setInParentNode(this.getGameAreaNode());
-
-        //TODO create an appropriate controller for boss?
-       // this.boss = StaticFactoryEntityBlock.createBoss(new V2D(0, 0), modelRadiusToDimension2D(5));
-      //  this.boss.setInParentNode(this.getGameAreaNode());
         this.mosqs = new HashSet<>();
-//        this.addInGameArea(this.boss.getNode());
-
         this.mosquitoesNode = new HashSet<>();
         this.tailPolyline = new Polyline();
-
     }
 
     @Override
     public void updateMosquitoesPosition(final Set<DynamicEntity> mosquitoes) {
-
-       // this.gameArea.getChildren().removeAll(mosquitoesNode);
         this.gameArea.getChildren().removeAll(mosqs);
         this.mosqs.clear();
-
         mosquitoes.forEach(m -> {
             EntityBlock entityBlock = StaticFactoryEntityBlock.createMosquitoes(mapCoordinateToViewSize(m.getPosition()), modelRadiusToDimension2D(m.getRadius()));
             entityBlock.setInParentNode(this.getGameAreaNode());
             this.mosqs.add(entityBlock);
-            //this.mosquitoesNode.add(entityBlock.getNode());
-            //this.addInGameArea(entityBlock.getNode());
         });
     }
 
+    /**
+     * Actually boss is updated by {@link vg.controller.entity.EntityManager#moveEntityBoss(long)}
+     * so this method is unused and empty.
+     * @param bossPos {@link V2D} new boss position
+     */
     @Override
     public void updateBossPosition(final V2D bossPos) {
-        /*((EntityBlockImpl)this.boss).setDisable(true);
-        this.getGameArea().getChildren().removeIf(Node::isDisable);
-        this.boss = StaticFactoryEntityBlock.createBoss(bossPos, modelRadiusToDimension2D(5));
-        //((EntityBlockImpl)this.boss).setDisable(false);
-        this.boss.setInParentNode(this.getGameAreaNode());
-    */
+      //unused,
     }
 
     @Override
@@ -162,6 +172,7 @@ public class GameBoardControllerImpl extends ViewController implements GameBoard
 
     @Override
     public void updateLifeCounter(final int life) {
+        System.out.println(life);
         if (prevLife != life) {
             prevLife = life;
             this.life1.setDisable(true);

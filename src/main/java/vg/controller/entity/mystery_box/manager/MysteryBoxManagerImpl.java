@@ -59,6 +59,11 @@ public class MysteryBoxManagerImpl implements MysteryBoxManager {
                 .filter(mysteryBox -> mysteryBox.isType(ETypeAbility.DURABLE) && mysteryBox.isActivated())
                 .collect(Collectors.toList());
     }
+    private List<MysteryBoxController> getMysteryBoxActiveAndInstantList() {
+        return this.mysteryBoxList.stream()
+                .filter(mysteryBox -> mysteryBox.isType(ETypeAbility.INSTANT) && mysteryBox.isActivated())
+                .collect(Collectors.toList());
+    }
 
     @Override
     public void increaseRound() {
@@ -69,6 +74,14 @@ public class MysteryBoxManagerImpl implements MysteryBoxManager {
     public void updateTimeBlinking(final long elapsedTime) {
         this.mysteryBoxList.forEach(mysteryBox -> mysteryBox.updateBlinking(elapsedTime));
     }
+
+    @Override
+    public void showPickUpMysteryBox(final long elapsedTime) {
+        this.getMysteryBoxActiveAndInstantList().forEach(mysteryBox -> {
+            mysteryBox.showPickUpMysteryBox(elapsedTime);
+        });
+    }
+
     @Override
     public void updateTimeIfAbilityActive(final long elapsedTime, final Stage<V2D> stage) {
         final List<MysteryBoxController> mysteryBoxActivateList = this.getMysteryBoxActiveAndDurableList();

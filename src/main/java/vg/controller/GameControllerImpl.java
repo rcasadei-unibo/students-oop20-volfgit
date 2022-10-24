@@ -209,8 +209,7 @@ public class GameControllerImpl extends Controller<AdaptableView<GameBoardContro
                     .updatePlayer(player.getPosition(),
                             this.stageDomain.getMap().isPlayerOnBorders() && player.getShield().isActive(),
                             player.getTail().getVertex());
-            //Boss
-            getGameViewController().updateBossPosition(this.stageDomain.getBoss().getPosition());
+            //Boss entity and MYstery boxes are updated and managed by EntityManager
             //Mosquitoes
             getGameViewController().updateMosquitoesPosition(this.stageDomain.getDynamicEntitySet());
         });

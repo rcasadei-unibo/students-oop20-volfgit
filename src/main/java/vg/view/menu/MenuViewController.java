@@ -11,9 +11,6 @@ import static vg.view.utils.Colors.*;
 public class MenuViewController extends ViewController {
 
     @FXML
-    private Pane panel;
-
-    @FXML
     private Label playBtn;
 
     @FXML
@@ -24,7 +21,6 @@ public class MenuViewController extends ViewController {
 
     @FXML
     private Label quitBtn;
-
 
     public void highlightSelectedButton(final int idx) {
         List<Label> buttons = List.of(playBtn, leaderboardsBtn, settingsBtn, quitBtn);

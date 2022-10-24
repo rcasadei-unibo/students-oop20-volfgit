@@ -4,6 +4,7 @@ import javafx.geometry.Dimension2D;
 import vg.model.entity.staticEntity.StaticEntity;
 import vg.model.mystery_box.logic_blink.LogicBlink;
 import vg.model.mystery_box.logic_blink.LogicBlinkImpl;
+import vg.model.mystery_box.logic_blink.StaticFactoryBlink;
 import vg.utils.V2D;
 import vg.utils.path.PathImageMysteryBox;
 
@@ -17,7 +18,8 @@ public abstract class AbstractAbility extends StaticEntity {
     private final EAbility idAbility;
     private final ETypeAbility typeAbility;
     private final LogicBlink logicBlink;
-
+    private final LogicBlink logicBlinkPickUp;
+    private boolean show;
     private String pathImage;
     private boolean isActivated;
 
@@ -28,7 +30,8 @@ public abstract class AbstractAbility extends StaticEntity {
         this.dimension = DIMENSION_BOX;
         this.idAbility = idAbility;
         this.typeAbility = typeAbility;
-        this.logicBlink = new LogicBlinkImpl();
+        this.logicBlink = StaticFactoryBlink.createLogicBlinkMysteryBox();
+        this.logicBlinkPickUp = StaticFactoryBlink.createLogicBlinkPickUp();
         this.isActivated = false;
     }
 
@@ -72,7 +75,7 @@ public abstract class AbstractAbility extends StaticEntity {
      * @return true if the box is shown, false otherwise.
      */
     public boolean isShow() {
-        return this.logicBlink.isShow();
+        return this.show;
     }
     /**
      * This method is used to update the blinking.
@@ -87,24 +90,33 @@ public abstract class AbstractAbility extends StaticEntity {
      */
     public void updateBlinking(final long elapsedTime) {
         this.logicBlink.updateBlinking(elapsedTime);
+        this.show = this.logicBlink.isShow();
     }
     public boolean isActivated() {
         return this.isActivated;
     }
     public void show() {
-        this.logicBlink.show();
+        this.show = true;
     }
     public void hide() {
-        this.logicBlink.hide();
+        this.show = false;
     }
 
-    protected void setPathImage(final String mysteryBoss) {
-        this.pathImage = mysteryBoss;
+    public void setActiveBlinkPickUp() {
+        this.logicBlinkPickUp.setBlinking(true);
+    }
+    public void updateBlinkingPickUp(final long elapsedTime) {
+        this.logicBlinkPickUp.updateBlinking(elapsedTime);
+        this.show = this.logicBlinkPickUp.isShow();
+        if (!this.show) {
+            this.logicBlinkPickUp.setBlinking(false);
+        }
+    }
+
+    protected void setPathImage(final String pathImage) {
+        this.pathImage = pathImage;
     }
     protected void activated() {
         this.isActivated = true;
-    }
-    protected void deactivated() {
-        this.isActivated = false;
     }
 }

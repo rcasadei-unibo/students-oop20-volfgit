@@ -84,30 +84,31 @@ public class MysteryBoxControllerImpl implements MysteryBoxController {
         }
 
         final Map<V2D> map = stage.getMap();
-
         final double posX = (int) (this.getPosition().getX() * MapImpl.MAXBORDERX / gameController.getGameAreaDimension().getWidth());
         final double posY = (int) (this.getPosition().getY() * MapImpl.MAXBORDERY / gameController.getGameAreaDimension().getHeight());
         final V2D position = new V2D(posX, posY);
         final boolean isOnBorder = map.isInBorders(position);
 
-//        if (isOnBorder) {
-//            System.out.println("AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA");
-//        }
-//        if (!isOnBorder) {
-//            System.out.println("SOno fuori ");
-//        }
+        if (!isOnBorder) {
+            System.out.println("Take " + this.model.getIdAbility());
+            this.model.activate(stage);
+            this.view.setImage(this.model.getPathReveled());
+            this.model.setActiveBlinkPickUp();
+        }
+    }
 
-//        if (false) {
-//            this.model.activate(stage);
-//            this.model.hide();
-//            this.view.setImage(this.model.getPathReveled());
-//        }
+    @Override
+    public void showPickUpMysteryBox(final long elapsedTime) {
+        this.model.updateBlinkingPickUp(elapsedTime);
+        this.view.setShow(this.model.isShow());
     }
 
     @Override
     public boolean isActivated() {
         return this.model.isActivated();
     }
+
+
 
 
 }
