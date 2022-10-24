@@ -6,9 +6,12 @@ import vg.controller.entity.EntityManagerImpl;
 import vg.controller.gameBoard.GameBoardController;
 import vg.controller.leaderboard.ScoreManagerImpl;
 import vg.model.Stage;
-import vg.model.StageImpl;
 import vg.model.entity.dynamicEntity.player.Player;
 import vg.model.score.Score;
+import vg.sound.manager.ESoundBackground;
+import vg.sound.manager.ESoundEffect;
+import vg.sound.manager.SoundManager;
+import vg.sound.manager.SoundManagerImpl;
 import vg.utils.*;
 import vg.view.AdaptableView;
 import vg.view.SceneController;
@@ -22,6 +25,7 @@ import vg.controller.prompt.PromptObserver;
 import vg.view.transition.TransitionViewController;
 import vg.view.utils.CountdownView;
 import vg.view.utils.KeyAction;
+
 import java.util.*;
 
 import static vg.model.StageImpl.MAP_PERC_WIN_CONDITION;
@@ -58,12 +62,14 @@ public class GameControllerImpl extends Controller<AdaptableView<GameBoardContro
      * {@link EntityManager}
      */
     private final EntityManager entityManager;
+    private final SoundManager soundManager;
 
     private Set<V2D> prevBorders;
 
     public GameControllerImpl(final AdaptableView<GameBoardController> view, final Stage<V2D> stageDomain, final ViewManager viewManager) {
         super(view, viewManager);
         this.entityManager = new EntityManagerImpl();
+        this.soundManager = new SoundManagerImpl();
         this.movementQueue = new ArrayList<>();
         this.stageDomain = stageDomain;
         this.getGameViewController().initMapView();
@@ -78,6 +84,7 @@ public class GameControllerImpl extends Controller<AdaptableView<GameBoardContro
     public void launchGameSession() {
         this.gameState = GameState.PLAYING;
         this.entityManager.initializeRound(super.getView().getViewController());
+        this.soundManager.playBackground(ESoundBackground.START);
         this.gameLoop();
     }
 
@@ -87,7 +94,7 @@ public class GameControllerImpl extends Controller<AdaptableView<GameBoardContro
     private void gameLoop() {
         oneTimeRender();
         render(true);
-//        this.gameState = GameState.GAMEOVER;
+        this.gameState = GameState.GAMEOVER;
         //Launch on new thread game loop in order to not block gui.
         new Thread(() -> {
             long prevCycleTime = System.currentTimeMillis();
@@ -252,6 +259,7 @@ public class GameControllerImpl extends Controller<AdaptableView<GameBoardContro
      */
     private void gameOver() {
         System.out.println("GAMEOVER");
+        this.soundManager.playEffect(ESoundEffect.GAMEOVER);
         GameOverView gameOverView = ViewFactory.gameOverView(
                 stageDomain.getCurrentScore(),
                 stageDomain.getLv(),

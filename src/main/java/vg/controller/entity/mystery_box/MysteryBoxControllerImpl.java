@@ -90,12 +90,12 @@ public class MysteryBoxControllerImpl implements MysteryBoxController {
         final V2D position = new V2D(posX, posY);
         final boolean isOnBorder = map.isInBorders(position);
 
-        if (isOnBorder) {
-            System.out.println("AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA");
-        }
-        if (!isOnBorder) {
-            System.out.println("SOno fuori ");
-        }
+//        if (isOnBorder) {
+//            System.out.println("AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA");
+//        }
+//        if (!isOnBorder) {
+//            System.out.println("SOno fuori ");
+//        }
 
 //        if (false) {
 //            this.model.activate(stage);

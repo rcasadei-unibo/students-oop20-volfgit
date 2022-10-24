@@ -7,7 +7,7 @@ import vg.model.Stage;
 import vg.model.mystery_box.AbilityDurable;
 import vg.model.mystery_box.ETypeAbility;
 import vg.model.mystery_box.data_round.DataRound;
-import vg.utils.Round.MysteryBoxPositionUtils;
+import vg.utils.round.MysteryBoxPositionUtils;
 import vg.utils.V2D;
 
 import java.util.ArrayList;

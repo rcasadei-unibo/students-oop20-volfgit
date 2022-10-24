@@ -96,7 +96,7 @@ public class StageImpl<T> implements Stage<V2D> {
 
     /**
      * Constructor with no parameters, when a new game is started (not from a save),
-     * this will set up everything needed to play.
+     * this will set up everything needed to playOne.
      */
     public StageImpl() throws IOException, ClassNotFoundException {
         this.currentScore = 0;
