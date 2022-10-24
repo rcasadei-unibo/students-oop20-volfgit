@@ -59,6 +59,9 @@ public interface AbilityInTheBox extends Entity {
      */
     void updateBlinking(long elapsedTime);
 
+    void setActiveBlinkPickUp();
+    void updateBlinkingPickUp(long elapsedTime);
+
     /**
      * This method is used if the box is shown.
      * @return true if the box is shown, false otherwise.
