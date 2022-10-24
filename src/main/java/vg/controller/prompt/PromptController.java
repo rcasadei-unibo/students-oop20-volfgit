@@ -31,7 +31,7 @@ public class PromptController extends Controller<PromptView> {
      * Communicate selection o to observer.
      */
     private void applySelection() {
-        this.promptObserver.notifyDialogAnswer(this.selection);
+        this.promptObserver.notifyPromptAnswer(this.selection);
     }
 
     /**

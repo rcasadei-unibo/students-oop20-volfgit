@@ -17,6 +17,9 @@ public class GameOverViewController extends ViewController {
     @FXML
     private TextField nameField;
 
+    @FXML
+    private Text title;
+
     /**
      * Set score value to be showed.
      * @param score Player score.
@@ -44,5 +47,13 @@ public class GameOverViewController extends ViewController {
         } else {
             return Optional.of(this.nameField.getText());
         }
+    }
+
+    /**
+     * Set Screen title.
+     * @param title title to be shown instead GameOver phrase.
+     */
+    public void setTitle(String title) {
+        this.title.setText(title);
     }
 }

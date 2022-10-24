@@ -102,7 +102,7 @@ public class MenuController extends Controller<MenuView> implements PromptObserv
     }
 
     @Override
-    public void notifyDialogAnswer(final PromptOption answer) {
+    public void notifyPromptAnswer(final PromptOption answer) {
         if (answer == PromptOption.CONFIRM) {
             Platform.exit();
         } else if (answer == PromptOption.DENY) {

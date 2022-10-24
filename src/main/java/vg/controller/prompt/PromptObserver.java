@@ -8,5 +8,5 @@ public interface PromptObserver {
      * In base of prompt's answer reflects on logic or domain.
      * @param answer {@link PromptOption} value of selected button.
      */
-    void notifyDialogAnswer(PromptOption answer);
+    void notifyPromptAnswer(PromptOption answer);
 }
