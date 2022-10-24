@@ -3,6 +3,8 @@ package vg.model;
 import vg.controller.entity.EntityManager;
 import vg.controller.entity.boss.BossControllerImpl;
 import vg.controller.entity.mystery_box.MysteryBoxController;
+import vg.controller.gameBoard.GameBoardController;
+import vg.controller.gameBoard.GameBoardControllerImpl;
 import vg.model.entity.ShapedEntity;
 import vg.model.entity.Entity;
 import vg.model.entity.dynamicEntity.DynamicEntity;
@@ -62,6 +64,8 @@ public class StageImpl<T> implements Stage<V2D> {
     private Map<V2D> map;
     private EntityManager emController;
     private HashMap boxControllerToStaticEntityMap;
+
+    private GameBoardController g;
     /**
      * Only {@link #doCycle()} can set this to true after
      * calling {@link Map#updateBorders(List)}.
@@ -245,25 +249,41 @@ public class StageImpl<T> implements Stage<V2D> {
      */
     @Override
     public void checkCollisions() {
-        //TODO add boss, ok now check them better, this is just to not let the game crash
+
+        /* checks on Boss */
         getBorders().forEach(e -> {
-            if (getBoss().isInShape(e)){
-               getBoss().setSpeed(getMap().getAfterCollisionDirection(getBoss()));
+            if (getBoss().isInShape(e)) {
+                getBoss().setSpeed(getMap().getAfterCollisionDirection(getBoss()));
             }
         });
+        getStaticEntitySet().forEach(e -> {
+            if (getBoss().isInShape(e)) {
+                getBoss().setSpeed(getMap().getAfterCollisionDirection(getBoss()));
+            }
+        });
+        syncToEntityManager();
+        /* checks on Mosqs */
         getDynamicEntitySet().forEach(e -> getAllEntities().forEach(t -> {
 
             if (e.isInShape((ShapedEntity) t) && !e.equals(t)) {
                 e.setSpeed(getMap().getAfterCollisionDirection(e));
             }
         }));
+        //if the speed of enemies is less of the radius there is no need to check outOfBounds
         getDynamicEntitySet().forEach(e -> getBorders().forEach(t -> {
             if (e.isInShape(t)) {
                 e.setSpeed(getMap().getAfterCollisionDirection(e));
             }
         }));
         getDynamicEntitySet().forEach(e -> {
-            if (e.isInShape((DynamicEntity)getPlayer())){
+            if (e.isInShape(getBoss())) {
+                e.setSpeed(map.getAfterCollisionDirection(e));
+            }
+        });
+
+        /* checks on player */
+        getDynamicEntitySet().forEach(e -> {
+            if (e.isInShape((DynamicEntity) getPlayer())) {
                 if (getBorders().contains(getPlayer().getPosition()) && !getPlayer().getShield().isActive()) {
                     getPlayer().decLife();
                 } else if (!getBorders().contains(getPlayer().getPosition())) {
@@ -274,7 +294,19 @@ public class StageImpl<T> implements Stage<V2D> {
                 //else the player is safe
             }
         });
+        if (getPlayer().isInShape(getBoss())) {
+            if (getBorders().contains(getPlayer().getPosition()) && !getPlayer().getShield().isActive()) {
+                getPlayer().decLife();
+            } else if (!getBorders().contains(getPlayer().getPosition())) {
+                //if the player is not on borders the tail cannot be empty
+                ((DynamicEntity) getPlayer()).setPosition(getPlayer().getTail().getCoordinates().get(0));
+                getPlayer().getTail().resetTail();
+            }
+        }
+
+
     }
+
     /**
      *
      * {@inheritDoc}
@@ -369,16 +401,31 @@ public class StageImpl<T> implements Stage<V2D> {
     }
 
     @Override
-    public void setEntityManagerController(EntityManager e) {
+    public void setEntityManagerController(EntityManager e, GameBoardController g) {
+        this.g = g;
         this.emController = e;
         this.boxControllerToStaticEntityMap = new HashMap<MysteryBoxController,FixedSquare>();
-        var b = (BossControllerImpl)e.getBoss();
-
-        ((MapImpl)getMap()).setBoss(new EmptyBoss(b.getModel().getPosition(),b.getModel().getSpeed(),5,b.getModel().getShape(),b.getModel().getMassTier()));
-        e.getMysteryBoxList().forEach( t -> boxControllerToStaticEntityMap.put(t, new FixedSquare(t.getPosition(),t.getRadius())));
-        getStaticEntitySet().addAll(boxControllerToStaticEntityMap.values());
+        syncFromEntityManager();
     }
 
+    private void syncFromEntityManager(){
+        var b = (BossControllerImpl)this.emController.getBoss();
+        ((MapImpl)getMap()).setBoss(new EmptyBoss(b.getModel().getPosition(),b.getModel().getSpeed(),5,b.getModel().getShape(),b.getModel().getMassTier()));
+        this.emController.getMysteryBoxList().forEach( t -> boxControllerToStaticEntityMap.put(t, new FixedSquare(t.getPosition(),t.getRadius())));
+        getStaticEntitySet().addAll(boxControllerToStaticEntityMap.values());
+        syncToEntityManager();
+
+
+    }
+    private void syncToEntityManager(){
+        var d2dPosition = ((GameBoardControllerImpl)g).V2DtoDimension2D(getBoss().getPosition());
+        var v2dPosition = new V2D(d2dPosition.getWidth(), d2dPosition.getHeight());
+        ((BossControllerImpl)this.emController.getBoss()).getModel().setPosition(v2dPosition);
+        var d2dSpeed = ((GameBoardControllerImpl)g).V2DtoDimension2D(getBoss().getSpeed());
+        var v2dSpeed = new V2D(d2dSpeed.getWidth(),d2dSpeed.getHeight());
+        ((BossControllerImpl)this.emController.getBoss()).getModel().setSpeed(v2dSpeed);
+
+    }
     /**
      *
      * {@inheritDoc}

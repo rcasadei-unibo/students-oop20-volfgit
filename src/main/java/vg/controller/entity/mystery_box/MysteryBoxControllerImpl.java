@@ -93,9 +93,12 @@ public class MysteryBoxControllerImpl implements MysteryBoxController {
 //        if (isOnBorder) {
 //            System.out.println("AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA");
 //        }
-//        if (!isOnBorder) {
-//            System.out.println("SOno fuori ");
-//        }
+        if (!isOnBorder) {
+            System.out.println("SOno fuori ");
+            this.model.activate(stage);
+            this.model.hide();
+            this.view.setImage(this.model.getPathReveled());
+        }
 
 //        if (false) {
 //            this.model.activate(stage);
