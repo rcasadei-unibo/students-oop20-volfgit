@@ -255,6 +255,13 @@ public class StageImpl<T> implements Stage<V2D> {
                 getBoss().setSpeed(getMap().getAfterCollisionDirection(getBoss()));
             }
         });
+        if (getPlayer().getTail().getLastCoordinate().isPresent()) {
+            getPlayer().getTail().getCoordinates().forEach(e -> {
+                if(getBoss().isInShape(e)) {
+                    getBoss().setSpeed(getMap().getAfterCollisionDirection(getBoss()));
+                }
+            });
+        }
         getStaticEntitySet().forEach(e -> {
             if (getBoss().isInShape(e)) {
                 getBoss().setSpeed(getMap().getAfterCollisionDirection(getBoss()));
@@ -289,6 +296,7 @@ public class StageImpl<T> implements Stage<V2D> {
                     //if the player is not on borders the tail cannot be empty
                     ((DynamicEntity) getPlayer()).setPosition(getPlayer().getTail().getCoordinates().get(0));
                     getPlayer().getTail().resetTail();
+                    getPlayer().decLife();
                 }
                 //else the player is safe
             }
@@ -300,6 +308,7 @@ public class StageImpl<T> implements Stage<V2D> {
                 //if the player is not on borders the tail cannot be empty
                 ((DynamicEntity) getPlayer()).setPosition(getPlayer().getTail().getCoordinates().get(0));
                 getPlayer().getTail().resetTail();
+                getPlayer().decLife();
             }
         }
 
@@ -374,24 +383,25 @@ public class StageImpl<T> implements Stage<V2D> {
         getPlayer().move();
         if (!getMap().isPlayerOnBorders() || !getPlayer().getTail().getCoordinates().isEmpty()) {
             ((MapImpl) getMap()).addTailPointsByPlayerSpeed();
+          //  System.out.println(emController.getMysteryBoxList().stream().map(MysteryBoxController::getPosition).collect(Collectors.toList()));
         }
         checkAllOutOfBounds();
         if (getMap().isTailCompleted()) {
-        getMap().updateBorders(getPlayer().getTail().getCoordinates());
-        getPlayer().getTail().resetTail();
-        this.borderUpdateBoolean = true;
-        //now to capture all the entities
-        getDynamicEntitySet().forEach(e -> {
-            if (!((MapImpl) getMap()).isInBorders(e.getPosition())) {
-                getToDestroySet().add(e);
-            } else {
-                getBorders().forEach(e2 -> {
-                    if (e.isInShape(e2)) {
-                        e.setSpeed(map.getAfterCollisionDirection(e));
-                    }
-                });
-            }
-        });
+            getMap().updateBorders(getPlayer().getTail().getCoordinates());
+            getPlayer().getTail().resetTail();
+            this.borderUpdateBoolean = true;
+            //now to capture all the entities
+            getDynamicEntitySet().forEach(e -> {
+                if (!((MapImpl) getMap()).isInBorders(e.getPosition())) {
+                    getToDestroySet().add(e);
+                } else {
+                    getBorders().forEach(e2 -> {
+                        if (e.isInShape(e2)) {
+                            e.setSpeed(map.getAfterCollisionDirection(e));
+                        }
+                    });
+                }
+            });
             //TODO check for static entities
         }
         moveAll();
