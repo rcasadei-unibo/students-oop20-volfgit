@@ -1,6 +1,7 @@
 package vg.model;
 
 import vg.controller.entity.EntityManager;
+import vg.controller.gameBoard.GameBoardController;
 import vg.model.entity.ShapedEntity;
 import vg.model.entity.Entity;
 import vg.model.entity.dynamicEntity.DynamicEntity;
@@ -158,7 +159,7 @@ public interface Stage<T> {
      * @see #destroyAll()
      */
     void doCycle();
-    void setEntityManagerController(EntityManager e);
+    void setEntityManagerController(EntityManager e, GameBoardController g);
     /**
      * Creates a {@link Map}, must use {@link LEVEL} or better
      * {@link MapFactoryImpl}.
