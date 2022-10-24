@@ -6,6 +6,8 @@ import vg.controller.GameControllerImpl;
 import vg.controller.gameBoard.GameBoardController;
 import vg.controller.menu.MenuController;
 import vg.model.StageImpl;
+import vg.sound.manager.SoundManager;
+import vg.sound.manager.SoundManagerImpl;
 import vg.utils.V2D;
 import vg.view.AdaptableView;
 import vg.view.ViewFactory;
@@ -16,17 +18,12 @@ import vg.view.utils.KeyEventHandler;
 
 public class GameBoard extends Application {
 
-    /**
-     * View Manager.
-     * {@see ViewManager}
-     */
-    private ViewManager viewManager;
-
     @Override
     public void start(final Stage stage) {
-        viewManager = new ViewManagerImpl(stage, new KeyEventHandler());
+        ViewManager viewManager = new ViewManagerImpl(stage, new KeyEventHandler());
+        SoundManager soundManager = new SoundManagerImpl();
 
-        MenuView menuView = ViewFactory.menuView(viewManager);
+        MenuView menuView = ViewFactory.menuView(viewManager, soundManager);
         viewManager.addScene(menuView);
 
         stage.setOnCloseRequest(event -> {

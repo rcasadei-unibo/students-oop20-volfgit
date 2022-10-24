@@ -6,6 +6,7 @@ import vg.controller.leaderboard.LeaderBoardController;
 import vg.controller.menu.MenuController;
 import vg.controller.prompt.PromptController;
 import vg.controller.prompt.PromptObserver;
+import vg.sound.manager.SoundManager;
 import vg.view.gameOver.GameOverView;
 import vg.view.leaderBoard.LeaderBoardView;
 import vg.view.menu.MenuView;
@@ -66,9 +67,9 @@ public class ViewFactory {
         return  promptView;
     }
 
-    public static MenuView menuView(final ViewManager viewManager) {
+    public static MenuView menuView(final ViewManager viewManager, final SoundManager soundManager) {
         MenuView menuView = new MenuView();
-        MenuController menuController = new MenuController(menuView, viewManager);
+        MenuController menuController = new MenuController(menuView, viewManager, soundManager);
         menuView.setIoLogicController(menuController);
         return menuView;
     }

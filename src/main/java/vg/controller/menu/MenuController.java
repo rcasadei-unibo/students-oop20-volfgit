@@ -9,6 +9,7 @@ import vg.controller.leaderboard.ScoreManagerImpl;
 import vg.controller.prompt.PromptObserver;
 import vg.controller.prompt.PromptOption;
 import vg.model.StageImpl;
+import vg.sound.manager.SoundManager;
 import vg.utils.V2D;
 import vg.view.AdaptableView;
 import vg.view.View;
@@ -24,10 +25,12 @@ public class MenuController extends Controller<MenuView> implements PromptObserv
      * Menu selection cursor.
      */
     private int idxSelection = 0;
+    private final SoundManager soundManager;
 
-    public MenuController(final MenuView view, final ViewManager viewManager) {
+    public MenuController(final MenuView view, final ViewManager viewManager, final SoundManager soundManager) {
         super(view, viewManager);
         this.getView().getViewController().highlightSelectedButton(idxSelection);
+        this.soundManager = soundManager;
     }
 
     /**
@@ -69,7 +72,7 @@ public class MenuController extends Controller<MenuView> implements PromptObserv
         // 1) CREATE view
         AdaptableView<GameBoardController> gameView = ViewFactory.newGameBoardView();
         // 2) CREATE createMysteryBox logic controller
-        GameControllerImpl gameController = new GameControllerImpl(gameView, stageModel, this.getViewManager());
+        GameControllerImpl gameController = new GameControllerImpl(gameView, stageModel, this.getViewManager(), this.soundManager);
         // 3) set logic controller in view
         gameView.setIoLogicController(gameController);
         this.getViewManager().addScene(gameView);
