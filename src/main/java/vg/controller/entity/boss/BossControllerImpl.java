@@ -2,6 +2,7 @@ package vg.controller.entity.boss;
 
 import vg.controller.gameBoard.GameBoardController;
 import vg.model.entity.boss.BossModel;
+import vg.model.entity.dynamicEntity.enemy.Boss;
 import vg.view.entity.EntityBlock;
 
 public class BossControllerImpl implements BossController {
@@ -23,5 +24,9 @@ public class BossControllerImpl implements BossController {
     public void move() {
         this.model.move();
         this.view.setPosition(this.model.getPosition());
+    }
+
+    public Boss getModel() {
+        return (Boss)this.model;
     }
 }
