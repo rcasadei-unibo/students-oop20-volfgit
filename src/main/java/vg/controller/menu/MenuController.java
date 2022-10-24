@@ -56,7 +56,6 @@ public class MenuController extends Controller<MenuView> implements PromptObserv
         LeaderBoardView leaderBoardView = ViewFactory.leaderBoardView(getViewManager());
         this.getViewManager().addScene(leaderBoardView);
         leaderBoardView.getViewController().showList(scoreManager.getTopScore(20));
-        System.out.println(scoreManager.getTopScore(20));
     }
 
     /**

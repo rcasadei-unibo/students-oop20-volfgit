@@ -104,7 +104,6 @@ public class ScoreManagerImpl implements Serializable, ScoreManager {
 
     @Override
     public void saveOnFile() {
-        System.out.println("Save on file");
         try {
             this.saveCurrentLeaderboard();
         } catch (IOException e) {

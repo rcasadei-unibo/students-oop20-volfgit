@@ -27,7 +27,7 @@ public class LeaderBoardViewController extends ViewController {
     }
 
     public void showList(final List<Score> scoreList) {
-        for(int i = 1; i < scoreList.size(); i++) {
+        for(int i = 0; i < scoreList.size(); i++) {
             Score score = scoreList.get(i);
             Optional<Node> itemRow = LeaderBoardView.listItem(i, score.getName(), score.getScore(), score.getRound());
             itemRow.ifPresent(node -> list.getChildren().add(node));
