@@ -1,11 +1,13 @@
 package vg.model;
 
 import vg.controller.entity.EntityManager;
+import vg.controller.entity.boss.BossControllerImpl;
 import vg.controller.entity.mystery_box.MysteryBoxController;
 import vg.model.entity.ShapedEntity;
 import vg.model.entity.Entity;
 import vg.model.entity.dynamicEntity.DynamicEntity;
 import vg.model.entity.dynamicEntity.enemy.Boss;
+import vg.model.entity.dynamicEntity.enemy.EmptyBoss;
 import vg.model.entity.dynamicEntity.player.Player;
 import vg.model.entity.staticEntity.FixedSquare;
 import vg.model.entity.staticEntity.StaticEntity;
@@ -261,14 +263,15 @@ public class StageImpl<T> implements Stage<V2D> {
             }
         }));
         getDynamicEntitySet().forEach(e -> {
-            if (e.isInShape((DynamicEntity)getPlayer()) &&
-                    (!getBorders().contains(getPlayer().getPosition()) || getPlayer().getShield().isActive())) {
-                getPlayer().decLife();
-                //if the player is not on borders the tail cannot be empty
-                if (!getPlayer().getTail().getCoordinates().isEmpty()) {
+            if (e.isInShape((DynamicEntity)getPlayer())){
+                if (getBorders().contains(getPlayer().getPosition()) && !getPlayer().getShield().isActive()) {
+                    getPlayer().decLife();
+                } else if (!getBorders().contains(getPlayer().getPosition())) {
+                    //if the player is not on borders the tail cannot be empty
                     ((DynamicEntity) getPlayer()).setPosition(getPlayer().getTail().getCoordinates().get(0));
+                    getPlayer().getTail().resetTail();
                 }
-                getPlayer().getTail().resetTail();
+                //else the player is safe
             }
         });
     }
@@ -369,6 +372,9 @@ public class StageImpl<T> implements Stage<V2D> {
     public void setEntityManagerController(EntityManager e) {
         this.emController = e;
         this.boxControllerToStaticEntityMap = new HashMap<MysteryBoxController,FixedSquare>();
+        var b = (BossControllerImpl)e.getBoss();
+
+        ((MapImpl)getMap()).setBoss(new EmptyBoss(b.getModel().getPosition(),b.getModel().getSpeed(),5,b.getModel().getShape(),b.getModel().getMassTier()));
         e.getMysteryBoxList().forEach( t -> boxControllerToStaticEntityMap.put(t, new FixedSquare(t.getPosition(),t.getRadius())));
         getStaticEntitySet().addAll(boxControllerToStaticEntityMap.values());
     }

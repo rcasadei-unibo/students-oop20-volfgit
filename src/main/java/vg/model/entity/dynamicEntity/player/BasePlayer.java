@@ -25,7 +25,7 @@ public final class BasePlayer extends DynamicEntity implements Player {
     /**
      * Default player radius shape.
      * */
-    public static final int DEFAULT_PLAYER_RADIUS = 20;
+    public static final int DEFAULT_PLAYER_RADIUS = 2;
 
     /**
      * Default state of capability to shoot of player.

@@ -28,12 +28,7 @@ public class MapImpl implements Map<V2D>, Serializable {
      * The boss.
      * @see Boss
      */
-    private final Boss boss;
-    /**
-     * Set of active bonuses that affect the player.
-     * @see Bonus
-     */
-    //TODO: salvare contorller bonus
+    private Boss boss;
 
     /**
      * Set of all static entities on the map.
@@ -453,5 +448,8 @@ public class MapImpl implements Map<V2D>, Serializable {
     }
     protected void setPlayer(Player p){
         this.player = p;
+    }
+    protected void setBoss(Boss b){
+        this.boss = b;
     }
 }

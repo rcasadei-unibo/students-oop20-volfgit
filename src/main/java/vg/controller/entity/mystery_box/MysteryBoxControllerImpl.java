@@ -85,8 +85,8 @@ public class MysteryBoxControllerImpl implements MysteryBoxController {
 
         final Map<V2D> map = stage.getMap();
 
-        final double posX = this.getPosition().getX() * MapImpl.MAXBORDERX / gameController.getGameAreaDimension().getWidth();
-        final double posY = this.getPosition().getY() * MapImpl.MAXBORDERY / gameController.getGameAreaDimension().getHeight();
+        final double posX = (int) (this.getPosition().getX() * MapImpl.MAXBORDERX / gameController.getGameAreaDimension().getWidth());
+        final double posY = (int) (this.getPosition().getY() * MapImpl.MAXBORDERY / gameController.getGameAreaDimension().getHeight());
         final V2D position = new V2D(posX, posY);
         final boolean isOnBorder = map.isInBorders(position);
 
