@@ -8,7 +8,6 @@ import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.Pane;
-import javafx.scene.paint.Paint;
 import javafx.scene.shape.Polyline;
 import vg.model.MapImpl;
 import vg.model.entity.ShapedEntity;
@@ -16,15 +15,12 @@ import vg.model.entity.dynamicEntity.DynamicEntity;
 import vg.utils.V2D;
 import vg.view.ViewController;
 import vg.view.entity.EntityBlock;
-import vg.view.entity.EntityBlockImpl;
 import vg.view.entity.StaticFactoryEntityBlock;
 import vg.view.player.PlayerViewController;
 import vg.view.player.PlayerViewControllerImpl;
 import vg.view.utils.Colors;
-
 import java.util.*;
 import java.util.stream.Collectors;
-import java.util.stream.Stream;
 
 public class GameBoardControllerImpl extends ViewController implements GameBoardController {
 
@@ -54,14 +50,40 @@ public class GameBoardControllerImpl extends ViewController implements GameBoard
     @FXML
     public Button life6;
 
+    /**
+     * View Controller of player to manager its view.
+     */
     private PlayerViewController player;
+
+    /**
+     * Polyline used to draw player's tail.
+     */
     private Polyline tailPolyline;
+
+    /**
+     * Polyline used to draw border.
+     */
     private Polyline borders;
     private EntityBlock boss;
+
+    /**
+     * Set of all nodes that are mosquitoes.
+     */
     private Set<Node> mosquitoesNode;
+
+    /**
+     *
+     */
     private Set<EntityBlock> mosqs;
+
+    /**
+     * Previous player's life value, used to not update life indicator if it is not changed.
+     */
     private int prevLife;
 
+    /**
+     * Game Area that contains all nodes to be showed.
+     */
     @FXML
     private Pane gameArea;
 
