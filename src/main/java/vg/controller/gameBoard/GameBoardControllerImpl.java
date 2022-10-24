@@ -60,6 +60,7 @@ public class GameBoardControllerImpl extends ViewController implements GameBoard
     private EntityBlock boss;
     private Set<Node> mosquitoesNode;
     private Set<EntityBlock> mosqs;
+    private int prevLife;
 
     @FXML
     private Pane gameArea;
@@ -106,14 +107,10 @@ public class GameBoardControllerImpl extends ViewController implements GameBoard
 
        // this.gameArea.getChildren().removeAll(mosquitoesNode);
         this.gameArea.getChildren().removeAll(mosqs);
-        this.mosqs.clear();/*
-        var b = StaticFactoryEntityBlock.createBoss( ((EntityBlockImpl)this.boss).getDimension2D(),
-                new Dimension2D( ((EntityBlockImpl) this.boss).getWidth(),((EntityBlockImpl) this.boss).getHeight()));
-        this.mosqs.add(b);
-        ((EntityBlockImpl) this.boss).setDisable(true);
-        b.setInParentNode(this.getGameAreaNode());*/
+        this.mosqs.clear();
+
         mosquitoes.forEach(m -> {
-            EntityBlock entityBlock = StaticFactoryEntityBlock.createMosquitoes(m.getPosition(), modelRadiusToDimension2D(m.getRadius()));
+            EntityBlock entityBlock = StaticFactoryEntityBlock.createMosquitoes(mapCoordinateToViewSize(m.getPosition()), modelRadiusToDimension2D(m.getRadius()));
             entityBlock.setInParentNode(this.getGameAreaNode());
             this.mosqs.add(entityBlock);
             //this.mosquitoesNode.add(entityBlock.getNode());
@@ -132,7 +129,7 @@ public class GameBoardControllerImpl extends ViewController implements GameBoard
     }
 
     @Override
-    public void updateBorders(List<V2D> vertexBorder) {
+    public void updateBorders(final List<V2D> vertexBorder) {
         this.gameArea.getChildren().remove(this.borders);
         this.borders = new Polyline();
         this.borders.getPoints()
@@ -145,7 +142,7 @@ public class GameBoardControllerImpl extends ViewController implements GameBoard
     }
 
     @Override
-    public void updatePlayer(V2D position, boolean shieldActive, final List<V2D> tailVec) {
+    public void updatePlayer(final V2D position, final boolean shieldActive, final List<V2D> tailVec) {
         if (shieldActive) {
             this.player.showShield();
         } else {
@@ -164,35 +161,50 @@ public class GameBoardControllerImpl extends ViewController implements GameBoard
     }
 
     @Override
-    public void updateLifeCounter(int life) {
-        Stream.of(life6, life5, life4, life3, life2, life1)
-                .limit(Math.min(life, 6))
-                .forEach(btn -> btn.setDisable(false));
+    public void updateLifeCounter(final int life) {
+        if (prevLife != life) {
+            prevLife = life;
+            this.life1.setDisable(true);
+            this.life2.setDisable(true);
+            this.life3.setDisable(true);
+            this.life4.setDisable(true);
+            this.life5.setDisable(true);
+            this.life6.setDisable(true);
+            switch (life) {
+                case 6: this.life1.setDisable(false);
+                case 5: this.life2.setDisable(false);
+                case 4: this.life3.setDisable(false);
+                case 3: this.life4.setDisable(false);
+                case 2: this.life5.setDisable(false);
+                case 1: this.life6.setDisable(false);
+            }
+        }
     }
 
     @Override
-    public void updatePercentage(double percentage) {
-        System.out.println(percentage);
-        this.percentage.setText(String.valueOf((int)percentage*100));
+    public void updatePercentage(final double percentage) {
+        int perc = (int)(percentage*100);
+        this.percentage.setText(String.valueOf(perc));
     }
 
     @Override
-    public void setRound(int round) {
-        this.numberRound.setText(String.valueOf(round));
+    public void setRound(final int round) {
+        String roundStr = String.valueOf(round);
+        this.numberRound.setText(roundStr);
     }
 
     @Override
-    public void updateScoreText(int score) {
+    public void updateScoreText(final int score) {
         this.scoreText.setText(String.valueOf(score));
     }
 
     @Override
-    public void setHighScoreText(int highScore) {
+    public void setHighScoreText(final int highScore) {
         this.highScoreText.setText(String.valueOf(highScore));
     }
 
     @Override
-    public void updateShieldTime(double time) {
+    public void updateShieldTime(final double time) {
         this.shield.setText(String.valueOf((int)time/100));
     }
 
@@ -213,7 +225,7 @@ public class GameBoardControllerImpl extends ViewController implements GameBoard
      * @param v2d the model position
      * @return {@link Dimension2D} that correctly scales from the model position into {@link #gameArea}
      */
-    private Dimension2D V2DtoDimension2D(V2D v2d){
+    private Dimension2D V2DtoDimension2D(final V2D v2d){
         return new Dimension2D(v2d.getX() * getGameArea().getWidth()/ MapImpl.MAXBORDERX,
                 v2d.getY() * getGameArea().getHeight()/ MapImpl.MAXBORDERY);
     }
@@ -223,7 +235,7 @@ public class GameBoardControllerImpl extends ViewController implements GameBoard
      * @param modelV2D the model position
      * @return {@link V2D} mapped position
      */
-    private V2D mapCoordinateToViewSize(V2D modelV2D) {
+    private V2D mapCoordinateToViewSize(final V2D modelV2D) {
         Dimension2D mapped = V2DtoDimension2D(modelV2D);
         return new V2D(mapped.getWidth(), mapped.getHeight());
     }
@@ -233,7 +245,7 @@ public class GameBoardControllerImpl extends ViewController implements GameBoard
      * @param radius the model {@link ShapedEntity#getRadius()}
      * @return {@link Dimension2D} that correctly scales from the model into {@link #gameArea}
      */
-    private Dimension2D modelRadiusToDimension2D(int radius){
+    private Dimension2D modelRadiusToDimension2D(final int radius){
         return new Dimension2D(radius * getGameArea().getWidth()/ MapImpl.MAXBORDERX,
                 radius * getGameArea().getWidth()/ MapImpl.MAXBORDERX);
     }
@@ -243,7 +255,7 @@ public class GameBoardControllerImpl extends ViewController implements GameBoard
      * @param entity the model {@link ShapedEntity#getRadius()}
      * @return {@link Dimension2D} that correctly scales from the model into {@link #gameArea}
      */
-    private Dimension2D modelRadiusToDimension2D(ShapedEntity entity){
+    private Dimension2D modelRadiusToDimension2D(final ShapedEntity entity){
         return new Dimension2D(entity.getRadius() * getGameArea().getWidth()/ MapImpl.MAXBORDERX,
                 entity.getRadius() * getGameArea().getWidth()/ MapImpl.MAXBORDERX);
     }

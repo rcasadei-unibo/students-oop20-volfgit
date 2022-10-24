@@ -73,7 +73,6 @@ public class GameControllerImpl extends Controller<AdaptableView<GameBoardContro
         this.movementQueue = new ArrayList<>();
         this.stageDomain = stageDomain;
         this.getGameViewController().initMapView();
-        this.render(true);
         this.stageDomain.setEntityManagerController(this.entityManager);
     }
 
@@ -94,7 +93,6 @@ public class GameControllerImpl extends Controller<AdaptableView<GameBoardContro
     private void gameLoop() {
         oneTimeRender();
         render(true);
-        this.gameState = GameState.GAMEOVER;
         //Launch on new thread game loop in order to not block gui.
         new Thread(() -> {
             long prevCycleTime = System.currentTimeMillis();
@@ -170,13 +168,11 @@ public class GameControllerImpl extends Controller<AdaptableView<GameBoardContro
      * Render static elements that during game-loop doesn't change.
      */
     private void oneTimeRender() {
-        Platform.runLater(() -> {
-            //Round
-            getGameViewController().setRound(this.stageDomain.getLv());
-            //HighScore
-            Optional<Score> highScore = ScoreManagerImpl.newScoreManager().getTopScore(1).stream().findFirst();
-            highScore.ifPresent(score -> getGameViewController().setHighScoreText(score.getScore()));
-        });
+        //Round
+        getGameViewController().setRound(this.stageDomain.getLv());
+        //HighScore
+        Optional<Score> highScore = ScoreManagerImpl.newScoreManager().getTopScore(1).stream().findFirst();
+        highScore.ifPresent(score -> getGameViewController().setHighScoreText(score.getScore()));
     }
 
     /**
@@ -188,6 +184,7 @@ public class GameControllerImpl extends Controller<AdaptableView<GameBoardContro
         boolean areBorderUpdated = this.stageDomain.isBorderUpdated();
         this.stageDomain.consumeBorderUpdatedState();
         if (areBorderUpdated || forceBorder) {
+            this.soundManager.playEffect(ESoundEffect.CLOSE_BORDER);
             borderList.add(border.stream().findFirst().get());
             while (borderList.size() < border.size()) {
                 Optional<V2D> vect = border.stream()
@@ -344,7 +341,7 @@ public class GameControllerImpl extends Controller<AdaptableView<GameBoardContro
      * @param dir new direction of player to be set
      */
     private void appendPlayerCommand(final Direction dir) {
-        Boolean isOnBorder = this.stageDomain.getMap().isPlayerOnBorders();
+        boolean isOnBorder = this.stageDomain.getMap().isPlayerOnBorders();
         this.movementQueue.add(pl -> pl.changeDirection(dir, isOnBorder));
     }
 
