@@ -32,6 +32,11 @@ public class EntityManagerImpl implements EntityManager {
     }
 
     @Override
+    public BossController getBoss() {
+        return this.boss;
+    }
+
+    @Override
     public void countingTimeMysteryBox(final long elapsedTime, final Stage<V2D> stage) {
         this.mysteryBoxManager.updateTimeBlinking(elapsedTime);
         this.mysteryBoxManager.updateTimeIfAbilityActive(elapsedTime, stage);

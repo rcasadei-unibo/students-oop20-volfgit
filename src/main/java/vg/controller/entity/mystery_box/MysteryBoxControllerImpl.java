@@ -84,16 +84,24 @@ public class MysteryBoxControllerImpl implements MysteryBoxController {
         }
 
         final Map<V2D> map = stage.getMap();
+
         final double posX = this.getPosition().getX() * MapImpl.MAXBORDERX / gameController.getGameAreaDimension().getWidth();
         final double posY = this.getPosition().getY() * MapImpl.MAXBORDERY / gameController.getGameAreaDimension().getHeight();
         final V2D position = new V2D(posX, posY);
         final boolean isOnBorder = map.isInBorders(position);
 
-        if (false) {
-            this.model.activate(stage);
-            this.model.hide();
-            this.view.setImage(this.model.getPathReveled());
+        if (isOnBorder) {
+            System.out.println("AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA");
         }
+        if (!isOnBorder) {
+            System.out.println("SOno fuori ");
+        }
+
+//        if (false) {
+//            this.model.activate(stage);
+//            this.model.hide();
+//            this.view.setImage(this.model.getPathReveled());
+//        }
     }
 
     @Override

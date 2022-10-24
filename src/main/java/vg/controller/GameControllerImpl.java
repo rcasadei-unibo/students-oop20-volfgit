@@ -87,7 +87,7 @@ public class GameControllerImpl extends Controller<AdaptableView<GameBoardContro
     private void gameLoop() {
         oneTimeRender();
         render(true);
-        this.gameState = GameState.GAMEOVER;
+//        this.gameState = GameState.GAMEOVER;
         //Launch on new thread game loop in order to not block gui.
         new Thread(() -> {
             long prevCycleTime = System.currentTimeMillis();

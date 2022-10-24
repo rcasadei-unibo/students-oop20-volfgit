@@ -11,7 +11,7 @@ import vg.utils.V2D;
 public class EntityBlockImpl extends Rectangle implements EntityBlock {
     private final Rectangle rectangleOverlay;
 
-    public EntityBlockImpl(V2D position, Dimension2D dimension)  {
+    public EntityBlockImpl(final V2D position, final Dimension2D dimension)  {
         super(dimension.getWidth(), dimension.getHeight());
         this.rectangleOverlay = new Rectangle(dimension.getWidth(), dimension.getHeight());
         V2D centerPos = new V2D(position.getX() - dimension.getWidth() / 2, position.getY() - dimension.getHeight() / 2);
@@ -24,7 +24,7 @@ public class EntityBlockImpl extends Rectangle implements EntityBlock {
     }
 
     @Override
-    public void setPosition(V2D position) {
+    public void setPosition(final V2D position) {
         V2D centerPos = new V2D(position.getX() - this.getWidth() / 2, position.getY() - this.getHeight() / 2);
 
         this.setX(centerPos.getX());
@@ -34,18 +34,18 @@ public class EntityBlockImpl extends Rectangle implements EntityBlock {
     }
 
     @Override
-    public void setImage(String pathImage) {
+    public void setImage(final String pathImage) {
         this.setFill(ImageFXUtils.createImagePatternFrom(pathImage));
     }
 
     @Override
-    public void setInParentNode(ObservableList<Node> gameAreaNode) {
+    public void setInParentNode(final ObservableList<Node> gameAreaNode) {
         gameAreaNode.add(this);
         gameAreaNode.add(this.rectangleOverlay);
     }
 
     @Override
-    public void setImageOverlay(String pathImage){
+    public void setImageOverlay(final String pathImage){
         this.rectangleOverlay.setFill(ImageFXUtils.createImagePatternFrom(pathImage));
     }
 
@@ -54,7 +54,6 @@ public class EntityBlockImpl extends Rectangle implements EntityBlock {
     public void showImageOverlay(){
         this.rectangleOverlay.setVisible(true);
     }
-
     @Override
     public void hideImageOverlay(){
         this.rectangleOverlay.setVisible(false);
