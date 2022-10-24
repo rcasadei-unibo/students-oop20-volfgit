@@ -10,7 +10,7 @@ import java.util.Optional;
 
 public class GameOverController extends Controller<GameOverView> {
 
-    private ScoreManager scoreManager;
+    private final ScoreManager scoreManager;
     private int score;
     private int round;
 
@@ -27,6 +27,8 @@ public class GameOverController extends Controller<GameOverView> {
     public void set(final int score, final int round) {
         this.score = score;
         this.round = round;
+        this.getView().getViewController().setRound(round);
+        this.getView().getViewController().setScore(score);
     }
 
     @Override

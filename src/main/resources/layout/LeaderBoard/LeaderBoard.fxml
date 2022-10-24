@@ -11,16 +11,6 @@
 <?import javafx.scene.text.Text?>
 
 <BorderPane prefHeight="400.0" prefWidth="600.0" style="-fx-background-color: black;" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="vg.view.leaderBoard.LeaderBoardViewController">
-   <bottom>
-      <Label fx:id="closeBtn" alignment="CENTER" minHeight="50.0" minWidth="200.0" style="-fx-background-color: #949494;" text="Close" textAlignment="CENTER" BorderPane.alignment="CENTER">
-         <font>
-            <Font name="Copperplate" size="24.0" />
-         </font>
-         <BorderPane.margin>
-            <Insets bottom="20.0" />
-         </BorderPane.margin>
-      </Label>
-   </bottom>
    <top>
       <VBox alignment="TOP_CENTER" BorderPane.alignment="CENTER">
          <children>
@@ -75,4 +65,26 @@
          </content>
       </ScrollPane>
    </center>
+   <bottom>
+      <VBox alignment="CENTER" BorderPane.alignment="CENTER">
+         <children>
+            <Text fill="WHITE" strokeType="OUTSIDE" strokeWidth="0.0" text="Press ESC then ENTER to close">
+               <font>
+                  <Font name="Copperplate" size="18.0" />
+               </font>
+               <VBox.margin>
+                  <Insets bottom="10.0" />
+               </VBox.margin>
+            </Text>
+            <Label fx:id="closeBtn" alignment="CENTER" minHeight="50.0" minWidth="200.0" style="-fx-background-color: #949494;" text="Close" textAlignment="CENTER">
+               <font>
+                  <Font name="Copperplate" size="24.0" />
+               </font>
+               <VBox.margin>
+                  <Insets bottom="20.0" />
+               </VBox.margin>
+            </Label>
+         </children>
+      </VBox>
+   </bottom>
 </BorderPane>
