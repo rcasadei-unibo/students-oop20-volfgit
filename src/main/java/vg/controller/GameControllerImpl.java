@@ -66,10 +66,10 @@ public class GameControllerImpl extends Controller<AdaptableView<GameBoardContro
 
     private Set<V2D> prevBorders;
 
-    public GameControllerImpl(final AdaptableView<GameBoardController> view, final Stage<V2D> stageDomain, final ViewManager viewManager) {
+    public GameControllerImpl(final AdaptableView<GameBoardController> view, final Stage<V2D> stageDomain, final ViewManager viewManager, final SoundManager soundManager) {
         super(view, viewManager);
         this.entityManager = new EntityManagerImpl();
-        this.soundManager = new SoundManagerImpl();
+        this.soundManager = soundManager;
         this.movementQueue = new ArrayList<>();
         this.stageDomain = stageDomain;
         this.getGameViewController().initMapView();
