@@ -1,11 +1,12 @@
 package vg.controller.entity.boss;
 
 import vg.controller.gameBoard.GameBoardController;
+import vg.model.entity.Entity;
 import vg.utils.MassTier;
 import vg.utils.Shape;
 import vg.utils.V2D;
 
-public interface BossController {
+public interface BossController extends Entity {
 
     void setInParentNode(GameBoardController gameController);
 
@@ -26,4 +27,6 @@ public interface BossController {
     Shape getShape();
 
     MassTier getMassTier();
+
+    void updateAnimation();
 }

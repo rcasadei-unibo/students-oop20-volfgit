@@ -19,4 +19,5 @@ public interface MysteryBoxManager {
     void updateTimeIfAbilityActive(long elapsedTime, Stage<V2D> stage);
     void checkMysteryBoxOnBorder(Stage<V2D> player, GameBoardController gameController, SoundManager soundManager);
 
+    void updateAnimation();
 }

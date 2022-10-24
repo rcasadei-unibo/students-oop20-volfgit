@@ -15,6 +15,8 @@ import vg.sound.manager.SoundManager;
 import vg.utils.V2D;
 import vg.view.entity.EntityBlock;
 
+import java.util.List;
+
 public class MysteryBoxControllerImpl implements MysteryBoxController {
 
     private final AbilityInTheBox model;
@@ -70,8 +72,8 @@ public class MysteryBoxControllerImpl implements MysteryBoxController {
     }
 
     @Override
-    public void setImage(final String mysteryBoss) {
-        this.view.setImage(mysteryBoss);
+    public void setAnimation(final List<String> animation) {
+        this.view.setAnimation(animation);
     }
 
     @Override
@@ -95,7 +97,7 @@ public class MysteryBoxControllerImpl implements MysteryBoxController {
             soundManager.playEffect(ESoundEffect.PICK_BOX);
             System.out.println("Take " + this.model.getIdAbility());
             this.model.activate(stage);
-            this.view.setImage(this.model.getPathReveled());
+            this.view.setAnimation(List.of(this.model.getPathReveled()));
             this.model.setBlinking(false);
             if (this.isType(ETypeAbility.INSTANT)) {
                 this.model.setActiveBlinkPickUp();
@@ -113,6 +115,11 @@ public class MysteryBoxControllerImpl implements MysteryBoxController {
     public void hide() {
         this.model.hide();
         this.view.setShow(this.model.isShow());
+    }
+
+    @Override
+    public void updateAnimation() {
+        this.view.updateAnimation();
     }
 
     @Override

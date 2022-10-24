@@ -59,4 +59,10 @@ public class EntityManagerImpl implements EntityManager {
     public void setSoundManager(final SoundManager soundManager) {
         this.soundManager = soundManager;
     }
+
+    @Override
+    public void updateAnimation() {
+        this.boss.updateAnimation();
+        this.mysteryBoxManager.updateAnimation();
+    }
 }

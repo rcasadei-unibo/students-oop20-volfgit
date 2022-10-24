@@ -3,20 +3,26 @@ package vg.view.entity;
 import javafx.collections.ObservableList;
 import javafx.geometry.Dimension2D;
 import javafx.scene.Node;
-import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
 import vg.utils.ImageFXUtils;
 import vg.utils.V2D;
 
+import java.util.List;
+
 public class EntityBlockImpl extends Rectangle implements EntityBlock {
+    private List<String> animationPathList;
+    private int indexImage;
     private final Rectangle rectangleOverlay;
 
-    public EntityBlockImpl(final V2D position, final Dimension2D dimension)  {
+    public EntityBlockImpl(final V2D position, final Dimension2D dimension, final List<String> animationPathList)  {
         super(dimension.getWidth(), dimension.getHeight());
+        this.animationPathList = animationPathList;
         this.rectangleOverlay = new Rectangle(dimension.getWidth(), dimension.getHeight());
         V2D centerPos = new V2D(position.getX() - dimension.getWidth() / 2, position.getY() - dimension.getHeight() / 2);
         this.setPosition(centerPos);
         this.hideImageOverlay();
+        this.indexImage = 0;
+        this.setImage(this.animationPathList.get(this.indexImage));
     }
     @Override
     public V2D getPosition() {
@@ -33,9 +39,13 @@ public class EntityBlockImpl extends Rectangle implements EntityBlock {
         this.rectangleOverlay.setY(centerPos.getY());
     }
 
-    @Override
-    public void setImage(final String pathImage) {
+    private void setImage(final String pathImage) {
         this.setFill(ImageFXUtils.createImagePatternFrom(pathImage));
+    }
+
+    @Override
+    public void setAnimation(final List<String> animationPathList) {
+        this.animationPathList = animationPathList;
     }
 
     @Override
@@ -45,31 +55,20 @@ public class EntityBlockImpl extends Rectangle implements EntityBlock {
     }
 
     @Override
-    public void setImageOverlay(final String pathImage){
+    public void setImageOverlay(final String pathImage) {
         this.rectangleOverlay.setFill(ImageFXUtils.createImagePatternFrom(pathImage));
     }
 
 
     @Override
-    public void showImageOverlay(){
+    public void showImageOverlay() {
         this.rectangleOverlay.setVisible(true);
     }
     @Override
-    public void hideImageOverlay(){
+    public void hideImageOverlay() {
         this.rectangleOverlay.setVisible(false);
     }
 
-    @Override
-    public void showCollider() {
-        this.setStroke(Color.RED);
-        this.setStrokeWidth(1);
-    }
-
-    @Override
-    public void hideCollider() {
-//        this.setStroke(Color.);
-        this.setStrokeWidth(0);
-    }
 
     @Override
     public void setShow(final boolean show) {
@@ -79,12 +78,12 @@ public class EntityBlockImpl extends Rectangle implements EntityBlock {
         this.rectangleOverlay.setVisible(isVisible);
     }
 
-    public void setDimension2D(Dimension2D position) {
-        this.setX(position.getWidth());
-        this.setY(position.getHeight());
-    }
-
-    public Dimension2D getDimension2D(){
-        return new Dimension2D(this.getX(), this.getY());
+    @Override
+    public void updateAnimation() {
+        if (this.animationPathList.size() == 0) {
+            return;
+        }
+        this.setImage(this.animationPathList.get(this.indexImage));
+        this.indexImage = (this.indexImage + 1) % this.animationPathList.size();
     }
 }

@@ -10,6 +10,8 @@ import vg.model.mystery_box.data_round.DataRound;
 import vg.sound.manager.SoundManager;
 import vg.utils.V2D;
 
+import java.util.List;
+
 public interface MysteryBoxController {
 
     AbilityDurable getDurability();
@@ -24,7 +26,7 @@ public interface MysteryBoxController {
 
     void updateBlinking(long elapsedTime);
 
-    void setImage(String mysteryBoss);
+    void setAnimation(List<String> animation);
 
     boolean isType(ETypeAbility type);
 
@@ -36,4 +38,6 @@ public interface MysteryBoxController {
     void showPickUpMysteryBox(long elapsedTime);
 
     void hide();
+
+    void updateAnimation();
 }

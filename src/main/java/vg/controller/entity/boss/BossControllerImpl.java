@@ -1,13 +1,14 @@
 package vg.controller.entity.boss;
 
 import vg.controller.gameBoard.GameBoardController;
+import vg.model.entity.ShapedEntity;
 import vg.model.entity.boss.BossModel;
 import vg.utils.MassTier;
 import vg.utils.Shape;
 import vg.utils.V2D;
 import vg.view.entity.EntityBlock;
 
-public class BossControllerImpl implements BossController {
+public class BossControllerImpl implements BossController{
     private final BossModel model;
     private final EntityBlock view;
 
@@ -55,6 +56,16 @@ public class BossControllerImpl implements BossController {
     }
 
     @Override
+    public boolean isInShape(final V2D position) {
+        return this.model.isInShape(position);
+    }
+
+    @Override
+    public boolean isInShape(final ShapedEntity entity) {
+        return this.model.isInShape(entity);
+    }
+
+    @Override
     public V2D getSpeed() {
         return this.model.getSpeed();
     }
@@ -67,5 +78,15 @@ public class BossControllerImpl implements BossController {
     @Override
     public MassTier getMassTier() {
         return this.model.getMassTier();
+    }
+
+    @Override
+    public void setMassTier(final MassTier toSet) {
+        this.model.setMassTier(toSet);
+    }
+
+    @Override
+    public void updateAnimation() {
+        this.view.updateAnimation();
     }
 }

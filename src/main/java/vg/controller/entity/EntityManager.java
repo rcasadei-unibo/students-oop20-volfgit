@@ -22,4 +22,6 @@ public interface EntityManager {
     void moveEntityBoss(long elapsedTime);
 
     void setSoundManager(SoundManager soundManager);
+
+    void updateAnimation();
 }

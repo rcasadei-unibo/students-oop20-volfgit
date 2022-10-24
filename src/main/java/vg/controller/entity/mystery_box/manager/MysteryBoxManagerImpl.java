@@ -103,6 +103,10 @@ public class MysteryBoxManagerImpl implements MysteryBoxManager {
         this.mysteryBoxList.forEach(mysteryBox -> mysteryBox.checkOnBorder(stage, gameController, soundManager));
     }
 
+    @Override
+    public void updateAnimation() {
+        this.mysteryBoxList.forEach(MysteryBoxController::updateAnimation);
+    }
 
 
 }

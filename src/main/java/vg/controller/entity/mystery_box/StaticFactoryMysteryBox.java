@@ -11,13 +11,13 @@ public class StaticFactoryMysteryBox {
     private static MysteryBoxController createRandom(final EAbility eAbility) {
         switch (eAbility) {
             case FREEZE_TIME:
-                return createFreezeTime();//createFreezeTime();
+                return createFreezeTime();
             case KILL_ALL_MOSQUITOES:
-                return createFreezeTime();
+                return createKillMosquitoes();
             case SCORE:
-                return createFreezeTime();
+                return createScore();
             case SPEED_UP:
-                return createFreezeTime(); //createSpeed(); //createSpeed();//createWeaponForBoss();
+                return createSpeed();
             default:
                 throw new IllegalArgumentException("Unknown ability: " + eAbility);
         }
@@ -29,7 +29,7 @@ public class StaticFactoryMysteryBox {
 
     public static MysteryBoxController createRandomMysteryBoxWithWeaponBoss() {
         final MysteryBoxController mysteryBoxController = createRandom(EAbility.randomAll());
-        mysteryBoxController.setImage(PathImageMysteryBox.MYSTERY_BOSS);
+        mysteryBoxController.setAnimation(PathImageMysteryBox.MYSTERY_BOSS);
         return mysteryBoxController;
     }
 
