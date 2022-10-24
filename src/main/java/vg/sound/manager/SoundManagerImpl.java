@@ -23,4 +23,9 @@ public class SoundManagerImpl implements SoundManager {
     public void playBackground(final ESoundBackground eSoundBackground) {
         this.soundBackgroundManager.play(eSoundBackground);
     }
+
+    @Override
+    public void stopBackground() {
+        this.soundBackgroundManager.stop();
+    }
 }

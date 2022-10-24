@@ -2,14 +2,8 @@ package vg.view.gameBoard;
 
 import javafx.application.Application;
 import javafx.stage.Stage;
-import vg.controller.GameControllerImpl;
-import vg.controller.gameBoard.GameBoardController;
-import vg.controller.menu.MenuController;
-import vg.model.StageImpl;
 import vg.sound.manager.SoundManager;
 import vg.sound.manager.SoundManagerImpl;
-import vg.utils.V2D;
-import vg.view.AdaptableView;
 import vg.view.ViewFactory;
 import vg.view.ViewManager;
 import vg.view.ViewManagerImpl;

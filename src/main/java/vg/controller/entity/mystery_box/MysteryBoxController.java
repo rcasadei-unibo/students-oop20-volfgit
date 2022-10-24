@@ -7,6 +7,7 @@ import vg.model.Stage;
 import vg.model.mystery_box.AbilityDurable;
 import vg.model.mystery_box.ETypeAbility;
 import vg.model.mystery_box.data_round.DataRound;
+import vg.sound.manager.SoundManager;
 import vg.utils.V2D;
 
 public interface MysteryBoxController {
@@ -27,7 +28,7 @@ public interface MysteryBoxController {
 
     boolean isType(ETypeAbility type);
 
-    void checkOnBorder(Stage<V2D> stage, GameBoardController gameController);
+    void checkOnBorder(Stage<V2D> stage, GameBoardController gameController, SoundManager soundManager);
 
 
     boolean isActivated();

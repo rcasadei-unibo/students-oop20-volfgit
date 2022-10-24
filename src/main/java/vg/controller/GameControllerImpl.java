@@ -68,6 +68,7 @@ public class GameControllerImpl extends Controller<AdaptableView<GameBoardContro
     public GameControllerImpl(final AdaptableView<GameBoardController> view, final Stage<V2D> stageDomain, final ViewManager viewManager, final SoundManager soundManager) {
         super(view, viewManager);
         this.entityManager = new EntityManagerImpl();
+        this.entityManager.setSoundManager(soundManager);
         this.soundManager = soundManager;
         this.movementQueue = new ArrayList<>();
         this.stageDomain = stageDomain;
@@ -185,6 +186,7 @@ public class GameControllerImpl extends Controller<AdaptableView<GameBoardContro
         boolean areBorderUpdated = this.stageDomain.isBorderUpdated();
         this.stageDomain.consumeBorderUpdatedState();
         if (areBorderUpdated || forceBorder) {
+            System.out.println("Border updated");
             this.soundManager.playEffect(ESoundEffect.CLOSE_BORDER);
             borderList.add(border.stream().findFirst().get());
             while (borderList.size() < border.size()) {
@@ -257,6 +259,7 @@ public class GameControllerImpl extends Controller<AdaptableView<GameBoardContro
     private void gameOver() {
         System.out.println("GAMEOVER");
         this.soundManager.playEffect(ESoundEffect.GAMEOVER);
+        this.soundManager.stopBackground();
         GameOverView gameOverView = ViewFactory.gameOverView(
                 stageDomain.getCurrentScore(),
                 stageDomain.getLv(),

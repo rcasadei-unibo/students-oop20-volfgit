@@ -7,6 +7,7 @@ import vg.controller.entity.mystery_box.manager.MysteryBoxManager;
 import vg.controller.entity.mystery_box.manager.MysteryBoxManagerImpl;
 import vg.controller.gameBoard.GameBoardController;
 import vg.model.Stage;
+import vg.sound.manager.SoundManager;
 import vg.utils.V2D;
 
 import java.util.List;
@@ -14,6 +15,7 @@ import java.util.List;
 public class EntityManagerImpl implements EntityManager {
     private final MysteryBoxManager mysteryBoxManager;
     private final BossController boss;
+    private SoundManager soundManager;
 
     public EntityManagerImpl() {
         this.mysteryBoxManager = new MysteryBoxManagerImpl();
@@ -45,11 +47,16 @@ public class EntityManagerImpl implements EntityManager {
 
     @Override
     public void checkMysteryBoxOnBorder(final Stage<V2D> stage, final GameBoardController gameController) {
-        this.mysteryBoxManager.checkMysteryBoxOnBorder(stage, gameController);
+        this.mysteryBoxManager.checkMysteryBoxOnBorder(stage, gameController, this.soundManager);
     }
 
     @Override
     public void moveEntityBoss(final long elapsedTime) {
         this.boss.move();
+    }
+
+    @Override
+    public void setSoundManager(final SoundManager soundManager) {
+        this.soundManager = soundManager;
     }
 }

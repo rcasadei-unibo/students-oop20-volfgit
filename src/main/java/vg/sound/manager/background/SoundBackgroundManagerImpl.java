@@ -4,18 +4,21 @@ import vg.sound.Sound;
 import vg.sound.factory.StaticFactorySoundBackground;
 import vg.sound.manager.ESoundBackground;
 
-import java.util.HashMap;
-import java.util.Map;
-
 public class SoundBackgroundManagerImpl implements SoundBackgroundManager {
-    private final Map<ESoundBackground, Sound> mapEffect;
+    private final Sound backgroundSound;
+
     public SoundBackgroundManagerImpl() {
-        this.mapEffect = new HashMap<>();
-        this.mapEffect.put(ESoundBackground.START, StaticFactorySoundBackground.createStart());
+        this.backgroundSound = StaticFactorySoundBackground.createStart();
     }
 
     @Override
     public void play(final ESoundBackground effect) {
-        this.mapEffect.get(effect).play();
+        this.backgroundSound.changeSound(effect.getPath());
+        this.backgroundSound.play();
+    }
+
+    @Override
+    public void stop() {
+        this.backgroundSound.stop();
     }
 }

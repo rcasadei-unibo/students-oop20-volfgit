@@ -9,9 +9,25 @@ import java.io.IOException;
 import java.net.URL;
 
 public class AbstractSound {
-    private final Clip clip;
+    private static final int FRAME_INIT = 0;
+    private Clip clip;
 
     protected  AbstractSound(final String pathSound) {
+        this.changeSound(pathSound);
+    }
+
+    protected void playLoop() {
+        this.clip.loop(Clip.LOOP_CONTINUOUSLY);
+    }
+    protected void playOne() {
+        this.clip.setFramePosition(FRAME_INIT);
+        this.clip.start();
+    }
+
+    public void stop() {
+        this.clip.stop();
+    }
+    public void changeSound(final String pathSound) {
         final URL url = ClassLoader.getSystemResource(pathSound);
         try {
             final AudioInputStream audioInputStream = AudioSystem.getAudioInputStream(url);
@@ -20,14 +36,6 @@ public class AbstractSound {
         } catch (UnsupportedAudioFileException | IOException | LineUnavailableException e) {
             throw new RuntimeException(e);
         }
-    }
-
-    protected void playLoop() {
-        this.clip.loop(Clip.LOOP_CONTINUOUSLY);
-    }
-
-    protected void playOne() {
-        this.clip.start();
     }
 
 }

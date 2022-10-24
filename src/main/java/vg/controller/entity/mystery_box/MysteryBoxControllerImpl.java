@@ -2,7 +2,6 @@ package vg.controller.entity.mystery_box;
 
 import javafx.collections.ObservableList;
 import javafx.scene.Node;
-import vg.controller.entity.EntityManager;
 import vg.controller.gameBoard.GameBoardController;
 import vg.model.Map;
 import vg.model.MapImpl;
@@ -11,6 +10,8 @@ import vg.model.mystery_box.AbilityDurable;
 import vg.model.mystery_box.AbilityInTheBox;
 import vg.model.mystery_box.ETypeAbility;
 import vg.model.mystery_box.data_round.DataRound;
+import vg.sound.manager.ESoundEffect;
+import vg.sound.manager.SoundManager;
 import vg.utils.V2D;
 import vg.view.entity.EntityBlock;
 
@@ -79,7 +80,7 @@ public class MysteryBoxControllerImpl implements MysteryBoxController {
     }
 
     @Override
-    public void checkOnBorder(final Stage<V2D> stage, final GameBoardController gameController) {
+    public void checkOnBorder(final Stage<V2D> stage, final GameBoardController gameController, final SoundManager soundManager) {
         if(!this.model.isShow() || this.model.isActivated()) {
             return;
         }
@@ -91,6 +92,7 @@ public class MysteryBoxControllerImpl implements MysteryBoxController {
         final boolean isOnBorder = map.isInBorders(position);
 
         if (!isOnBorder) {
+            soundManager.playEffect(ESoundEffect.PICK_BOX);
             System.out.println("Take " + this.model.getIdAbility());
             this.model.activate(stage);
             this.view.setImage(this.model.getPathReveled());

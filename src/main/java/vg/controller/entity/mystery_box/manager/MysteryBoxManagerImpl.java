@@ -7,6 +7,7 @@ import vg.model.Stage;
 import vg.model.mystery_box.AbilityDurable;
 import vg.model.mystery_box.ETypeAbility;
 import vg.model.mystery_box.data_round.DataRound;
+import vg.sound.manager.SoundManager;
 import vg.utils.round.MysteryBoxPositionUtils;
 import vg.utils.V2D;
 
@@ -98,8 +99,8 @@ public class MysteryBoxManagerImpl implements MysteryBoxManager {
     }
 
     @Override
-    public void checkMysteryBoxOnBorder(final Stage<V2D> stage, final GameBoardController gameController) {
-        this.mysteryBoxList.forEach(mysteryBox -> mysteryBox.checkOnBorder(stage, gameController));
+    public void checkMysteryBoxOnBorder(final Stage<V2D> stage, final GameBoardController gameController, final SoundManager soundManager) {
+        this.mysteryBoxList.forEach(mysteryBox -> mysteryBox.checkOnBorder(stage, gameController, soundManager));
     }
 
 
