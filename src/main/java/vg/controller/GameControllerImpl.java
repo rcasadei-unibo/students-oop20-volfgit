@@ -11,7 +11,6 @@ import vg.model.score.Score;
 import vg.sound.manager.ESoundBackground;
 import vg.sound.manager.ESoundEffect;
 import vg.sound.manager.SoundManager;
-import vg.sound.manager.SoundManagerImpl;
 import vg.utils.*;
 import vg.view.AdaptableView;
 import vg.view.SceneController;
@@ -219,7 +218,7 @@ public class GameControllerImpl extends Controller<AdaptableView<GameBoardContro
 
     /**
      * Put game in pause then show a dialog to ask if user wants stop playing and go back to main menu.
-     * The response is received by the method {{@link #notifyDialogAnswer(PromptOption)}} of interface
+     * The response is received by the method {{@link #notifyPromptAnswer(PromptOption)}} of interface
      * {@link PromptObserver} and resume or go home depending on response.
      */
     public void closeGame() {
@@ -345,10 +344,23 @@ public class GameControllerImpl extends Controller<AdaptableView<GameBoardContro
         this.movementQueue.add(pl -> pl.changeDirection(dir, isOnBorder));
     }
 
+    /**
+     * Show view (same as game-over one) asking name of player before closing current game-play.
+     * It adds ti the view stack game-over screen with different title then when name is confirmed go back home.s
+     */
+    private void saveScoreThenClose() {
+        GameOverView saveNameView = ViewFactory.gameOverView(
+                stageDomain.getCurrentScore(),
+                stageDomain.getLv(),
+                this.getViewManager());
+        saveNameView.getViewController().setTitle("...but before save your name:");
+        this.getViewManager().addScene(saveNameView);
+    }
+
     @Override
-    public void notifyDialogAnswer(final PromptOption answer) {
+    public void notifyPromptAnswer(final PromptOption answer) {
         if (answer == PromptOption.CONFIRM) {
-            this.getViewManager().backHome();
+            saveScoreThenClose();
         } else if (answer == PromptOption.DENY) {
             resumeGame();
         }
