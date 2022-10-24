@@ -419,8 +419,8 @@ public class StageImpl<T> implements Stage<V2D> {
     }
 
     private void syncFromEntityManager(){
-        var b = (BossControllerImpl)this.emController.getBoss();
-        ((MapImpl)getMap()).setBoss(new EmptyBoss(b.getModel().getPosition(),b.getModel().getSpeed(),5,b.getModel().getShape(),b.getModel().getMassTier()));
+        var b = this.emController.getBoss();
+        ((MapImpl)getMap()).setBoss(new EmptyBoss(b.getPosition(),b.getSpeed(),5,b.getShape(),b.getMassTier()));
         this.emController.getMysteryBoxList().forEach( t -> boxControllerToStaticEntityMap.put(t, new FixedSquare(t.getPosition(),t.getRadius())));
         getStaticEntitySet().addAll(boxControllerToStaticEntityMap.values());
         syncToEntityManager();
@@ -430,10 +430,10 @@ public class StageImpl<T> implements Stage<V2D> {
     private void syncToEntityManager(){
         var d2dPosition = ((GameBoardControllerImpl)g).V2DtoDimension2D(getBoss().getPosition());
         var v2dPosition = new V2D(d2dPosition.getWidth(), d2dPosition.getHeight());
-        ((BossControllerImpl)this.emController.getBoss()).getModel().setPosition(v2dPosition);
+        this.emController.getBoss().setPosition(v2dPosition);
         var d2dSpeed = ((GameBoardControllerImpl)g).V2DtoDimension2D(getBoss().getSpeed());
         var v2dSpeed = new V2D(d2dSpeed.getWidth(),d2dSpeed.getHeight());
-        ((BossControllerImpl)this.emController.getBoss()).getModel().setSpeed(v2dSpeed);
+        this.emController.getBoss().setSpeed(v2dSpeed);
 
     }
     /**
@@ -468,6 +468,12 @@ public class StageImpl<T> implements Stage<V2D> {
         this.borderUpdateBoolean = false;
 
     }
+
+    @Override
+    public EntityManager getEntityManager() {
+        return this.emController;
+    }
+
     /**
      * Uses {@link MapFactoryImpl#fromSerialized(int)} to createMysteryBox the map for the next level,
      * set up the {@link #currentScore} and the {@link #lv}.

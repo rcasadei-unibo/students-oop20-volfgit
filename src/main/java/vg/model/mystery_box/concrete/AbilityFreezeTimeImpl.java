@@ -1,5 +1,6 @@
 package vg.model.mystery_box.concrete;
 
+import vg.controller.entity.boss.BossController;
 import vg.model.Stage;
 import vg.model.entity.dynamicEntity.DynamicEntity;
 import vg.model.mystery_box.AbilityDurable;
@@ -22,10 +23,14 @@ public class AbilityFreezeTimeImpl extends AbstractAbilityDurable implements Abi
             enemy.saveMySpeed();
             enemy.setSpeed(new V2D(0, 0));
         });
+        BossController boss = stage.getEntityManager().getBoss();
+        boss.saveMySpeed();
+        boss.setSpeed(new V2D(0, 0));
     }
 
     @Override
     public void deActivate(final Stage<V2D> stage) {
         stage.getDynamicEntitySet().forEach(DynamicEntity::restoreMySpeed);
+        stage.getEntityManager().getBoss().restoreMySpeed();
     }
 }

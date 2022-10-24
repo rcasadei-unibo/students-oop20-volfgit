@@ -7,9 +7,7 @@ public enum EAbility {
     SCORE(PathImageMysteryBox.COIN_SCORE),
     FREEZE_TIME(PathImageMysteryBox.COIN_TIME),
     SPEED_UP(PathImageMysteryBox.COIN_SPEED),
-    KILL_ALL_MOSQUITOES(PathImageMysteryBox.COIN_KILL_ALL_MOQUETOES),
-    WEAPON_MOSQUITOES(PathImageMysteryBox.COIN_WEAPON_MOQUETOES),
-    WEAPON_BOSS(PathImageMysteryBox.COIN_WEAPON_BOSS);
+    KILL_ALL_MOSQUITOES(PathImageMysteryBox.COIN_KILL_ALL_MOQUETOES);
 
     private final String pathReveled;
 

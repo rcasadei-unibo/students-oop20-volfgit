@@ -11,17 +11,13 @@ public class StaticFactoryMysteryBox {
     private static MysteryBoxController createRandom(final EAbility eAbility) {
         switch (eAbility) {
             case FREEZE_TIME:
-                return createScore();//createFreezeTime();
+                return createFreezeTime();//createFreezeTime();
             case KILL_ALL_MOSQUITOES:
-                return createKillMosquitoes();
+                return createFreezeTime();
             case SCORE:
-                return createScore();
+                return createFreezeTime();
             case SPEED_UP:
-                return createScore(); //createSpeed();
-            case WEAPON_MOSQUITOES:
-                return createScore();//createWeaponForMosquitoes();
-            case WEAPON_BOSS:
-                return createScore(); //createSpeed();//createWeaponForBoss();
+                return createFreezeTime(); //createSpeed(); //createSpeed();//createWeaponForBoss();
             default:
                 throw new IllegalArgumentException("Unknown ability: " + eAbility);
         }
@@ -64,22 +60,4 @@ public class StaticFactoryMysteryBox {
 
         return new MysteryBoxControllerImpl(model, view);
     }
-
-    public static MysteryBoxController createWeaponForMosquitoes() {
-        final var model = StaticFactoryAbilityDurable.createWeaponForMosquitoes();
-        final var view = StaticFactoryEntityBlock.createMysteryBox(model.getPosition(), model.getDimension());
-
-        return new MysteryBoxControllerImpl(model, view);
-    }
-
-    public static MysteryBoxController createWeaponForBoss() {
-        final var model = StaticFactoryAbilityDurable.createWeaponForBoss();
-        final var view = StaticFactoryEntityBlock.createMysteryBox(model.getPosition(), model.getDimension());
-
-        return new MysteryBoxControllerImpl(model, view);
-    }
-
-
-
-
 }

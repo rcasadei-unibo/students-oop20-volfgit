@@ -72,7 +72,7 @@ public class GameControllerImpl extends Controller<AdaptableView<GameBoardContro
         this.movementQueue = new ArrayList<>();
         this.stageDomain = stageDomain;
         this.getGameViewController().initMapView();
-        this.stageDomain.setEntityManagerController(this.entityManager,getGameViewController());
+        this.stageDomain.setEntityManagerController(this.entityManager, this.getGameViewController());
     }
 
     /**

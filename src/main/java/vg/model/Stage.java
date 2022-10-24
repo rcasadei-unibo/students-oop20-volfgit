@@ -178,4 +178,6 @@ public interface Stage<T> {
      * if it was true, then it will become false.
      */
     void consumeBorderUpdatedState();
+
+    EntityManager getEntityManager();
 }

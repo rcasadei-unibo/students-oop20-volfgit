@@ -2,6 +2,7 @@ package vg.controller.entity.mystery_box;
 
 import javafx.collections.ObservableList;
 import javafx.scene.Node;
+import vg.controller.entity.EntityManager;
 import vg.controller.gameBoard.GameBoardController;
 import vg.model.Map;
 import vg.model.MapImpl;
@@ -93,13 +94,22 @@ public class MysteryBoxControllerImpl implements MysteryBoxController {
             System.out.println("Take " + this.model.getIdAbility());
             this.model.activate(stage);
             this.view.setImage(this.model.getPathReveled());
-            this.model.setActiveBlinkPickUp();
+            this.model.setBlinking(false);
+            if (this.isType(ETypeAbility.INSTANT)) {
+                this.model.setActiveBlinkPickUp();
+            }
         }
     }
 
     @Override
     public void showPickUpMysteryBox(final long elapsedTime) {
         this.model.updateBlinkingPickUp(elapsedTime);
+        this.view.setShow(this.model.isShow());
+    }
+
+    @Override
+    public void hide() {
+        this.model.hide();
         this.view.setShow(this.model.isShow());
     }
 

@@ -33,4 +33,6 @@ public interface MysteryBoxController {
     boolean isActivated();
 
     void showPickUpMysteryBox(long elapsedTime);
+
+    void hide();
 }

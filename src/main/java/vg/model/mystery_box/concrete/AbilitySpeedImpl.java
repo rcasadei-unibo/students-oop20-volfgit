@@ -9,7 +9,7 @@ import vg.utils.V2D;
 
 public class AbilitySpeedImpl extends AbstractAbilityDurable implements AbilityDurable {
     private static final double INCREASE_SPEED = 1;
-    private static final double DURATION = 5000;
+    private static final double DURATION = 6000;
 
     private final double speedIncrease;
 
