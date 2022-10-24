@@ -6,11 +6,13 @@ import vg.controller.leaderboard.LeaderBoardController;
 import vg.controller.menu.MenuController;
 import vg.controller.prompt.PromptController;
 import vg.controller.prompt.PromptObserver;
+import vg.controller.settings.SettingsController;
 import vg.sound.manager.SoundManager;
 import vg.view.gameOver.GameOverView;
 import vg.view.leaderBoard.LeaderBoardView;
 import vg.view.menu.MenuView;
 import vg.view.menu.prompt.PromptView;
+import vg.view.settings.SettingView;
 import vg.view.transition.TransitionView;
 import vg.view.transition.TransitionViewController;
 import vg.view.utils.CountdownView;
@@ -72,5 +74,12 @@ public class ViewFactory {
         MenuController menuController = new MenuController(menuView, viewManager, soundManager);
         menuView.setIoLogicController(menuController);
         return menuView;
+    }
+
+    public static SettingView settingView(final ViewManager viewManager, final SoundManager soundManager) {
+        SettingView settingView = new SettingView();
+        SettingsController settingsController = new SettingsController(settingView, viewManager, soundManager);
+        settingView.setIoLogicController(settingsController);
+        return settingView;
     }
 }
