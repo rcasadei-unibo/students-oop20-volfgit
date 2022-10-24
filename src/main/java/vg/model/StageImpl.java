@@ -166,7 +166,6 @@ public class StageImpl<T> implements Stage<V2D> {
         this.player = player;
     }
 
-
     /**
      *
      * {@inheritDoc}
