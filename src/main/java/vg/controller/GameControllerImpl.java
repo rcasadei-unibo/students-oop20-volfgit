@@ -137,7 +137,9 @@ public class GameControllerImpl extends Controller<AdaptableView<GameBoardContro
      * @param elapsedTime time elapsed between current and previous gameLoop cycle
      */
     private void updateGameDomain(final long elapsedTime) {
-        this.stageDomain.getPlayer().getShield().updateTimer(elapsedTime);
+        if (this.stageDomain.getMap().isPlayerOnBorders()) {
+            this.stageDomain.getPlayer().getShield().updateTimer(elapsedTime);
+        }
         this.stageDomain.getMap().updateBonusTimer(elapsedTime);
         this.stageDomain.doCycle();
         this.entityManager.moveEntityBoss(elapsedTime);
