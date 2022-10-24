@@ -225,7 +225,7 @@ public class GameBoardControllerImpl extends ViewController implements GameBoard
      * @param v2d the model position
      * @return {@link Dimension2D} that correctly scales from the model position into {@link #gameArea}
      */
-    private Dimension2D V2DtoDimension2D(final V2D v2d){
+    public Dimension2D V2DtoDimension2D(final V2D v2d){
         return new Dimension2D(v2d.getX() * getGameArea().getWidth()/ MapImpl.MAXBORDERX,
                 v2d.getY() * getGameArea().getHeight()/ MapImpl.MAXBORDERY);
     }
@@ -235,7 +235,7 @@ public class GameBoardControllerImpl extends ViewController implements GameBoard
      * @param modelV2D the model position
      * @return {@link V2D} mapped position
      */
-    private V2D mapCoordinateToViewSize(final V2D modelV2D) {
+    public V2D mapCoordinateToViewSize(final V2D modelV2D) {
         Dimension2D mapped = V2DtoDimension2D(modelV2D);
         return new V2D(mapped.getWidth(), mapped.getHeight());
     }
@@ -245,7 +245,7 @@ public class GameBoardControllerImpl extends ViewController implements GameBoard
      * @param radius the model {@link ShapedEntity#getRadius()}
      * @return {@link Dimension2D} that correctly scales from the model into {@link #gameArea}
      */
-    private Dimension2D modelRadiusToDimension2D(final int radius){
+    public Dimension2D modelRadiusToDimension2D(final int radius){
         return new Dimension2D(radius * getGameArea().getWidth()/ MapImpl.MAXBORDERX,
                 radius * getGameArea().getWidth()/ MapImpl.MAXBORDERX);
     }
@@ -255,7 +255,7 @@ public class GameBoardControllerImpl extends ViewController implements GameBoard
      * @param entity the model {@link ShapedEntity#getRadius()}
      * @return {@link Dimension2D} that correctly scales from the model into {@link #gameArea}
      */
-    private Dimension2D modelRadiusToDimension2D(final ShapedEntity entity){
+    public Dimension2D modelRadiusToDimension2D(final ShapedEntity entity){
         return new Dimension2D(entity.getRadius() * getGameArea().getWidth()/ MapImpl.MAXBORDERX,
                 entity.getRadius() * getGameArea().getWidth()/ MapImpl.MAXBORDERX);
     }
