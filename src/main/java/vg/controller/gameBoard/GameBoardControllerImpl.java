@@ -172,7 +172,6 @@ public class GameBoardControllerImpl extends ViewController implements GameBoard
 
     @Override
     public void updateLifeCounter(final int life) {
-        System.out.println(life);
         if (prevLife != life) {
             prevLife = life;
             this.life1.setDisable(true);
