@@ -354,12 +354,17 @@ public class GameControllerImpl extends Controller<AdaptableView<GameBoardContro
      * It adds ti the view stack game-over screen with different title then when name is confirmed go back home.s
      */
     private void saveScoreThenClose() {
-        GameOverView saveNameView = ViewFactory.gameOverView(
-                stageDomain.getCurrentScore(),
-                stageDomain.getLv(),
-                this.getViewManager());
-        saveNameView.getViewController().setTitle("...but before save your name:");
-        this.getViewManager().addScene(saveNameView);
+        if (this.stageDomain.getCurrentScore() > 0) {
+            GameOverView saveNameView = ViewFactory.gameOverView(
+                    stageDomain.getCurrentScore(),
+                    stageDomain.getLv(),
+                    this.getViewManager());
+            saveNameView.getViewController().setTitle("...but before save your name:");
+            this.getViewManager().addScene(saveNameView);
+        } else {
+            this.getViewManager().backHome();
+        }
+        this.soundManager.stopBackground();
     }
 
     @Override
