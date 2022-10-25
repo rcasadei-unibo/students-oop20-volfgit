@@ -5,6 +5,9 @@ import vg.model.entity.Entity;
 import vg.utils.Shape;
 import vg.utils.V2D;
 
+/**
+ * This interface represents the boss entities (model).
+ */
 public interface BossModel extends Entity {
     /**
      * Get the radius of the boss.
