@@ -41,12 +41,18 @@ public class ViewFactory {
 
     /**
      * Return pause view.
-     * @return
+     * @return Pause view
      */
     public static View<ViewController> pauseView() {
         return makeAdaptableView("/layout/PauseView.fxml");
     }
 
+    /**
+     * Return CountdownView specific for when player won level and goes to next one.
+     * This view show a victory message, current score and next level number.
+     * Is also showed a countdown timer that inform player how long wait for next level.
+     * @return CountdownView controlled by TransitionViewController
+     */
     public static CountdownView<TransitionViewController> transitionView(final int score, final int round) {
         CountdownView<TransitionViewController> transitionView =  new TransitionView();
         transitionView.getViewController().setLevel(round);
@@ -54,6 +60,11 @@ public class ViewFactory {
         return transitionView;
     }
 
+    /**
+     * Create new LeaderBoard view to show list of player's score.
+     * @param viewManager current viewManager
+     * @return LeaderBoardView
+     */
     public static LeaderBoardView leaderBoardView(final ViewManager viewManager) {
         LeaderBoardView leaderBoardView = new LeaderBoardView();
         LeaderBoardController leaderBoardController = new LeaderBoardController(leaderBoardView, viewManager);
@@ -61,6 +72,12 @@ public class ViewFactory {
         return leaderBoardView;
     }
 
+    /**
+     * Create prompt view that ask user something and can be answered by two buttons.
+     * @param viewManager current viewManager
+     * @param observer Controller or class that need to be informed of prompt answer
+     * @return PromptView that ask user something
+     */
       public static PromptView promptView(final ViewManager viewManager, final PromptObserver observer) {
         PromptView promptView = PromptView.newConfirmDialogView();
         PromptController promptController =
@@ -69,6 +86,12 @@ public class ViewFactory {
         return  promptView;
     }
 
+    /**
+     * Create main menu view that show title and many button to
+     * @param viewManager current viewManager
+     * @param soundManager current soundManager
+     * @return MenuView
+     */
     public static MenuView menuView(final ViewManager viewManager, final SoundManager soundManager) {
         MenuView menuView = new MenuView();
         MenuController menuController = new MenuController(menuView, viewManager, soundManager);
@@ -76,6 +99,12 @@ public class ViewFactory {
         return menuView;
     }
 
+    /**
+     * Create settings view where change settings.
+     * @param viewManager current viewManager
+     * @param soundManager current soundManager
+     * @return SettingView
+     */
     public static SettingView settingView(final ViewManager viewManager, final SoundManager soundManager) {
         SettingView settingView = new SettingView();
         SettingsController settingsController = new SettingsController(settingView, viewManager, soundManager);
