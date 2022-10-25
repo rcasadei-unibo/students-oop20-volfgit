@@ -123,6 +123,5 @@ public class EntityBlockImpl extends Rectangle implements EntityBlock {
     }
     private void setImage(final String pathImage) {
         this.setFill(ImageFXUtils.createImagePatternFrom(pathImage));
-
     }
 }

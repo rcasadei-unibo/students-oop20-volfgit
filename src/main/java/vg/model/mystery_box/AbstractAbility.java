@@ -5,14 +5,12 @@ import vg.model.entity.staticEntity.StaticEntity;
 import vg.model.mystery_box.logic_blink.LogicBlink;
 import vg.model.mystery_box.logic_blink.StaticFactoryBlink;
 import vg.utils.V2D;
-import vg.utils.path.PathImageMysteryBox;
 
 /**
  * AbstractAbility is the base class for all the abilities.
  */
 public abstract class AbstractAbility extends StaticEntity {
     private static final long serialVersionUID = 1L;
-
     private static final Dimension2D DIMENSION_BOX = new Dimension2D(60, 60);
     private static final V2D INIT_POSITION = new V2D(0, 0);
     private final Dimension2D dimension;
@@ -21,13 +19,11 @@ public abstract class AbstractAbility extends StaticEntity {
     private final LogicBlink logicBlink;
     private final LogicBlink logicBlinkPickUp;
     private boolean show;
-    private String pathImage;
     private boolean isActivated;
 
 
     public AbstractAbility(final EAbility idAbility, final ETypeAbility typeAbility) {
         super(INIT_POSITION, (int) (DIMENSION_BOX.getWidth() / 2));
-        this.pathImage = PathImageMysteryBox.MYSTERY_BOX;
         this.dimension = DIMENSION_BOX;
         this.idAbility = idAbility;
         this.typeAbility = typeAbility;
@@ -43,10 +39,17 @@ public abstract class AbstractAbility extends StaticEntity {
     public EAbility getIdAbility() {
         return this.idAbility;
     }
+    /**
+     * This method is used to get the path of the ability.
+     * @return the path of the ability.
+     */
     public String getPathReveled() {
         return this.idAbility.getPathReveled();
     }
-
+    /**
+     * This method is used to get the type of the ability.
+     * @return the type of the ability.
+     */
     public ETypeAbility getTypeAbility() {
         return this.typeAbility;
     }
@@ -56,20 +59,6 @@ public abstract class AbstractAbility extends StaticEntity {
      */
     public Dimension2D getDimension() {
         return this.dimension;
-    }
-    /**
-     * This method is used to get the path of the image of the ability.
-     * @return the path of the image of the ability.
-     */
-    public String getPathImage() {
-        return this.pathImage;
-    }
-    /**
-     * This method is used to verify if the blink is active.
-     * @return true if the blink is active, false otherwise.
-     */
-    public boolean isBlinking() {
-        return this.logicBlink.isBlinking();
     }
     /**
      * This method is used to verify if the box is shown.
@@ -93,19 +82,36 @@ public abstract class AbstractAbility extends StaticEntity {
         this.logicBlink.updateBlinking(elapsedTime);
         this.show = this.logicBlink.isShow();
     }
+    /**
+     * This method is used to verify if the ability has been activated.
+     * @return true if the activation is true, false otherwise.
+     */
     public boolean isActivated() {
         return this.isActivated;
     }
+    /**
+     * Show the box.
+     */
     public void show() {
         this.show = true;
     }
+    /**
+     * Hide the box.
+     */
     public void hide() {
         this.show = false;
     }
-
+    /**
+     * This method is used to set the blink when the box is picked up.
+     */
     public void setActiveBlinkPickUp() {
         this.logicBlinkPickUp.setBlinking(true);
     }
+    /**
+     * This method is used to update the blink when the box is picked up.
+     * The blink is active for a short time.
+     * @param elapsedTime defines the time elapsed.
+     */
     public void updateBlinkingPickUp(final long elapsedTime) {
         this.logicBlinkPickUp.updateBlinking(elapsedTime);
         this.show = this.logicBlinkPickUp.isShow();
@@ -114,10 +120,9 @@ public abstract class AbstractAbility extends StaticEntity {
             this.logicBlink.setBlinking(false);
         }
     }
-
-    protected void setPathImage(final String pathImage) {
-        this.pathImage = pathImage;
-    }
+    /**
+     * This method set isActivated to true.
+     */
     protected void activated() {
         this.isActivated = true;
     }
