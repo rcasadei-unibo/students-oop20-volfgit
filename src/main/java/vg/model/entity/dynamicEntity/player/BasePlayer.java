@@ -229,7 +229,6 @@ public final class BasePlayer extends DynamicEntity implements Player {
         super.afterCollisionAction(other);
         if (this.getMassTier().compareTo(other) > MassTier.NOCOLLISION.ordinal()) {
             decLife();
-            System.out.println("Decrement life");
         }
 
     }

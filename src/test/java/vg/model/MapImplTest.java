@@ -58,7 +58,7 @@ class MapImplTest {
         assertTrue(map.getBorders().contains(new V2D(133, 150)));
         assertTrue(map.getBorders().contains(new V2D(133, 0)));
         assertTrue(map.getBorders().contains(new V2D(0, 150)));
-        //assertTrue(map.getOccupiedPercentage()<0.05);
+        assertTrue(map.getOccupiedPercentage()<0.05);
         player.getTail().resetTail();
         IntStream.rangeClosed(0,200).boxed().flatMap(e -> Stream.of(new V2D(e,75))).sorted((e1,e2) -> (int) (e1.getX() - e2.getX())).forEach(e -> player.getTail().addPoint(e));
         map.updateBorders(player.getTail().getCoordinates());
@@ -66,7 +66,7 @@ class MapImplTest {
         assertTrue(map.getBorders().contains(new V2D(133, 75)));
         assertTrue(map.getBorders().contains(new V2D(133, 0)));
         assertTrue(map.getBorders().contains(new V2D(0, 75)));
-        //assertTrue(map.getOccupiedPercentage()>0.5);
+        assertTrue(map.getOccupiedPercentage()>0.5);
         player.getTail().resetTail();
         IntStream.rangeClosed(0,75).boxed().flatMap(e -> Stream.of(new V2D(120,e))).sorted((e1,e2) -> (int) (e1.getY() - e2.getY())).forEach(e -> player.getTail().addPoint(e));
         assertTrue(map.isTailCompleted());
@@ -79,9 +79,7 @@ class MapImplTest {
         IntStream.rangeClosed(0,25).boxed().flatMap(e -> Stream.of(new V2D(5,e))).sorted((e1,e2) -> (int) (e1.getX() - e2.getX())).forEach(e -> player.getTail().addPoint(e));
         IntStream.rangeClosed(0,2).boxed().flatMap(e -> Stream.of(new V2D(e + 5,25))).sorted((e1,e2) -> (int) (e1.getX() - e2.getX())).forEach(e -> player.getTail().addPoint(e));
         IntStream.rangeClosed(0,25).boxed().flatMap(e -> Stream.of(new V2D(7,25-e))).sorted((e1,e2) -> (int) (e1.getX() - e2.getX())).forEach(e -> player.getTail().addPoint(e));
-        //System.out.println(map.getBoss().getPosition());
         assertTrue(((MapImpl)map).isInBorders(map.getBoss().getPosition()));
-        //System.out.println(map.getBorders().stream().sorted((e1,e2) -> (int)(1000*e1.getX() -1000*e2.getX() + e1.getY()- e1.getY())).collect(Collectors.toList()));
         assertTrue(map.getBorders().contains(new V2D(10,0)));
         map.updateBorders(player.getTail().getCoordinates());
         assertFalse(map.getBorders().contains(new V2D(6,6)));
@@ -115,12 +113,8 @@ class MapImplTest {
         assertTrue(map.getBorders().contains(new V2D(5,0)));
         assertTrue(map.getBorders().contains(new V2D(5,150)));
         //assertTrue(map.getBorders().contains(new V2D(5,151)));
-
-
         player.getTail().resetTail();
-       // System.out.println(map.getBorders().stream().sorted((e, e2) -> (int) (1000*e.getX() -1000*e2.getX() +e.getY() - e2.getY())).collect(Collectors.toList()));
         tail.stream().sorted((e, e2) -> (int) (e.getY() - e2.getY())).forEach(player.getTail()::addPoint);
-      //  System.out.println(player.getTail().getCoordinates().stream().sorted((e, e2) -> (int) (e.getY() - e2.getY())).collect(Collectors.toList()));
         map.updateBorders(player.getTail().getCoordinates());
         assertFalse(map.getBorders().contains(new V2D(0,0)));
         assertTrue(map.getBorders().contains(new V2D(5,150)));

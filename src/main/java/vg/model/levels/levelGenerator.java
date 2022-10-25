@@ -143,7 +143,6 @@ public class levelGenerator {
      * @throws ClassNotFoundException if the file is corrupted
      */
     public Map<V2D> deserializeLevel(final String lv) throws IOException, ClassNotFoundException {
-        System.out.println(lv);
         FileInputStream in = new FileInputStream(lv);
         ObjectInputStream oIn = new ObjectInputStream(in);
         var map = (Map<V2D>)oIn.readObject();

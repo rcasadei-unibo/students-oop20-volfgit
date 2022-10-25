@@ -406,8 +406,6 @@ public class MapImpl implements Map<V2D>, Serializable {
                 return false;
             }
         } catch (Exception e) {
-            System.out.println(toRemove);
-            System.out.println(toRemove.getPosition());
             e.printStackTrace();
         }
         if (getAllDynamicEntities().stream()

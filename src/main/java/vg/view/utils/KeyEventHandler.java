@@ -59,7 +59,6 @@ public final class KeyEventHandler implements EventHandler<KeyEvent> {
 
     @Override
     public void handle(final KeyEvent event) {
-       // System.out.println(event);
         if (this.sceneController.isPresent()) {
             if (event.getEventType().equals(KEY_PRESSED)) {
                 this.sceneController.get().keyPressed(getActionFromKeyCode(event.getCode()));

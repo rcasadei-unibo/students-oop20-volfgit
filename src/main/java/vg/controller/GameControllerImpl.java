@@ -184,7 +184,6 @@ public class GameControllerImpl extends Controller<AdaptableView<GameBoardContro
         boolean areBorderUpdated = this.stageDomain.isBorderUpdated();
         this.stageDomain.consumeBorderUpdatedState();
         if (areBorderUpdated || forceBorder) {
-            System.out.println("Border updated");
             this.soundManager.playEffect(ESoundEffect.CLOSE_BORDER);
             borderList.add(border.stream().findFirst().get());
             while (borderList.size() < border.size()) {
@@ -431,7 +430,6 @@ public class GameControllerImpl extends Controller<AdaptableView<GameBoardContro
      */
     @Override
     public void keyReleased(final KeyAction k) {
-        System.out.println("RELEASED : " + k.name());
         if (gameState == GameState.PLAYING &&
             (k == KeyAction.DOWN || k == KeyAction.UP ||
              k == KeyAction.LEFT || k == KeyAction.RIGHT)) {

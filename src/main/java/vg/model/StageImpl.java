@@ -338,8 +338,7 @@ public class StageImpl<T> implements Stage<V2D> {
                 getPlayer().changeDirection(Direction.NONE, false);
                 if (!tailCopy.isEmpty()) {
                     var t = new ArrayList<V2D>();
-                    //System.out.println("break" + tailCopy + t);
-                    for(int i = 0; i < tailCopy.size(); i++){
+                        for(int i = 0; i < tailCopy.size(); i++){
                         t.add(tailCopy.get(i));
                         if (tailCopy.get(i).equals(getPlayer().getPosition())) {
                             break;
@@ -413,7 +412,6 @@ public class StageImpl<T> implements Stage<V2D> {
         getPlayer().move();
         if (!getMap().isPlayerOnBorders() || !getPlayer().getTail().getCoordinates().isEmpty()) {
             ((MapImpl) getMap()).addTailPointsByPlayerSpeed();
-          //  System.out.println(emController.getMysteryBoxList().stream().map(MysteryBoxController::getPosition).collect(Collectors.toList()));
         }
         checkAllOutOfBounds();
         if (getMap().isTailCompleted()) {

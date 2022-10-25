@@ -33,7 +33,6 @@ public class GameOverViewController extends ViewController {
      * @param round round when is gameover
      */
     public void setRound(final int round) {
-        System.out.println("setRound :" + round);
         this.round.setText(String.valueOf(round));
     }
 
