@@ -29,19 +29,13 @@ public class MysteryBoxManagerImpl implements MysteryBoxManager {
     @Override
     public void initializeRound(final GameBoardController gameBoard) {
         final List<DataRound> dataRoundList = MysteryBoxPositionUtils.getDataRoundList(this.round, gameBoard.getGameAreaDimension());
-
-        final MysteryBoxController mysteryBoxBoss = StaticFactoryMysteryBox.createRandomMysteryBoxWithWeaponBoss();
-        mysteryBoxBoss.setDataRound(dataRoundList.get(0));
-        this.mysteryBoxList.add(mysteryBoxBoss);
-        mysteryBoxBoss.setInParentNode(gameBoard.getGameAreaNode());
-
-
-        dataRoundList.stream().skip(1).forEach(dataRound -> {
+        dataRoundList.forEach(dataRound -> {
             final MysteryBoxController mysteryBox = StaticFactoryMysteryBox.createRandomMysteryBoxDefault();
             mysteryBox.setDataRound(dataRound);
             this.mysteryBoxList.add(mysteryBox);
             mysteryBox.setInParentNode(gameBoard.getGameAreaNode());
         });
+        this.increaseRound();
     }
 
     @Override

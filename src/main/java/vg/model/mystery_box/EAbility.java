@@ -24,8 +24,4 @@ public enum EAbility {
         return values()[(int) (Math.random() * values().length)];
     }
 
-    public static EAbility randomAllButBoss()  {
-        return values()[(int) (Math.random() * (values().length - 1))];
-    }
-
 }
