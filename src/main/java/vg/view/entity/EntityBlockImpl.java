@@ -9,6 +9,9 @@ import vg.utils.V2D;
 
 import java.util.List;
 
+/**
+ * This class is the implementation of the entity view.
+ */
 public class EntityBlockImpl extends Rectangle implements EntityBlock {
     private List<String> animationPathList;
     private int indexImage;
@@ -18,11 +21,14 @@ public class EntityBlockImpl extends Rectangle implements EntityBlock {
         super(dimension.getWidth(), dimension.getHeight());
         this.animationPathList = animationPathList;
         this.rectangleOverlay = new Rectangle(dimension.getWidth(), dimension.getHeight());
-        V2D centerPos = new V2D(position.getX() - dimension.getWidth() / 2, position.getY() - dimension.getHeight() / 2);
-        this.setPosition(centerPos);
-        this.hideImageOverlay();
+        this.setPosition(this.getCenterPosition(position));
+        this.rectangleOverlay.setVisible(false);
         this.indexImage = 0;
         this.setImage(this.animationPathList.get(this.indexImage));
+    }
+
+    private V2D getCenterPosition(final V2D position) {
+        return new V2D(position.getX() - this.getWidth() / 2, position.getY() - this.getHeight() / 2);
     }
 
     /**
@@ -38,7 +44,7 @@ public class EntityBlockImpl extends Rectangle implements EntityBlock {
      */
     @Override
     public void setPosition(final V2D position) {
-        V2D centerPos = new V2D(position.getX() - this.getWidth() / 2, position.getY() - this.getHeight() / 2);
+        final V2D centerPos = new V2D(position.getX() - this.getWidth() / 2, position.getY() - this.getHeight() / 2);
         this.setX(centerPos.getX());
         this.setY(centerPos.getY());
         this.rectangleOverlay.setX(centerPos.getX());
@@ -51,7 +57,7 @@ public class EntityBlockImpl extends Rectangle implements EntityBlock {
     @Override
     public void setShow(final boolean show) {
         this.setVisible(show);
-        boolean isVisible = this.rectangleOverlay.isVisible() && show;
+        final boolean isVisible = this.rectangleOverlay.isVisible() && show;
         this.rectangleOverlay.setVisible(isVisible);
     }
 
@@ -96,14 +102,12 @@ public class EntityBlockImpl extends Rectangle implements EntityBlock {
         this.rectangleOverlay.setVisible(false);
     }
 
-
-
     /**
      * {@inheritDoc}
      */
     @Override
     public void updateAnimation() {
-        if (this.animationPathList.size() == 0) {
+        if (this.animationPathList.isEmpty()) {
             return;
         }
         this.setImage(this.animationPathList.get(this.indexImage));
