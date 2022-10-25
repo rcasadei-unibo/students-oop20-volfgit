@@ -71,8 +71,7 @@ public class MapImpl implements Map<V2D>, Serializable {
     public MapImpl(final Player player, final Boss boss, final Set<StaticEntity> staticEntitySet, final Set<DynamicEntity> dynamicEntitySet, final Set<V2D> border) {
         this.player = player;
         this.boss = boss;
-        //this.staticEntitySet = staticEntitySet; //TODO get the mystery boxes..>.<
-        this.staticEntitySet = new HashSet<>();
+        this.staticEntitySet = staticEntitySet;
         this.dynamicEntitySet = dynamicEntitySet;
         this.border = border;
         this.getOccupiedPercentage = 0;

@@ -8,6 +8,7 @@ import vg.model.entity.dynamicEntity.enemy.Boss;
 import vg.model.entity.dynamicEntity.enemy.EmptyBoss;
 import vg.model.entity.dynamicEntity.enemy.Mosquitoes;
 import vg.model.entity.dynamicEntity.player.BasePlayer;
+import vg.model.entity.staticEntity.FixedSquare;
 import vg.model.entity.staticEntity.StaticEntity;
 import vg.utils.MassTier;
 import vg.utils.Shape;
@@ -39,32 +40,34 @@ public class levelGenerator {
      * Lv1.
      */
     private Boss bossLv1 = new EmptyBoss(new V2D(100, 100), new V2D(1, 1), 3,  Shape.CIRCLE, MassTier.HIGH);
-/*
-    private Set<StaticEntity> ssLv1 = new HashSet<>(Stream.of(5, 100, 195)
-            .flatMap(e -> Stream.of(new V2D(e,148)))
-            .flatMap(e -> Stream.of(new FixedMysteryBox(e,2, BonusImpl.createBonus(BonusType.EXTRA_SCORE,10))))
-            .collect(Collectors.toSet()));
-*/
     private Set<DynamicEntity> dsLv1 = generatesEnemies(null, bossLv1, 4 );
+    private Set<StaticEntity> ssLv1 = new HashSet<StaticEntity>(Stream.of(
+            new FixedSquare(new V2D(100,75), 5),
 
+            new FixedSquare(new V2D(6,145), 5),
+            new FixedSquare(new V2D(194,145), 5),
+            new FixedSquare(new V2D(50,145), 5),
+            new FixedSquare(new V2D(100,145), 5),
+            new FixedSquare(new V2D(150,145), 5)).collect(Collectors.toSet())
+    );
 
     private Map<V2D> lv1 = new MapImpl(BasePlayer.newPlayer(new V2D(0, 0)),
             bossLv1,
-            null, //TODO: !!!!!
+            ssLv1,
             dsLv1,
             defaultBorders);
-    //TODO actually create different levels
+    //TODO actually create next levels with right params
     private Map<V2D> lv2 = new MapImpl(BasePlayer.newPlayer(new V2D(0, 0)),
             bossLv1,
-            null, //TODO: !!!!!
+            ssLv1,
             dsLv1,
             defaultBorders);;
     private Map<V2D> lv3 = new MapImpl(BasePlayer.newPlayer(new V2D(0, 0)),
             bossLv1,
-            null, //TODO: !!!!!
+            ssLv1,
             dsLv1,
             defaultBorders);;
-    private Map<V2D> lv4 = lv1;
+
 
     /**
      * Generates n {@link Mosquitoes} that are in borders and not colliding
