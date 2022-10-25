@@ -8,10 +8,14 @@ import vg.model.MapImpl;
  *  Static class with resolutions in pixels.
  */
 public final class DimensionUtils {
-
+    /**
+     *  The width of the screen.
+     */
     public static final int DEFAULT_WIDTH = 1400;
+    /**
+     *  The height of the screen.
+     */
     public static final int DEFAULT_HEIGHT = 950;
-
     /**
      * width 4k.
      */
@@ -56,7 +60,6 @@ public final class DimensionUtils {
      * The height of the primary screen.
      */
     private static final double SCREEN_HEIGHT = Screen.getPrimary().getBounds().getHeight();
-
     /**
      * The width that is currently used.
      */
@@ -73,7 +76,6 @@ public final class DimensionUtils {
      * The boolean that indicates if the application mode is fullscreen or not.
      */
     private static Boolean fullscreen = true;
-
     /**
      * Sets the current fields to the ones compatible from the screen.
      */
@@ -133,6 +135,8 @@ public final class DimensionUtils {
         DimensionUtils.fullscreen = fullscreen;
     }
 
+    private DimensionUtils() {
+    }
     //TODO sub to getCurrentWidth the difference from the total stage dimension and the game Pane
     public static Dimension2D getImagePosition(final V2D modelPosition) {
         return new Dimension2D(getCurrentWidth() * modelPosition.getX() / MapImpl.MAXBORDERX,
