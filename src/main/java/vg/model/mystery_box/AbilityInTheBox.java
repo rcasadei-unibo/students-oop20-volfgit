@@ -6,7 +6,7 @@ import vg.model.entity.Entity;
 import vg.utils.V2D;
 
 /**
- * This class represents the ability of the game.
+ * This interface represents the ability of the game.
  */
 public interface AbilityInTheBox extends Entity {
     /**
@@ -14,64 +14,73 @@ public interface AbilityInTheBox extends Entity {
      *   @return the id of the ability.
      */
     EAbility getIdAbility();
-    ETypeAbility getTypeAbility();
     /**
-     * This method is used to get the position of the box.
-     * @return the position of the box.
+     * This method is used to get the type of the ability. (Instant and durable)
+     * @return the dimension of the box.
      */
-    @Override
-    V2D getPosition();
+    ETypeAbility getTypeAbility();
     /**
      * This method is used to get the dimension of the box.
      * @return the dimension of the box.
      */
     Dimension2D getDimension();
-    String getPathReveled();
-
-    int getRadius();
     /**
-     * This method is used to get the path of the image of the ability.
+     * This method is used to get the path of the image of the ability, when is taken.
      * @return the path of the image of the ability.
      */
-    String getPathImage();
-
+    String getPathReveled();
     /**
-     * This method is used to verify if the blink is active.
-     * @return true if the blink is active, false otherwise.
+     * This method is used to get the radius.
+     * @return the radius.
      */
-    boolean isBlinking();
-
+    int getRadius();
     /**
-     * This method is used to update the blinking.
+     * This method show if the box is blinking.
      * @param isBlinking defines if the ability is blinking.
      */
     void setBlinking(boolean isBlinking);
-
     /**
      * This method is used to set the position.
      * @param position defines the position of the box.
      */
     void setPosition(V2D position);
-
     /**
      * This method is used to update the blinking.
      * @param elapsedTime defines the time elapsed.
      */
     void updateBlinking(long elapsedTime);
-
+    /**
+     * This method is used to active the blink when the box is picked up.
+     */
     void setActiveBlinkPickUp();
+    /**
+     * This method is used to update the blink when the box is picked up.
+     * The blink is active for a short time.
+     * @param elapsedTime defines the time elapsed.
+     */
     void updateBlinkingPickUp(long elapsedTime);
-
     /**
      * This method is used if the box is shown.
      * @return true if the box is shown, false otherwise.
      */
     boolean isShow();
-
+    /**
+     * Active the ability.
+     * @param stage defines the stage.
+     */
     void activate(Stage<V2D> stage);
+    /**
+     * This method is used to verify if the ability has been actived.
+     * @return true if the activation is true, false otherwise.
+     */
     boolean isActivated();
-
+    /**
+     * Show the box.
+     */
     void show();
+    /**
+     * Hide the box.
+     */
     void hide();
-
 }
+

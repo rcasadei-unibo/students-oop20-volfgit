@@ -12,6 +12,7 @@ public interface ScoreManager {
 
     /**
      * Save passed score.
+     * @param score score to be saved
      */
     void saveScore(Score score);
 

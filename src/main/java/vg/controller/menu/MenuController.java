@@ -12,7 +12,6 @@ import vg.model.StageImpl;
 import vg.sound.manager.SoundManager;
 import vg.utils.V2D;
 import vg.view.AdaptableView;
-import vg.view.View;
 import vg.view.ViewFactory;
 import vg.view.ViewManager;
 import vg.view.leaderBoard.LeaderBoardView;
@@ -44,17 +43,17 @@ public class MenuController extends Controller<MenuView> implements PromptObserv
            this.leaderBoards();
         } else if (idxSelection == MenuOption.SETTINGS.ordinal()) {
             SettingView settingsView = ViewFactory.settingView(this.getViewManager(), this.soundManager);
-            this.getViewManager().addScene(settingsView);
+            this.getViewManager().addView(settingsView);
         } else if (idxSelection == MenuOption.QUIT.ordinal()) {
             PromptView promptView = ViewFactory.promptView(this.getViewManager(), this);
-            this.getViewManager().addScene(promptView);
+            this.getViewManager().addView(promptView);
         }
     }
 
     public void leaderBoards() {
         ScoreManager scoreManager = ScoreManagerImpl.newScoreManager();
         LeaderBoardView leaderBoardView = ViewFactory.leaderBoardView(getViewManager());
-        this.getViewManager().addScene(leaderBoardView);
+        this.getViewManager().addView(leaderBoardView);
         leaderBoardView.getViewController().showList(scoreManager.getTopScore(20));
     }
 
@@ -76,7 +75,7 @@ public class MenuController extends Controller<MenuView> implements PromptObserv
         GameControllerImpl gameController = new GameControllerImpl(gameView, stageModel, this.getViewManager(), this.soundManager);
         // 3) set logic controller in view
         gameView.setSceneController(gameController);
-        this.getViewManager().addScene(gameView);
+        this.getViewManager().addView(gameView);
         //5) run game-loop
         gameController.launchGameSession();
     }
@@ -107,7 +106,7 @@ public class MenuController extends Controller<MenuView> implements PromptObserv
         if (answer == PromptOption.CONFIRM) {
             Platform.exit();
         } else if (answer == PromptOption.DENY) {
-            this.getViewManager().popScene();
+            this.getViewManager().popView();
         }
     }
 }

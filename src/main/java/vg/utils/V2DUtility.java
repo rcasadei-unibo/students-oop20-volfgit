@@ -37,7 +37,7 @@ public class V2DUtility {
 
     /**
      * Utility method to get direction from vector considering coordinate sign.
-     * Example: (5,0) -> {@link Direction#RIGHT}, (0, -4) -> {@link Direction#UP}
+     * Example: (5,0) is {@link Direction#RIGHT}, (0, -4) is {@link Direction#UP}
      * @param vector {@link V2D} vector where extract direction.
      * @return corresponding {@link Direction}
      */

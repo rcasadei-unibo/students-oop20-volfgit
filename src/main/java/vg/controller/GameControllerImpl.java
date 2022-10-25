@@ -63,8 +63,6 @@ public class GameControllerImpl extends Controller<AdaptableView<GameBoardContro
     private final EntityManager entityManager;
     private final SoundManager soundManager;
 
-    private Set<V2D> prevBorders;
-
     public GameControllerImpl(final AdaptableView<GameBoardController> view, final Stage<V2D> stageDomain, final ViewManager viewManager, final SoundManager soundManager) {
         super(view, viewManager);
         this.entityManager = new EntityManagerImpl();
@@ -83,7 +81,6 @@ public class GameControllerImpl extends Controller<AdaptableView<GameBoardContro
     public void launchGameSession() {
         this.gameState = GameState.PLAYING;
         this.entityManager.initializeRound(super.getView().getViewController());
-        this.soundManager.playBackground(ESoundBackground.START);
         this.gameLoop();
     }
 
@@ -231,7 +228,7 @@ public class GameControllerImpl extends Controller<AdaptableView<GameBoardContro
         promptView.setTitle("Stop playing and back home?");
         //launch confirmation dialog
         //the response is communicated through method notifyDialogAnswer
-        this.getViewManager().addScene(promptView);
+        this.getViewManager().addView(promptView);
     }
 
     /**
@@ -250,7 +247,7 @@ public class GameControllerImpl extends Controller<AdaptableView<GameBoardContro
     private void resumeGame() {
         System.out.println("RESUME");
         this.gameState = GameState.PLAYING;
-        Platform.runLater(()-> this.getViewManager().popScene());
+        Platform.runLater(()-> this.getViewManager().popView());
         this.gameLoop();
     }
 
@@ -266,7 +263,7 @@ public class GameControllerImpl extends Controller<AdaptableView<GameBoardContro
                 stageDomain.getLv(),
                 this.getViewManager());
         Platform.runLater(() -> {
-            this.getViewManager().addScene(gameOverView);
+            this.getViewManager().addView(gameOverView);
         });
     }
 
@@ -282,6 +279,8 @@ public class GameControllerImpl extends Controller<AdaptableView<GameBoardContro
                 stageDomain.getLv());
         transView.setSceneController(this);
         showTimedView(transView, SCREEN_DURATION_TIME);
+        this.entityManager.initializeNewRound(this.getGameViewController());
+        this.getGameViewController().getPlayer().setInParentNode(this.getGameViewController().getGameAreaNode());
         this.resumeGame();
     }
 
@@ -317,13 +316,13 @@ public class GameControllerImpl extends Controller<AdaptableView<GameBoardContro
 
     /**
      * Show passed view on screen;
-     * this method delegates {@link ViewManager#addScene(View)} to do it.
+     * this method delegates {@link ViewManager#addView(View)} to do it.
      * @param view View to show on screen
      */
     private void showView(final View view) {
         Platform.runLater(() -> {
             view.setSceneController(this);
-            this.getViewManager().addScene(view);
+            this.getViewManager().addView(view);
         });
     }
 
@@ -360,7 +359,7 @@ public class GameControllerImpl extends Controller<AdaptableView<GameBoardContro
                     stageDomain.getLv(),
                     this.getViewManager());
             saveNameView.getViewController().setTitle("...but before save your name:");
-            this.getViewManager().addScene(saveNameView);
+            this.getViewManager().addView(saveNameView);
         } else {
             this.getViewManager().backHome();
         }

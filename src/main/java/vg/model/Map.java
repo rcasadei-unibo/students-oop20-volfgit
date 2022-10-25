@@ -88,13 +88,6 @@ public interface Map<T> {
      */
     void removeEntity(Entity toRemove);
 
-    //TODO: delegate bonus controller the request
-    /**
-     * Return a list of active bonus collected by player.
-     * @return the set of bonuses currently activate
-     */
-    <R> Set<R> getActiveBonus();
-
     /**
      * Update bonus internal timer and remove from active bonus if expired.
      * @param elapsedTime elasped time between current and previous game cycle

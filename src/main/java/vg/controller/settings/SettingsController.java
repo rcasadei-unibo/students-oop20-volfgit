@@ -1,7 +1,10 @@
 package vg.controller.settings;
 
 import vg.controller.Controller;
+import vg.sound.SoundEffectImpl;
+import vg.sound.manager.ESoundBackground;
 import vg.sound.manager.SoundManager;
+import vg.utils.path.PathSound;
 import vg.view.ViewManager;
 import vg.view.settings.SettingView;
 import vg.view.utils.KeyAction;
@@ -30,7 +33,7 @@ public class SettingsController extends Controller<SettingView> {
         } else if (idxSelection == SettingOption.EFFECTS.ordinal()) {
             toggleEffects();
         } else if (idxSelection == SettingOption.CLOSE_SETTING.ordinal()) {
-            this.getViewManager().popScene();
+            this.getViewManager().popView();
         }
     }
 
@@ -40,6 +43,11 @@ public class SettingsController extends Controller<SettingView> {
     private void toggleSong() {
         this.songIsOn = !songIsOn;
         this.getView().getViewController().changeMusicStateON(this.songIsOn);
+        if (!this.songIsOn) {
+            this.soundManager.stopBackground();
+        } else {
+            this.soundManager.playBackground(ESoundBackground.START);
+        }
     }
 
     /**

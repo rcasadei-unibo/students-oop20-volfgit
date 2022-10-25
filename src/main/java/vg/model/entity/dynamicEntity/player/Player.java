@@ -60,6 +60,7 @@ public interface Player extends Entity {
     /**
      * Change player's moving direction.
      * @param direction new direction
+     * @param isOnBorder flag if player is on border
      */
     void changeDirection(Direction direction, boolean isOnBorder);
 

@@ -29,7 +29,7 @@ public class LeaderBoardController extends Controller<LeaderBoardView> {
     @Override
     public void keyReleased(final KeyAction k) {
         if (k == KeyAction.ENTER && this.escWasPressed) {
-            this.getViewManager().popScene();
+            this.getViewManager().popView();
         }
     }
 }

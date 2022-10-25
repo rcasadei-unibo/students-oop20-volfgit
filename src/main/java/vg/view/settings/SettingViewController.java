@@ -29,20 +29,38 @@ public class SettingViewController extends ViewController {
     @FXML
     private Text quitBtn;
 
+    /**
+     * Color with accent color selected button setting.
+     * @param idx button selected index
+     */
     public void highlightSelectedButton(final int idx) {
         List<Text> buttons = List.of(musicLabel, effectsLabel, quitBtn);
         buttons.forEach(button -> button.setFill(UNSELECTED_COLOR));
         buttons.get(idx).setFill(SELECTED_COLOR);
     }
 
+    /**
+     * toggle from ON to OFF background label.
+     * @param isOn state of background sound
+     */
     public void changeMusicStateON(final boolean isOn) {
         changeStateON(this.musicToggle, isOn);
     }
 
+    /**
+     * toggle from ON to OFF effects label.
+     * @param isOn state of effects sound
+     */
     public void changeEffectStateON(final boolean isOn) {
-        changeStateON(this.effectsToggle, isOn);
+        //actually is not implemented the disabling effects
+        changeStateON(this.effectsToggle, true);
     }
 
+    /**
+     * Change color and label of setting sound button.
+     * @param labelText label to be changed
+     * @param isOn state of sound setting
+     */
     private void changeStateON(final Text labelText,final boolean isOn) {
         labelText.setText(isOn ? "ON" : "OFF");
         labelText.setFill(isOn ? SELECTED_COLOR : UNSELECTED_COLOR);

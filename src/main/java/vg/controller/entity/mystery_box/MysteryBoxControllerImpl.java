@@ -17,75 +17,99 @@ import vg.view.entity.EntityBlock;
 
 import java.util.List;
 
+/**
+ * This class is the controller of the mystery box.
+ */
 public class MysteryBoxControllerImpl implements MysteryBoxController {
-
     private final AbilityInTheBox model;
     private final EntityBlock view;
-
     public MysteryBoxControllerImpl(final AbilityInTheBox model, final EntityBlock view) {
         this.model = model;
         this.view = view;
     }
-
-
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public AbilityDurable getDurability() {
         return (AbilityDurable) this.model;
     }
-
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public V2D getPosition() {
         return this.model.getPosition();
     }
-
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public int getRadius() {
         return this.model.getRadius();
     }
-
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public void setPosition(final V2D position) {
         this.model.setPosition(position);
         this.view.setPosition(this.model.getPosition());
     }
-
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public void setBlinking(final boolean blinking) {
         this.model.setBlinking(blinking);
     }
-
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public void setInParentNode(final ObservableList<Node> gameAreaNode) {
         this.view.setInParentNode(gameAreaNode);
     }
-
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public void setDataRound(final DataRound dataRound) {
         this.setPosition(dataRound.getPosition());
         this.setBlinking(dataRound.isBlinking());
     }
-
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public void updateBlinking(final long elapsedTime) {
         this.model.updateBlinking(elapsedTime);
         this.view.setShow(this.model.isShow());
     }
-
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public void setAnimation(final List<String> animation) {
         this.view.setAnimation(animation);
     }
-
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public boolean isType(final ETypeAbility type) {
         return this.model.getTypeAbility() == type;
     }
-
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public boolean isShow() {
         return this.model.isShow();
     }
-
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public void checkOnBorder(final Stage<V2D> stage, final GameBoardController gameController, final SoundManager soundManager) {
         if (!this.model.isShow() || this.model.isActivated()) {
@@ -114,7 +138,9 @@ public class MysteryBoxControllerImpl implements MysteryBoxController {
             this.model.setActiveBlinkPickUp();
         }
     }
-
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public void showPickUpMysteryBox(final long elapsedTime) {
         if (!this.model.isShow() && this.model.isActivated()) {
@@ -123,24 +149,26 @@ public class MysteryBoxControllerImpl implements MysteryBoxController {
         this.model.updateBlinkingPickUp(elapsedTime);
         this.view.setShow(this.model.isShow());
     }
-
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public void hide() {
         this.model.hide();
         this.view.setShow(this.model.isShow());
     }
-
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public void updateAnimation() {
         this.view.updateAnimation();
     }
-
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public boolean isActivated() {
         return this.model.isActivated();
     }
-
-
-
-
 }

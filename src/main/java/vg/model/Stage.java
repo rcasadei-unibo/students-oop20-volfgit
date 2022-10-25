@@ -10,6 +10,7 @@ import vg.model.entity.dynamicEntity.player.Player;
 import vg.model.entity.staticEntity.StaticEntity;
 import vg.model.levels.LEVEL;
 import vg.utils.Direction;
+import vg.utils.MassTier;
 
 import java.util.List;
 import java.util.Set;
@@ -91,7 +92,7 @@ public interface Stage<T> {
 
     /**
      * Return a Set of all entities that will be deleted from the map before the next iteration begins.
-     * @return : Set<ShapedEntity> that contains all entities on the map that will be deleted.
+     * @return : Set of ShapedEntity that contains all entities on the map that will be deleted.
      * @see Entity
      * @see ShapedEntity
      */
@@ -133,6 +134,7 @@ public interface Stage<T> {
      * which one are colliding and call the proper method on the
      * entity to manage the collision.
      * @see DynamicEntity
+     * @see DynamicEntity#afterCollisionAction(MassTier)
      */
     void checkCollisions();
 
