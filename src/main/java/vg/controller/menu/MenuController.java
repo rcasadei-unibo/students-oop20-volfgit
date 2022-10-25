@@ -63,21 +63,20 @@ public class MenuController extends Controller<MenuView> implements PromptObserv
      * {@see Game}
      */
     private void playGame() {
-        vg.model.Stage<V2D> stageModel = null;
         try {
-            stageModel = new StageImpl<>();
+            vg.model.Stage<V2D> stageModel = new StageImpl<>();
+            // 1) CREATE view
+            AdaptableView<GameBoardController> gameView = ViewFactory.newGameBoardView();
+            // 2) CREATE createMysteryBox logic controller
+            GameControllerImpl gameController = new GameControllerImpl(gameView, stageModel, this.getViewManager(), this.soundManager);
+            // 3) set logic controller in view
+            gameView.setSceneController(gameController);
+            this.getViewManager().addView(gameView);
+            //5) run game-loop
+            gameController.launchGameSession();
         } catch (Exception e) {
             e.printStackTrace();
         }
-        // 1) CREATE view
-        AdaptableView<GameBoardController> gameView = ViewFactory.newGameBoardView();
-        // 2) CREATE createMysteryBox logic controller
-        GameControllerImpl gameController = new GameControllerImpl(gameView, stageModel, this.getViewManager(), this.soundManager);
-        // 3) set logic controller in view
-        gameView.setSceneController(gameController);
-        this.getViewManager().addView(gameView);
-        //5) run game-loop
-        gameController.launchGameSession();
     }
 
     @Override
