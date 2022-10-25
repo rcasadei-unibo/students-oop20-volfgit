@@ -26,11 +26,16 @@ public class AbilityFreezeTimeImpl extends AbstractAbilityDurable implements Abi
         BossController boss = stage.getEntityManager().getBoss();
         boss.saveMySpeed();
         boss.setSpeed(new V2D(0, 0));
+
+        stage.getBoss().saveMySpeed();
+        stage.getBoss().setSpeed(new V2D(0,0));
     }
 
     @Override
     public void deActivate(final Stage<V2D> stage) {
         stage.getDynamicEntitySet().forEach(DynamicEntity::restoreMySpeed);
         stage.getEntityManager().getBoss().restoreMySpeed();
+
+        stage.getBoss().restoreMySpeed();
     }
 }
