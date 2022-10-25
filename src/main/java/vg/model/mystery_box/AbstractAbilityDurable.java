@@ -6,7 +6,7 @@ import vg.model.timedObject.TimedObjectImpl;
 /**
  * This class is the superclass of all abilities that are durable.
  */
-public abstract class AbstractAbilityDurable extends AbstractAbility {
+public abstract class AbstractAbilityDurable extends AbstractAbility implements AbilityDurable {
     private static final long serialVersionUID = 1L;
     private final TimedObject timedObject;
     public AbstractAbilityDurable(final EAbility idAbility, final double duration) {

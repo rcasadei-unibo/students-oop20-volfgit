@@ -1,15 +1,22 @@
 package vg.model.mystery_box.logic_blink;
 
+/**
+ * This interface is used to create a new LogicBlink.
+ */
 public interface LogicBlink {
     /**
-     * This method is used to verify if the blink is active.
-     * @return true if the blink is active, false otherwise.
+     * Set true if the object is blinking.
+     * @param blinking defines if the object is blinking.
      */
-    boolean isBlinking();
-
     void setBlinking(boolean blinking);
-
+    /**
+     * This method is used to verify the visibility of the object.
+     * @return defines if the object is visible.
+     */
     boolean isShow();
-
+    /**
+     * This method is used to update the blinking.
+     * @param elapsedTime defines the time.
+     */
     void updateBlinking(long elapsedTime);
 }

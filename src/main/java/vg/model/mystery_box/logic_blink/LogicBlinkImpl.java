@@ -1,13 +1,14 @@
 package vg.model.mystery_box.logic_blink;
 
+/**
+ * This class is used to create a new LogicBlink.
+ */
 public class LogicBlinkImpl implements LogicBlink {
     private boolean isBlinking;
     private boolean isShow;
     private final double timeHide;
     private final double timeShow;
     private double currentTime;
-
-
     public LogicBlinkImpl(final int timeShow, final int timeHide) {
         this.isBlinking = false;
         this.isShow = true;
@@ -15,23 +16,23 @@ public class LogicBlinkImpl implements LogicBlink {
         this.timeHide = timeHide;
         this.currentTime = 0;
     }
-
     /**
-     * This method is used to verify the blinking.
-     * @return defines if the ability is blinking.
+     * {@inheritDoc}
      */
-    @Override
-    public boolean isBlinking() {
-        return this.isBlinking;
-    }
     @Override
     public void setBlinking(final boolean blinking) {
         this.isBlinking = blinking;
     }
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public boolean isShow() {
         return this.isShow;
     }
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public void updateBlinking(final long elapsedTime) {
         if (!this.isBlinking) {
@@ -45,7 +46,6 @@ public class LogicBlinkImpl implements LogicBlink {
             this.updateIfIsHidden();
         }
     }
-
     private void resetCurrentTime() {
         this.currentTime = 0;
     }
@@ -64,5 +64,4 @@ public class LogicBlinkImpl implements LogicBlink {
             this.resetCurrentTime();
         }
     }
-
 }
