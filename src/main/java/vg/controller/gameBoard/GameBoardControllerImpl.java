@@ -15,6 +15,7 @@ import vg.model.entity.dynamicEntity.DynamicEntity;
 import vg.utils.V2D;
 import vg.view.ViewController;
 import vg.view.entity.EntityBlock;
+import vg.view.entity.EntityBlockImpl;
 import vg.view.entity.StaticFactoryEntityBlock;
 import vg.view.player.PlayerViewController;
 import vg.view.player.PlayerViewControllerImpl;
@@ -119,7 +120,8 @@ public class GameBoardControllerImpl extends ViewController implements GameBoard
 
     @Override
     public void updateMosquitoesPosition(final Set<DynamicEntity> mosquitoes) {
-        this.gameArea.getChildren().removeAll(mosqs);
+        mosqs.forEach(e -> getGameArea().getChildren().remove(((EntityBlockImpl)e).getRectangleOverlay()));
+        getGameArea().getChildren().removeAll(mosqs);
         this.mosqs.clear();
         mosquitoes.forEach(m -> {
             EntityBlock entityBlock = StaticFactoryEntityBlock.createMosquitoes(mapCoordinateToViewSize(m.getPosition()), modelRadiusToDimension2D(m.getRadius()));
