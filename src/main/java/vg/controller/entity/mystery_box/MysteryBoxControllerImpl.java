@@ -83,7 +83,7 @@ public class MysteryBoxControllerImpl implements MysteryBoxController {
 
     @Override
     public void checkOnBorder(final Stage<V2D> stage, final GameBoardController gameController, final SoundManager soundManager) {
-        if(!this.model.isShow() || this.model.isActivated()) {
+        if (!this.model.isShow() || this.model.isActivated()) {
             return;
         }
 
@@ -93,20 +93,28 @@ public class MysteryBoxControllerImpl implements MysteryBoxController {
         final V2D position = new V2D(posX, posY);
         final boolean isOnBorder = map.isInBorders(position);
 
-        if (!isOnBorder) {
-            soundManager.playEffect(ESoundEffect.PICK_BOX);
-            System.out.println("Take " + this.model.getIdAbility());
-            this.model.activate(stage);
-            this.view.setAnimation(List.of(this.model.getPathReveled()));
-            this.model.setBlinking(false);
-            if (this.isType(ETypeAbility.INSTANT)) {
-                this.model.setActiveBlinkPickUp();
-            }
+        if (isOnBorder) {
+            return;
+        }
+
+        soundManager.playEffect(ESoundEffect.PICK_BOX);
+        this.activate(stage);
+    }
+
+    private void activate(final Stage<V2D> stage) {
+        this.model.activate(stage);
+        this.view.setAnimation(List.of(this.model.getPathReveled()));
+        this.model.setBlinking(false);
+        if (this.isType(ETypeAbility.INSTANT)) {
+            this.model.setActiveBlinkPickUp();
         }
     }
 
     @Override
     public void showPickUpMysteryBox(final long elapsedTime) {
+        if (!this.model.isShow() && this.model.isActivated()) {
+            return;
+        }
         this.model.updateBlinkingPickUp(elapsedTime);
         this.view.setShow(this.model.isShow());
     }
