@@ -11,10 +11,9 @@ import vg.utils.V2D;
 
 public class AbilityFreezeTimeImpl extends AbstractAbilityDurable implements AbilityDurable {
     private static final long serialVersionUID = 1L;
-    private static final double DURATION = 5000;
 
-    public AbilityFreezeTimeImpl(final EAbility idAbility) {
-        super(idAbility, DURATION);
+    public AbilityFreezeTimeImpl(final double duration) {
+        super(EAbility.FREEZE_TIME, duration);
     }
 
     @Override

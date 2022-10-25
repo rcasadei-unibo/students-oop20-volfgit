@@ -26,7 +26,7 @@ public class ViewFactory {
     public static GameOverView gameOverView(final int score, final int round, final ViewManager viewManager) {
         GameOverView gameOverView = new GameOverView();
         GameOverController gameOverController = new GameOverController(gameOverView, viewManager);
-        gameOverView.setIoLogicController(gameOverController);
+        gameOverView.setSceneController(gameOverController);
         gameOverController.set(score, round);
         return gameOverView;
      }
@@ -57,7 +57,7 @@ public class ViewFactory {
     public static LeaderBoardView leaderBoardView(final ViewManager viewManager) {
         LeaderBoardView leaderBoardView = new LeaderBoardView();
         LeaderBoardController leaderBoardController = new LeaderBoardController(leaderBoardView, viewManager);
-        leaderBoardView.setIoLogicController(leaderBoardController);
+        leaderBoardView.setSceneController(leaderBoardController);
         return leaderBoardView;
     }
 
@@ -65,21 +65,21 @@ public class ViewFactory {
         PromptView promptView = PromptView.newConfirmDialogView();
         PromptController promptController =
                 new PromptController(promptView, viewManager, observer);
-        promptView.setIoLogicController(promptController);
+        promptView.setSceneController(promptController);
         return  promptView;
     }
 
     public static MenuView menuView(final ViewManager viewManager, final SoundManager soundManager) {
         MenuView menuView = new MenuView();
         MenuController menuController = new MenuController(menuView, viewManager, soundManager);
-        menuView.setIoLogicController(menuController);
+        menuView.setSceneController(menuController);
         return menuView;
     }
 
     public static SettingView settingView(final ViewManager viewManager, final SoundManager soundManager) {
         SettingView settingView = new SettingView();
         SettingsController settingsController = new SettingsController(settingView, viewManager, soundManager);
-        settingView.setIoLogicController(settingsController);
+        settingView.setSceneController(settingsController);
         return settingView;
     }
 }

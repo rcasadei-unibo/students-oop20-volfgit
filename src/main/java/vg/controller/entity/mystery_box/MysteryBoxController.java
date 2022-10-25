@@ -29,6 +29,7 @@ public interface MysteryBoxController {
     void setAnimation(List<String> animation);
 
     boolean isType(ETypeAbility type);
+    boolean isShow();
 
     void checkOnBorder(Stage<V2D> stage, GameBoardController gameController, SoundManager soundManager);
 

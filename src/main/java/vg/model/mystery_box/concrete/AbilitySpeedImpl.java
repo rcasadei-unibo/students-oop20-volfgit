@@ -10,15 +10,12 @@ import vg.utils.V2D;
 public class AbilitySpeedImpl extends AbstractAbilityDurable implements AbilityDurable {
     private static final long serialVersionUID = 1L;
 
-    private static final double INCREASE_SPEED = 1;
-    private static final double DURATION = 6000;
-
     private final double speedIncrease;
 
 
-    public AbilitySpeedImpl(final EAbility idAbility) {
-        super(idAbility, DURATION);
-        this.speedIncrease = INCREASE_SPEED;
+    public AbilitySpeedImpl(final double duration, final double speedIncrease) {
+        super(EAbility.SPEED_UP, duration);
+        this.speedIncrease = speedIncrease;
     }
 
 

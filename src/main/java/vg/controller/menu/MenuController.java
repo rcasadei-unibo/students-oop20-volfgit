@@ -75,7 +75,7 @@ public class MenuController extends Controller<MenuView> implements PromptObserv
         // 2) CREATE createMysteryBox logic controller
         GameControllerImpl gameController = new GameControllerImpl(gameView, stageModel, this.getViewManager(), this.soundManager);
         // 3) set logic controller in view
-        gameView.setIoLogicController(gameController);
+        gameView.setSceneController(gameController);
         this.getViewManager().addScene(gameView);
         //5) run game-loop
         gameController.launchGameSession();

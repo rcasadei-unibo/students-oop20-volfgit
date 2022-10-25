@@ -8,8 +8,8 @@ import vg.utils.V2D;
 public class AbilityKillMosquitoesImpl extends AbstractAbilityInstant {
     private static final long serialVersionUID = 1L;
 
-    public AbilityKillMosquitoesImpl(final EAbility idAbility) {
-        super(idAbility);
+    public AbilityKillMosquitoesImpl() {
+        super(EAbility.KILL_ALL_MOSQUITOES);
     }
 
     @Override

@@ -82,6 +82,11 @@ public class MysteryBoxControllerImpl implements MysteryBoxController {
     }
 
     @Override
+    public boolean isShow() {
+        return this.model.isShow();
+    }
+
+    @Override
     public void checkOnBorder(final Stage<V2D> stage, final GameBoardController gameController, final SoundManager soundManager) {
         if (!this.model.isShow() || this.model.isActivated()) {
             return;

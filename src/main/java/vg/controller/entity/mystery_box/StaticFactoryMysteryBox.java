@@ -1,8 +1,8 @@
 package vg.controller.entity.mystery_box;
 
 import vg.model.mystery_box.EAbility;
-import vg.model.mystery_box.factory.StaticFactoryAbilityDurable;
-import vg.model.mystery_box.factory.StaticFactoryAbilityInstant;
+import vg.model.mystery_box.factory.AbstractFactoryMysteryBox;
+import vg.model.mystery_box.factory.ConcreteFactoryEasyMysteryBox;
 import vg.view.entity.StaticFactoryEntityBlock;
 
 public final class StaticFactoryMysteryBox {
@@ -29,28 +29,32 @@ public final class StaticFactoryMysteryBox {
     }
 
     public static MysteryBoxController createFreezeTime() {
-        final var model = StaticFactoryAbilityDurable.createFreezeTime();
+        AbstractFactoryMysteryBox factory = new ConcreteFactoryEasyMysteryBox();
+        final var model = factory.createFreezeTime();
         final var view = StaticFactoryEntityBlock.createMysteryBox(model.getPosition(), model.getDimension());
 
         return new MysteryBoxControllerImpl(model, view);
     }
 
     public static MysteryBoxController createKillMosquitoes() {
-        final var model = StaticFactoryAbilityInstant.createKillMosquitoes();
+        AbstractFactoryMysteryBox factory = new ConcreteFactoryEasyMysteryBox();
+        final var model = factory.createKillMosquitoes();
         final var view = StaticFactoryEntityBlock.createMysteryBox(model.getPosition(), model.getDimension());
 
         return new MysteryBoxControllerImpl(model, view);
     }
 
     public static MysteryBoxController createScore() {
-        final var model = StaticFactoryAbilityInstant.createScore();
+        AbstractFactoryMysteryBox factory = new ConcreteFactoryEasyMysteryBox();
+        final var model = factory.createScore();
         final var view = StaticFactoryEntityBlock.createMysteryBox(model.getPosition(), model.getDimension());
 
         return new MysteryBoxControllerImpl(model, view);
     }
 
     public static MysteryBoxController createSpeed() {
-        final var model = StaticFactoryAbilityDurable.createSpeedUp();
+        AbstractFactoryMysteryBox factory = new ConcreteFactoryEasyMysteryBox();
+        final var model = factory.createSpeedUp();
         final var view = StaticFactoryEntityBlock.createMysteryBox(model.getPosition(), model.getDimension());
 
         return new MysteryBoxControllerImpl(model, view);

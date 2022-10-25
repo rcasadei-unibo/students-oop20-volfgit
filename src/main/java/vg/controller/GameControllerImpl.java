@@ -280,7 +280,7 @@ public class GameControllerImpl extends Controller<AdaptableView<GameBoardContro
         CountdownView<TransitionViewController> transView = ViewFactory.transitionView(
                 stageDomain.getCurrentScore(),
                 stageDomain.getLv());
-        transView.setIoLogicController(this);
+        transView.setSceneController(this);
         showTimedView(transView, SCREEN_DURATION_TIME);
         this.resumeGame();
     }
@@ -322,7 +322,7 @@ public class GameControllerImpl extends Controller<AdaptableView<GameBoardContro
      */
     private void showView(final View view) {
         Platform.runLater(() -> {
-            view.setIoLogicController(this);
+            view.setSceneController(this);
             this.getViewManager().addScene(view);
         });
     }
