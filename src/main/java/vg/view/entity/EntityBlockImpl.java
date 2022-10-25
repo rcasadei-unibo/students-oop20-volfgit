@@ -114,7 +114,15 @@ public class EntityBlockImpl extends Rectangle implements EntityBlock {
         this.indexImage = (this.indexImage + 1) % this.animationPathList.size();
     }
 
+    /**
+     * Getter for the overlay.
+     * @return the overlay of the {@link EntityBlock}
+     */
+    public Rectangle getRectangleOverlay() {
+        return this.rectangleOverlay;
+    }
     private void setImage(final String pathImage) {
         this.setFill(ImageFXUtils.createImagePatternFrom(pathImage));
+
     }
 }

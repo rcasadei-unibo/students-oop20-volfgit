@@ -8,12 +8,11 @@ import vg.utils.V2D;
 public class AbilityScoreImpl extends AbstractAbilityInstant {
     private static final long serialVersionUID = 1L;
 
-    private static final int SCORE_INCREASE = 200;
     private final int scoreIncrease;
 
-    public AbilityScoreImpl(final EAbility idAbility) {
-        super(idAbility);
-        this.scoreIncrease = SCORE_INCREASE;
+    public AbilityScoreImpl(final int scoreIncrease) {
+        super(EAbility.SCORE);
+        this.scoreIncrease = scoreIncrease;
     }
 
     @Override
