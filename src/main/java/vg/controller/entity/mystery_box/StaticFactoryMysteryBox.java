@@ -5,10 +5,12 @@ import vg.model.mystery_box.factory.AbstractFactoryMysteryBox;
 import vg.model.mystery_box.factory.ConcreteFactoryEasyMysteryBox;
 import vg.view.entity.StaticFactoryEntityBlock;
 
+/**
+ * Factory class for creating a mystery box controller.
+ */
 public final class StaticFactoryMysteryBox {
     private StaticFactoryMysteryBox() {
     }
-
     private static MysteryBoxController createRandom(final EAbility eAbility) {
         switch (eAbility) {
             case FREEZE_TIME:
@@ -23,11 +25,17 @@ public final class StaticFactoryMysteryBox {
                 throw new IllegalArgumentException("Unknown ability: " + eAbility);
         }
     }
-
+    /**
+     * Creates random  mystery box controller.
+     * @return a new mystery box controller.
+     */
     public static MysteryBoxController createRandomMysteryBoxDefault() {
         return createRandom(EAbility.randomAll());
     }
-
+    /**
+     * Creates freeze time mystery box controller.
+     * @return a new mystery box controller.
+     */
     public static MysteryBoxController createFreezeTime() {
         final AbstractFactoryMysteryBox factory = new ConcreteFactoryEasyMysteryBox();
         final var model = factory.createFreezeTime();
@@ -35,7 +43,10 @@ public final class StaticFactoryMysteryBox {
 
         return new MysteryBoxControllerImpl(model, view);
     }
-
+    /**
+     * Creates kill mosquitoes mystery box controller.
+     * @return a new mystery box controller.
+     */
     public static MysteryBoxController createKillMosquitoes() {
         final AbstractFactoryMysteryBox factory = new ConcreteFactoryEasyMysteryBox();
         final var model = factory.createKillMosquitoes();
@@ -43,7 +54,10 @@ public final class StaticFactoryMysteryBox {
 
         return new MysteryBoxControllerImpl(model, view);
     }
-
+    /**
+     * Creates score mystery box controller.
+     * @return a new mystery box controller.
+     */
     public static MysteryBoxController createScore() {
         final AbstractFactoryMysteryBox factory = new ConcreteFactoryEasyMysteryBox();
         final var model = factory.createScore();
@@ -51,7 +65,10 @@ public final class StaticFactoryMysteryBox {
 
         return new MysteryBoxControllerImpl(model, view);
     }
-
+    /**
+     * Creates speed mystery box controller.
+     * @return a new mystery box controller.
+     */
     public static MysteryBoxController createSpeed() {
         final AbstractFactoryMysteryBox factory = new ConcreteFactoryEasyMysteryBox();
         final var model = factory.createSpeedUp();
