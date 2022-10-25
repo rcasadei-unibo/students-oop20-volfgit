@@ -39,9 +39,9 @@ public class levelGenerator {
     /**
      * Lv1.
      */
-    private Boss bossLv1 = new EmptyBoss(new V2D(100, 100), new V2D(1, 1), 3,  Shape.CIRCLE, MassTier.HIGH);
-    private Set<DynamicEntity> dsLv1 = generatesEnemies(null, bossLv1, 4 );
-    private Set<StaticEntity> ssLv1 = new HashSet<StaticEntity>(Stream.of(
+    private final Boss bossLv1 = new EmptyBoss(new V2D(100, 100), new V2D(1, 1), 3,  Shape.CIRCLE, MassTier.HIGH);
+
+    private final Set<StaticEntity> ssLv1 = new HashSet<StaticEntity>(Stream.of(
             new FixedSquare(new V2D(100,75), 5),
 
             new FixedSquare(new V2D(6,145), 5),
@@ -50,19 +50,19 @@ public class levelGenerator {
             new FixedSquare(new V2D(100,145), 5),
             new FixedSquare(new V2D(150,145), 5)).collect(Collectors.toSet())
     );
-
-    private Map<V2D> lv1 = new MapImpl(BasePlayer.newPlayer(new V2D(0, 0)),
+    private final Set<DynamicEntity> dsLv1 = generatesEnemies(ssLv1, bossLv1, 4 );
+    private final Map<V2D> lv1 = new MapImpl(BasePlayer.newPlayer(new V2D(0, 0)),
             bossLv1,
             ssLv1,
             dsLv1,
             defaultBorders);
-    //TODO actually create next levels with right params
-    private Map<V2D> lv2 = new MapImpl(BasePlayer.newPlayer(new V2D(0, 0)),
+
+    private final Map<V2D> lv2 = new MapImpl(BasePlayer.newPlayer(new V2D(0, 0)),
             bossLv1,
             ssLv1,
             dsLv1,
             defaultBorders);;
-    private Map<V2D> lv3 = new MapImpl(BasePlayer.newPlayer(new V2D(0, 0)),
+    private final Map<V2D> lv3 = new MapImpl(BasePlayer.newPlayer(new V2D(0, 0)),
             bossLv1,
             ssLv1,
             dsLv1,
@@ -94,6 +94,11 @@ public class levelGenerator {
         return rt;
     }
 
+    /**
+     * Serialize MapImpl with default params defined here.
+     * @throws IOException exception with IO
+     */
+
     public void serializeDefaults() throws IOException {
         FileOutputStream fileOutLv1 = new FileOutputStream("1");
         ObjectOutputStream lv1 = new ObjectOutputStream(fileOutLv1);
@@ -114,6 +119,13 @@ public class levelGenerator {
         lv3.close();
     }
 
+    /**
+     * Used to serialize a "state" of the {@link MapImpl} and use it
+     * as a save file. An actual implementation needs a wrapper as
+     * {@link MapImpl} does not contain the level.
+     * @param map
+     * @throws IOException
+     */
     public void serializeState(final Map<V2D> map) throws IOException {
         FileOutputStream out = new FileOutputStream("save");
         ObjectOutputStream oOut = new ObjectOutputStream(out);
@@ -122,6 +134,14 @@ public class levelGenerator {
         oOut.close();
     }
 
+    /**
+     * Used to deserialize a {@link MapImpl} serialized class and
+     * returns it.
+     * @param lv the level to deserialize
+     * @return {@link MapImpl}
+     * @throws IOException if the file is not found
+     * @throws ClassNotFoundException if the file is corrupted
+     */
     public Map<V2D> deserializeLevel(final String lv) throws IOException, ClassNotFoundException {
         System.out.println(lv);
         FileInputStream in = new FileInputStream(lv);
@@ -130,6 +150,14 @@ public class levelGenerator {
         oIn.close();
         return map;
     }
+
+    /**
+     * Used to deserialize a saved file. An actual usable method
+     * needs a wrapper. {@link #serializeState(Map)}.
+     * @return {@link Map}
+     * @throws IOException if the save file does not exist
+     * @throws ClassNotFoundException if the file is corrputed
+     */
     public Map<V2D> deserializeSaved() throws IOException, ClassNotFoundException {
         FileInputStream in = new FileInputStream("save");
         ObjectInputStream oIn = new ObjectInputStream(in);

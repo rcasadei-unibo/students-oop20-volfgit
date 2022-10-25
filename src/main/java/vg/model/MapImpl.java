@@ -18,6 +18,11 @@ import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 import java.util.stream.Stream;
 
+/**
+ * {@inheritDoc}
+ * The Type used to implement {@link Map} is {@link V2D}.
+ * This class implements {@link Serializable} for {@link MapFactory}.
+ */
 public class MapImpl implements Map<V2D>, Serializable {
     /**
      * The player.
@@ -150,7 +155,7 @@ public class MapImpl implements Map<V2D>, Serializable {
      */
     @Override
     public boolean toCapture(final Entity toCheck) {
-        return isClosedByTail(toCheck.getPosition(), getTail(), getBoss());
+        return false;
     }
     /**
      * {@inheritDoc}
@@ -167,25 +172,12 @@ public class MapImpl implements Map<V2D>, Serializable {
     }
 
     /**
-     * {@inheritDoc}
-     */
-    public <R> Set<R> getActiveBonus() {
-        //TODO: luanaaaa
-        return null;
-    }
-
-    /**
+     *
      * {@inheritDoc}
      */
     @Override
-    public void updateBonusTimer(final double elapsedTime) {
-        //TODO: Fix
-        /*this.getActiveBonus().forEach(bonus -> bonus.updateTimer(elapsedTime));
-        Set.copyOf(this.getActiveBonus()).forEach(bonus -> {
-            if (bonus.isTimeOver()) {
-                this.setBonuses.remove(bonus);
-            }
-        });*/
+    public void updateBonusTimer(double elapsedTime) {
+
     }
 
     /**
@@ -221,7 +213,6 @@ public class MapImpl implements Map<V2D>, Serializable {
      */
     @Override
     public Set<DynamicEntity> getFriendlyBolts() {
-        //TODO updated with correct Bolt logic where there will be one
         return this.dynamicEntitySet.stream().filter(e -> e instanceof Bolt && !(e instanceof EnemyBolt)).collect(Collectors.toSet());
     }
     /**
@@ -285,17 +276,16 @@ public class MapImpl implements Map<V2D>, Serializable {
             throw new IllegalStateException("Failed to create a new border (Boss too big?)");
         }
     }
-    /**
-     * Method to check if a point will be closed by the border
+    /* Old method, not used anymore, maybe can be inspirational
+     *  to check if a point will be closed by the border
      * or not. Works only with points
      * @param pos the starting position from which to check
      * @param tail the tail that will become the new border
      * @param boss the boss of the map
      * @return true if the position will be outside the map
      *         and will be captured/deleted, false otherwise
-     */
+     *
     public boolean isClosedByTail(final V2D pos, final Set<V2D> tail, final Boss boss) {
-
 
         if (tail.contains(pos)) {
             return false;
@@ -320,7 +310,7 @@ public class MapImpl implements Map<V2D>, Serializable {
         // if the cycles finished and tail not contains a point between pos and the boss
         return false;
     }
-
+    */
     /**
      * Checks if a position is inside the current borders.
      * @param pos the position to check
@@ -332,6 +322,14 @@ public class MapImpl implements Map<V2D>, Serializable {
         }
         return isInBorders(pos,getBorders());
     }
+
+    /**
+     * Attempt to create a more performing {@link #updateOccupiedPercentage()}.
+     * Not finished so don't use it, but the idea is to compute an entire axis
+     * at one instead of every point (how now {@link #isInBorders(V2D)}) do.
+     * @param yPos the axis to compute
+     * @return yOccupied/yTotal on a single axis
+     */
     public double isInBorderAxis(final int yPos) {
         List<Integer> segments = new ArrayList<>();
         IntStream.rangeClosed(1, MapImpl.MAXBORDERX)
@@ -345,6 +343,18 @@ public class MapImpl implements Map<V2D>, Serializable {
             return 0;
         }
     }
+
+    /**
+     * This was not easy at all even if it seems so,
+     * bugs that need to be solved are: if a "segment" is
+     * parallel to a y-axis, it will generate problems, for now
+     * some are limited by {@link StageImpl#checkAllOutOfBounds()}.
+     * The algorithmic idea is that from the first border the positions
+     * are "inside" then outside, then inside again and so on.
+     * @param pos to check
+     * @param borders {@link #getBorders()}
+     * @return true if is in borders, false otherwise
+     */
     private boolean isInBorders(final V2D pos, final Set<V2D> borders) {
 
         List<Integer> segments = new ArrayList<>();

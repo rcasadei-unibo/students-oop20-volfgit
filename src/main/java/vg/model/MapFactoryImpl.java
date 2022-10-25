@@ -18,17 +18,22 @@ import java.util.stream.Stream;
  */
 public class MapFactoryImpl implements MapFactory<V2D> {
 
-    //Player player;
-
     MapFactoryImpl() {
     }
 
+    /**
+     * This was an initial attempt to create fixed levels,
+     * but was a bit ugly, now it's a "backup" plan if {@link #fromSerialized(int)}
+     * fails.
+     * @param lv the
+     * @return {@link Map}
+     */
     @Override
     public Map<V2D> fromEnum(final LEVEL lv) {
-        return new MapImpl(BasePlayer.newPlayer(new V2D(0, 0)), lv.getBoss(), new HashSet<>(), lv.getEnemies(), IntStream.rangeClosed(0, 200).boxed().
-
-                flatMap(e -> Stream.of(new V2D(e, 0), new V2D(0, e), new V2D(200, e), new V2D(e, 150))).filter(e -> e.getY() <= 150).
-                collect(Collectors.toSet()));
+        return new MapImpl(BasePlayer.newPlayer(new V2D(0, 0)), lv.getBoss(), new HashSet<>(), lv.getEnemies(),
+                IntStream.rangeClosed(0, 200).boxed().
+                flatMap(e -> Stream.of(new V2D(e, 0), new V2D(0, e), new V2D(200, e), new V2D(e, 150)))
+                        .filter(e -> e.getY() <= 150).collect(Collectors.toSet()));
     }
 
     /**

@@ -8,7 +8,7 @@ import vg.utils.V2D;
 public abstract class DynamicEntity extends ShapedEntity {
     /**
      * Entity movement speed.
-     * */
+     */
     private V2D speed;
     private V2D speedSaved;
 
@@ -41,6 +41,7 @@ public abstract class DynamicEntity extends ShapedEntity {
         this.speed = newSpeed;
     }
 
+    /* the actual logic of collisions is applied by MapImpl */
     /**
      * Evaluates what happens to the entity after a
      * collision. Generally an entity will "bounce"
@@ -58,7 +59,7 @@ public abstract class DynamicEntity extends ShapedEntity {
     }
 
     private void bounces() {
-        //TODO invertire speed
+
     }
 
     public void saveMySpeed() {
