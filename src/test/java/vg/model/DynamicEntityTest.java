@@ -39,7 +39,6 @@ class DynamicEntityTest {
     void afterCollisionAction() {
         assertTrue(de2.getPosition().equals(new V2D(6,0)));
         assertTrue(de2.getSpeed().equals(new V2D(-1,4)));
-        //TODO remove this test and merge them in test entity collisions?
 
     }
 }

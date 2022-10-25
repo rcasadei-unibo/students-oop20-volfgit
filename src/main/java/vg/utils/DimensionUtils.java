@@ -137,7 +137,6 @@ public final class DimensionUtils {
 
     private DimensionUtils() {
     }
-    //TODO sub to getCurrentWidth the difference from the total stage dimension and the game Pane
     public static Dimension2D getImagePosition(final V2D modelPosition) {
         return new Dimension2D(getCurrentWidth() * modelPosition.getX() / MapImpl.MAXBORDERX,
                 getCurrentHeight() * modelPosition.getY() / MapImpl.MAXBORDERY);

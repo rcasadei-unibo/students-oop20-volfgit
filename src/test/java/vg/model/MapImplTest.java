@@ -133,18 +133,6 @@ class MapImplTest {
         assertFalse(map.toCapture(toCheck));
     }
 
-    @Test
-    void removeEntity() {
-        //TODO
-        var toCheckD = new DynamicEntityImpl(new V2D(2,2), new V2D(5,0),2, Shape.CIRCLE,MassTier.HIGH);
-        //var toCheckS = new FixedMysteryBox(new V2D(2,2),2, null);
-        map.getAllDynamicEntities().add(toCheckD);
-        //map.getAllStaticEntities().add(toCheckS);
-        //assertTrue(map.getAllMysteryBoxes().contains(toCheckS));
-        //map.removeEntity(toCheckS);
-       // assertFalse(map.getAllMysteryBoxes().contains(toCheckS));
-
-    }
 
     @Test
     void addTailPointsByPlayerSpeed() {

@@ -430,7 +430,6 @@ public class StageImpl<T> implements Stage<V2D> {
                     });
                 }
             });
-            //TODO check for static entities
         }
         moveAll();
         checkCollisions();
@@ -517,6 +516,5 @@ public class StageImpl<T> implements Stage<V2D> {
             this.player = BasePlayer.newPlayer(new V2D(0, 0),getPlayer().getLife());
             ((MapImpl)this.map).setPlayer(this.player);
         }
-        //TODO add bosses and mystery boxes from controllers when called
     }
 }

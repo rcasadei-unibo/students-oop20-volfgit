@@ -176,7 +176,6 @@ public final class BasePlayer extends DynamicEntity implements Player {
 
     @Override
     public void move() {
-        //TODO: understand why this if break movement player and leave it to move unconditionally
         V2D newPos = this.getPosition().sum(this.getSpeed().mul(this.direction.getVector()));
         if (!this.tail.getCoordinates().contains(newPos)) {
             setPosition(newPos);
