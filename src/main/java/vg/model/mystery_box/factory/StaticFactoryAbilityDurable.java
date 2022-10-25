@@ -5,7 +5,10 @@ import vg.model.mystery_box.EAbility;
 import vg.model.mystery_box.concrete.AbilityFreezeTimeImpl;
 import vg.model.mystery_box.concrete.AbilitySpeedImpl;
 
-public class StaticFactoryAbilityDurable {
+public final class StaticFactoryAbilityDurable {
+
+    private StaticFactoryAbilityDurable() {
+    }
 
     public static AbilityInTheBox createFreezeTime() {
         return new AbilityFreezeTimeImpl(EAbility.FREEZE_TIME);

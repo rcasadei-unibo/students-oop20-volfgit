@@ -168,6 +168,7 @@ public class GameBoardControllerImpl extends ViewController implements GameBoard
         this.tailPolyline.setStrokeWidth(2.5);
         this.tailPolyline.setStroke(Colors.TAIL);
         this.addInGameArea(this.tailPolyline);
+        this.player.updateAnimation();
     }
 
     @Override

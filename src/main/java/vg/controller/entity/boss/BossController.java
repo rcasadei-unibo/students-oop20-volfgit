@@ -20,12 +20,14 @@ public interface BossController extends Entity {
 
     void setPosition(V2D v2dPosition);
 
+    @Override
     V2D getPosition();
 
     V2D getSpeed();
 
     Shape getShape();
 
+    @Override
     MassTier getMassTier();
 
     void updateAnimation();

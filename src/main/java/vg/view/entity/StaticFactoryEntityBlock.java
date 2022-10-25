@@ -14,7 +14,7 @@ public class StaticFactoryEntityBlock {
         return block;
     }
     public static EntityBlock createMosquitoes(final V2D position, final Dimension2D dimension) {
-        EntityBlock block = new EntityBlockImpl(position, dimension, List.of(PathImageEnemy.MOSQUITOES));
+        EntityBlock block = new EntityBlockImpl(position, dimension, PathImageEnemy.MOSQUITOES);
         return block;
     }
     public static EntityBlock createBoss(final V2D position, final Dimension2D dimension) {

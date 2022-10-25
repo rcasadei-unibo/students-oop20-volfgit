@@ -10,6 +10,7 @@ import vg.utils.V2D;
 
 
 public class AbilityFreezeTimeImpl extends AbstractAbilityDurable implements AbilityDurable {
+    private static final long serialVersionUID = 1L;
     private static final double DURATION = 5000;
 
     public AbilityFreezeTimeImpl(final EAbility idAbility) {
@@ -23,7 +24,7 @@ public class AbilityFreezeTimeImpl extends AbstractAbilityDurable implements Abi
             enemy.saveMySpeed();
             enemy.setSpeed(new V2D(0, 0));
         });
-        BossController boss = stage.getEntityManager().getBoss();
+        final BossController boss = stage.getEntityManager().getBoss();
         boss.saveMySpeed();
         boss.setSpeed(new V2D(0, 0));
 

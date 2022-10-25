@@ -6,6 +6,8 @@ import vg.model.mystery_box.EAbility;
 import vg.utils.V2D;
 
 public class AbilityScoreImpl extends AbstractAbilityInstant {
+    private static final long serialVersionUID = 1L;
+
     private static final int SCORE_INCREASE = 200;
     private final int scoreIncrease;
 

@@ -3,10 +3,11 @@ package vg.controller.entity.mystery_box;
 import vg.model.mystery_box.EAbility;
 import vg.model.mystery_box.factory.StaticFactoryAbilityDurable;
 import vg.model.mystery_box.factory.StaticFactoryAbilityInstant;
-import vg.utils.path.PathImageMysteryBox;
 import vg.view.entity.StaticFactoryEntityBlock;
 
-public class StaticFactoryMysteryBox {
+public final class StaticFactoryMysteryBox {
+    private StaticFactoryMysteryBox() {
+    }
 
     private static MysteryBoxController createRandom(final EAbility eAbility) {
         switch (eAbility) {
@@ -24,13 +25,7 @@ public class StaticFactoryMysteryBox {
     }
 
     public static MysteryBoxController createRandomMysteryBoxDefault() {
-        return createRandom(EAbility.randomAllButBoss());
-    }
-
-    public static MysteryBoxController createRandomMysteryBoxWithWeaponBoss() {
-        final MysteryBoxController mysteryBoxController = createRandom(EAbility.randomAll());
-        mysteryBoxController.setAnimation(PathImageMysteryBox.MYSTERY_BOSS);
-        return mysteryBoxController;
+        return createRandom(EAbility.randomAll());
     }
 
     public static MysteryBoxController createFreezeTime() {

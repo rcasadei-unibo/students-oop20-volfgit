@@ -6,7 +6,7 @@ import vg.model.mystery_box.EAbility;
 import vg.utils.V2D;
 
 public class AbilityKillMosquitoesImpl extends AbstractAbilityInstant {
-
+    private static final long serialVersionUID = 1L;
 
     public AbilityKillMosquitoesImpl(final EAbility idAbility) {
         super(idAbility);
