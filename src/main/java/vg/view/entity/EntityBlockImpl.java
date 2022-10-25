@@ -24,60 +24,83 @@ public class EntityBlockImpl extends Rectangle implements EntityBlock {
         this.indexImage = 0;
         this.setImage(this.animationPathList.get(this.indexImage));
     }
+
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public V2D getPosition() {
         return new V2D(this.getX(), this.getY());
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public void setPosition(final V2D position) {
         V2D centerPos = new V2D(position.getX() - this.getWidth() / 2, position.getY() - this.getHeight() / 2);
-
         this.setX(centerPos.getX());
         this.setY(centerPos.getY());
         this.rectangleOverlay.setX(centerPos.getX());
         this.rectangleOverlay.setY(centerPos.getY());
     }
 
-    private void setImage(final String pathImage) {
-        this.setFill(ImageFXUtils.createImagePatternFrom(pathImage));
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public void setShow(final boolean show) {
+        this.setVisible(show);
+        boolean isVisible = this.rectangleOverlay.isVisible() && show;
+        this.rectangleOverlay.setVisible(isVisible);
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public void setAnimation(final List<String> animationPathList) {
         this.animationPathList = animationPathList;
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public void setInParentNode(final ObservableList<Node> gameAreaNode) {
         gameAreaNode.add(this);
         gameAreaNode.add(this.rectangleOverlay);
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public void setImageOverlay(final String pathImage) {
         this.rectangleOverlay.setFill(ImageFXUtils.createImagePatternFrom(pathImage));
     }
 
-
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public void showImageOverlay() {
         this.rectangleOverlay.setVisible(true);
     }
+
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public void hideImageOverlay() {
         this.rectangleOverlay.setVisible(false);
     }
 
 
-    @Override
-    public void setShow(final boolean show) {
-        this.setVisible(show);
 
-        boolean isVisible = this.rectangleOverlay.isVisible() && show;
-        this.rectangleOverlay.setVisible(isVisible);
-    }
-
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public void updateAnimation() {
         if (this.animationPathList.size() == 0) {
@@ -85,5 +108,9 @@ public class EntityBlockImpl extends Rectangle implements EntityBlock {
         }
         this.setImage(this.animationPathList.get(this.indexImage));
         this.indexImage = (this.indexImage + 1) % this.animationPathList.size();
+    }
+
+    private void setImage(final String pathImage) {
+        this.setFill(ImageFXUtils.createImagePatternFrom(pathImage));
     }
 }

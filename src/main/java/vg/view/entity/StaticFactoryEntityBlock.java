@@ -7,18 +7,17 @@ import vg.utils.path.PathImageMysteryBox;
 
 import java.util.List;
 
-public class StaticFactoryEntityBlock {
+public final class StaticFactoryEntityBlock {
+    private StaticFactoryEntityBlock() {
+    }
 
     public static EntityBlock createMysteryBox(final V2D position, final Dimension2D dimension) {
-        EntityBlock block = new EntityBlockImpl(position, dimension, List.of(PathImageMysteryBox.MYSTERY_BOX));
-        return block;
+        return new EntityBlockImpl(position, dimension, List.of(PathImageMysteryBox.MYSTERY_BOX));
     }
     public static EntityBlock createMosquitoes(final V2D position, final Dimension2D dimension) {
-        EntityBlock block = new EntityBlockImpl(position, dimension, PathImageEnemy.MOSQUITOES);
-        return block;
+        return new EntityBlockImpl(position, dimension, PathImageEnemy.MOSQUITOES);
     }
     public static EntityBlock createBoss(final V2D position, final Dimension2D dimension) {
-        EntityBlock block = new EntityBlockImpl(position, dimension, PathImageEnemy.BOSS);
-        return block;
+        return new EntityBlockImpl(position, dimension, PathImageEnemy.BOSS);
     }
 }
