@@ -16,8 +16,10 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
+/*
+ * This class is responsible for managing the mystery boxes.
+ */
 public class MysteryBoxManagerImpl implements MysteryBoxManager {
-
     private final List<MysteryBoxController> mysteryBoxList;
     private int round;
 
@@ -25,8 +27,9 @@ public class MysteryBoxManagerImpl implements MysteryBoxManager {
         this.mysteryBoxList = new ArrayList<>();
         this.round = 1;
     }
-
-
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public void initializeRound(final GameBoardController gameBoard) {
         this.mysteryBoxList.clear();
@@ -38,19 +41,18 @@ public class MysteryBoxManagerImpl implements MysteryBoxManager {
             mysteryBox.setInParentNode(gameBoard.getGameAreaNode());
         });
         this.mysteryBoxList.stream().findFirst().get().setAnimation(PathImageMysteryBox.MYSTERY_BOSS);
-        this.increaseRound();
+        this.round++;
     }
-
-    @Override
-    public int getRound() {
-        return this.round;
-    }
-
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public List<MysteryBoxController> getMysteryBoxList() {
         return this.mysteryBoxList;
     }
-
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public List<MysteryBoxController> getMysteryBoxActiveAndDurableList() {
         return this.mysteryBoxList.stream()
@@ -62,24 +64,23 @@ public class MysteryBoxManagerImpl implements MysteryBoxManager {
                 .filter(mysteryBox -> mysteryBox.isType(ETypeAbility.INSTANT) && mysteryBox.isActivated())
                 .collect(Collectors.toList());
     }
-
-    @Override
-    public void increaseRound() {
-        this.round++;
-    }
-
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public void updateTimeBlinking(final long elapsedTime) {
         this.mysteryBoxList.forEach(mysteryBox -> mysteryBox.updateBlinking(elapsedTime));
     }
-
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public void showPickUpMysteryBox(final long elapsedTime) {
-        this.getMysteryBoxActiveAndInstantList().forEach(mysteryBox -> {
-            mysteryBox.showPickUpMysteryBox(elapsedTime);
-        });
+        this.getMysteryBoxActiveAndInstantList().forEach(mysteryBox -> mysteryBox.showPickUpMysteryBox(elapsedTime));
     }
-
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public void updateTimeIfAbilityActive(final long elapsedTime, final Stage<V2D> stage) {
         final List<MysteryBoxController> mysteryBoxActivateList = this.getMysteryBoxActiveAndDurableList();
@@ -101,16 +102,18 @@ public class MysteryBoxManagerImpl implements MysteryBoxManager {
                 });
 
     }
-
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public void checkMysteryBoxOnBorder(final Stage<V2D> stage, final GameBoardController gameController, final SoundManager soundManager) {
         this.mysteryBoxList.forEach(mysteryBox -> mysteryBox.checkOnBorder(stage, gameController, soundManager));
     }
-
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public void updateAnimation() {
         this.mysteryBoxList.forEach(MysteryBoxController::updateAnimation);
     }
-
-
 }

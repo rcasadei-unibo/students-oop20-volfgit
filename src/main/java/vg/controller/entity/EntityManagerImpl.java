@@ -12,54 +12,72 @@ import vg.utils.V2D;
 
 import java.util.List;
 
+/**
+ * This class manages the entities of the game.
+ */
 public class EntityManagerImpl implements EntityManager {
     private final MysteryBoxManager mysteryBoxManager;
     private final BossController boss;
     private SoundManager soundManager;
-
     public EntityManagerImpl() {
         this.mysteryBoxManager = new MysteryBoxManagerImpl();
         this.boss = StaticFactoryBossController.createRound1();
     }
-
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public void initializeRound(final GameBoardController gameController) {
         this.mysteryBoxManager.initializeRound(gameController);
         this.boss.setInParentNode(gameController);
     }
-
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public List<MysteryBoxController> getMysteryBoxList() {
         return this.mysteryBoxManager.getMysteryBoxList();
     }
-
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public BossController getBoss() {
         return this.boss;
     }
-
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public void countingTimeMysteryBox(final long elapsedTime, final Stage<V2D> stage) {
         this.mysteryBoxManager.updateTimeBlinking(elapsedTime);
         this.mysteryBoxManager.showPickUpMysteryBox(elapsedTime);
         this.mysteryBoxManager.updateTimeIfAbilityActive(elapsedTime, stage);
     }
-
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public void checkMysteryBoxOnBorder(final Stage<V2D> stage, final GameBoardController gameController) {
         this.mysteryBoxManager.checkMysteryBoxOnBorder(stage, gameController, this.soundManager);
     }
-
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public void moveEntityBoss(final long elapsedTime) {
         this.boss.move();
     }
-
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public void setSoundManager(final SoundManager soundManager) {
         this.soundManager = soundManager;
     }
-
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public void updateAnimation() {
         this.boss.updateAnimation();

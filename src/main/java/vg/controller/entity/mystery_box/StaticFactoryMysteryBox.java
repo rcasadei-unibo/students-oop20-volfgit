@@ -29,7 +29,7 @@ public final class StaticFactoryMysteryBox {
     }
 
     public static MysteryBoxController createFreezeTime() {
-        AbstractFactoryMysteryBox factory = new ConcreteFactoryEasyMysteryBox();
+        final AbstractFactoryMysteryBox factory = new ConcreteFactoryEasyMysteryBox();
         final var model = factory.createFreezeTime();
         final var view = StaticFactoryEntityBlock.createMysteryBox(model.getPosition(), model.getDimension());
 
@@ -37,7 +37,7 @@ public final class StaticFactoryMysteryBox {
     }
 
     public static MysteryBoxController createKillMosquitoes() {
-        AbstractFactoryMysteryBox factory = new ConcreteFactoryEasyMysteryBox();
+        final AbstractFactoryMysteryBox factory = new ConcreteFactoryEasyMysteryBox();
         final var model = factory.createKillMosquitoes();
         final var view = StaticFactoryEntityBlock.createMysteryBox(model.getPosition(), model.getDimension());
 
@@ -45,7 +45,7 @@ public final class StaticFactoryMysteryBox {
     }
 
     public static MysteryBoxController createScore() {
-        AbstractFactoryMysteryBox factory = new ConcreteFactoryEasyMysteryBox();
+        final AbstractFactoryMysteryBox factory = new ConcreteFactoryEasyMysteryBox();
         final var model = factory.createScore();
         final var view = StaticFactoryEntityBlock.createMysteryBox(model.getPosition(), model.getDimension());
 
@@ -53,7 +53,7 @@ public final class StaticFactoryMysteryBox {
     }
 
     public static MysteryBoxController createSpeed() {
-        AbstractFactoryMysteryBox factory = new ConcreteFactoryEasyMysteryBox();
+        final AbstractFactoryMysteryBox factory = new ConcreteFactoryEasyMysteryBox();
         final var model = factory.createSpeedUp();
         final var view = StaticFactoryEntityBlock.createMysteryBox(model.getPosition(), model.getDimension());
 
