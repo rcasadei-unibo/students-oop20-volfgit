@@ -1,6 +1,5 @@
 package vg.view;
 
-import javafx.scene.Scene;
 import javafx.stage.Stage;
 
 /**
@@ -13,13 +12,13 @@ public interface ViewManager {
      * Ther first view you add is considered as home view and cannot be removed.
      * @param view new scene view to be shown.
      */
-    void addScene(View view);
+    void addView(View view);
 
     /**
      * Removed last-added scene view from stack and show the previous one;
      * If there is only one view nothing happens.
      */
-    void popScene();
+    void popView();
 
     /**
      * Remove all views in stack and keep first one and show it.

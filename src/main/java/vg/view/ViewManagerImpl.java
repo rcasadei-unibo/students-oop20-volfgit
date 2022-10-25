@@ -39,13 +39,13 @@ public final class ViewManagerImpl implements ViewManager {
     }
 
     @Override
-    public void addScene(final View view) {
+    public void addView(final View view) {
         this.sceneStack.push(view);
         showScene();
     }
 
     @Override
-    public void popScene() {
+    public void popView() {
         if (this.sceneStack.size() > 1) {
             this.sceneStack.pop();
             showScene();
