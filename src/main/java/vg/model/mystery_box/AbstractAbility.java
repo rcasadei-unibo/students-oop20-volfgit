@@ -110,6 +110,7 @@ public abstract class AbstractAbility extends StaticEntity {
         this.show = this.logicBlinkPickUp.isShow();
         if (!this.show) {
             this.logicBlinkPickUp.setBlinking(false);
+            this.logicBlink.setBlinking(false);
         }
     }
 

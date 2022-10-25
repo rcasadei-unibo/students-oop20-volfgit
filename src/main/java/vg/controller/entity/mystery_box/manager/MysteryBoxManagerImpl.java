@@ -86,15 +86,22 @@ public class MysteryBoxManagerImpl implements MysteryBoxManager {
     @Override
     public void updateTimeIfAbilityActive(final long elapsedTime, final Stage<V2D> stage) {
         final List<MysteryBoxController> mysteryBoxActivateList = this.getMysteryBoxActiveAndDurableList();
-
-        mysteryBoxActivateList.forEach(mysteryBox -> {
-            final AbilityDurable abilityDurable = mysteryBox.getDurability();
-            abilityDurable.updateTimer(elapsedTime);
-            if (abilityDurable.isTimeOver()) {
-                abilityDurable.deActivate(stage);
-                mysteryBox.hide();
-            }
-        });
+        mysteryBoxActivateList.stream()
+                .filter(mysteryBox -> {
+                    final AbilityDurable abilityDurable = mysteryBox.getDurability();
+                    if (abilityDurable.isTimeOver()) {
+                        mysteryBox.hide();
+                    }
+                    return !mysteryBox.getDurability().isTimeOver();
+                })
+                .forEach(mysteryBox -> {
+                    final AbilityDurable abilityDurable = mysteryBox.getDurability();
+                    abilityDurable.updateTimer(elapsedTime);
+                    if (abilityDurable.isTimeOver()) {
+                        abilityDurable.deActivate(stage);
+                        mysteryBox.hide();
+                    }
+                });
 
     }
 
