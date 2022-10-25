@@ -328,6 +328,30 @@ public class StageImpl<T> implements Stage<V2D> {
                 e.move();
             }
         });*/
+        getStaticEntitySet().forEach(e -> {
+            if (getPlayer().isInShape(e)) {
+                var tailCopy = new ArrayList<>(getPlayer().getTail().getCoordinates());
+                getPlayer().getTail().resetTail();
+                ((DynamicEntity)getPlayer()).setSpeed(getPlayer().getSpeed().scalarMul(-1));
+                getPlayer().move();
+                //((DynamicEntity) getPlayer()).setPosition(getPlayer().getPosition().sum(getPlayer().getSpeed().mul(getPlayer().getDirection().getVector()).scalarMul(-1)));
+                getPlayer().changeDirection(Direction.NONE, false);
+                if (!tailCopy.isEmpty()) {
+                    var t = new ArrayList<V2D>();
+                    //System.out.println("break" + tailCopy + t);
+                    for(int i = 0; i < tailCopy.size(); i++){
+                        t.add(tailCopy.get(i));
+                        if (tailCopy.get(i).equals(getPlayer().getPosition())) {
+                            break;
+                        }
+                    }
+                    t.forEach(getPlayer().getTail()::addPoint);
+                } else {
+                    getPlayer().getTail().resetTail();
+                }
+                ((DynamicEntity)getPlayer()).setSpeed(getPlayer().getSpeed().scalarMul(-1));
+            }
+        });
         if (!((MapImpl) getMap()).isInBorders(getPlayer().getPosition()) && !getBorders().contains(getPlayer().getPosition())) {
             var l = getPlayer().getTail().getCoordinates().stream().filter(e -> getBorders().contains(e)).collect(Collectors.toList());
             if (l.size()==0) {
@@ -338,25 +362,30 @@ public class StageImpl<T> implements Stage<V2D> {
                 ((DynamicEntity) getPlayer()).setSpeed(getPlayer().getSpeed().scalarMul(-1));
                 return;
             } else if (l.size() == 1){
-                getPlayer().changeDirection(Direction.NONE,true);
-                getPlayer().getTail().resetTail();
-                ((DynamicEntity)getPlayer()).setPosition(l.get(0));
-                return;
-            }else if (l.size() > 2) {
+                if(getPlayer().getPosition().sum(getPlayer().getDirection().getVector().scalarMul(-1)).equals(getPlayer().getTail().getCoordinates().get(0))) {
+                    getPlayer().changeDirection(Direction.NONE, true);
+                    getPlayer().getTail().resetTail();
+                    ((DynamicEntity) getPlayer()).setPosition(l.get(0));
+                    return;
+                }
+
+            } else if (l.size() > 2) {
                throw new RuntimeException("l:" + l + "Error in tail generation : more then 2 intersactions with borders" + getPlayer().getTail().getCoordinates());
+            } else {
+                var tail = getPlayer().getTail().getCoordinates();
+                var l0 = l.get(0);
+                var l1 = l.get(1);
+                if (tail.get(0).equals(l1)) {
+                    l1 = l0;
+                    l0 = tail.get(0);
+                }
+                // the second subTail is need if the tail start and end are the same, to get the index of the end V2D
+                l = tail.subList(tail.indexOf(l0), tail.subList(1, tail.size() - 1).indexOf(l1));
+                ((DynamicEntity) getPlayer()).setPosition(l1);
+                getPlayer().getTail().resetTail();
+                l.forEach(getPlayer().getTail()::addPoint);
             }
-            var tail = getPlayer().getTail().getCoordinates();
-            var l0 = l.get(0);
-            var l1 = l.get(1);
-            if (tail.get(0).equals(l1)) {
-               l1 = l0;
-               l0 = tail.get(0);
-            }
-            // the second subTail is need if the tail start and end are the same, to get the index of the end V2D
-            l = tail.subList(tail.indexOf(l0), tail.subList(1, tail.size() - 1).indexOf(l1));
-            ((DynamicEntity) getPlayer()).setPosition(l1);
-            getPlayer().getTail().resetTail();
-            l.forEach(getPlayer().getTail()::addPoint);
+
         }
     }
     /**
