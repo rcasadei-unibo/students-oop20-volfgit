@@ -362,7 +362,7 @@ public class StageImpl<T> implements Stage<V2D> {
                 ((DynamicEntity) getPlayer()).setSpeed(getPlayer().getSpeed().scalarMul(-1));
                 return;
             } else if (l.size() == 1){
-                if(getPlayer().getPosition().sum(getPlayer().getDirection().getVector().scalarMul(-1)).equals(getPlayer().getTail().getCoordinates().get(0))) {
+                if(getPlayer().getPosition().sum(getPlayer().getSpeed().mul(getPlayer().getDirection().getVector().scalarMul(-1))).equals(getPlayer().getTail().getCoordinates().get(0))) {
                     getPlayer().changeDirection(Direction.NONE, true);
                     getPlayer().getTail().resetTail();
                     ((DynamicEntity) getPlayer()).setPosition(l.get(0));
