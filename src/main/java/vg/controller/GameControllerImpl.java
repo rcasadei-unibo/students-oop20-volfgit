@@ -273,12 +273,9 @@ public class GameControllerImpl extends Controller<AdaptableView<GameBoardContro
      */
     private void victory() {
         System.out.println("VICTORY");
-<<<<<<< HEAD
         Platform.runLater(()-> {
             this.entityManager.initializeRound(this.getGameViewController());
         });
-=======
->>>>>>> cf7a8b4972c2b280feb994972ca97aef87ebb1a6
         this.stageDomain.createNextLevel();
         CountdownView<TransitionViewController> transView = ViewFactory.transitionView(
                 stageDomain.getCurrentScore(),
