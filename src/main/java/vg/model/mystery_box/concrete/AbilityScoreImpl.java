@@ -1,6 +1,7 @@
 package vg.model.mystery_box.concrete;
 
 import vg.model.Stage;
+import vg.model.mystery_box.AbilityInTheBox;
 import vg.model.mystery_box.AbstractAbilityInstant;
 import vg.model.mystery_box.EAbility;
 import vg.utils.V2D;

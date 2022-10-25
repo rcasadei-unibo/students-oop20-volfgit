@@ -9,7 +9,7 @@ import vg.utils.V2D;
 /**
  * This class represents the ability speed.
  */
-public class AbilitySpeedImpl extends AbstractAbilityDurable implements AbilityDurable {
+public class AbilitySpeedImpl extends AbstractAbilityDurable {
     private static final long serialVersionUID = 1L;
     private final double speedIncrease;
     public AbilitySpeedImpl(final double duration, final double speedIncrease) {
