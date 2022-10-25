@@ -133,7 +133,6 @@ public interface Stage<T> {
      * which one are colliding and call the proper method on the
      * entity to manage the collision.
      * @see DynamicEntity
-     * @see DynamicEntity#afterCollisionAction()
      */
     void checkCollisions();
 
