@@ -17,7 +17,7 @@ import java.util.List;
  */
 public class EntityManagerImpl implements EntityManager {
     private final MysteryBoxManager mysteryBoxManager;
-    private final BossController boss;
+    private BossController boss;
     private SoundManager soundManager;
     public EntityManagerImpl() {
         this.mysteryBoxManager = new MysteryBoxManagerImpl();
@@ -31,6 +31,15 @@ public class EntityManagerImpl implements EntityManager {
         this.mysteryBoxManager.initializeRound(gameController);
         this.boss.setInParentNode(gameController);
     }
+
+    @Override
+    public void initializeNewRound(final GameBoardController gameController) {
+        gameController.getGameAreaNode().clear();
+        this.mysteryBoxManager.initializeRound(gameController);
+        this.boss = StaticFactoryBossController.createRound1();
+        this.boss.setInParentNode(gameController);
+    }
+
     /**
      * {@inheritDoc}
      */

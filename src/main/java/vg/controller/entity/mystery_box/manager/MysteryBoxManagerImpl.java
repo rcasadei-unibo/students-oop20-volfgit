@@ -40,7 +40,6 @@ public class MysteryBoxManagerImpl implements MysteryBoxManager {
             this.mysteryBoxList.add(mysteryBox);
             mysteryBox.setInParentNode(gameBoard.getGameAreaNode());
         });
-        this.mysteryBoxList.stream().findFirst().get().setAnimation(PathImageMysteryBox.MYSTERY_BOSS);
         this.round++;
     }
     /**

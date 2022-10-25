@@ -13,9 +13,13 @@ import java.util.List;
  */
 public interface EntityManager {
     /*
-     * This method is responsible for creating entity for round.
+     * This method is responsible for creating entity.
      */
     void initializeRound(GameBoardController gameController);
+    /*
+     * This method is responsible for creating entity for round.
+     */
+    void initializeNewRound(GameBoardController gameController);
     /*
      * This method is used to get the list of MysteryBoxController.
      * @return the list of MysteryBoxController.

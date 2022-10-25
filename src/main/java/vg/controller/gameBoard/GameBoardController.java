@@ -5,7 +5,9 @@ import javafx.geometry.Dimension2D;
 import javafx.scene.Node;
 import javafx.scene.layout.Pane;
 import vg.model.entity.dynamicEntity.DynamicEntity;
+import vg.model.entity.dynamicEntity.player.Player;
 import vg.utils.V2D;
+import vg.view.player.PlayerViewController;
 
 import java.util.List;
 import java.util.Set;
@@ -104,4 +106,10 @@ public interface GameBoardController {
      * @param time double indicating remaining time of player's shield
      */
     void updateShieldTime(double time);
+    /**
+     * Get Player view.
+     *
+     * @return Player.
+     */
+    PlayerViewController getPlayer();
 }

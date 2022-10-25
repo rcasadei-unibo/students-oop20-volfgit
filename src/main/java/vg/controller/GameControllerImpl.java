@@ -273,13 +273,14 @@ public class GameControllerImpl extends Controller<AdaptableView<GameBoardContro
      */
     private void victory() {
         System.out.println("VICTORY");
-        this.entityManager.initializeRound(this.getGameViewController());
         this.stageDomain.createNextLevel();
         CountdownView<TransitionViewController> transView = ViewFactory.transitionView(
                 stageDomain.getCurrentScore(),
                 stageDomain.getLv());
         transView.setSceneController(this);
         showTimedView(transView, SCREEN_DURATION_TIME);
+        this.entityManager.initializeNewRound(this.getGameViewController());
+        this.getGameViewController().getPlayer().setInParentNode(this.getGameViewController().getGameAreaNode());
         this.resumeGame();
     }
 

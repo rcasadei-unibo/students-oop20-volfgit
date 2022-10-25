@@ -6,7 +6,6 @@ import javafx.geometry.Dimension2D;
 import javafx.scene.Node;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
-import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.Pane;
 import javafx.scene.shape.Polyline;
 import vg.model.MapImpl;
@@ -20,7 +19,11 @@ import vg.view.entity.StaticFactoryEntityBlock;
 import vg.view.player.PlayerViewController;
 import vg.view.player.PlayerViewControllerImpl;
 import vg.view.utils.Colors;
-import java.util.*;
+
+import java.util.Collection;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
 import java.util.stream.Collectors;
 
 /**
@@ -219,6 +222,11 @@ public class GameBoardControllerImpl extends ViewController implements GameBoard
     @Override
     public void updateShieldTime(final double time) {
         this.shield.setText(String.valueOf((int)time/100));
+    }
+
+    @Override
+    public PlayerViewController getPlayer() {
+        return this.player;
     }
 
     /**
