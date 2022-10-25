@@ -17,7 +17,7 @@ import java.util.Optional;
  */
 public class AdaptableView<T> implements View<T> {
     private Scene scene;
-    private Optional<Controller> logicController;
+    private Optional<SceneController> sceneController;
     /**
      * JavaFX controller loaded from file associated to file fxml.
      */
@@ -36,14 +36,14 @@ public class AdaptableView<T> implements View<T> {
     }
 
     @Override
-    public void setIoLogicController(final Controller controller) {
-        this.logicController = Optional.of(controller);
+    public void setSceneController(final SceneController sceneController) {
+        this.sceneController = Optional.of(sceneController);
     }
 
     @Override
-    public Controller getIoLogicController() throws NoSuchControllerException {
-        if (this.logicController.isPresent()) {
-            return this.logicController.get();
+    public SceneController getSceneController() throws NoSuchControllerException {
+        if (this.sceneController.isPresent()) {
+            return this.sceneController.get();
         } else {
             throw new NoSuchControllerException();
         }
