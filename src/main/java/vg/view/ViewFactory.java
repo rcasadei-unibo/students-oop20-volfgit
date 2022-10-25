@@ -51,6 +51,8 @@ public class ViewFactory {
      * Return CountdownView specific for when player won level and goes to next one.
      * This view show a victory message, current score and next level number.
      * Is also showed a countdown timer that inform player how long wait for next level.
+     * @param score score reached by player
+     * @param round next round number
      * @return CountdownView controlled by TransitionViewController
      */
     public static CountdownView<TransitionViewController> transitionView(final int score, final int round) {
