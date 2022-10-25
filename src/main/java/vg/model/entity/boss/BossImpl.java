@@ -7,11 +7,11 @@ import vg.utils.Shape;
 import vg.utils.V2D;
 
 public class BossImpl extends Boss implements BossModel {
+    private static final long serialVersionUID = 1L;
     private static final Dimension2D DIMENSION_BOX = new Dimension2D(80, 80);
     private static final V2D INIT_POSITION = new V2D(100, 100);
 
     private final Dimension2D dimension;
-    private boolean isDead;
 
 
     public BossImpl(final V2D speed) {

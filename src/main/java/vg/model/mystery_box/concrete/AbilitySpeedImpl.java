@@ -8,6 +8,8 @@ import vg.model.mystery_box.EAbility;
 import vg.utils.V2D;
 
 public class AbilitySpeedImpl extends AbstractAbilityDurable implements AbilityDurable {
+    private static final long serialVersionUID = 1L;
+
     private static final double INCREASE_SPEED = 1;
     private static final double DURATION = 6000;
 

@@ -14,7 +14,7 @@ import java.util.List;
 
 public class EntityManagerImpl implements EntityManager {
     private final MysteryBoxManager mysteryBoxManager;
-    private BossController boss;
+    private final BossController boss;
     private SoundManager soundManager;
 
     public EntityManagerImpl() {

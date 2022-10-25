@@ -5,7 +5,9 @@ import vg.model.mystery_box.factory.StaticFactoryAbilityDurable;
 import vg.model.mystery_box.factory.StaticFactoryAbilityInstant;
 import vg.view.entity.StaticFactoryEntityBlock;
 
-public class StaticFactoryMysteryBox {
+public final class StaticFactoryMysteryBox {
+    private StaticFactoryMysteryBox() {
+    }
 
     private static MysteryBoxController createRandom(final EAbility eAbility) {
         switch (eAbility) {

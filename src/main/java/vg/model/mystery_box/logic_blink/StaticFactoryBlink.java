@@ -1,6 +1,8 @@
 package vg.model.mystery_box.logic_blink;
 
-public class StaticFactoryBlink {
+public final class StaticFactoryBlink {
+    private StaticFactoryBlink() {
+    }
 
     public static LogicBlink createLogicBlinkMysteryBox() {
         final int timeHide = 3000;

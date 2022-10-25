@@ -5,6 +5,7 @@ import vg.model.timedObject.TimedObject;
 import vg.model.timedObject.TimedObjectImpl;
 
 public abstract class AbstractAbilityDurable extends AbstractAbility {
+    private static final long serialVersionUID = 1L;
 
     private final TimedObject timedObject;
 

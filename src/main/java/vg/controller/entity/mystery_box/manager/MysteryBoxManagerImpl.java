@@ -8,6 +8,7 @@ import vg.model.mystery_box.AbilityDurable;
 import vg.model.mystery_box.ETypeAbility;
 import vg.model.mystery_box.data_round.DataRound;
 import vg.sound.manager.SoundManager;
+import vg.utils.path.PathImageMysteryBox;
 import vg.utils.round.MysteryBoxPositionUtils;
 import vg.utils.V2D;
 
@@ -28,6 +29,7 @@ public class MysteryBoxManagerImpl implements MysteryBoxManager {
 
     @Override
     public void initializeRound(final GameBoardController gameBoard) {
+        this.mysteryBoxList.clear();
         final List<DataRound> dataRoundList = MysteryBoxPositionUtils.getDataRoundList(this.round, gameBoard.getGameAreaDimension());
         dataRoundList.forEach(dataRound -> {
             final MysteryBoxController mysteryBox = StaticFactoryMysteryBox.createRandomMysteryBoxDefault();
@@ -35,6 +37,7 @@ public class MysteryBoxManagerImpl implements MysteryBoxManager {
             this.mysteryBoxList.add(mysteryBox);
             mysteryBox.setInParentNode(gameBoard.getGameAreaNode());
         });
+        this.mysteryBoxList.stream().findFirst().get().setAnimation(PathImageMysteryBox.MYSTERY_BOSS);
         this.increaseRound();
     }
 
